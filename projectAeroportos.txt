@@ -52,6 +52,7 @@ companhia aerea
     - custos
     - velocidade do vento
     - consumo
+    - tempo de viagem
     _________________________________________
     Metodos:
     - construtor(aero.origem, aero.destino)
@@ -61,15 +62,14 @@ companhia aerea
 
 
 estatisticas
-    - maior viagem
-    - menor viagem
-    - maior aviao
-    - menor aviao
-    - menor aeroporto
-    - maior aeroporto
-    - quantas pessoas passam pelo aeroporto por ano
+    - maior/menor viagem
+    - maior/menor aviao
+    - maior/menor aeroporto
+    - nº de passageiros transportados (somatorio de pessoas transportadas PARA e DO aeroporto em questao)
     - nº de chegadas / partidas
+    - voo com mais passageiros
+    - aeroporto com mais voos
     _________________________________________
     Metodos:
 
-
+Ligacoes aereas (que ligacoes entre aeroportos podem ser ligacoes diretas e quais necessitam de escalas)
