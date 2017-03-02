@@ -1,0 +1,66 @@
+Aeroportos
+    - Nome
+    - Localizacao(pais e distrito)
+    - dimensao (quantidade de avioes, tamanho da pista)
+    - companhias aereas
+    - tipo (aeroporto/base aerea/aerodromo)
+    - histórico de voos
+    ___________________________
+    Métodos:
+
+    
+    
+    
+    
+    
+    
+ Aviões
+    - nome
+    - consumo
+    - capacidade do combustivel
+    - capacidade de passageiros
+    - capacidade de carga
+    - tipo (quanti.motores/helices/jato/supersonico/passageiros/carga)
+    - dimensao do cockpit
+    - peso
+    - velocidade de cruzeiro
+    ___________________________
+    Métodos:
+    
+    
+   
+   
+ companhia aerea
+    - nome
+    - nacionalidade
+    - frota
+    ___________________________
+    Métodos:
+    
+    
+    
+ metereologia
+    - velocidade do vento
+    ___________________________
+    Métodos:
+
+    estatisticas
+     - maior viagem
+     - menor viagem
+     - maior aviao
+     - menor aviao
+     - menor aeroporto
+     - maior aeroporto
+     - quantas pessoas passam pelo aeroporto por ano
+     - nº de chegadas / partidas
+     ___________________________
+     Métodos:
+
+
+ voo
+    - altitude
+    - aeroporto de origem
+    - aeroporto de destino
+    - distancia
+    ___________________________
+    Métodos:
