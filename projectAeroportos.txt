@@ -2,21 +2,18 @@ Aeroportos
     - Nome
     - Localizacao(pais e continente)
     - dimensao (quantidade de avioes)
-    - companhias aereas
     - tipo (aeroporto/base aerea/aerodromo)
     - histórico de voos
     - taxas
-    -
-    -
-
-
-
-
-
+    _________________________________________
+    Metodos:
+    - receivePlane(Plane newPlane): void
+    - numberOfPlanes(): int
+    - sendPlane(Plane plane): Date // envia para as informacoes do voo a data de partida do aviao que sai
+    - setTax(Plane arrivingPlane): float
 
 Aviões
     - nome
-    - consumo
     - capacidade do combustivel
     - capacidade de passageiros
     - tipo (normal/helices/ jato)
@@ -24,18 +21,28 @@ Aviões
     - altitude de cruzeiro
     - alcance
     - companhia
+    _________________________________________
+    Metodos:
+    -
 
 histórico de voos
     -  chegadas
     -  partidas
     -  n passageiros por voo
     -  data
+    _________________________________________
+    Metodos:
+    -
 
 companhia aerea
     - nome
     - nacionalidade
     - frota
-    -
+    _________________________________________
+    Metodos:
+    - addPlane(Plane newPlane): void
+    - removePlane(Plane plane): boolean // sucesso da remocao
+    - numberOfPlanes(): int
 
  voo(ligação entre dois aeroportos)
     - altitude
@@ -44,19 +51,25 @@ companhia aerea
     - distancia
     - custos
     - velocidade do vento
-    - consumo(alcance, capacidade do combustivel)
-
+    - consumo
+    _________________________________________
+    Metodos:
+    - construtor(aero.origem, aero.destino)
+    - setPlaneConsumption(float range, float fuelCapacity): float
+    - setWindVelocity(): void // dependendo do aeroporto de origem/destino
+    - setFlightCost():
 
 
 estatisticas
- - maior viagem
- - menor viagem
- - maior aviao
- - menor aviao
- - menor aeroporto
- - maior aeroporto
- - quantas pessoas passam pelo aeroporto por ano
- - nº de chegadas / partidas
-
+    - maior viagem
+    - menor viagem
+    - maior aviao
+    - menor aviao
+    - menor aeroporto
+    - maior aeroporto
+    - quantas pessoas passam pelo aeroporto por ano
+    - nº de chegadas / partidas
+    _________________________________________
+    Metodos:
 
 
