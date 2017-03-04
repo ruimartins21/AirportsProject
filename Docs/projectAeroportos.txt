@@ -1,0 +1,75 @@
+Aeroportos
+    - Nome
+    - Localizacao(pais e continente)
+    - dimensao (quantidade de avioes)
+    - tipo (aeroporto/base aerea/aerodromo)
+    - histórico de voos
+    - taxas
+    _________________________________________
+    Metodos:
+    - receivePlane(Plane newPlane): void
+    - numberOfPlanes(): int
+    - sendPlane(Plane plane): Date // envia para as informacoes do voo a data de partida do aviao que sai
+    - setTax(Plane arrivingPlane): float
+
+Aviões
+    - nome
+    - capacidade do combustivel
+    - capacidade de passageiros
+    - tipo (normal/helices/ jato)
+    - velocidade de cruzeiro
+    - altitude de cruzeiro
+    - alcance
+    - companhia
+    _________________________________________
+    Metodos:
+    -
+
+histórico de voos
+    -  chegadas
+    -  partidas
+    -  n passageiros por voo
+    -  data
+    _________________________________________
+    Metodos:
+    -
+
+companhia aerea
+    - nome
+    - nacionalidade
+    - frota
+    _________________________________________
+    Metodos:
+    - addPlane(Plane newPlane): void
+    - removePlane(Plane plane): boolean // sucesso da remocao
+    - numberOfPlanes(): int
+
+ voo(ligação entre dois aeroportos)
+    - altitude
+    - aeroporto de origem
+    - aeroporto de destino
+    - distancia
+    - custos
+    - velocidade do vento
+    - consumo
+    - tempo de viagem
+    _________________________________________
+    Metodos:
+    - construtor(aero.origem, aero.destino)
+    - setPlaneConsumption(float range, float fuelCapacity): float
+    - setWindVelocity(): void // dependendo do aeroporto de origem/destino
+    - setFlightCost(): void
+
+
+estatisticas
+    - maior/menor viagem
+    - maior/menor aviao
+    - maior/menor aeroporto
+    - nº de passageiros transportados (somatorio de pessoas transportadas PARA e DO aeroporto em questao)
+    - nº de chegadas / partidas
+    - voo com mais passageiros
+    - aeroporto com mais voos
+    _________________________________________
+    Metodos:
+
+Ligacoes aereas (que ligacoes entre aeroportos podem ser ligacoes diretas e quais necessitam de escalas)
