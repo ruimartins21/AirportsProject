@@ -3,25 +3,18 @@ package airportsProject;
 public class Flight {
 
   private float altitude;
-
   private float distance;
-
   private float costs;
-
   private float windSpeed;
-
   private Date duration;
-
   private Date date;
-
   private int passengers;
+  private Airplane airplane;
+  private Airport airportOfOrigin;
+  private Airport airportOfDestination;
 
-    private Airplane airplane;
-    private Airport airportOfOrigin;
-    private Airport airportOfDestination;
-
-  public float setPlaneConsumption( float range,  int uelCapacity) {
-  return 0.0f;
+  public float setPlaneConsumption( float range,  int fuelCapacity) {
+    return 0.0f;
   }
 
   public void setWindVelocity() {

@@ -5,22 +5,19 @@ import java.util.Vector;
 public class Airline {
 
   private String name;
-
   private String nationality;
-
   private int numPlanes;
-
-    private Vector  airplanes;
+  private Vector  airplanes;
 
   public void addPlane( Airplane newPlane) {
   }
 
   public boolean removePlane( Airplane plane) {
-  return false;
+    return false;
   }
 
   public int fleet() {
-  return 0;
+    return 0;
   }
 
   public String getName() {

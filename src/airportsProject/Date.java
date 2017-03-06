@@ -6,15 +6,10 @@ import java.util.GregorianCalendar;
 public class Date implements Comparable<Date> {
 
   private int day;
-
   private int month;
-
   private int year;
-
   private int hour;
-
   private int minute;
-
   private int second;
 
   public Date(int day, int month, int year, int hour, int minute, int second) {

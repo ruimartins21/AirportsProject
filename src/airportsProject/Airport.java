@@ -1,7 +1,8 @@
 package airportsProject;
 
+import edu.princeton.cs.algs4.RedBlackBST;
+
 import java.util.Vector;
-import princeton.cs.algs4;
 
 public class Airport {
 
@@ -11,10 +12,9 @@ public class Airport {
   private String country;
   private String continent;
   private float rating;
-  private RedBlackBST_AED2_1617<Integer, String> logs = new RedBlackBST_AED2_1617<>();
-
-    private Vector  airplanes;
-    private Vector  flights;
+  private RedBlackBST<Integer, String> logs = new RedBlackBST<>();
+  private Vector  airplanes;
+  private Vector  flights;
   
   public void receivePlane( Airplane newPlane) {
   }

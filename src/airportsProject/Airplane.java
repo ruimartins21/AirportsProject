@@ -5,26 +5,16 @@ import java.util.Vector;
 public class Airplane {
 
   private int id;
-
   private String model;
-
   private String name;
-
   private float cruiseSpeed;
-
   private float cruiseAltitude;
-
   private float maxRange;
-
   private String airportCode;
-
   private int passengersCapacity;
-
   private int fuelCapacity;
-
-    private Airport airport;
-    private Vector  airplaneFlight;
-
+  private Airport airport;
+  private Vector  airplaneFlight;
   private Airline airline;
 
   public int getId() {
