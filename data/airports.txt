@@ -1,0 +1,40 @@
+nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;
+Ben Gurion;TLV;Tel Aviv;Israel;Asia;10.0;
+Francisco Sá Carneiro;OPO;Porto;Portugal;Europe;9.8;
+Frankfurt;FRA;Frankfurt;Germany;Europe;9.6;
+Internacional de Dubai;DXB;Dubai;Dubai;Asia;9.4;
+Internacional John Kennedy;JFK;Nova York;US;North America;9.3;
+Internacional El Dorado;BOG;Bogotá;Colombia;South America;9.0;
+Internacional Jorge Chávez;LIM;Lima;Peru;South America;8.9;
+Kastrup;CPH;Copenhaga;Denmark;Europe;8.7;
+Pierre Elliott Trudeau;YUL;Montreal;Canada;North America;8.7;
+Internacional Comodoro Arturo Merino Benitez;SCL;Santiago de Chile;Chile;South America;8.6;
+Internacional de Los Angeles;LAX;Los Angeles;US;North America;8.6;
+Humberto Delgado;LIS;Lisboa;Portugal;Europe;8.5;
+Milão-Malpensa;MXP;Milão;Italy;Europe;8.4;
+Tito Minniti de Reggio di Calabria;REG;Reggio Calabria;Italy;Europe;8.4;
+Internacional do Recife/Guararapes Gilberto Freyre;REC;Recife;Brazil;South America;8.4;
+Internacional Fiumicino-Leonardo da Vinci;FCO;Roma;Italy;Europe;8.3;
+Amsterdam Schiphol;AMS;Amsterdão;Netherland;Europe;8.1;
+Gatwick;LGW;Londres;UK;Europe;8.1;
+Internacional Rafael Nuñez;MVD;Montevideu;Uruguai;South America;8.0;
+Moscou Domodedovo;DME;Moscow;Russia;Asia;7.8;
+Joanesburgo;JNB;Joanesburgo;South Africa;Africa;8.0;
+Beijing International;PEK;Beijing;China;Asia;9.8;
+International Soekarno-Hatta;CGK;Jakarta;Indonesia;Asia;7.8;
+Kingsford Smith de Sydney;SYD;Sydney;Australia;Oceania;9.3;
+Internacional Quatro de Fevereiro;LAD;Luanda;Angola;Africa;4.3;
+Houari Boumediene;ALG;Algiers;Algeria;Africa;7.6;
+Boryspil;KBP;Kiev;Ukraine;Europe;8.0;
+Henri Coanda de Bucareste;OTP;Bucharest;Romenia;Europe;7.8;
+Warsaw Chopin Airport;WAW;Warsaw;Poland;Europe;7.8;
+Charles de Gaulle;CDG;Paris;France;Europe;8.1;
+Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
+Rio Galeão;GIG;Rio de Janeiro;Brazil;South America;5.3;
+Narita;NRT;Tokyo;Japan;Asia;9.8;
+
+
+
+
+
+ 
