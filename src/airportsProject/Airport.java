@@ -1,21 +1,17 @@
 package airportsProject;
 
 import java.util.Vector;
+import princeton.cs.algs4;
 
 public class Airport {
 
   private String name;
-
   private String code;
-
   private String city;
-
   private String country;
-
   private String continent;
-
   private float rating;
-
+  private RedBlackBST_AED2_1617<Integer, String> logs = new RedBlackBST_AED2_1617<>();
 
     private Vector  airplanes;
     private Vector  flights;
