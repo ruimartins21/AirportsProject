@@ -1,8 +1,11 @@
 package airportsProject;
 
+import edu.princeton.cs.algs4.RedBlackBST;
+
 import java.util.Vector;
 
 public class Airport {
+
 
     private String name;
     private String code;

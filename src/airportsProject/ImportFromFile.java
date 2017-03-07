@@ -1,6 +1,7 @@
 package airportsProject;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.RedBlackBST;
 
 import java.io.File;
 
@@ -19,7 +20,7 @@ public class ImportFromFile {
         }
     }
 
-    public void importAirports() {
+    public static void importAirports(String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
@@ -40,7 +41,7 @@ public class ImportFromFile {
         }
     }
 
-    public void importPlanes() {
+    public static void importPlanes(RedBlackBST<Integer, Airplane> airplaneST, String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
@@ -64,12 +65,13 @@ public class ImportFromFile {
                 Airplane newPlane = new Airplane(id, model, name, cruiseSpeed, cruiseAltitude, maxRange, airportCode,
                         passengersCapacity, fuelCapacity, thisPlaneAirline);
                 System.out.println(newPlane.toString());
+                airplaneST.put(id, newPlane);
             }
             i++;
         }
     }
 
-    public void importAirlines() {
+    public static void importAirlines(String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
