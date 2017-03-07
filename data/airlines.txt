@@ -1,0 +1,6 @@
+nome;nacionalidade;
+TAP Air Portugal;Portugal;
+Lufthansa;Germany;
+Qatar Airways;Qatar;
+Qantas;Australia;
+Thai Airways;Thailand

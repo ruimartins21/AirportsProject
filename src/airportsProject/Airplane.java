@@ -4,116 +4,145 @@ import java.util.Vector;
 
 public class Airplane {
 
-  private int id;
-  private String model;
-  private String name;
-  private float cruiseSpeed;
-  private float cruiseAltitude;
-  private float maxRange;
-  private String airportCode;
-  private int passengersCapacity;
-  private int fuelCapacity;
-  private Airport airport;
-  private Vector  airplaneFlight;
-  private Airline airline;
+    private int id;
+    private String model;
+    private String name;
+    private float cruiseSpeed;
+    private float cruiseAltitude;
+    private float maxRange;
+    private String airportCode;
+    private int passengersCapacity;
+    private int fuelCapacity;
+    private Airport airport;
+    private Vector  airplaneFlight;
+    private Airline airline;
 
-  public int getId() {
+    public Airplane(int id, String model, String name, float cruiseSpeed, float cruiseAltitude, float maxRange,
+                    String airportCode, int passengersCapacity, int fuelCapacity, Airline airline) {
+        this.id = id;
+        this.model = model;
+        this.name = name;
+        this.cruiseSpeed = cruiseSpeed;
+        this.cruiseAltitude = cruiseAltitude;
+        this.maxRange = maxRange;
+        this.airportCode = airportCode;
+        this.passengersCapacity = passengersCapacity;
+        this.fuelCapacity = fuelCapacity;
+        this.airline = airline;
+    }
+
+    public int getId() {
     return id;
   }
 
-  public void setId(int id) {
+    public void setId(int id) {
     this.id = id;
   }
 
-  public String getModel() {
+    public String getModel() {
     return model;
   }
 
-  public void setModel(String model) {
+    public void setModel(String model) {
     this.model = model;
   }
 
-  public String getName() {
+    public String getName() {
     return name;
   }
 
-  public void setName(String name) {
+    public void setName(String name) {
     this.name = name;
   }
 
-  public float getCruiseSpeed() {
+    public float getCruiseSpeed() {
     return cruiseSpeed;
   }
 
-  public void setCruiseSpeed(float cruiseSpeed) {
+    public void setCruiseSpeed(float cruiseSpeed) {
     this.cruiseSpeed = cruiseSpeed;
   }
 
-  public float getCruiseAltitude() {
+    public float getCruiseAltitude() {
     return cruiseAltitude;
   }
 
-  public void setCruiseAltitude(float cruiseAltitude) {
+    public void setCruiseAltitude(float cruiseAltitude) {
     this.cruiseAltitude = cruiseAltitude;
   }
 
-  public float getMaxRange() {
+    public float getMaxRange() {
     return maxRange;
   }
 
-  public void setMaxRange(float maxRange) {
+    public void setMaxRange(float maxRange) {
     this.maxRange = maxRange;
   }
 
-  public String getAirportCode() {
+    public String getAirportCode() {
     return airportCode;
   }
 
-  public void setAirportCode(String airportCode) {
+    public void setAirportCode(String airportCode) {
     this.airportCode = airportCode;
   }
 
-  public int getPassengersCapacity() {
+    public int getPassengersCapacity() {
     return passengersCapacity;
   }
 
-  public void setPassengersCapacity(int passengersCapacity) {
+    public void setPassengersCapacity(int passengersCapacity) {
     this.passengersCapacity = passengersCapacity;
   }
 
-  public int getFuelCapacity() {
+    public int getFuelCapacity() {
     return fuelCapacity;
   }
 
-  public void setFuelCapacity(int fuelCapacity) {
+    public void setFuelCapacity(int fuelCapacity) {
     this.fuelCapacity = fuelCapacity;
   }
 
-  public Airport getAirport() {
+    public Airport getAirport() {
     return airport;
   }
 
-  public void setAirport(Airport airport) {
+    public void setAirport(Airport airport) {
     this.airport = airport;
   }
 
-  /**
- *
- * @element-type Flight
- */
-  public Vector getAirplaneFlight() {
+    /**
+    *
+    * @element-type Flight
+    */
+    public Vector getAirplaneFlight() {
     return airplaneFlight;
   }
 
-  public void setAirplaneFlight(Vector airplaneFlight) {
+    public void setAirplaneFlight(Vector airplaneFlight) {
     this.airplaneFlight = airplaneFlight;
   }
 
-  public Airline getAirline() {
+    public Airline getAirline() {
     return airline;
   }
 
-  public void setAirline(Airline airline) {
+    public void setAirline(Airline airline) {
     this.airline = airline;
   }
+
+    @Override
+    public String toString() {
+        return "Airplane{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", name='" + name + '\'' +
+                ", cruiseSpeed=" + cruiseSpeed +
+                ", cruiseAltitude=" + cruiseAltitude +
+                ", maxRange=" + maxRange +
+                ", airportCode='" + airportCode + '\'' +
+                ", passengersCapacity=" + passengersCapacity +
+                ", fuelCapacity=" + fuelCapacity +
+                '}';
+    }
 }
