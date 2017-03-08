@@ -2,8 +2,10 @@ package airportsProject;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
+import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.File;
+import java.util.Hashtable;
 
 public class ImportFromFile {
     private String path;
@@ -20,7 +22,7 @@ public class ImportFromFile {
         }
     }
 
-    public static void importAirports(String path) {
+    public static void importAirports(SeparateChainingHashST<String, Airport> airportST, String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
@@ -36,6 +38,7 @@ public class ImportFromFile {
                 float rating = Float.parseFloat(fileContent[5]);
                 Airport newAirport = new Airport(name, code, city, country, continent, rating);
                 System.out.println(newAirport.toString());
+                airportST.put(code,newAirport);
             }
             i++;
         }
