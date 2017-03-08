@@ -1,27 +1,29 @@
 package airportsProject;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Airline {
 
     private String name;
     private String nationality;
     private int numPlanes;
-    private Vector airplanes;
+    private ArrayList<Airplane> airplanes = new ArrayList<>();
 
     public Airline(String name, String nationality) {
         this.name = name;
         this.nationality = nationality;
         this.numPlanes = 0;
-        this.airplanes = null;
     }
 
-    public void addPlane(Airplane newPlane) {
+    public Airline addPlane(Airplane newPlane) {
+        this.airplanes.add(newPlane);
+        this.numPlanes += 1;
+        return this;
     }
 
     public boolean removePlane( Airplane plane) {
-    return false;
-  }
+        return false;
+    }
 
     public int fleet() {
     return 0;
@@ -55,12 +57,8 @@ public class Airline {
      *
      * @element-type Airplane
      */
-    public Vector getAirplanes() {
+    public ArrayList<Airplane> getAirplanes() {
     return airplanes;
-  }
-
-    public void setAirplanes(Vector airplanes) {
-    this.airplanes = airplanes;
   }
 
     @Override

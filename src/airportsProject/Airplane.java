@@ -127,10 +127,6 @@ public class Airplane {
     return airline;
   }
 
-    public void setAirline(Airline airline) {
-    this.airline = airline;
-  }
-
     @Override
     public String toString() {
         return "Airplane{" +

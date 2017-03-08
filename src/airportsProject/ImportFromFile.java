@@ -26,8 +26,6 @@ public class ImportFromFile {
         int i = 0;
         while (!in.isEmpty()) {
             String[] fileContent = in.readLine().split(";");
-//            System.out.println(Arrays.toString(fileContent));
-            // ST nao ordenada
             if(i != 0){ // first line of the file is to ignore
                 String name = fileContent[0];
                 String code = fileContent[1];
@@ -36,29 +34,30 @@ public class ImportFromFile {
                 String continent = fileContent[4];
                 float rating = Float.parseFloat(fileContent[5]);
                 Airport newAirport = new Airport(name, code, city, country, continent, rating);
-                System.out.println(newAirport.toString());
-                airportST.put(code,newAirport);
+                airportST.put(code, newAirport);
 //                System.out.println(newAirport.toString());
             }
             i++;
         }
     }
 
-    public static void importPlanes(RedBlackBST<Integer, Airplane> airplaneST, String path) {
+    public static void importPlanes(RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airline> airlineST, String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
             String[] fileContent = in.readLine().split(";");
-//            System.out.println(Arrays.toString(fileContent));
-            // pegar na companhia aerea e noutra funcao inserir a companhia na respetiva table, verificar se ja existe
-            // ST ordenada por id
             if(i != 0){  // first line of the file is to ignore
                 int id = Integer.parseInt(fileContent[0]);
                 String model = fileContent[1];
                 String name = fileContent[2];
                 // first we need to add the plane to the respective airline, that needs to exist already
                 // and return the respective airline needed to pass to the plane class
-                Airline thisPlaneAirline = null;
+                String airlineName = fileContent[3];
+                // searches for the airline existence
+                Airline thisPlaneAirline = airlineST.get(airlineName);
+                if(thisPlaneAirline == null){
+                    throw new IllegalArgumentException("argument to get() is null");
+                }
                 float cruiseSpeed = Float.parseFloat(fileContent[4]);
                 float cruiseAltitude = Float.parseFloat(fileContent[5]);
                 float maxRange = Float.parseFloat(fileContent[6]);
@@ -67,22 +66,23 @@ public class ImportFromFile {
                 int fuelCapacity = Integer.parseInt(fileContent[9]);
                 Airplane newPlane = new Airplane(id, model, name, cruiseSpeed, cruiseAltitude, maxRange, airportCode,
                         passengersCapacity, fuelCapacity, thisPlaneAirline);
-//                System.out.println(newPlane.toString());
+                thisPlaneAirline.addPlane(newPlane); // adds this new plane to the respective airline
                 airplaneST.put(id, newPlane);
+//                System.out.println(newPlane.toString());
             }
             i++;
         }
     }
 
-    public static void importAirlines(String path) {
+    public static void importAirlines(SeparateChainingHashST<String, Airline> airlineST, String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
             String[] fileContent = in.readLine().split(";");
-//            System.out.println(Arrays.toString(fileContent));
             if(i != 0){  // first line of the file is to ignore
                 Airline newAirline = new Airline(fileContent[0], fileContent[1]);
-                System.out.println(newAirline.toString());
+                airlineST.put(newAirline.getName(), newAirline);
+//                System.out.println(newAirline.toString());
             }
             i++;
         }
