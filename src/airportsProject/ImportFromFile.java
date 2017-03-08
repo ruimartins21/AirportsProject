@@ -5,7 +5,6 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.File;
-import java.util.Hashtable;
 
 public class ImportFromFile {
     private String path;
@@ -39,6 +38,7 @@ public class ImportFromFile {
                 Airport newAirport = new Airport(name, code, city, country, continent, rating);
                 System.out.println(newAirport.toString());
                 airportST.put(code,newAirport);
+//                System.out.println(newAirport.toString());
             }
             i++;
         }
@@ -67,7 +67,7 @@ public class ImportFromFile {
                 int fuelCapacity = Integer.parseInt(fileContent[9]);
                 Airplane newPlane = new Airplane(id, model, name, cruiseSpeed, cruiseAltitude, maxRange, airportCode,
                         passengersCapacity, fuelCapacity, thisPlaneAirline);
-                System.out.println(newPlane.toString());
+//                System.out.println(newPlane.toString());
                 airplaneST.put(id, newPlane);
             }
             i++;
