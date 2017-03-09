@@ -76,6 +76,7 @@ public class Airplane {
         this.airplaneFlight = airplaneFlight;
     }
 
+//    calculo de custo com base windspeed e altitude
     public Airline getAirline() {
         return airline;
     }

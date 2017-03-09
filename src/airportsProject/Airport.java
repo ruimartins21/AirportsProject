@@ -12,6 +12,7 @@ public class Airport {
     private float rating;
     private ArrayList<Airplane> airplanes = new ArrayList<>();
     private ArrayList<Flight> flights = new ArrayList<>();
+//    redblack
 
     public Airport(String name, String code, String city, String country, String continent, float rating) {
         this.name = name;
