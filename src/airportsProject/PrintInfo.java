@@ -47,8 +47,6 @@ public class PrintInfo {
 
     public static void airplane(RedBlackBST<Integer, Airplane> airplaneST , int id) {
 
-
-
         for (Integer a : airplaneST.keys()) {
             if(airplaneST.get(a).getId() == id ){
                 System.out.println();
@@ -62,7 +60,7 @@ public class PrintInfo {
                                 airplaneST.get(a).getFuelCapacity() );
                 System.out.println();
 
-
+//                current flight imprimir isto
             }
         }
     }
