@@ -1,7 +1,5 @@
 package airportsProject;
 
-import java.util.Vector;
-
 public class Airplane {
 
     private int id;
@@ -13,8 +11,7 @@ public class Airplane {
     private String airportCode;
     private int passengersCapacity;
     private int fuelCapacity;
-    private Airport airport;
-    private Vector  airplaneFlight;
+    private Flight  airplaneFlight;
     private Airline airline;
 
     public Airplane(int id, String model, String name, float cruiseSpeed, float cruiseAltitude, float maxRange,
@@ -32,100 +29,56 @@ public class Airplane {
     }
 
     public int getId() {
-    return id;
-  }
-
-    public void setId(int id) {
-    this.id = id;
-  }
+        return id;
+    }
 
     public String getModel() {
-    return model;
-  }
-
-    public void setModel(String model) {
-    this.model = model;
-  }
+        return model;
+    }
 
     public String getName() {
-    return name;
-  }
-
-    public void setName(String name) {
-    this.name = name;
-  }
+        return name;
+    }
 
     public float getCruiseSpeed() {
-    return cruiseSpeed;
-  }
-
-    public void setCruiseSpeed(float cruiseSpeed) {
-    this.cruiseSpeed = cruiseSpeed;
-  }
+        return cruiseSpeed;
+    }
 
     public float getCruiseAltitude() {
-    return cruiseAltitude;
-  }
-
-    public void setCruiseAltitude(float cruiseAltitude) {
-    this.cruiseAltitude = cruiseAltitude;
-  }
+        return cruiseAltitude;
+    }
 
     public float getMaxRange() {
-    return maxRange;
-  }
-
-    public void setMaxRange(float maxRange) {
-    this.maxRange = maxRange;
-  }
+        return maxRange;
+    }
 
     public String getAirportCode() {
-    return airportCode;
-  }
+        return airportCode;
+    }
 
     public void setAirportCode(String airportCode) {
-    this.airportCode = airportCode;
-  }
+        this.airportCode = airportCode;
+    }
 
     public int getPassengersCapacity() {
-    return passengersCapacity;
-  }
-
-    public void setPassengersCapacity(int passengersCapacity) {
-    this.passengersCapacity = passengersCapacity;
-  }
+        return passengersCapacity;
+    }
 
     public int getFuelCapacity() {
-    return fuelCapacity;
-  }
+        return fuelCapacity;
+    }
 
-    public void setFuelCapacity(int fuelCapacity) {
-    this.fuelCapacity = fuelCapacity;
-  }
+    public Flight getAirplaneFlight() {
+        return airplaneFlight;
+    }
 
-    public Airport getAirport() {
-    return airport;
-  }
-
-    public void setAirport(Airport airport) {
-    this.airport = airport;
-  }
-
-    /**
-    *
-    * @element-type Flight
-    */
-    public Vector getAirplaneFlight() {
-    return airplaneFlight;
-  }
-
-    public void setAirplaneFlight(Vector airplaneFlight) {
-    this.airplaneFlight = airplaneFlight;
-  }
+    public void setAirplaneFlight(Flight airplaneFlight) {
+        this.airplaneFlight = airplaneFlight;
+    }
 
     public Airline getAirline() {
-    return airline;
-  }
+        return airline;
+    }
 
     @Override
     public String toString() {
