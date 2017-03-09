@@ -1,12 +1,12 @@
 package airportsProject;
 
-import java.util.ArrayList;
+import edu.princeton.cs.algs4.RedBlackBST;
 
 public class Airline {
 
     private String name;
     private String nationality;
-    private ArrayList<Airplane> airplanes = new ArrayList<>();
+    private RedBlackBST<Integer, Airplane> airplanes = new RedBlackBST<>();
 
     public Airline(String name, String nationality) {
         this.name = name;
@@ -14,11 +14,12 @@ public class Airline {
     }
 
     public void addPlane(Airplane newPlane) {
-        this.airplanes.add(newPlane);
+        this.airplanes.put(newPlane.getId(), newPlane);
     }
 
     public Airplane removePlane( Airplane plane) {
-        return this.airplanes.remove(this.airplanes.indexOf(plane));
+        this.airplanes.put(plane.getId(), null);
+        return null;
     }
 
     public String getName() {
@@ -29,7 +30,7 @@ public class Airline {
         return nationality;
     }
 
-    public ArrayList<Airplane> getFleet() {
+    public RedBlackBST<Integer, Airplane> getFleet() {
         return airplanes;
     }
 

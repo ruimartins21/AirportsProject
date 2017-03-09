@@ -1,5 +1,7 @@
 package airportsProject;
 
+import edu.princeton.cs.algs4.RedBlackBST;
+
 public class Airplane {
 
     private int id;
@@ -11,7 +13,7 @@ public class Airplane {
     private String airportCode;
     private int passengersCapacity;
     private int fuelCapacity;
-    private Flight  airplaneFlight;
+    private RedBlackBST<Date, Flight> airplaneFlights = new RedBlackBST<>();
     private Airline airline;
 
     public Airplane(int id, String model, String name, float cruiseSpeed, float cruiseAltitude, float maxRange,
@@ -68,15 +70,16 @@ public class Airplane {
         return fuelCapacity;
     }
 
-    public Flight getAirplaneFlight() {
-        return airplaneFlight;
+    public RedBlackBST<Date, Flight> getCurrentAirplaneFlight() {
+        return airplaneFlights;
     }
 
-    public void setAirplaneFlight(Flight airplaneFlight) {
-        this.airplaneFlight = airplaneFlight;
+    public void setAirplaneFlight(RedBlackBST<Date, Flight> airplaneFlight) {
+        this.airplaneFlights = airplaneFlight;
     }
 
 //    calculo de custo com base windspeed e altitude
+
     public Airline getAirline() {
         return airline;
     }

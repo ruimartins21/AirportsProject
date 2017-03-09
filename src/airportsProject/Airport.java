@@ -1,6 +1,6 @@
 package airportsProject;
 
-import java.util.ArrayList;
+import edu.princeton.cs.algs4.RedBlackBST;
 
 public class Airport {
 
@@ -10,9 +10,8 @@ public class Airport {
     private String country;
     private String continent;
     private float rating;
-    private ArrayList<Airplane> airplanes = new ArrayList<>();
-    private ArrayList<Flight> flights = new ArrayList<>();
-//    redblack
+    private RedBlackBST<Date, Flight> flights = new RedBlackBST<>();
+    private RedBlackBST<Integer, Airplane> airplanes = new RedBlackBST<>();
 
     public Airport(String name, String code, String city, String country, String continent, float rating) {
         this.name = name;
@@ -24,27 +23,27 @@ public class Airport {
     }
 
     public void receivePlane(Airplane newPlane) {
-        // adds the new plane to the list of planes currently on this airport
-        this.airplanes.add(newPlane);
-        // the plane now has to update the current airport code it has
+        // the plane has to update the current airport where it is
         newPlane.setAirportCode(this.code);
+        this.airplanes.put(newPlane.getId(), newPlane);
     }
 
     public Airplane sendPlane(Airplane plane) {
-        int index = this.airplanes.indexOf(plane);
-        return this.airplanes.remove(index);
+        Airplane airplaneToSend = this.airplanes.get(plane.getId());
+        this.airplanes.put(plane.getId(), null); // deletes the plane from the ST
+        return airplaneToSend;
     }
 
-    public ArrayList<Airplane> getAirplanes() {
+    public RedBlackBST<Integer, Airplane> getAirplanes() {
         return airplanes;
     }
 
-    public ArrayList<Flight> getFlights() {
+    public RedBlackBST<Date, Flight> getFlights() {
         return flights;
     }
 
     public void newFlight(Flight flight) {
-        this.flights.add(flight);
+        this.flights.put(flight.getDate(), flight);
     }
 
     public String getName() {
