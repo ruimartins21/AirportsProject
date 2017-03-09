@@ -4,22 +4,7 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-import java.io.File;
-
 public class ImportFromFile {
-    private String path;
-
-    public ImportFromFile(String path) {
-        setPath(path);
-    }
-
-    private void setPath(String path) {
-        if (new File(path).exists()) {
-            this.path = path;
-        }else{
-            throw new IllegalArgumentException("Path \"" + path + "\" doesn't exist");
-        }
-    }
 
     public static void importAirports(SeparateChainingHashST<String, Airport> airportST, String path) {
         In in = new In(path);

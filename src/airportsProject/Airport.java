@@ -1,11 +1,8 @@
 package airportsProject;
 
-import edu.princeton.cs.algs4.RedBlackBST;
-
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Airport {
-
 
     private String name;
     private String code;
@@ -13,9 +10,8 @@ public class Airport {
     private String country;
     private String continent;
     private float rating;
-//    private RedBlackBST<Integer, String> logs = new RedBlackBST<>();
-    private Vector  airplanes;
-    private Vector  flights;
+    private ArrayList<Airplane> airplanes = new ArrayList<>();
+    private ArrayList<Flight> flights = new ArrayList<>();
 
     public Airport(String name, String code, String city, String country, String continent, float rating) {
         this.name = name;
@@ -24,96 +20,55 @@ public class Airport {
         this.country = country;
         this.continent = continent;
         this.rating = rating;
-        this.airplanes = null;
-        this.flights = null;
     }
 
     public void receivePlane(Airplane newPlane) {
+        // adds the new plane to the list of planes currently on this airport
+        this.airplanes.add(newPlane);
+        // the plane now has to update the current airport code it has
+        newPlane.setAirportCode(this.code);
     }
 
-    public int numberOfPlanes() {
-  return 0;
-  }
+    public Airplane sendPlane(Airplane plane) {
+        int index = this.airplanes.indexOf(plane);
+        return this.airplanes.remove(index);
+    }
 
-    public Date sendPlane( Airplane plane) {
-  return null;
-  }
+    public ArrayList<Airplane> getAirplanes() {
+        return airplanes;
+    }
 
-    public boolean remove() {
-  return false;
-  }
+    public ArrayList<Flight> getFlights() {
+        return flights;
+    }
+
+    public void newFlight(Flight flight) {
+        this.flights.add(flight);
+    }
 
     public String getName() {
-    return name;
-  }
-
-    public void setName(String name) {
-    this.name = name;
-  }
+        return name;
+    }
 
     public String getCode() {
-    return code;
-  }
-
-    public void setCode(String code) {
-    this.code = code;
-  }
+        return code;
+    }
 
     public String getCity() {
-    return city;
-  }
-
-    public void setCity(String city) {
-    this.city = city;
-  }
+        return city;
+    }
 
     public String getCountry() {
-    return country;
-  }
-
-    public void setCountry(String country) {
-    this.country = country;
-  }
+        return country;
+    }
 
     public String getContinent() {
-    return continent;
-  }
-
-    public void setContinent(String continent) {
-    this.continent = continent;
-  }
+        return continent;
+    }
 
     public float getRating() {
-    return rating;
-  }
-
-    public void setRating(float rating) {
-    this.rating = rating;
-  }
-
-    /**
-    *
-    * @element-type Airplane
-    */
-    public Vector getAirplanes() {
-    return airplanes;
-  }
-
-    public void setAirplanes(Vector airplanes) {
-    this.airplanes = airplanes;
-  }
-
-    /**
-    *
-    * @element-type Flight
-    */
-    public Vector getFlights() {
-    return flights;
-  }
-
-    public void setFlights(Vector flights) {
-    this.flights = flights;
-  }
+        return rating;
+    }
 
     @Override
     public String toString() {
