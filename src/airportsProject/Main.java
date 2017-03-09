@@ -17,11 +17,13 @@ public class Main {
         ImportFromFile.importAirlines(airlinesST, pathAirlines);
 
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
-        ImportFromFile.importPlanes(airplaneST, airlinesST,  pathAirplanes);
+        ImportFromFile.importPlanes(airplaneST, airlinesST, pathAirplanes);
 
 //        PrintInfo.allAirports(airportST);
 //        PrintInfo.airport(airportST, "NRT");
         PrintInfo.airplane(airplaneST , 1);
+
+
 
 //        System.out.println("AIRLINES");
 //        System.out.println("-------------------");
@@ -56,5 +58,12 @@ public class Main {
 //            }
 //
 //        }
+    }
+
+//    pesquisa avioes de um país	ou	continente ou cidade
+    public  SeparateChainingHashST<String, Airport> airplanesSearch(SeparateChainingHashST<String, Airport> airportST){
+
+
+        return airportST;
     }
 }
