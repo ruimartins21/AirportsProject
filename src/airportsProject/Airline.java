@@ -17,9 +17,8 @@ public class Airline {
         this.airplanes.put(newPlane.getId(), newPlane);
     }
 
-    public Airplane removePlane( Airplane plane) {
+    public void removePlane(Airplane plane) {
         this.airplanes.put(plane.getId(), null);
-        return null;
     }
 
     public String getName() {
