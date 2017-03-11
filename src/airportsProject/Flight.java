@@ -21,8 +21,7 @@ public class Flight {
         this.date = date;
         this.setAirplane(airplane);
         this.setPassengers(passengers); // checks if the number of passengers doesn't exceed the airplane capacity
-        this.airportOfOrigin = airportOfOrigin;
-        this.airportOfDestination = airportOfDestination;
+        this.setAirports(airportOfOrigin, airportOfDestination);
     }
 
     private float planeConsumption() {
@@ -44,7 +43,17 @@ public class Flight {
     }
 
     private void setAirplane(Airplane plane){
+        plane.setAirplaneFlight(this);
+        this.airplane = plane;
+    }
 
+    private void setAirports(Airport origin, Airport destination){
+        origin.newFlight(this);
+        origin.sendPlane(this.airplane); // the plane will leave this airport
+        destination.newFlight(this);
+        destination.receivePlane(this.airplane); // the plane will arrive at this airport
+        this.airportOfOrigin = origin;
+        this.airportOfDestination = destination;
     }
 
     public float getDistance() {
