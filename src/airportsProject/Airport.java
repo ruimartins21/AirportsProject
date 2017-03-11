@@ -28,10 +28,8 @@ public class Airport {
         this.airplanes.put(newPlane.getId(), newPlane);
     }
 
-    public Airplane sendPlane(Airplane plane) {
-        Airplane airplaneToSend = this.airplanes.get(plane.getId());
+    public void sendPlane(Airplane plane) {
         this.airplanes.put(plane.getId(), null); // deletes the plane from the ST
-        return airplaneToSend;
     }
 
     public RedBlackBST<Integer, Airplane> getAirplanes() {

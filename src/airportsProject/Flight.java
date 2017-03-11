@@ -49,9 +49,9 @@ public class Flight {
 
     private void setAirports(Airport origin, Airport destination){
         origin.newFlight(this);
-        Airplane thisAirplane = origin.sendPlane(this.airplane); // the plane will leave this airport
+        origin.sendPlane(this.airplane); // the plane will leave this airport
         destination.newFlight(this);
-        destination.receivePlane(thisAirplane); // the plane will arrive at this airport
+        destination.receivePlane(this.airplane); // the plane will arrive at this airport
         this.airportOfOrigin = origin;
         this.airportOfDestination = destination;
     }
