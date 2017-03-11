@@ -105,12 +105,22 @@ public class Date implements Comparable<Date> {
     return false;
   }
 
+  public String getDuration(){
+      return (this.day > 0 ? this.day + " days " : "") +
+              this.hour + " hours " + this.minute + " minutes " + this.second + " seconds";
+
+  }
+
   @Override
   public String toString() {
     return "Date: "
                 + this.day +
             "/" + this.month +
-            "/" + this.year;
+            "/" + this.year +
+            " (" + this.hour +
+            "h " + this.minute +
+            "m " + this.second +
+            "s)";
   }
 
   public int getDay() {

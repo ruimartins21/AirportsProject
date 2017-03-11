@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 public class Flight {
 
-//    private float altitude;
     private float distance;
     private float costs;
-//    private float windSpeed;
     private Date duration;
     private Date date;
     private int passengers;
@@ -16,28 +14,37 @@ public class Flight {
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
-    public Flight(float altitude, float distance, float costs, float windSpeed, Date duration, Date date,
+    public Flight(float distance, Date duration, Date date,
                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
-//        this.altitude = altitude;
         this.distance = distance;
-        this.costs = costs;
-//        this.windSpeed = windSpeed;
         this.duration = duration;
         this.date = date;
-        this.passengers = passengers; // verificar se o aviao pertendido consegue levar o nº de passageiros
-        this.airplane = airplane;
+        this.setAirplane(airplane);
+        this.setPassengers(passengers); // checks if the number of passengers doesn't exceed the airplane capacity
         this.airportOfOrigin = airportOfOrigin;
         this.airportOfDestination = airportOfDestination;
     }
 
-    public float setPlaneConsumption(float range, int fuelCapacity) {
-    return 0.0f;
-  }
+    private float planeConsumption() {
+        return 1000*(airplane.getFuelCapacity()/airplane.getMaxRange());
+    }
 
     public void setWindVelocity() {
     }
 
     public void setFlightCost() {
+    }
+
+    private void setPassengers(int passengers) {
+        if(passengers <= this.airplane.getPassengersCapacity()){
+            this.passengers = passengers;
+        }else{
+            throw new IllegalArgumentException("Flight: Number of passengers exceeds the airplane capacity");
+        }
+    }
+
+    private void setAirplane(Airplane plane){
+
     }
 
     public float getDistance() {
@@ -71,4 +78,19 @@ public class Flight {
     public Airport getAirportOfDestination() {
     return airportOfDestination;
   }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "\n-> distance= " + distance +
+                "\n-> costs=" + costs +
+                "\n-> duration= " + duration.getDuration() +
+                "\n-> date=" + date +
+                "\n-> passengers=" + passengers +
+                "\n-> airplane=" + airplane +
+                "\n-> connections=" + connections +
+                "\n-> airportOfOrigin=" + airportOfOrigin +
+                "\n-> airportOfDestination=" + airportOfDestination +
+                "\n}";
+    }
 }
