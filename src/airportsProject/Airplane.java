@@ -70,12 +70,15 @@ public class Airplane {
         return fuelCapacity;
     }
 
-    public RedBlackBST<Date, Flight> getCurrentAirplaneFlight() {
-        return airplaneFlights;
+    public Flight getCurrentAirplaneFlight() {
+        // apanhar o ultimo voo inserido e verificar pela duracao e data atual se ja acabou ou se ainda se encontra
+        // em viagem, se ainda se encontrar, retorna a viagem, senao retorna null e avisa que nao ha viagens em curso
+
+        return this.airplaneFlights.get(this.airplaneFlights.max());
     }
 
-    public void setAirplaneFlight(RedBlackBST<Date, Flight> airplaneFlight) {
-        this.airplaneFlights = airplaneFlight;
+    public void setAirplaneFlight(Flight currentFlight) {
+        this.airplaneFlights.put(currentFlight.getDate(), currentFlight);
     }
 
     public Airline getAirline() {
