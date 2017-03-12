@@ -187,17 +187,34 @@ public class Main {
     }
 
     /**
-     * Removes an airplane from the database (respective symbol table & respective airline)
+     * Removes an airplane from the database (respective symbol table, airline and the current airport where it is parked)
      * @param airplaneST is the symbol table where it is stored in this Main class
      * @param plane is the plane to remove
      */
-    private static void removeAirplane(RedBlackBST<Integer, Airplane> airplaneST , Airplane plane){
+    private static void removeAirplane(RedBlackBST<Integer, Airplane> airplaneST,SeparateChainingHashST<String, Airport> airportST,
+                                       Airplane plane){
         Airline airline = plane.getAirline();
-        airline.removePlane(plane);
-        airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
         log("Airline \"" + airline.getName() + "\"", "Removed airplane \"" + plane.getName() + "\"");
         log("AirplaneST", "Removed airplane \"" + plane.getName() + "\"");
+        log("Airport \"" + airportST.get(plane.getAirportCode()) + "\"", "Removed airplane \"" + plane.getName() + "\"");
+        airline.removePlane(plane);
+        airportST.get(plane.getAirportCode()).sendPlane(plane); // goes to the airport where the plane is parked to remove it
+        airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
     }
+
+    /** remove airport
+     * airportST
+     * remover dos voos ligados a este o aeroporto
+     * escrever pa ficheiro log do aeroporto em questao os voos e aeroportos do historico
+     * guardar em ficheiro "backup" do aeroporto por onde se pode voltar a cria-lo
+     * remover dos avioes estacionados no aeroporto o "code" na classe deles
+     */
+
+    /** remove airline
+     * airlineST
+     * remover todos os avioes ligados a companhia
+     */
+
 
     /**
      * Determines the airport (or more than one if the ammount is the same) with the most traffic (number of flights)
