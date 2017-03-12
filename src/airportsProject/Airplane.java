@@ -74,11 +74,13 @@ public class Airplane {
         return fuelCapacity;
     }
 
-    public Flight getCurrentAirplaneFlight() {
+    public Flight getLatestFlight() {
         // apanhar o ultimo voo inserido e verificar pela duracao e data atual se ja acabou ou se ainda se encontra
         // em viagem, se ainda se encontrar, retorna a viagem, senao retorna null e avisa que nao ha viagens em curso
-//        airplaneFlights.
-        return this.airplaneFlights.get(this.airplaneFlights.max());
+        Date today = new Date();
+        if(this.airplaneFlights.size() > 0)
+            return this.airplaneFlights.get(this.airplaneFlights.floor(today));
+        return null;
     }
 
     public void setAirplaneFlight(Flight currentFlight) {

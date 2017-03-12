@@ -3,11 +3,8 @@ package airportsProject;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-/**
- * Created by ruimartins on 09/03/2017.
- */
 public class PrintInfo {
-    public PrintInfo() { }
+//    public PrintInfo() { }
 
     public static void allAirports(SeparateChainingHashST<String, Airport> airportST) {
         System.out.println();
@@ -25,8 +22,6 @@ public class PrintInfo {
     }
 
     public static void airport(SeparateChainingHashST<String, Airport> airportST, String code) {
-
-
         for (String a : airportST.keys()) {
             if (airportST.get(a).getCode().contentEquals(code)) {
                 System.out.println();
@@ -46,7 +41,6 @@ public class PrintInfo {
     }
 
     public static void airplane(RedBlackBST<Integer, Airplane> airplaneST , int id) {
-
         for (Integer a : airplaneST.keys()) {
             if(airplaneST.get(a).getId() == id ){
                 System.out.println();
@@ -65,7 +59,6 @@ public class PrintInfo {
     }
 
     public static void allAirplanes(RedBlackBST<Integer, Airplane> airplaneST ) {
-
         for (Integer a : airplaneST.keys()) {
                 System.out.println();
                 System.out.format("%8s%3s%8s", "Info of [", airplaneST.get(a).getName(), "] airplane");
@@ -129,7 +122,7 @@ public class PrintInfo {
 
 //    Imprimir todas as viagens realizadas por um determinado avião
     public static void allTravelsPlane(RedBlackBST<Integer, Airplane> airplaneST, int id){
-        id -= 1;
+        id -= 1; // Redblack table stores keys from 0 but the airplanes id's starts from 1
         System.out.printf("\n\n");
         System.out.format("%90s%3s", "Travels made by Airplane: [" + airplaneST.get(id).getId() + "] ", airplaneST.get(id).getName());
         System.out.printf("\n\n");
