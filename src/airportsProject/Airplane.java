@@ -46,6 +46,10 @@ public class Airplane {
         return cruiseSpeed;
     }
 
+    public RedBlackBST<Date, Flight> getAirplaneFlights() {
+        return airplaneFlights;
+    }
+
     public float getCruiseAltitude() {
         return cruiseAltitude;
     }
@@ -73,7 +77,7 @@ public class Airplane {
     public Flight getCurrentAirplaneFlight() {
         // apanhar o ultimo voo inserido e verificar pela duracao e data atual se ja acabou ou se ainda se encontra
         // em viagem, se ainda se encontrar, retorna a viagem, senao retorna null e avisa que nao ha viagens em curso
-
+//        airplaneFlights.
         return this.airplaneFlights.get(this.airplaneFlights.max());
     }
 
