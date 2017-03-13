@@ -83,20 +83,22 @@ public class Main {
 //            System.out.println(flightST.get(d).toString());
 //        }
 
-//        removeAirplane(airplaneST, airplaneST.get(0));
+//        removeAirplane(airplaneST, airportST, airplaneST.get(21));
 //        for (Integer ap : airplaneST.keys()){
 //            System.out.println(ap + ": " + airplaneST.get(ap).getName());
 //        }
 
 //        System.out.println("AIRLINES");
 //        System.out.println("-------------------");
-//
-//
-//        System.out.println();
-//        for (String c : airlinesST.keys()) {
-//            System.out.println(airlinesST.get(c).getName() + " from " + airlinesST.get(c).getNationality());
-//            System.out.println();
-//        }
+
+
+        PrintInfo.allAirplanes(airplaneST);
+        System.out.println();
+        removeAirline(airlinesST,airplaneST,airportST,"TAP Air Portugal");
+        for (String c : airlinesST.keys()) {
+            System.out.println(airlinesST.get(c).getName() + " from " + airlinesST.get(c).getNationality());
+            System.out.println();
+        }
 //
 //        System.out.println("PLANES");
 //        System.out.println("-------------------");
@@ -132,7 +134,7 @@ public class Main {
 //        PrintInfo.flightsBetweenTimes(flightST,new Date(1, 1, 2017, 23, 59, 10),new Date(21, 9, 2017, 21, 21, 21));
 //        PrintInfo.flightsThisAirport(flightST,"OPO");
 //        PrintInfo.allTravelsPlane(airplaneST,6);
-//        PrintInfo.allAirplanes(airplaneST);
+        PrintInfo.allAirplanes(airplaneST);
 
         // ricardo
 //        ArrayList<Airport> result = mostTrafficAirport(airportST);
@@ -202,17 +204,29 @@ public class Main {
         airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
     }
 
+    /** remove airline
+     * airlineST
+     * remover todos os avioes ligados a companhia
+     */
+    private static void removeAirline(SeparateChainingHashST<String, Airline> airlineST, RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String,
+            Airport> airportST, String airlineName ){
+        for (String a: airlineST.keys()) {
+            if(airlineST.get(a).getName().equals(airlineName)){
+                for (Integer p: airlineST.get(a).getFleet().keys()) {
+                    removeAirplane(airplaneST, airportST,airlineST.get(a).getFleet().get(p));
+                }
+                log("AirlineST","Removed airline \"" + airlineST.get(a).getName() + "\"");
+                airlineST.put(airlineST.get(a).getName(),null);
+            }
+        }
+    }
+
     /** remove airport
      * airportST
      * remover dos voos ligados a este o aeroporto
      * escrever pa ficheiro log do aeroporto em questao os voos e aeroportos do historico
      * guardar em ficheiro "backup" do aeroporto por onde se pode voltar a cria-lo
      * remover dos avioes estacionados no aeroporto o "code" na classe deles
-     */
-
-    /** remove airline
-     * airlineST
-     * remover todos os avioes ligados a companhia
      */
 
 
