@@ -29,55 +29,75 @@ public class Main {
         ImportFromFile.importPlanes(airplaneST, airlinesST, pathAirplanes);
 
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
+        Airplane airplane;
+        Airport airportOfOrigin;
+        Airport airportOfDestination;
+        float distance;
+        Date duration, flightDate;
+        int passengers;
 
-        Airplane flight1Airplane = airplaneST.get(1);
-        Airport flight1AirportOfOrigin = airportST.get("OPO");
-        Airport flight1AirportOfDestination = airportST.get("FRA");
-        Flight flight1 = new Flight(2000, new Date(0, 0, 0, 10, 0, 0), new Date(7, 3, 2017, 12, 50, 30), 380, flight1Airplane,
-                flight1AirportOfOrigin, flight1AirportOfDestination);
-        flightST.put(flight1.getDate(), flight1);
+        distance = 2000;
+        duration = new Date(0, 0, 0, 10, 0, 0);
+        flightDate = new Date(7, 3, 2017, 12, 50, 30);
+        passengers = 380;
+        airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
+        airportOfOrigin = airportST.get("OPO");
+        airportOfDestination = airportST.get("FRA");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
-        Airplane flight2Airplane = airplaneST.get(2);
-        Airport flight2AirportOfOrigin = airportST.get("DXB");
-        Airport flight2AirportOfDestination = airportST.get("SCL");
-        Flight flight2 = new Flight(10000, new Date(1, 0, 0, 10, 0, 0), new Date(8, 4, 2017, 23, 1, 30), 380, flight2Airplane,
-                flight2AirportOfOrigin, flight2AirportOfDestination);
-        flightST.put(flight2.getDate(), flight2);
+        distance = 10000;
+        duration = new Date(1, 0, 0, 10, 0, 0);
+        flightDate = new Date(8, 4, 2017, 23, 1, 30);
+        passengers = 380;
+        airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
+        airportOfOrigin = airportST.get("DXB");
+        airportOfDestination = airportST.get("LAD");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
-        Airplane flight3Airplane = airplaneST.get(3);
-        Airport flight3AirportOfOrigin = airportST.get("CDG");
-        Airport flight3AirportOfDestination = airportST.get("LAD");
-        Flight flight3 = new Flight(21500, new Date(0, 0, 0, 17, 43, 32), new Date(9, 2, 2017, 23, 1, 30), 200, flight3Airplane,
-                flight3AirportOfOrigin, flight3AirportOfDestination);
-        flightST.put(flight3.getDate(), flight3);
+        distance = 21500;
+        duration = new Date(0, 0, 0, 17, 43, 32);
+        flightDate = new Date(9, 2, 2017, 23, 1, 30);
+        passengers = 200;
+        airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
+        airportOfOrigin = airportST.get("CDG");
+        airportOfDestination = airportST.get("LAD");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
-        Airplane flight4Airplane = airplaneST.get(4);
-        Airport flight4AirportOfOrigin = airportST.get("LAD");
-        Airport flight4AirportOfDestination = airportST.get("OPO");
-        Flight flight4 = new Flight(500, new Date(0, 0, 0, 7, 43, 32), new Date(10, 3, 2017, 23, 1, 30), 100, flight4Airplane,
-                flight4AirportOfOrigin, flight4AirportOfDestination);
-        flightST.put(flight4.getDate(), flight4);
+        distance = 500;
+        duration = new Date(0, 0, 0, 7, 43, 32);
+        flightDate = new Date(10, 3, 2017, 23, 1, 30);
+        passengers = 100;
+        airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
+        airportOfOrigin = airportST.get("LAD");
+        airportOfDestination = airportST.get("OPO");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
-        Airplane flight6Airplane = airplaneST.get(5);
-        Airport flight6AirportOfOrigin = airportST.get("OPO");
-        Airport flight6AirportOfDestination = airportST.get("NRT");
-        Flight flight6 = new Flight(500, new Date(0, 0, 0, 4, 43, 32), new Date(10, 3, 2017, 23, 1, 30), 100, flight6Airplane,
-                flight6AirportOfOrigin, flight6AirportOfDestination);
-        flightST.put(flight6.getDate(), flight6);
+        distance = 1500;
+        duration = new Date(0, 0, 0, 4, 43, 32);
+        flightDate = new Date(10, 3, 2017, 23, 1, 30);
+        passengers = 100;
+        airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+        airportOfOrigin = airportST.get("OPO");
+        airportOfDestination = airportST.get("NRT");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
-        Airplane flight5Airplane = airplaneST.get(5); // key 5 = id 6
-        Airport flight5AirportOfOrigin = airportST.get("OPO");
-        Airport flight5AirportOfDestination = airportST.get("NRT");
-        Flight flight5 = new Flight(500, new Date(0, 0, 0, 4, 43, 32), new Date(11, 3, 2017, 23, 1, 30), 100, flight5Airplane,
-                flight5AirportOfOrigin, flight5AirportOfDestination);
-        flightST.put(flight5.getDate(), flight5);
+        distance = 1000;
+        duration = new Date(0, 0, 0, 4, 43, 32);
+        flightDate = new Date(11, 3, 2017, 23, 1, 30);
+        passengers = 50;
+        airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+        airportOfOrigin = airportST.get("OPO");
+        airportOfDestination = airportST.get("NRT");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
-        Airplane flight7Airplane = airplaneST.get(5);
-        Airport flight7AirportOfOrigin = airportST.get("NRT");
-        Airport flight7AirportOfDestination = airportST.get("OPO");
-        Flight flight7 = new Flight(500, new Date(0, 0, 0, 4, 43, 32), new Date(27, 1, 1995, 17, 45, 30), 100, flight7Airplane,
-                flight7AirportOfOrigin, flight7AirportOfDestination);
-        flightST.put(flight7.getDate(), flight7);
+        distance = 5000;
+        duration = new Date(0, 0, 0, 4, 43, 32);
+        flightDate = new Date(27, 1, 1995, 17, 45, 30);
+        passengers = 150;
+        airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+        airportOfOrigin = airportST.get("NRT");
+        airportOfDestination = airportST.get("OPO");
+        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
 
 //        for(Date d : flightST.keys()){
 //            System.out.println(flightST.get(d).toString());
@@ -128,7 +148,7 @@ public class Main {
 //        PrintInfo.allAirports(airportST);
 //        PrintInfo.airport(airportST, "NRT");
 //        PrintInfo.airplane(airplaneST , 1);
-//        PrintInfo.allAirports(airportsSearch(airportST,"Asia"));
+//        PrintInfo.allAirports(searchAirportsOf(airportST,"Asia"));
 //        PrintInfo.flightsBetweenTimes(flightST,new Date(1, 1, 2017, 23, 59, 10),new Date(21, 9, 2017, 21, 21, 21));
 //        PrintInfo.flightsThisAirport(flightST,"OPO");
 //        PrintInfo.allTravelsPlane(airplaneST,6);
@@ -142,6 +162,20 @@ public class Main {
 //        result.forEach((f)->{
 //            System.out.println(f.toString());
 //        });
+
+    }
+
+    private static void newFlight(float distance, Date duration, Date date, int passengers, Airplane airplane,
+                                  Airport airportOfOrigin, Airport airportOfDestination, RedBlackBST<Date, Flight> flightST){
+
+        Flight newFlight = new Flight(distance, duration, date, passengers, airplane, airportOfOrigin, airportOfDestination);
+        flightST.put(newFlight.getDate(), newFlight);
+        log("flightST", "New flight leaving at:" + newFlight.getDate() +
+                "; duration: " + newFlight.getDuration().getDuration() +
+                "; from \"" + newFlight.getAirportOfOrigin().getName() +
+                " ( " + newFlight.getDistance() + "m) " +
+                "\"; to \"" + newFlight.getAirportOfDestination().getName() +
+                "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
     }
 
     /**
@@ -150,7 +184,7 @@ public class Main {
      * @param search the continent or country to search for
      * @return returns all the airports that matched the search
      */
-    public static ArrayList<Airport> airportsSearch(SeparateChainingHashST<String, Airport> airportST, String search){
+    private static ArrayList<Airport> searchAirportsOf(SeparateChainingHashST<String, Airport> airportST, String search){
         ArrayList<Airport> airportSearch = new ArrayList<>();
         for (String code: airportST.keys()) {
             if(airportST.get(code).getContinent().equals(search) || airportST.get(code).getCountry().equals(search)){

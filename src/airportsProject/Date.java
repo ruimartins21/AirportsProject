@@ -107,8 +107,9 @@ public class Date implements Comparable<Date> {
 
   public String getDuration(){
       return (this.day > 0 ? this.day + " days " : "") +
-              this.hour + " hours " + this.minute + " minutes " + this.second + " seconds";
-
+              (this.hour > 0 ? this.hour + " hours " : "") +
+              (this.minute > 0 ? this.minute + " minutes " : "") +
+              (this.second > 0 ? this.second + " seconds " : "");
   }
 
   @Override
