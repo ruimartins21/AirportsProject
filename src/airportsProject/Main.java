@@ -112,13 +112,13 @@ public class Main {
 //        System.out.println("-------------------");
 
 
-        PrintInfo.allAirplanes(airplaneST);
-        System.out.println();
-        removeAirline(airlinesST,airplaneST,airportST,"TAP Air Portugal");
-        for (String c : airlinesST.keys()) {
-            System.out.println(airlinesST.get(c).getName() + " from " + airlinesST.get(c).getNationality());
-            System.out.println();
-        }
+//        PrintInfo.allAirplanes(airplaneST);
+//        System.out.println();
+//        removeAirline(airlinesST,airplaneST,airportST,"TAP Air Portugal");
+//        for (String c : airlinesST.keys()) {
+//            System.out.println(airlinesST.get(c).getName() + " from " + airlinesST.get(c).getNationality());
+//            System.out.println();
+//        }
 //
 //        System.out.println("PLANES");
 //        System.out.println("-------------------");
@@ -238,9 +238,12 @@ public class Main {
         airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
     }
 
-    /** remove airline
-     * airlineST
-     * remover todos os avioes ligados a companhia
+    /**
+     * Removes an airline including all its airplanes
+     * @param airlineST ST with all the airlines
+     * @param airplaneST ST with all the airplanes
+     * @param airportST ST with all the airports
+     * @param airlineName is the airline to remove
      */
     private static void removeAirline(SeparateChainingHashST<String, Airline> airlineST, RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String,
             Airport> airportST, String airlineName ){
