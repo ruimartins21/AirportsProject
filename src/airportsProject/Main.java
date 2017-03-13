@@ -154,7 +154,7 @@ public class Main {
 //        PrintInfo.flightsBetweenTimes(flightST,new Date(1, 1, 2017, 23, 59, 10),new Date(21, 9, 2017, 21, 21, 21));
 //        PrintInfo.flightsThisAirport(flightST,"OPO");
 //        PrintInfo.allTravelsPlane(airplaneST,6);
-        PrintInfo.allAirplanes(airplaneST);
+//        PrintInfo.allAirplanes(airplaneST);
 
         // ricardo
 //        ArrayList<Airport> result = mostTrafficAirport(airportST);
