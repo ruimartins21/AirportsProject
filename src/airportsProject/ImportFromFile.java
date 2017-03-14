@@ -26,7 +26,7 @@ public class ImportFromFile {
         }
     }
 
-    public static void importPlanes(RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airline> airlineST, String path) {
+    public static void importPlanes(SeparateChainingHashST<String, Airport> airportST, RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airline> airlineST, String path) {
         In in = new In(path);
         int i = 0;
         while (!in.isEmpty()) {
@@ -51,6 +51,7 @@ public class ImportFromFile {
                 int fuelCapacity = Integer.parseInt(fileContent[9]);
                 Airplane newPlane = new Airplane(id, model, name, cruiseSpeed, cruiseAltitude, maxRange, airportCode,
                         passengersCapacity, fuelCapacity, thisPlaneAirline);
+                airportST.get(airportCode).receivePlane(newPlane);  // adds this new plane to the respective airport
                 thisPlaneAirline.addPlane(newPlane); // adds this new plane to the respective airline
                 airplaneST.put(id-1, newPlane); // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
                 Main.log("airplaneST", "Inserted airplane \"" + newPlane.getName() + "\"");
