@@ -26,7 +26,7 @@ public class Main {
         ImportFromFile.importAirlines(airlinesST, pathAirlines);
 
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
-        ImportFromFile.importPlanes(airplaneST, airlinesST, pathAirplanes);
+        ImportFromFile.importPlanes(airportST,airplaneST, airlinesST, pathAirplanes);
 
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
         Airplane airplane;
@@ -335,4 +335,6 @@ public class Main {
         System.out.println("# Passengers transported: " + max + " #");
         return airports;
     }
+
+
 }
