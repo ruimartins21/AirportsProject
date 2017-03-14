@@ -28,9 +28,6 @@ public class Flight {
         return 1000*(airplane.getFuelCapacity()/airplane.getMaxRange());
     }
 
-    public void setWindVelocity() {
-    }
-
     public void setFlightCost() {
     }
 

@@ -112,6 +112,15 @@ public class Date implements Comparable<Date> {
               (this.second > 0 ? this.second + " seconds " : "");
   }
 
+  public String getSlashes(){
+      return  this.day + "/" +
+              this.month + "/" +
+              this.year + "/" +
+              this.hour + "/" +
+              this.minute + "/" +
+              this.second;
+  }
+
   @Override
   public String toString() {
     return " "

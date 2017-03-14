@@ -22,11 +22,11 @@ public class Main {
         SeparateChainingHashST<String, Airport> airportST = new SeparateChainingHashST<>();
         ImportFromFile.importAirports(airportST,pathAirports);
 
-        SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
-        ImportFromFile.importAirlines(airlinesST, pathAirlines);
+        SeparateChainingHashST<String, Airline> airlineST = new SeparateChainingHashST<>();
+        ImportFromFile.importAirlines(airlineST, pathAirlines);
 
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
-        ImportFromFile.importPlanes(airportST,airplaneST, airlinesST, pathAirplanes);
+        ImportFromFile.importPlanes(airportST,airplaneST, airlineST, pathAirplanes);
 
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
         Airplane airplane;
@@ -165,6 +165,58 @@ public class Main {
 //            System.out.println(f.toString());
 //        });
 
+//        System.out.println("nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;");
+//        for(String a : airportST.keys()){
+//            System.out.println(
+//                    airportST.get(a).getName() + ";" +
+//                    airportST.get(a).getCode() + ";" +
+//                    airportST.get(a).getCity() + ";" +
+//                    airportST.get(a).getCountry() + ";" +
+//                    airportST.get(a).getContinent() + ";" +
+//                    airportST.get(a).getRating() + ";"
+//            );
+//        }
+//        System.out.println("#");
+//        System.out.println("nome;nacionalidade;");
+//        for(String al : airlineST.keys()){
+//            System.out.println(
+//                    airlineST.get(al).getName() + ";" +
+//                    airlineST.get(al).getNationality() + ";"
+//            );
+//        }
+//        System.out.println("#");
+//        System.out.println("id_avião;modelo;nome;companhia_aérea;velocidade_cruzeiro;altitude_cruzeiro;distância_máxima;cod_aeroporto;" +
+//                "capacidade_de_passageiros;capacidade_do_depósito");
+//        for(Integer ap : airplaneST.keys()){
+//            System.out.println(
+//                    airplaneST.get(ap).getId() + ";" +
+//                    airplaneST.get(ap).getModel() + ";" +
+//                    airplaneST.get(ap).getName() + ";" +
+//                    airplaneST.get(ap).getAirline().getName() + ";" +
+//                    airplaneST.get(ap).getCruiseSpeed() + ";" +
+//                    airplaneST.get(ap).getCruiseAltitude() + ";" +
+//                    airplaneST.get(ap).getMaxRange() + ";" +
+//                    airplaneST.get(ap).getAirportCode() + ";" +
+//                    airplaneST.get(ap).getPassengersCapacity() + ";" +
+//                    airplaneST.get(ap).getFuelCapacity() + ";"
+//            );
+//        }
+//        System.out.println("#");
+//        System.out.println("distancia;custo;duracao;data;passageiros;aviao;aeroportoOrigem;aeroportoDestino;");
+//        for(Date d : flightST.keys()){
+//            System.out.println(
+//                    flightST.get(d).getDistance() + ";" +
+//                    flightST.get(d).getCosts() + ";" +
+//                    flightST.get(d).getDuration().getSlashes() + ";" +
+//                    flightST.get(d).getDate().getSlashes() + ";" +
+//                    flightST.get(d).getPassengers() + ";" +
+//                    flightST.get(d).getAirplane().getId() + ";" +
+//                    flightST.get(d).getAirportOfOrigin().getCode() + ";" +
+//                    flightST.get(d).getAirportOfDestination().getCode() + ";"
+//            );
+//        }
+
+        dump(airportST, airlineST, airplaneST, flightST);
     }
 
     private static void newFlight(float distance, Date duration, Date date, int passengers, Airplane airplane,
@@ -194,6 +246,77 @@ public class Main {
             }
         }
         return airportSearch;
+    }
+
+    public static void dump(SeparateChainingHashST<String, Airport> airportST, SeparateChainingHashST<String, Airline> airlineST,
+                            RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST){
+        String path = ".//data/dump.txt";
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){ // FileWriter with onle one parameter will overwrite the file content each time that is what we want
+            bw.write("nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;");
+            bw.newLine();
+            for(String a : airportST.keys()){
+                bw.write(
+                        airportST.get(a).getName() + ";" +
+                        airportST.get(a).getCode() + ";" +
+                        airportST.get(a).getCity() + ";" +
+                        airportST.get(a).getCountry() + ";" +
+                        airportST.get(a).getContinent() + ";" +
+                        airportST.get(a).getRating() + ";"
+                );
+                bw.newLine();
+            }
+            bw.write("#");
+            bw.newLine();
+            bw.write("nome;nacionalidade;");
+            bw.newLine();
+            for(String al : airlineST.keys()){
+                bw.write(
+                        airlineST.get(al).getName() + ";" +
+                        airlineST.get(al).getNationality() + ";"
+                );
+                bw.newLine();
+            }
+            bw.write("#");
+            bw.newLine();
+            bw.write("id_avião;modelo;nome;companhia_aérea;velocidade_cruzeiro;altitude_cruzeiro;distância_máxima;cod_aeroporto;" +
+                    "capacidade_de_passageiros;capacidade_do_depósito");
+            bw.newLine();
+            for(Integer ap : airplaneST.keys()){
+                bw.write(
+                        airplaneST.get(ap).getId() + ";" +
+                        airplaneST.get(ap).getModel() + ";" +
+                        airplaneST.get(ap).getName() + ";" +
+                        airplaneST.get(ap).getAirline().getName() + ";" +
+                        airplaneST.get(ap).getCruiseSpeed() + ";" +
+                        airplaneST.get(ap).getCruiseAltitude() + ";" +
+                        airplaneST.get(ap).getMaxRange() + ";" +
+                        airplaneST.get(ap).getAirportCode() + ";" +
+                        airplaneST.get(ap).getPassengersCapacity() + ";" +
+                        airplaneST.get(ap).getFuelCapacity() + ";"
+                );
+                bw.newLine();
+            }
+            bw.write("#");
+            bw.newLine();
+            bw.write("distancia;custo;duracao;data;passageiros;aviao;aeroportoOrigem;aeroportoDestino;");
+            bw.newLine();
+            for(Date d : flightST.keys()){
+                bw.write(
+                        flightST.get(d).getDistance() + ";" +
+                        flightST.get(d).getCosts() + ";" +
+                        flightST.get(d).getDuration().getSlashes() + ";" +
+                        flightST.get(d).getDate().getSlashes() + ";" +
+                        flightST.get(d).getPassengers() + ";" +
+                        flightST.get(d).getAirplane().getId() + ";" +
+                        flightST.get(d).getAirportOfOrigin().getCode() + ";" +
+                        flightST.get(d).getAirportOfDestination().getCode() + ";"
+                );
+                bw.newLine();
+            }
+            bw.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -245,8 +368,8 @@ public class Main {
      * @param airportST ST with all the airports
      * @param airlineName is the airline to remove
      */
-    private static void removeAirline(SeparateChainingHashST<String, Airline> airlineST, RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String,
-            Airport> airportST, String airlineName ){
+    private static void removeAirline(SeparateChainingHashST<String, Airline> airlineST, RedBlackBST<Integer, Airplane> airplaneST,
+                                      SeparateChainingHashST<String, Airport> airportST, String airlineName ){
         for (String a: airlineST.keys()) {
             if(airlineST.get(a).getName().equals(airlineName)){
                 for (Integer p: airlineST.get(a).getFleet().keys()) {
