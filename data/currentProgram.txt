@@ -1,0 +1,92 @@
+nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;
+Ben Gurion;TLV;Tel Aviv;Israel;Asia;10.0;
+Francisco Sá Carneiro;OPO;Porto;Portugal;Europe;9.8;
+Frankfurt;FRA;Frankfurt;Germany;Europe;9.6;
+Internacional de Dubai;DXB;Dubai;Dubai;Asia;9.4;
+Internacional John Kennedy;JFK;Nova York;US;North America;9.3;
+Internacional El Dorado;BOG;Bogotá;Colombia;South America;9.0;
+Internacional Jorge Chávez;LIM;Lima;Peru;South America;8.9;
+Kastrup;CPH;Copenhaga;Denmark;Europe;8.7;
+Pierre Elliott Trudeau;YUL;Montreal;Canada;North America;8.7;
+Internacional Comodoro Arturo Merino Benitez;SCL;Santiago de Chile;Chile;South America;8.6;
+Internacional de Los Angeles;LAX;Los Angeles;US;North America;8.6;
+Humberto Delgado;LIS;Lisboa;Portugal;Europe;8.5;
+Milão-Malpensa;MXP;Milão;Italy;Europe;8.4;
+Tito Minniti de Reggio di Calabria;REG;Reggio Calabria;Italy;Europe;8.4;
+Internacional do Recife/Guararapes Gilberto Freyre;REC;Recife;Brazil;South America;8.4;
+Internacional Fiumicino-Leonardo da Vinci;FCO;Roma;Italy;Europe;8.3;
+Amsterdam Schiphol;AMS;Amsterdão;Netherland;Europe;8.1;
+Gatwick;LGW;Londres;UK;Europe;8.1;
+Internacional Rafael Nuñez;MVD;Montevideu;Uruguai;South America;8.0;
+Moscou Domodedovo;DME;Moscow;Russia;Asia;7.8;
+Joanesburgo;JNB;Joanesburgo;South Africa;Africa;8.0;
+Beijing International;PEK;Beijing;China;Asia;9.8;
+International Soekarno-Hatta;CGK;Jakarta;Indonesia;Asia;7.8;
+Kingsford Smith de Sydney;SYD;Sydney;Australia;Oceania;9.3;
+Internacional Quatro de Fevereiro;LAD;Luanda;Angola;Africa;4.3;
+Houari Boumediene;ALG;Algiers;Algeria;Africa;7.6;
+Boryspil;KBP;Kiev;Ukraine;Europe;8.0;
+Henri Coanda de Bucareste;OTP;Bucharest;Romenia;Europe;7.8;
+Warsaw Chopin Airport;WAW;Warsaw;Poland;Europe;7.8;
+Charles de Gaulle;CDG;Paris;France;Europe;8.1;
+Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
+Rio Galeão;GIG;Rio de Janeiro;Brazil;South America;5.3;
+Narita;NRT;Tokyo;Japan;Asia;9.8;
+#
+nome;nacionalidade;
+TAP Air Portugal;Portugal;
+Lufthansa;Germany;
+Qatar Airways;Qatar;
+Qantas;Australia;
+Thai Airways;Thailand
+#
+id_avião;modelo;nome;companhia_aérea;velocidade_cruzeiro;altitude_cruzeiro;distância_máxima;cod_aeroporto;capacidade_de_passageiros;capacidade_do_depósito
+1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871;8000;16700;OPO;380;274876;
+2;Airbus A340;D. João de Castro;TAP Air Portugal;871;8000;16700;OPO;380;274876;
+3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871;8000;16700;OPO;380;274876;
+4;Airbus A340;D. Francisco de Almeida;TAP Air Portugal;871;8000;16700;OPO;380;274876;
+5;Airbus A331;Pero Vaz de Caminha;TAP Air Portugal;829;12000;5900;SCL;236;29580;
+6;Airbus A331;Luís vaz de camões;TAP Air Portugal;829;12000;5900;AMS;236;29580;
+7;Airbus A331;Amalia Rodrigues;TAP Air Portugal;829;12000;5900;LGW;236;29580;
+8;Airbus A319;Soares dos Reis;TAP Air Portugal;828;10000;6950;REC;156;26750;
+9;Airbus A319;Guilhermina Suggia;TAP Air Portugal;828;9000;6950;MVD;156;26750;
+10;Airbus A380;Frankfurt Am Main;Lufthansa;910;13000;15700;LAX;525;320000;
+11;Airbus A380;München;Lufthansa;910;13000;15700;LGW;525;320000;
+12;Airbus A380;Peking;Lufthansa;910;13000;15700;FCO;525;320000;
+13;Airbus A380;Tokio;Lufthansa;910;13000;15700;LGW;525;320000;
+14;Airbus A319;Al Hilal;Qatar Airways;828;9000;6950;DXB;156;26750;
+15;Airbus A319;Al Jasra;Qatar Airways;828;9000;6950;BOG;156;26750;
+16;Boeing 777;Al Khattya;Qatar Airways;905;12000;17000;WAW;550;117348;
+17;Boeing 777;Jaow Alsalam;Qatar Airways;905;12000;17000;FRA;550;117348;
+18;Boeing 777;Lbeshairiya;Qatar Airways;905;12000;17000;CDG;550;117348;
+19;Boeing 777;Um-Alamad;Qatar Airways;905;12000;17000;JFK;550;117348;
+20;Boeing 747;Gosford;Qantas;893;12000;9800;SYD;480;183380;
+21;Boeing 747;Hamilton Island;Qantas;893;12000;9800;TLV;480;183380;
+22;Boeing 747;Phillip Island;Qantas;893;12000;9800;PEK;480;183380;
+23;Boeing 787;Ongkharak;Thai Airways;958;12000;15190;BOM;420;126206;
+24;Boeing 787;Chaturaphak Phiman;Thai Airways;958;12000;15190;BOM;420;126206;
+25;Boeing 787;Wapi Pathum;Thai Airways;958;12000;15190;MXP;420;126206;
+26;Boeing 787;pran Buri;Thai Airways;958;12000;15190;MXP;420;126206;
+27;Boeing 787;Kosum Phisai;Thai Airways;958;12000;15190;JFK;420;126206;
+28;Boeing 787;Kong Krailat;Thai Airways;958;12000;15190;AMS;420;126206;
+29;ATR 72;Apasara;Thai Airways;511;5000;1528;KBP;74;5700;
+30;ATR 72;Chang;Thai Airways;511;5000;1528;CPH;74;5700;
+31;ATR 72;Tao;Thai Airways;511;5000;1528;AMS;74;5700;
+32;ATR 72;Hua Hin;Thai Airways;511;5000;1528;OTP;74;5700;
+33;Airbus A319;Sophia de Mello Breyner;TAP Air Portugal;828;9000;6950;MVD;156;26750;
+34;Airbus A319;Antero de Quental;TAP Air Portugal;828;9000;6950;MVD;156;26750;
+35;Airbus A319;Almeida Garrett;TAP Air Portugal;828;9000;6950;MVD;156;26750;
+36;Airbus A319;Eca de Queiros;TAP Air Portugal;828;9000;6950;MVD;156;26750;
+37;Airbus A319;Eusebio;TAP Air Portugal;828;9000;6950;MVD;156;26750;
+#
+distancia;custo;duracao;data;passageiros;aviao;aeroportoOrigem;aeroportoDestino;
+5000.0;0.0;0/0/0/4/43/32/;1995/1/27/17/45/30/;150;6;NRT;OPO;
+21500.0;0.0;0/0/0/17/43/32/;2017/2/9/23/1/30/;200;4;CDG;LAD;
+2000.0;0.0;0/0/0/10/0/0/;2017/3/7/12/50/30/;380;2;OPO;FRA;
+1500.0;0.0;0/0/0/4/43/32/;2017/3/10/23/1/30/;100;6;OPO;NRT;
+1000.0;0.0;0/0/0/4/43/32/;2017/3/11/23/1/30/;50;6;OPO;NRT;
+10000.0;0.0;0/0/1/10/0/0/;2017/4/8/23/1/30/;380;3;DXB;LAD;
+
+
+
+ 

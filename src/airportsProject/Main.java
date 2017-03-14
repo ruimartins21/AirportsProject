@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+
 
         // clean the logs file each program run
         log("reset", "");
@@ -20,15 +22,24 @@ public class Main {
         String pathAirlines     = ".//data//airlines.txt";
 
         SeparateChainingHashST<String, Airport> airportST = new SeparateChainingHashST<>();
-        ImportFromFile.importAirports(airportST,pathAirports);
-
-        SeparateChainingHashST<String, Airline> airlineST = new SeparateChainingHashST<>();
-        ImportFromFile.importAirlines(airlineST, pathAirlines);
-
+        SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
-        ImportFromFile.importPlanes(airportST,airplaneST, airlineST, pathAirplanes);
-
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
+//        ImportFromFile.importAirports(airportST,pathAirports);
+//        ImportFromFile.importAirlines(airlinesST, pathAirlines);
+//        ImportFromFile.importPlanes(airportST,airplaneST, airlinesST, pathAirplanes);
+
+
+
+        if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
+            File file = new File(".//data//currentProgram.txt");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            System.out.println("Last opened in: " + sdf.format(file.lastModified()));
+            PrintInfo.allAirports(airportST);
+        }
+
+
+
         Airplane airplane;
         Airport airportOfOrigin;
         Airport airportOfDestination;
@@ -165,61 +176,9 @@ public class Main {
 //            System.out.println(f.toString());
 //        });
 
-//        System.out.println("nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;");
-//        for(String a : airportST.keys()){
-//            System.out.println(
-//                    airportST.get(a).getName() + ";" +
-//                    airportST.get(a).getCode() + ";" +
-//                    airportST.get(a).getCity() + ";" +
-//                    airportST.get(a).getCountry() + ";" +
-//                    airportST.get(a).getContinent() + ";" +
-//                    airportST.get(a).getRating() + ";"
-//            );
-//        }
-//        System.out.println("#");
-//        System.out.println("nome;nacionalidade;");
-//        for(String al : airlineST.keys()){
-//            System.out.println(
-//                    airlineST.get(al).getName() + ";" +
-//                    airlineST.get(al).getNationality() + ";"
-//            );
-//        }
-//        System.out.println("#");
-//        System.out.println("id_avião;modelo;nome;companhia_aérea;velocidade_cruzeiro;altitude_cruzeiro;distância_máxima;cod_aeroporto;" +
-//                "capacidade_de_passageiros;capacidade_do_depósito");
-//        for(Integer ap : airplaneST.keys()){
-//            System.out.println(
-//                    airplaneST.get(ap).getId() + ";" +
-//                    airplaneST.get(ap).getModel() + ";" +
-//                    airplaneST.get(ap).getName() + ";" +
-//                    airplaneST.get(ap).getAirline().getName() + ";" +
-//                    airplaneST.get(ap).getCruiseSpeed() + ";" +
-//                    airplaneST.get(ap).getCruiseAltitude() + ";" +
-//                    airplaneST.get(ap).getMaxRange() + ";" +
-//                    airplaneST.get(ap).getAirportCode() + ";" +
-//                    airplaneST.get(ap).getPassengersCapacity() + ";" +
-//                    airplaneST.get(ap).getFuelCapacity() + ";"
-//            );
-//        }
-//        System.out.println("#");
-//        System.out.println("distancia;custo;duracao;data;passageiros;aviao;aeroportoOrigem;aeroportoDestino;");
-//        for(Date d : flightST.keys()){
-//            System.out.println(
-//                    flightST.get(d).getDistance() + ";" +
-//                    flightST.get(d).getCosts() + ";" +
-//                    flightST.get(d).getDuration().getSlashes() + ";" +
-//                    flightST.get(d).getDate().getSlashes() + ";" +
-//                    flightST.get(d).getPassengers() + ";" +
-//                    flightST.get(d).getAirplane().getId() + ";" +
-//                    flightST.get(d).getAirportOfOrigin().getCode() + ";" +
-//                    flightST.get(d).getAirportOfDestination().getCode() + ";"
-//            );
-//        }
-
-        dump(airportST, airlineST, airplaneST, flightST);
     }
 
-    private static void newFlight(float distance, Date duration, Date date, int passengers, Airplane airplane,
+    public static void newFlight(float distance, Date duration, Date date, int passengers, Airplane airplane,
                                   Airport airportOfOrigin, Airport airportOfDestination, RedBlackBST<Date, Flight> flightST){
 
         Flight newFlight = new Flight(distance, duration, date, passengers, airplane, airportOfOrigin, airportOfDestination);
