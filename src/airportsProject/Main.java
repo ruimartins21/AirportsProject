@@ -114,10 +114,15 @@ public class Main {
 //            System.out.println(flightST.get(d).toString());
 //        }
 
-//        removeAirplane(airplaneST, airportST, airplaneST.get(21));
-//        for (Integer ap : airplaneST.keys()){
-//            System.out.println(ap + ": " + airplaneST.get(ap).getName());
-//        }
+        removeAirplane(airplaneST, airportST, airplaneST.get(21));
+        for (Integer ap : airplaneST.keys()){
+            System.out.println(ap + ": " + airplaneST.get(ap).getName());
+        }
+
+        removeAirport(airportST,"OPO");
+        for (Integer ap : airplaneST.keys()){
+            System.out.println(ap + ": " + airplaneST.get(ap).getName());
+        }
 
 //        System.out.println("AIRLINES");
 //        System.out.println("-------------------");
@@ -163,9 +168,9 @@ public class Main {
 //        PrintInfo.airplane(airplaneST , 1);
 //        PrintInfo.allAirports(searchAirportsOf(airportST,"Asia"));
 //        PrintInfo.flightsBetweenTimes(flightST,new Date(1, 1, 2017, 23, 59, 10),new Date(21, 9, 2017, 21, 21, 21));
-//        PrintInfo.flightsThisAirport(flightST,"OPO");
-//        PrintInfo.allTravelsPlane(airplaneST,6);
-//        PrintInfo.allAirplanes(airplaneST);
+        PrintInfo.flightsThisAirport(flightST,"OPO");
+        PrintInfo.allTravelsPlane(airplaneST,6);
+        PrintInfo.allAirplanes(airplaneST);
 
         // ricardo
 //        ArrayList<Airport> result = mostTrafficAirport(airportST);
@@ -347,6 +352,20 @@ public class Main {
      * guardar em ficheiro "backup" do aeroporto por onde se pode voltar a cria-lo
      * remover dos avioes estacionados no aeroporto o "code" na classe deles
      */
+    private static void removeAirport(SeparateChainingHashST<String, Airport> airportST,  String airportCode ){
+        for (String a: airportST.keys() ) {
+            if(airportST.get(a).getCode().equals(airportCode)){
+                for (Integer p: airportST.get(a).getAirplanes().keys() ) {
+                    removeAirplane(airportST.get(a).getAirplanes(),airportST,airportST.get(a).getAirplanes().get(p));
+                }
+
+                log("AirportST","Removed airport \"" + airportST.get(a).getName() + "\"");
+            }
+        }
+
+    }
+
+
 
 
     /**
