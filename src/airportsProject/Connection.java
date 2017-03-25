@@ -1,7 +1,15 @@
 package airportsProject;
 
-public class Connection {
+import libs.DirectedEdge;
+
+public class Connection extends DirectedEdge{
     private float altitude;
     private float windSpeed;
+
+    public Connection(int v, int w, double weight, float altitude, float windSpeed) {
+        super(v, w, weight);
+        this.altitude = altitude;
+        this.windSpeed = windSpeed;
+    }
 
 }
