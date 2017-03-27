@@ -5,7 +5,6 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -26,18 +25,18 @@ public class Main {
         SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
-//        ImportFromFile.importAirports(airportST,pathAirports);
-//        ImportFromFile.importAirlines(airlinesST, pathAirlines);
-//        ImportFromFile.importPlanes(airportST,airplaneST, airlinesST, pathAirplanes);
+        ImportFromFile.importAirports(airportST, pathAirports);
+        ImportFromFile.importAirlines(airlinesST, pathAirlines);
+        ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
 
 
-        if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
-            File file = new File(".//data//currentProgram.txt");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            System.out.println("Last opened in: " + sdf.format(file.lastModified()));
-            PrintInfo.allAirports(airportST);
-        }
+//        if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
+//            File file = new File(".//data//currentProgram.txt");
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//            System.out.println("Last opened in: " + sdf.format(file.lastModified()));
+//            PrintInfo.allAirports(airportST);
+//        }
 
 
 
@@ -53,63 +52,56 @@ public class Main {
         flightDate = new Date(7, 3, 2017, 12, 50, 30);
         passengers = 380;
         airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
-        airportOfOrigin = airportST.get("OPO");
         airportOfDestination = airportST.get("FRA");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         distance = 10000;
         duration = new Date(1, 0, 0, 10, 0, 0);
         flightDate = new Date(8, 4, 2017, 23, 1, 30);
         passengers = 380;
         airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
-        airportOfOrigin = airportST.get("DXB");
         airportOfDestination = airportST.get("LAD");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         distance = 21500;
         duration = new Date(0, 0, 0, 17, 43, 32);
         flightDate = new Date(9, 2, 2017, 23, 1, 30);
         passengers = 200;
         airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
-        airportOfOrigin = airportST.get("CDG");
         airportOfDestination = airportST.get("LAD");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         distance = 500;
         duration = new Date(0, 0, 0, 7, 43, 32);
         flightDate = new Date(10, 3, 2017, 23, 1, 30);
         passengers = 100;
         airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
-        airportOfOrigin = airportST.get("LAD");
         airportOfDestination = airportST.get("OPO");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         distance = 1500;
         duration = new Date(0, 0, 0, 4, 43, 32);
         flightDate = new Date(10, 3, 2017, 23, 1, 30);
         passengers = 100;
         airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-        airportOfOrigin = airportST.get("OPO");
         airportOfDestination = airportST.get("NRT");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         distance = 1000;
         duration = new Date(0, 0, 0, 4, 43, 32);
         flightDate = new Date(11, 3, 2017, 23, 1, 30);
         passengers = 50;
         airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-        airportOfOrigin = airportST.get("OPO");
         airportOfDestination = airportST.get("NRT");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         distance = 5000;
         duration = new Date(0, 0, 0, 4, 43, 32);
         flightDate = new Date(27, 1, 1995, 17, 45, 30);
         passengers = 150;
         airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-        airportOfOrigin = airportST.get("NRT");
         airportOfDestination = airportST.get("OPO");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
 //        for(Date d : flightST.keys()){
 //            System.out.println(flightST.get(d).toString());
@@ -120,14 +112,21 @@ public class Main {
 //            System.out.println(ap + ": " + airplaneST.get(ap).getName());
 //        }
 
+//        PrintInfo.allAirports(airportST);
         try {
-            removeAirport(airportST,"OPO");
-            System.out.println("removido ------------------------------------------------------------------- OPO");
-            PrintInfo.allAirports(airportST);
-
+            removeAirport(airportST, airplaneST, "OPO");
+            System.out.println("Airport removed");
+//            PrintInfo.allAirports(airportST);
         }catch (AirportNotExistException e){
-            System.out.println("Error remove airport");
+            System.out.println(e.getMessage());
         }
+        try {
+            removeAirport(airportST,airplaneST, "OPO");
+//            PrintInfo.allAirports(airportST);
+        }catch (AirportNotExistException e){
+            System.out.println(e.getMessage());
+        }
+//        PrintInfo.allAirports(airportST);
 //        for (Integer ap : airplaneST.keys()){
 //            System.out.println(ap + ": " + airplaneST.get(ap).getName());
 //        }
@@ -322,15 +321,15 @@ public class Main {
      * @param airplaneST is the symbol table where it is stored in this Main class
      * @param plane is the plane to remove
      */
-    private static void removeAirplane(RedBlackBST<Integer, Airplane> airplaneST,SeparateChainingHashST<String, Airport> airportST,
+    private static void removeAirplane(RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airport> airportST,
                                        Airplane plane){
         Airline airline = plane.getAirline();
-        log("Airline \"" + airline.getName() + "\"", "Removed airplane \"" + plane.getName() + "\"");
-        log("AirplaneST", "Removed airplane \"" + plane.getName() + "\"");
-        log("Airport \"" + airportST.get(plane.getAirportCode()) + "\"", "Removed airplane \"" + plane.getName() + "\"");
         airline.removePlane(plane);
         airportST.get(plane.getAirportCode()).sendPlane(plane); // goes to the airport where the plane is parked to remove it
         airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
+        log("Airline \"" + airline.getName() + "\"", "Removed airplane \"" + plane.getName() + "\"");
+        log("AirplaneST", "Removed airplane \"" + plane.getName() + "\"");
+        log("Airport \"" + airportST.get(plane.getAirportCode()) + "\"", "Removed airplane \"" + plane.getName() + "\"");
     }
 
     /**
@@ -353,33 +352,28 @@ public class Main {
         }
     }
 
-    /** remove airport
-     * airportST
-     * nao e para remover dos voos ligados a este o aeroporto - excecoes para quando pesquisa um aeroporto eliminado
-     * escrever pa ficheiro log do aeroporto em questao os voos e aeroportos do historico
+    /**
+     * Removes an airport incluiding all the airplanes parked there
+     * @param airportST ST with all the airports
+     * @param airportCode Code of the airport to remove
      */
-    private static void removeAirport(SeparateChainingHashST<String, Airport> airportST,  String airportCode ) throws AirportNotExistException{
-        int count = 0;
-        for (String a: airportST.keys() ) {
-            if(airportST.get(a).getCode().compareTo(airportCode) == 0){
-                for (Integer p: airportST.get(a).getAirplanes().keys() ) {
-                    removeAirplane(airportST.get(a).getAirplanes(),airportST,airportST.get(a).getAirplanes().get(p));
-                    count++;
-                    airportST.put(null,airportST.get(a));
+    private static void removeAirport(SeparateChainingHashST<String, Airport> airportST, RedBlackBST<Integer, Airplane> airplaneST,
+                                      String airportCode) throws AirportNotExistException{
+        boolean removed = false;
+        for (String a : airportST.keys() ) {
+            if(a.compareTo(airportCode) == 0){
+                for (Integer p : airportST.get(a).getAirplanes().keys() ) {
+                    removeAirplane(airplaneST, airportST, airportST.get(a).getAirplanes().get(p));
                 }
                 log("AirportST","Removed airport \"" + airportST.get(a).getName() + "\"");
-
+                airportST.put(a, null);
+                removed = true;
             }
         }
-
-        if(count ==0){
-            throw new AirportNotExistException("Airport: "+airportCode + "not exists!\n");
+        if(!removed){
+            throw new AirportNotExistException("Airport with code \"" + airportCode + "\" does not exist!\n");
         }
-
     }
-
-
-
 
     /**
      * Determines the airport (or more than one if the ammount is the same) with the most traffic (number of flights)

@@ -1,7 +1,5 @@
 package airportsProject;
 
-import java.util.ArrayList;
-
 public class Flight {
 
     private float distance;
@@ -10,7 +8,8 @@ public class Flight {
     private Date date;
     private int passengers;
     private Airplane airplane;
-    private ArrayList<Connection> connections = new ArrayList<>();
+//    private ArrayList<Connection> connections = new ArrayList<>();
+    private Connection connection;
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
@@ -19,9 +18,14 @@ public class Flight {
         this.distance = distance;
         this.duration = duration;
         this.date = date;
+        this.airplane = airplane;
+        this.setAirports(airportOfOrigin, airportOfDestination);
         this.setAirplane(airplane);
         this.setPassengers(passengers); // checks if the number of passengers doesn't exceed the airplane capacity
-        this.setAirports(airportOfOrigin, airportOfDestination);
+    }
+
+    private void setConnection(){
+//        this.connection = new Connection();
     }
 
     private float planeConsumption() {
@@ -40,8 +44,10 @@ public class Flight {
     }
 
     private void setAirplane(Airplane plane){
-        plane.setAirplaneFlight(this);
-        this.airplane = plane;
+        this.airplane.setAirplaneFlight(this);
+        this.airplane.setAirportCode(this.airportOfDestination.getCode());
+        this.airportOfDestination.receivePlane(this.airplane);
+        this.airportOfOrigin.sendPlane(this.airplane);
     }
 
     private void setAirports(Airport origin, Airport destination){
@@ -94,7 +100,7 @@ public class Flight {
                 "\n-> date=" + date +
                 "\n-> passengers=" + passengers +
                 "\n-> airplane=" + airplane +
-                "\n-> connections=" + connections +
+//                "\n-> connections=" + connections +
                 "\n-> airportOfOrigin=" + airportOfOrigin +
                 "\n-> airportOfDestination=" + airportOfDestination +
                 "\n}";
