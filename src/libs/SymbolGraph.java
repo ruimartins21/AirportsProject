@@ -218,9 +218,9 @@ public class SymbolGraph {
             String source = StdIn.readLine();
             if (sg.contains(source)) {
                 int s = sg.index(source);
-                for (int v : graph.adj(s)) {
-                    StdOut.println("   " + sg.name(v));
-                }
+//                for (int v : graph.adj(s)) {
+//                    StdOut.println("   " + sg.name(v));
+//                }
             }
             else {
                 StdOut.println("input not contain '" + source + "'");

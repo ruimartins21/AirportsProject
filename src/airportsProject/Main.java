@@ -1,5 +1,6 @@
 package airportsProject;
 
+import airportsProject.Exceptions.AirportNotExistException;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
@@ -114,15 +115,22 @@ public class Main {
 //            System.out.println(flightST.get(d).toString());
 //        }
 
-        removeAirplane(airplaneST, airportST, airplaneST.get(21));
-        for (Integer ap : airplaneST.keys()){
-            System.out.println(ap + ": " + airplaneST.get(ap).getName());
-        }
+//        removeAirplane(airplaneST, airportST, airplaneST.get(21));
+//        for (Integer ap : airplaneST.keys()){
+//            System.out.println(ap + ": " + airplaneST.get(ap).getName());
+//        }
 
-        removeAirport(airportST,"OPO");
-        for (Integer ap : airplaneST.keys()){
-            System.out.println(ap + ": " + airplaneST.get(ap).getName());
+        try {
+            removeAirport(airportST,"OPO");
+            System.out.println("removido ------------------------------------------------------------------- OPO");
+            PrintInfo.allAirports(airportST);
+
+        }catch (AirportNotExistException e){
+            System.out.println("Error remove airport");
         }
+//        for (Integer ap : airplaneST.keys()){
+//            System.out.println(ap + ": " + airplaneST.get(ap).getName());
+//        }
 
 //        System.out.println("AIRLINES");
 //        System.out.println("-------------------");
@@ -168,9 +176,9 @@ public class Main {
 //        PrintInfo.airplane(airplaneST , 1);
 //        PrintInfo.allAirports(searchAirportsOf(airportST,"Asia"));
 //        PrintInfo.flightsBetweenTimes(flightST,new Date(1, 1, 2017, 23, 59, 10),new Date(21, 9, 2017, 21, 21, 21));
-        PrintInfo.flightsThisAirport(flightST,"OPO");
-        PrintInfo.allTravelsPlane(airplaneST,6);
-        PrintInfo.allAirplanes(airplaneST);
+//        PrintInfo.flightsThisAirport(flightST,"OPO");
+//        PrintInfo.allTravelsPlane(airplaneST,6);
+//        PrintInfo.allAirplanes(airplaneST);
 
         // ricardo
 //        ArrayList<Airport> result = mostTrafficAirport(airportST);
@@ -347,20 +355,25 @@ public class Main {
 
     /** remove airport
      * airportST
-     * remover dos voos ligados a este o aeroporto
+     * nao e para remover dos voos ligados a este o aeroporto - excecoes para quando pesquisa um aeroporto eliminado
      * escrever pa ficheiro log do aeroporto em questao os voos e aeroportos do historico
-     * guardar em ficheiro "backup" do aeroporto por onde se pode voltar a cria-lo
-     * remover dos avioes estacionados no aeroporto o "code" na classe deles
      */
-    private static void removeAirport(SeparateChainingHashST<String, Airport> airportST,  String airportCode ){
+    private static void removeAirport(SeparateChainingHashST<String, Airport> airportST,  String airportCode ) throws AirportNotExistException{
+        int count = 0;
         for (String a: airportST.keys() ) {
-            if(airportST.get(a).getCode().equals(airportCode)){
+            if(airportST.get(a).getCode().compareTo(airportCode) == 0){
                 for (Integer p: airportST.get(a).getAirplanes().keys() ) {
                     removeAirplane(airportST.get(a).getAirplanes(),airportST,airportST.get(a).getAirplanes().get(p));
+                    count++;
+                    airportST.put(null,airportST.get(a));
                 }
-
                 log("AirportST","Removed airport \"" + airportST.get(a).getName() + "\"");
+
             }
+        }
+
+        if(count ==0){
+            throw new AirportNotExistException("Airport: "+airportCode + "not exists!\n");
         }
 
     }

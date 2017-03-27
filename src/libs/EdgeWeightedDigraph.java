@@ -12,6 +12,7 @@
 
 package libs;
 
+import airportsProject.Connection;
 import edu.princeton.cs.algs4.*;
 
 /**
@@ -76,8 +77,8 @@ public class EdgeWeightedDigraph {
             int v = StdRandom.uniform(V);
             int w = StdRandom.uniform(V);
             double weight = 0.01 * StdRandom.uniform(100);
-            Connection e = new Connection(v, w, weight);
-            addEdge(e);
+//            Connection e = new Connection(v, w, weight);
+//            addEdge(e);
         }
     }
 
@@ -102,7 +103,7 @@ public class EdgeWeightedDigraph {
             validateVertex(v);
             validateVertex(w);
             double weight = in.readDouble();
-            addEdge(new Connection(v, w, weight));
+//            addEdge(new Connection(v, w, weight));
         }
     }
 
