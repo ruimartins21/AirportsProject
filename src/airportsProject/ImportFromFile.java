@@ -76,9 +76,17 @@ public class ImportFromFile {
 
     public static boolean currentProgram( String path,SeparateChainingHashST<String, Airport> airportST,SeparateChainingHashST<String, Airline> airlineST,
                                           RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST) {
-        In in = new In(path);
+        In in = new In();
+        try{
+            in = new In(path);
+        }catch (Exception e){
+            System.out.println("! No previous program saved !");
+        }
+
         int i = 0,j=0;
+        boolean hasContent = false;
         while (!in.isEmpty()) {
+            hasContent = true;
             String[] fileContent = in.readLine().split(";");
             if(fileContent[0].equals("#")){
                 i = 0;
@@ -154,6 +162,6 @@ public class ImportFromFile {
                 i++;
             }
         }
-        return true;
+        return hasContent;
     }
 }

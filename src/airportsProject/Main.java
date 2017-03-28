@@ -6,13 +6,18 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        boolean validChoice = false;
+        int choice, airplaneId;
+        String airportCode;
+        ArrayList<Airport> result;
 
         // clean the logs file each program run
         log("reset", "");
@@ -25,20 +30,31 @@ public class Main {
         SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
-        ImportFromFile.importAirports(airportST, pathAirports);
-        ImportFromFile.importAirlines(airlinesST, pathAirlines);
-        ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
-
-
-//        if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
-//            File file = new File(".//data//currentProgram.txt");
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//            System.out.println("Last opened in: " + sdf.format(file.lastModified()));
-//            PrintInfo.allAirports(airportST);
-//        }
-
-
+        // New program or load previous program
+        Scanner scanner = new Scanner(System.in);
+        while(!validChoice){
+            System.out.println("# Airport Management #");
+            System.out.println("1 - New Program");
+            System.out.println("2 - Load Previous Program");
+            choice = scanner.nextInt();
+            if(choice == 1){
+                System.out.println("Creating new program ...");
+                validChoice = true;
+                ImportFromFile.importAirports(airportST, pathAirports);
+                ImportFromFile.importAirlines(airlinesST, pathAirlines);
+                ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
+            }else if(choice == 2){
+                System.out.print("Loading previous program:");
+                if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
+                    File file = new File(".//data//currentProgram.txt");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
+//                    PrintInfo.allAirports(airportST);
+                    validChoice = true;
+                }
+            }
+        }
 
         Airplane airplane;
         Airport airportOfOrigin;
@@ -103,6 +119,104 @@ public class Main {
         airportOfDestination = airportST.get("OPO");
         newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
+        /* Interaction Menu */
+        while(true){
+            System.out.println("\n# Operations Available #");
+            System.out.println("0 - Manage information (Insert / Edit / Remove)");
+            System.out.println("-----------------------------------");
+            System.out.println("* Statistics *");
+            System.out.println("1 - Show all information about an airport\n" +
+                    "2 - Show all information relative to an airplane\n" +
+                    "3 - Show all airports from a certain Country / Continent\n" +
+                    "4 - Show all flights with origin/destination on a certain airport\n" +
+                    "5 - Show all flights done by an airplane\n" +
+                    "6 - Show all flights done in a period of time\n" +
+                    "7 - Airport with the most traffic\n" +
+                    "8 - Flight that carried more passengers\n");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice){
+                case 0: // Insert / Edit / Remove
+                    System.out.println("Manage Infos");
+                    break;
+                case 1: // Show all information about an airport
+                    System.out.print("Code of the airport: ");
+                    airportCode = scanner.nextLine();
+                    airportCode = airportCode.toUpperCase();
+                    if(airportST.get(airportCode) != null){
+                        PrintInfo.airport(airportST, airportCode);
+                    }else{
+                        System.out.println("! There's no airport with that code !");
+                    }
+                    break;
+                case 2: // Show all information relative to an airplane
+                    System.out.print("ID of the airplane: ");
+                    airplaneId = scanner.nextInt();
+                    if(airplaneST.get(airplaneId) != null){
+                        PrintInfo.airplane(airplaneST, airplaneId);
+                    }else{
+                        System.out.println("! There's no airplane with that ID !");
+                    }
+                    break;
+                case 3: // Show all airports from a certain Country / Continent
+                    System.out.print("Country or Continent: ");
+                    String countryContinent = scanner.nextLine();
+                    countryContinent = countryContinent.toLowerCase();
+                    if(!(result = searchAirportsOf(airportST, countryContinent)).isEmpty()){
+                        for(Airport a : result){
+                            System.out.println("\"" + a.getName() + "\"");
+                        }
+                    }else{
+                        System.out.println("! There's no airport from that country / continent !");
+                    }
+                    break;
+                case 4: // Show all flights with origin/destination on a certain airport
+                    System.out.print("Code of the airport: ");
+                    airportCode = scanner.nextLine();
+                    airportCode = airportCode.toUpperCase();
+                    if(airportST.get(airportCode) != null){
+                        PrintInfo.flightsOfThisAirport(flightST, airportCode);
+                    }else{
+                        System.out.println("! There's no airport with that code !");
+                    }
+                    break;
+                case 5: // Show all flights done by an airplane
+                    System.out.print("ID of the airplane: ");
+                    airplaneId = scanner.nextInt();
+                    if(airplaneST.get(airplaneId) != null){
+                        PrintInfo.allTravelsPlane(airplaneST, airplaneId);
+                    }else{
+                        System.out.println("! There's no airplane with that ID !");
+                    }
+                    break;
+                case 6: // Show all flights done in a period of time
+
+                    break;
+                case 7: // Airport with the most traffic
+                    if(!(result = mostTrafficAirport(airportST)).isEmpty()){
+                        for(Airport a : result){
+                            System.out.println("\"" + a.getName() + "\"");
+                        }
+                    }else{
+                        System.out.println("! There's no airports with traffic !");
+                    }
+                    break;
+                case 8: // Flight that carried more passengers
+                    if(!(result = mostPassengersAirport(airportST)).isEmpty()){
+                        for(Airport a : result){
+                            System.out.println("\"" + a.getName() + "\" with " + a);
+                        }
+                    }else{
+                        System.out.println("! There's no airports with traffic !");
+                    }
+                    break;
+                default: break;
+            }
+        }
+
+
+//        PrintInfo.airport(airportST, "OPO");
+
 //        for(Date d : flightST.keys()){
 //            System.out.println(flightST.get(d).toString());
 //        }
@@ -113,19 +227,19 @@ public class Main {
 //        }
 
 //        PrintInfo.allAirports(airportST);
-        try {
-            removeAirport(airportST, airplaneST, "OPO");
-            System.out.println("Airport removed");
-//            PrintInfo.allAirports(airportST);
-        }catch (AirportNotExistException e){
-            System.out.println(e.getMessage());
-        }
-        try {
-            removeAirport(airportST,airplaneST, "OPO");
-//            PrintInfo.allAirports(airportST);
-        }catch (AirportNotExistException e){
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            removeAirport(airportST, airplaneST, "OPO");
+//            System.out.println("Airport removed");
+////            PrintInfo.allAirports(airportST);
+//        }catch (AirportNotExistException e){
+//            System.out.println(e.getMessage());
+//        }
+//        try {
+//            removeAirport(airportST,airplaneST, "OPO");
+////            PrintInfo.allAirports(airportST);
+//        }catch (AirportNotExistException e){
+//            System.out.println(e.getMessage());
+//        }
 //        PrintInfo.allAirports(airportST);
 //        for (Integer ap : airplaneST.keys()){
 //            System.out.println(ap + ": " + airplaneST.get(ap).getName());
@@ -212,7 +326,7 @@ public class Main {
     private static ArrayList<Airport> searchAirportsOf(SeparateChainingHashST<String, Airport> airportST, String search){
         ArrayList<Airport> airportSearch = new ArrayList<>();
         for (String code: airportST.keys()) {
-            if(airportST.get(code).getContinent().equals(search) || airportST.get(code).getCountry().equals(search)){
+            if(airportST.get(code).getContinent().toLowerCase().compareTo(search) == 0 || airportST.get(code).getCountry().toLowerCase().compareTo(search) == 0){
                 airportSearch.add(airportSearch.size(), airportST.get(code));
             }
         }

@@ -24,18 +24,35 @@ public class PrintInfo {
     public static void airport(SeparateChainingHashST<String, Airport> airportST, String code) {
         for (String a : airportST.keys()) {
             if (airportST.get(a).getCode().contentEquals(code)) {
+                Airport airport = airportST.get(a);
                 System.out.println();
-                System.out.format("%8s%3s%8s", "Info of ", airportST.get(a).getCode(), "airport");
+                System.out.format("%8s%3s%8s", "Info of ", airport.getCode(), "airport");
                 System.out.println();
                 System.out.format("%11s", "---");
                 System.out.println();
-                System.out.printf("Name:\t\t%s\nCode:\t\t%s\nCity:\t\t%s\nCountry:\t%s\nContinent:\t%s\nRating:\t\t%s\n", airportST.get(a).getName(), airportST.get(a).getCode(), airportST.get(a).getCity(), airportST.get(a).getCountry(), airportST.get(a).getContinent(), airportST.get(a).getRating());
+                System.out.printf("Name:\t\t%s\nCode:\t\t%s\nCity:\t\t%s\nCountry:\t%s\nContinent:\t%s\nRating:\t\t%s\n", airport.getName(), airport.getCode(), airport.getCity(), airport.getCountry(), airport.getContinent(), airport.getRating());
                 System.out.println();
-                System.out.println("Companies:");
-
-//                Falta info sobre o trafego, partidas e chegadas no aeroporto
-//                historico daquele aeroporto
-
+                System.out.println("Parked Planes:");
+                for(Integer k : airport.getAirplanes().keys()){
+                    System.out.println("-> \"" + airport.getAirplanes().get(k).getName() + "\" from \"" +
+                            airport.getAirplanes().get(k).getAirline().getName() + "\" airline");
+                }
+                System.out.println();
+                System.out.println("Flights leaving the airport:");
+                for(Date d : airport.getFlights().keys()){
+                    if(airport.getFlights().get(d).getAirportOfOrigin().equals(airport)) {
+                        System.out.println("-> Plane \"" + airport.getFlights().get(d).getAirplane().getName() + "\" leaving to \"" +
+                                airport.getFlights().get(d).getAirportOfDestination().getName() + "\" airport at " + airport.getFlights().get(d).getDate());
+                    }
+                }
+                System.out.println();
+                System.out.println("Flights arriving the airport:");
+                for(Date d : airport.getFlights().keys()){
+                    if(!airport.getFlights().get(d).getAirportOfOrigin().equals(airport)) {
+                        System.out.println("-> Plane \"" + airport.getFlights().get(d).getAirplane().getName() + "\" arriving from \"" +
+                                airport.getFlights().get(d).getAirportOfOrigin().getName() + "\" airport at " + airport.getFlights().get(d).getDate());
+                    }
+                }
             }
         }
     }
@@ -99,7 +116,7 @@ public class PrintInfo {
     }
 
     //    Imprimir todas as viagens com origem/destino num determinado aeroporto;
-    public static void flightsThisAirport(RedBlackBST<Date, Flight> flightST, String airportCode){
+    public static void flightsOfThisAirport(RedBlackBST<Date, Flight> flightST, String airportCode){
         System.out.printf("\n\n");
         System.out.format("%90s%3s", "Travels of ", airportCode);
         System.out.printf("\n\n");
