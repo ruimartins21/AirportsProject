@@ -12,4 +12,11 @@ public class Connection extends DirectedEdge{
         this.windSpeed = windSpeed;
     }
 
+    public float getAltitude() {
+        return altitude;
+    }
+
+    public float getWindSpeed() {
+        return windSpeed;
+    }
 }

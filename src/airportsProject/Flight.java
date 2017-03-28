@@ -32,8 +32,11 @@ public class Flight {
         return 1000*(airplane.getFuelCapacity()/airplane.getMaxRange());
     }
 
+//  custo definido pela conecao da viagem mais barata. apos sleecionado pela coneccao a viagem mais barata (é guardado em costs)
     public void setFlightCost() {
+
     }
+
 
     private void setPassengers(int passengers) {
         if(passengers <= this.airplane.getPassengersCapacity()){

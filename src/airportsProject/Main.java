@@ -13,11 +13,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    static int nValue = 200;
+    static int mValue = 250;
+
     public static void main(String[] args) {
         boolean validChoice = false;
         int choice, airplaneId;
         String airportCode;
         ArrayList<Airport> result;
+
 
         // clean the logs file each program run
         log("reset", "");

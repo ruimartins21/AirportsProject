@@ -105,4 +105,20 @@ public class Airplane {
                 ", fuelCapacity=" + fuelCapacity +
                 '}';
     }
+
+
+
+
+
+    public float getAirplaneCost(float distance, float windSpeed, float altitude) {
+
+        float altitudeDiference = this.cruiseAltitude - altitude; // diferenca entre a alitude do aviao e do tunel aereo
+        altitudeDiference = altitudeDiference % 1000;
+        if(altitudeDiference > 0){
+            return  Main.nValue * altitudeDiference * distance * windSpeed;
+        }else if(altitudeDiference < 0){
+            return  Main.mValue * altitudeDiference * distance * windSpeed;
+        }
+        return  distance * windSpeed;
+    }
 }
