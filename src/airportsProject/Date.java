@@ -31,6 +31,22 @@ public class Date implements Comparable<Date> {
     this.year = gregCaelndar.get(Calendar.YEAR);
   }
 
+  public boolean isValid(){
+      Calendar gregCaelndar = new GregorianCalendar();
+      boolean dayIsValid;
+      if(this.year >= 0 && this.year <= gregCaelndar.get(Calendar.YEAR)){
+          if(this.month >= 1 && this.month <= 12){
+              dayIsValid = (isLeapYear(this.year) ? (this.day >= 1 && this.day <= 29) : (this.day >= 1 && this.day <= 28));
+              if(dayIsValid){
+                  if(this.hour >= 0 && this.hour <= 24 && this.minute >= 0 && this.minute <= 60 && this.second >= 0 && this.second <= 60){
+                      return true;
+                  }
+              }
+          }
+      }
+      return false;
+  }
+
   public int diferenceYears(Date d) {
     int difference = this.year - d.year;
     return Math.abs(difference);

@@ -5,8 +5,8 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -125,6 +125,7 @@ public class Main {
 
         /* Interaction Menu */
         while(true){
+            validChoice = false;
             System.out.println("\n# Operations Available #");
             System.out.println("0 - Manage information (Insert / Edit / Remove)");
             System.out.println("-----------------------------------");
@@ -194,7 +195,28 @@ public class Main {
                     }
                     break;
                 case 6: // Show all flights done in a period of time
-
+                    System.out.println("Insert beggining date: ");
+                    while(!validChoice) {
+                        System.out.print("Day: ");
+                        int day = scanner.nextInt();
+                        System.out.print("Month: ");
+                        int month = scanner.nextInt();
+                        System.out.print("Year: ");
+                        int year = scanner.nextInt();
+                        System.out.print("Hours: ");
+                        int hours = scanner.nextInt();
+                        System.out.print("Minutes: ");
+                        int minutes = scanner.nextInt();
+                        System.out.print("Seconds: ");
+                        int seconds = scanner.nextInt();
+                        Date newDate = new Date(day, month, year, hours, minutes, seconds);
+                        if(newDate.isValid()){
+                            System.out.println("Valid");
+                            validChoice = true;
+                        }else{
+                            System.out.println("Not valid");
+                        }
+                    }
                     break;
                 case 7: // Airport with the most traffic
                     if(!(result = mostTrafficAirport(airportST)).isEmpty()){
@@ -216,6 +238,7 @@ public class Main {
                     break;
                 default: break;
             }
+            scanner.nextLine();
         }
 
 
