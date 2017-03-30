@@ -35,6 +35,13 @@ public class Main {
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
 
+        Airplane airplane;
+        Airport airportOfOrigin;
+        Airport airportOfDestination;
+        float distance;
+        Date duration, flightDate;
+        int passengers;
+
         // New program or load previous program
         Scanner scanner = new Scanner(System.in);
         while(!validChoice){
@@ -48,80 +55,76 @@ public class Main {
                 ImportFromFile.importAirports(airportST, pathAirports);
                 ImportFromFile.importAirlines(airlinesST, pathAirlines);
                 ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
+
+                // Hardcoded Flights to populate the ST
+                distance = 2000;
+                duration = new Date(0, 0, 0, 10, 0, 0);
+                flightDate = new Date(7, 3, 2017, 12, 50, 30);
+                passengers = 380;
+                airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
+                airportOfDestination = airportST.get("FRA");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                distance = 10000;
+                duration = new Date(1, 0, 0, 10, 0, 0);
+                flightDate = new Date(8, 4, 2017, 23, 1, 30);
+                passengers = 380;
+                airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
+                airportOfDestination = airportST.get("LAD");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                distance = 21500;
+                duration = new Date(0, 0, 0, 17, 43, 32);
+                flightDate = new Date(9, 2, 2017, 23, 1, 30);
+                passengers = 200;
+                airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
+                airportOfDestination = airportST.get("LAD");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                distance = 500;
+                duration = new Date(0, 0, 0, 7, 43, 32);
+                flightDate = new Date(10, 3, 2017, 23, 1, 30);
+                passengers = 100;
+                airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
+                airportOfDestination = airportST.get("OPO");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                distance = 1500;
+                duration = new Date(0, 0, 0, 4, 43, 32);
+                flightDate = new Date(10, 3, 2017, 23, 1, 30);
+                passengers = 100;
+                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+                airportOfDestination = airportST.get("NRT");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                distance = 1000;
+                duration = new Date(0, 0, 0, 4, 43, 32);
+                flightDate = new Date(11, 3, 2017, 23, 1, 30);
+                passengers = 50;
+                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+                airportOfDestination = airportST.get("NRT");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                distance = 5000;
+                duration = new Date(0, 0, 0, 4, 43, 32);
+                flightDate = new Date(27, 1, 1995, 17, 45, 30);
+                passengers = 150;
+                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+                airportOfDestination = airportST.get("OPO");
+                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+
+                // Overwrites previous saved program
+                dump(airportST, airlinesST, airplaneST, flightST);
             }else if(choice == 2){
                 System.out.print("Loading previous program:");
                 if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
                     File file = new File(".//data//currentProgram.txt");
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
-//                    PrintInfo.allAirports(airportST);
                     validChoice = true;
                 }
             }
         }
-
-        Airplane airplane;
-        Airport airportOfOrigin;
-        Airport airportOfDestination;
-        float distance;
-        Date duration, flightDate;
-        int passengers;
-
-        distance = 2000;
-        duration = new Date(0, 0, 0, 10, 0, 0);
-        flightDate = new Date(7, 3, 2017, 12, 50, 30);
-        passengers = 380;
-        airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
-        airportOfDestination = airportST.get("FRA");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-        distance = 10000;
-        duration = new Date(1, 0, 0, 10, 0, 0);
-        flightDate = new Date(8, 4, 2017, 23, 1, 30);
-        passengers = 380;
-        airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
-        airportOfDestination = airportST.get("LAD");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-        distance = 21500;
-        duration = new Date(0, 0, 0, 17, 43, 32);
-        flightDate = new Date(9, 2, 2017, 23, 1, 30);
-        passengers = 200;
-        airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
-        airportOfDestination = airportST.get("LAD");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-        distance = 500;
-        duration = new Date(0, 0, 0, 7, 43, 32);
-        flightDate = new Date(10, 3, 2017, 23, 1, 30);
-        passengers = 100;
-        airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
-        airportOfDestination = airportST.get("OPO");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-        distance = 1500;
-        duration = new Date(0, 0, 0, 4, 43, 32);
-        flightDate = new Date(10, 3, 2017, 23, 1, 30);
-        passengers = 100;
-        airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-        airportOfDestination = airportST.get("NRT");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-        distance = 1000;
-        duration = new Date(0, 0, 0, 4, 43, 32);
-        flightDate = new Date(11, 3, 2017, 23, 1, 30);
-        passengers = 50;
-        airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-        airportOfDestination = airportST.get("NRT");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-        distance = 5000;
-        duration = new Date(0, 0, 0, 4, 43, 32);
-        flightDate = new Date(27, 1, 1995, 17, 45, 30);
-        passengers = 150;
-        airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-        airportOfDestination = airportST.get("OPO");
-        newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
         /* Interaction Menu */
         while(true){
@@ -195,8 +198,9 @@ public class Main {
                     }
                     break;
                 case 6: // Show all flights done in a period of time
-                    System.out.println("Insert beggining date: ");
+                    Date startingDate = null, endingDate = null; // it will never send a null date to the method because of the conditions before the call
                     while(!validChoice) {
+                        System.out.println("Insert starting date: ");
                         System.out.print("Day: ");
                         int day = scanner.nextInt();
                         System.out.print("Month: ");
@@ -209,14 +213,40 @@ public class Main {
                         int minutes = scanner.nextInt();
                         System.out.print("Seconds: ");
                         int seconds = scanner.nextInt();
-                        Date newDate = new Date(day, month, year, hours, minutes, seconds);
-                        if(newDate.isValid()){
-                            System.out.println("Valid");
+                        startingDate = new Date(day, month, year, hours, minutes, seconds);
+                        if(startingDate.isValid()){
                             validChoice = true;
                         }else{
-                            System.out.println("Not valid");
+                            System.out.println("Date not valid");
                         }
                     }
+                    validChoice = false;
+                    while(!validChoice) {
+                        System.out.println("Insert ending date: ");
+                        System.out.print("Day: ");
+                        int day = scanner.nextInt();
+                        System.out.print("Month: ");
+                        int month = scanner.nextInt();
+                        System.out.print("Year: ");
+                        int year = scanner.nextInt();
+                        System.out.print("Hours: ");
+                        int hours = scanner.nextInt();
+                        System.out.print("Minutes: ");
+                        int minutes = scanner.nextInt();
+                        System.out.print("Seconds: ");
+                        int seconds = scanner.nextInt();
+                        endingDate = new Date(day, month, year, hours, minutes, seconds);
+                        if(endingDate.isValid()){
+                            if(endingDate.beforeDate(startingDate) || endingDate.equals(startingDate)){
+                                System.out.println("Ending date can't be previous or equal to the starting date");
+                            }else{
+                                validChoice = true;
+                            }
+                        }else{
+                            System.out.println("Date not valid");
+                        }
+                    }
+                    PrintInfo.flightsBetweenTimes(flightST, startingDate, endingDate);
                     break;
                 case 7: // Airport with the most traffic
                     if(!(result = mostTrafficAirport(airportST)).isEmpty()){
@@ -362,7 +392,7 @@ public class Main {
 
     public static void dump(SeparateChainingHashST<String, Airport> airportST, SeparateChainingHashST<String, Airline> airlineST,
                             RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST){
-        String path = ".//data/dump.txt";
+        String path = ".//data/currentProgram.txt";
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){ // FileWriter with onle one parameter will overwrite the file content each time that is what we want
             bw.write("nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;");
             bw.newLine();
