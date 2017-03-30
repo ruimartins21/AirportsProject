@@ -1,8 +1,9 @@
 package airportsProject;
 
 import airportsProject.Exceptions.AirportNotExistException;
-import edu.princeton.cs.algs4.RedBlackBST;
-import edu.princeton.cs.algs4.SeparateChainingHashST;
+
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

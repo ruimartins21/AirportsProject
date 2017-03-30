@@ -1,7 +1,7 @@
 package airportsProject;
 
-import edu.princeton.cs.algs4.RedBlackBST;
-import edu.princeton.cs.algs4.SeparateChainingHashST;
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
 
 public class PrintInfo {
 //    public PrintInfo() { }

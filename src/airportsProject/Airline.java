@@ -1,6 +1,6 @@
 package airportsProject;
 
-import edu.princeton.cs.algs4.RedBlackBST;
+import libs.RedBlackBST;
 
 public class Airline {
 

@@ -1,8 +1,8 @@
 package airportsProject;
 
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.RedBlackBST;
-import edu.princeton.cs.algs4.SeparateChainingHashST;
+import libs.In;
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
 
 public class ImportFromFile {
 
