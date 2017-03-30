@@ -40,30 +40,28 @@ public class Main {
 
 
 //        debug rui
-        ImportFromFile.importAirports(airportST, pathAirports);
-        ImportFromFile.importAirlines(airlinesST, pathAirlines);
-        ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
+//        ImportFromFile.importAirports(airportST, pathAirports);
+//        ImportFromFile.importAirlines(airlinesST, pathAirlines);
+//        ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
-        addAirplane("airplaneModel", "airplaneName",  "TAP Air Portugal", 345.0f, 1456f,
-                4567f, "OPO", 450, 900, airportST, airplaneST, airlinesST);
+//        addAirplane("airplaneModel", "airplaneName",  "TAP Air Portugal", 345.0f, 1456f,
+//                4567f, "OPO", 450, 900, airportST, airplaneST, airlinesST);
+//
+//        addAirport("airportName" ,"code",  "city", "country","continent", 9.3f, airportST);
+//
+//        editAirport("OPO", "Airport of Rui Miguel Martins", 9.9f, airportST);
+//
+//        editAirplane(21, "model", "name",  3333f, 5000f,20000f, 900, 6000, airplaneST);
 
-        addAirport("airportName" ,"code",  "city", "country","continent", 9.3f, airportST);
-
-        editAirport("OPO", "Airport of Rui Miguel Martins", 9.9f, airportST);
-
-        editAirplane(21, "model", "name",  3333f, 5000f,20000f, 900, 6000, airplaneST);
-
-        PrintInfo.allAirports(airportST);
-        PrintInfo.allAirplanes(airplaneST);
+//        PrintInfo.allAirports(airportST);
+//        PrintInfo.allAirplanes(airplaneST);
 
 
 //        end debug rui
 
 
 
-
         Airplane airplane;
-        Airport airportOfOrigin;
         Airport airportOfDestination;
         float distance;
         Date duration, flightDate;
@@ -172,7 +170,14 @@ public class Main {
             scanner.nextLine();
             switch (choice){
                 case 0: // Insert / Edit / Remove
-                    System.out.println("Manage Infos");
+                    System.out.println("1 - Add a new airport");
+                    System.out.println("2 - Add a new airplane");
+                    System.out.println("3 - Edit an airport");
+                    System.out.println("4 - Edit an airplane");
+                    System.out.println("5 - Remove an airplane");
+                    System.out.println("6 - Remove an airplane");
+                    int newChoice = scanner.nextInt();
+
                     break;
                 case 1: // Show all information about an airport
                     System.out.print("Code of the airport: ");

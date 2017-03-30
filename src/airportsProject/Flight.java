@@ -34,6 +34,7 @@ public class Flight {
 
 //  custo definido pela conecao da viagem mais barata. apos sleecionado pela coneccao a viagem mais barata (é guardado em costs)
     public void setFlightCost() {
+        // airplane returns how many liters will spend on the flight
         this.costs = this.airplane.getAirplaneCost(this.distance, this.connection.getWindSpeed(),this.connection.getAltitude());
 
     }
