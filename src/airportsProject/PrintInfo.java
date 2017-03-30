@@ -23,7 +23,7 @@ public class PrintInfo {
 
     public static void airport(SeparateChainingHashST<String, Airport> airportST, String code) {
         for (String a : airportST.keys()) {
-            if (airportST.get(a).getCode().contentEquals(code)) {
+            if (airportST.get(a).getCode().compareTo(code) == 0) {
                 Airport airport = airportST.get(a);
                 System.out.println();
                 System.out.format("%8s%3s%8s", "Info of ", airport.getCode(), "airport");
@@ -127,7 +127,7 @@ public class PrintInfo {
                 "--------", "-----", "-------------", "-------------");
         System.out.printf("\n\n");
         for (Date f : flightST.keys()) {
-            if (flightST.get(f).getAirportOfOrigin().getCode().equals(airportCode) || flightST.get(f).getAirportOfDestination().getCode().equals(airportCode))  {
+            if (flightST.get(f).getAirportOfOrigin().getCode().compareTo(airportCode) == 0 || flightST.get(f).getAirportOfDestination().getCode().compareTo(airportCode) == 0)  {
                 System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s", flightST.get(f).getAirportOfOrigin().getCode(), flightST.get(f).getAirportOfDestination().getCode(),
                         flightST.get(f).getDate(), flightST.get(f).getDuration(), flightST.get(f).getDistance(), flightST.get(f).getCosts(),flightST.get(f).getPassengers(),
                         flightST.get(f).getAirplane().getName());

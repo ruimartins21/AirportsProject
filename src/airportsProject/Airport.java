@@ -68,6 +68,11 @@ public class Airport {
         return rating;
     }
 
+    public void setName(String name){this.name = name;}
+
+    public void setRating(Float rating){this.rating = rating;}
+
+
     @Override
     public String toString() {
         return "Airport{" +

@@ -35,6 +35,32 @@ public class Main {
         RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
         RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
 
+
+
+
+//        debug rui
+        ImportFromFile.importAirports(airportST, pathAirports);
+        ImportFromFile.importAirlines(airlinesST, pathAirlines);
+        ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
+
+        addAirplane("airplaneModel", "airplaneName",  "TAP Air Portugal", 345.0f, 1456f,
+                4567f, "OPO", 450, 900, airportST, airplaneST, airlinesST);
+
+        addAirport("airportName" ,"code",  "city", "country","continent", 9.3f, airportST);
+
+        editAirport("OPO", "Airport of Rui Miguel Martins", 9.9f, airportST);
+
+        editAirplane(21, "model", "name",  3333f, 5000f,20000f, 900, 6000, airplaneST);
+
+        PrintInfo.allAirports(airportST);
+        PrintInfo.allAirplanes(airplaneST);
+
+
+//        end debug rui
+
+
+
+
         // New program or load previous program
         Scanner scanner = new Scanner(System.in);
         while(!validChoice){
@@ -560,6 +586,94 @@ public class Main {
         }
         System.out.println("# Passengers transported: " + max + " #");
         return airports;
+    }
+
+
+    private static void addAirplane(String model, String name, String airlineName,  float cruiseSpeed, float cruiseAltitude,
+                                        float maxRange, String airportCode, int passengersCapacity, int fuelCapacity,
+                                    SeparateChainingHashST<String, Airport> airportST, RedBlackBST<Integer, Airplane> airplaneST,
+                                    SeparateChainingHashST<String, Airline> airlineST) throws IllegalArgumentException{
+
+        int id = 1; // fica a 0 pois se a ST estive vazia o primeiro aviao fica a 1
+        if(!airplaneST.isEmpty())
+            id = airplaneST.max() +1;
+
+
+        // searches for the airline existence
+        Airline thisPlaneAirline = airlineST.get(airlineName);
+        if(thisPlaneAirline == null){
+            throw new IllegalArgumentException("argument to get() is null [airlineName]");
+        }
+
+        // searches for the airportCode existence
+        Airport thisPlaneAirport = airportST.get(airportCode);
+        if(thisPlaneAirport == null){
+            throw new IllegalArgumentException("argument to get() is null [airportCode]");
+        }
+
+        Airplane newPlane = new Airplane(id, model, name, cruiseSpeed, cruiseAltitude, maxRange, airportCode,
+                passengersCapacity, fuelCapacity, thisPlaneAirline);
+
+        airportST.get(airportCode).receivePlane(newPlane);  // adds this new plane to the respective airport
+        thisPlaneAirline.addPlane(newPlane); // adds this new plane to the respective airline
+        airplaneST.put(id, newPlane); // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
+        Main.log("airplaneST", "Inserted airplane \"" + newPlane.getName() + "\"");
+        // chama a funcao de dump depois da chamada desta funcao nao vale a pena fazer dentro desta o dump pois nem se precisa dos flights
+
+
+
+    }
+
+
+    private static void addAirport(String name, String code,  String city, String country,
+                                    String continent, Float rating, SeparateChainingHashST<String, Airport> airportST) throws IllegalArgumentException{
+
+        // searches for the airportCode existence if exists dont add to airport (throw exception)
+        Airport thisPlaneAirport = airportST.get(code);
+        if(thisPlaneAirport != null){
+            throw new IllegalArgumentException("argument to get() is null [airportCode]");
+        }
+
+        Airport newAirport = new Airport(name, code, city, country, continent, rating);
+        airportST.put(code, newAirport);
+        Main.log("airportST", "Inserted airport \"" + newAirport.getName() + "\"");
+
+
+    }
+
+
+
+    private static void editAirport(String code, String name, Float rating, SeparateChainingHashST<String, Airport> airportST) throws IllegalArgumentException{
+
+        // searches for the airportCode existence
+        Airport thisPlaneAirport = airportST.get(code);
+        if(thisPlaneAirport == null){
+            throw new IllegalArgumentException("argument to get() is null [airportCode]");
+        }
+
+        airportST.get(code).setName(name);
+        airportST.get(code).setRating(rating);
+        Main.log("airportST", "Edited airport [" +  airportST.get(code).getCode() +  "] \" Name:" + airportST.get(code).getName() + "\" Rating:" +
+                airportST.get(code).getRating());
+
+
+    }
+
+
+    private static void editAirplane(int idAirplane, String model, String name,  float cruiseSpeed, float cruiseAltitude,
+                                     float maxRange, int passengersCapacity, int fuelCapacity,
+                                     RedBlackBST<Integer, Airplane> airplaneST){
+        idAirplane -= 1;    // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
+        airplaneST.get(idAirplane).setModel(model);
+        airplaneST.get(idAirplane).setName(name);
+        airplaneST.get(idAirplane).setCruiseSpeed(cruiseSpeed);
+        airplaneST.get(idAirplane).setCruiseAltitude(cruiseAltitude);
+        airplaneST.get(idAirplane).setMaxRange(maxRange);
+        airplaneST.get(idAirplane).setPassengersCapacity(passengersCapacity);
+        airplaneST.get(idAirplane).setFuelCapacity(fuelCapacity);
+
+        Main.log("airplaneST", "Edited airplane [" +airplaneST.get(idAirplane).getId() +"] \"" + airplaneST.get(idAirplane).getName() + "\"");
+
     }
 
 
