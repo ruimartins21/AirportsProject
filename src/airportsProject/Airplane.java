@@ -1,6 +1,6 @@
 package airportsProject;
 
-import edu.princeton.cs.algs4.RedBlackBST;
+import libs.RedBlackBST;
 
 public class Airplane {
 
@@ -74,6 +74,21 @@ public class Airplane {
         return fuelCapacity;
     }
 
+    public void setModel(String model){this.model = model;}
+
+    public void setName(String name){this.name = name;}
+
+    public void setCruiseSpeed(Float cruiseSpeed){this.cruiseSpeed = cruiseSpeed;}
+
+    public void setCruiseAltitude(Float cruiseAltitude){this.cruiseAltitude = cruiseAltitude;}
+
+    public void setMaxRange(Float maxRange){this.maxRange = maxRange;}
+
+    public void setPassengersCapacity(int passengersCapacity){this.passengersCapacity = passengersCapacity;}
+
+    public void setFuelCapacity(int fuelCapacity){this.fuelCapacity = fuelCapacity;}
+
+
     public Flight getLatestFlight() {
         // apanhar o ultimo voo inserido e verificar pela duracao e data atual se ja acabou ou se ainda se encontra
         // em viagem, se ainda se encontrar, retorna a viagem, senao retorna null e avisa que nao ha viagens em curso
@@ -91,6 +106,20 @@ public class Airplane {
         return airline;
     }
 
+
+    public float getAirplaneCost(float distance, float windSpeed, float altitude) {
+
+        float altitudeDiference = this.cruiseAltitude - altitude; // diferenca entre a alitude do aviao e do tunel aereo
+        altitudeDiference = altitudeDiference % 1000;
+        if(altitudeDiference > 0){
+            return  Main.nValue * altitudeDiference * distance * windSpeed;
+        }else if(altitudeDiference < 0){
+            return  Main.mValue * altitudeDiference * distance * windSpeed;
+        }
+        return  distance * windSpeed;
+    }
+
+
     @Override
     public String toString() {
         return "Airplane{" +
@@ -104,21 +133,5 @@ public class Airplane {
                 ", passengersCapacity=" + passengersCapacity +
                 ", fuelCapacity=" + fuelCapacity +
                 '}';
-    }
-
-
-
-
-
-    public float getAirplaneCost(float distance, float windSpeed, float altitude) {
-
-        float altitudeDiference = this.cruiseAltitude - altitude; // diferenca entre a alitude do aviao e do tunel aereo
-        altitudeDiference = altitudeDiference % 1000;
-        if(altitudeDiference > 0){
-            return  Main.nValue * altitudeDiference * distance * windSpeed;
-        }else if(altitudeDiference < 0){
-            return  Main.mValue * altitudeDiference * distance * windSpeed;
-        }
-        return  distance * windSpeed;
     }
 }

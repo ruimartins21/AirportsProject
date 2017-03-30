@@ -1,6 +1,6 @@
 package airportsProject;
 
-import edu.princeton.cs.algs4.RedBlackBST;
+import libs.RedBlackBST;
 
 public class Airport {
 
@@ -67,6 +67,11 @@ public class Airport {
     public float getRating() {
         return rating;
     }
+
+    public void setName(String name){this.name = name;}
+
+    public void setRating(Float rating){this.rating = rating;}
+
 
     @Override
     public String toString() {
