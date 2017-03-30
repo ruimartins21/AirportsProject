@@ -177,7 +177,73 @@ public class Main {
                     System.out.println("5 - Remove an airplane");
                     System.out.println("6 - Remove an airplane");
                     int newChoice = scanner.nextInt();
-
+                    if(newChoice >= 1 && newChoice <= 6){
+                        switch (newChoice){
+                            case 1:
+                                if(!addAirportTerminal(airportST)){
+                                    System.out.println("Couldn't add the new airport.");
+                                }
+                                scanner.nextLine();
+                                break;
+                            case 2:
+                                if(!addAirplaneTerminal(airplaneST)){
+                                    System.out.println("Couldn't add the new airplane.");
+                                }
+                                scanner.nextLine();
+                                break;
+                            case 3:
+                                scanner.nextLine();
+                                System.out.print("Code of the airport: ");
+                                airportCode = scanner.nextLine();
+                                airportCode = airportCode.toUpperCase();
+                                Airport selectedAirport;
+                                if((selectedAirport = airportST.get(airportCode)) != null){
+                                    editAirportTerminal(selectedAirport);
+                                    System.out.println("Airport edited successfully");
+                                }else{
+                                    System.out.println("! There's no airport with that code !");
+                                }
+                                break;
+                            case 4:
+                                scanner.nextLine();
+                                System.out.print("ID of the airplane: ");
+                                airplaneId = scanner.nextInt();
+                                Airplane selectedAirplane;
+                                if((selectedAirplane = airplaneST.get(airplaneId)) != null){
+                                    editAirplaneTerminal(selectedAirplane);
+                                    System.out.println("Airplane edited successfully");
+                                }else{
+                                    System.out.println("! There's no airplane with that ID !");
+                                }
+                                break;
+                            case 5:
+                                scanner.nextLine();
+                                System.out.print("Code of the airport: ");
+                                airportCode = scanner.nextLine();
+                                airportCode = airportCode.toUpperCase();
+                                try {
+                                    removeAirport(airportST, airplaneST, airportCode);
+                                    System.out.println("Airport removed successfully");
+                                }catch (AirportNotExistException ae){
+                                    System.out.println(ae.getMessage());
+                                }
+                                break;
+                            case 6:
+                                scanner.nextLine();
+                                System.out.print("ID of the airplane: ");
+                                airplaneId = scanner.nextInt();
+                                Airplane airplaneToRemove;
+                                if((airplaneToRemove = airplaneST.get(airplaneId)) != null){
+                                    removeAirplane(airplaneST, airportST, airplaneToRemove);
+                                    System.out.println("Airplane removed successfully");
+                                }else{
+                                    System.out.println("! There's no airplane with that ID !");
+                                }
+                                break;
+                        }
+                    }else{
+                        System.out.println("Choose a valid choice");
+                    }
                     break;
                 case 1: // Show all information about an airport
                     System.out.print("Code of the airport: ");
@@ -188,6 +254,7 @@ public class Main {
                     }else{
                         System.out.println("! There's no airport with that code !");
                     }
+                    scanner.nextLine();
                     break;
                 case 2: // Show all information relative to an airplane
                     System.out.print("ID of the airplane: ");
@@ -197,6 +264,7 @@ public class Main {
                     }else{
                         System.out.println("! There's no airplane with that ID !");
                     }
+                    scanner.nextLine();
                     break;
                 case 3: // Show all airports from a certain Country / Continent
                     System.out.print("Country or Continent: ");
@@ -209,6 +277,7 @@ public class Main {
                     }else{
                         System.out.println("! There's no airport from that country / continent !");
                     }
+                    scanner.nextLine();
                     break;
                 case 4: // Show all flights with origin/destination on a certain airport
                     System.out.print("Code of the airport: ");
@@ -228,6 +297,7 @@ public class Main {
                     }else{
                         System.out.println("! There's no airplane with that ID !");
                     }
+                    scanner.nextLine();
                     break;
                 case 6: // Show all flights done in a period of time
                     Date startingDate = null, endingDate = null; // it will never send a null date to the method because of the conditions before the call
@@ -279,6 +349,7 @@ public class Main {
                         }
                     }
                     PrintInfo.flightsBetweenTimes(flightST, startingDate, endingDate);
+                    scanner.nextLine();
                     break;
                 case 7: // Airport with the most traffic
                     if(!(result = mostTrafficAirport(airportST)).isEmpty()){
@@ -288,6 +359,7 @@ public class Main {
                     }else{
                         System.out.println("! There's no airports with traffic !");
                     }
+                    scanner.nextLine();
                     break;
                 case 8: // Flight that carried more passengers
                     if(!(result = mostPassengersAirport(airportST)).isEmpty()){
@@ -297,10 +369,10 @@ public class Main {
                     }else{
                         System.out.println("! There's no airports with traffic !");
                     }
+                    scanner.nextLine();
                     break;
                 default: break;
             }
-            scanner.nextLine();
         }
 
 
@@ -518,6 +590,23 @@ public class Main {
             }
         }
     }
+
+    private static boolean addAirportTerminal(SeparateChainingHashST<String, Airport> airportST){
+
+        return false;
+    }
+    private static boolean addAirplaneTerminal(RedBlackBST<Integer, Airplane> airplaneST){
+
+        return false;
+    }
+    private static void editAirportTerminal(Airport selectedAirport){
+
+    }
+    private static void editAirplaneTerminal(Airplane selectedAirplane){
+
+    }
+
+
 
     /**
      * Removes an airplane from the database (respective symbol table, airline and the current airport where it is parked)
