@@ -98,6 +98,10 @@ public class Airplane {
         return null;
     }
 
+    private float planeConsumption() {
+        return 1000*(this.getFuelCapacity()/this.getMaxRange());
+    }
+
     public void setAirplaneFlight(Flight currentFlight) {
         this.airplaneFlights.put(currentFlight.getDate(), currentFlight);
     }
@@ -108,15 +112,23 @@ public class Airplane {
 
 
     public float getAirplaneCost(float distance, float windSpeed, float altitude) {
-
-        float altitudeDiference = this.cruiseAltitude - altitude; // diferenca entre a alitude do aviao e do tunel aereo
-        altitudeDiference = altitudeDiference % 1000;
-        if(altitudeDiference > 0){
-            return  Main.nValue * altitudeDiference * distance * windSpeed;
-        }else if(altitudeDiference < 0){
-            return  Main.mValue * altitudeDiference * distance * windSpeed;
+        // cost of the wind speed
+        float windCost = 0f;
+        if(windSpeed < 0){ // against the airplane, adds cost
+            windSpeed = Math.abs(windSpeed);
+            windCost = -(Main.windCost*windSpeed);
+        }else{ // in favor of the airplane, reduces cost
+            windCost = Main.windCost*windSpeed;
         }
-        return  distance * windSpeed;
+        // cost of the altitude
+        float altitudeDiference = this.cruiseAltitude - altitude; // diferenca entre a alitude do aviao e do tunel aereo
+        altitudeDiference %= 1000;
+        if(altitudeDiference > 0){
+            return  planeConsumption() + (Main.nValue * altitudeDiference) + (windCost*distance);
+        }else if(altitudeDiference < 0){
+            return  planeConsumption() + (Main.mValue * altitudeDiference) + (windCost*distance);
+        }
+        return planeConsumption() + (windCost*distance);
     }
 
 

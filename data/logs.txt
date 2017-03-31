@@ -1,0 +1,6 @@
+30/03/2017 21:26:35 # From flightST: New flight leaving at:27/1/1995 (17h 45m 30s); duration: 4 hours 43 minutes 32 seconds ; from "Narita ( 5000.0m) "; to "Francisco Sá Carneiro"; airplane: "Amalia Rodrigues"
+30/03/2017 21:26:35 # From flightST: New flight leaving at:9/5/2017 (23h 1m 30s); duration: 17 hours 43 minutes 32 seconds ; from "Francisco Sá Carneiro ( 21500.0m) "; to "Internacional Quatro de Fevereiro"; airplane: "Pero Vaz de Caminha"
+30/03/2017 21:26:35 # From flightST: New flight leaving at:7/3/2017 (12h 50m 30s); duration: 10 hours ; from "Francisco Sá Carneiro ( 2000.0m) "; to "Frankfurt"; airplane: "Wenceslau de Moraes"
+30/03/2017 21:26:35 # From flightST: New flight leaving at:10/3/2017 (23h 1m 30s); duration: 4 hours 43 minutes 32 seconds ; from "Amsterdam Schiphol ( 1500.0m) "; to "Narita"; airplane: "Amalia Rodrigues"
+30/03/2017 21:26:35 # From flightST: New flight leaving at:11/3/2017 (23h 1m 30s); duration: 4 hours 43 minutes 32 seconds ; from "Narita ( 1000.0m) "; to "Narita"; airplane: "Amalia Rodrigues"
+30/03/2017 21:26:35 # From flightST: New flight leaving at:8/4/2017 (23h 1m 30s); duration: 1 days 10 hours ; from "Francisco Sá Carneiro ( 10000.0m) "; to "Internacional Quatro de Fevereiro"; airplane: "D. Francisco de Almeida"

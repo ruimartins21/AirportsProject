@@ -9,7 +9,7 @@ public class Flight {
     private int passengers;
     private Airplane airplane;
 //    private ArrayList<Connection> connections = new ArrayList<>();
-    private Connection connection;
+    private Connection connection = new Connection(0,0,0,930,400);
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
@@ -22,22 +22,28 @@ public class Flight {
         this.setAirports(airportOfOrigin, airportOfDestination);
         this.setAirplane(airplane);
         this.setPassengers(passengers); // checks if the number of passengers doesn't exceed the airplane capacity
+
+        this.setFlightCost();
     }
+
+
 
     private void setConnection(){
 //        this.connection = new Connection();
     }
 
-    private float planeConsumption() {
-        return 1000*(airplane.getFuelCapacity()/airplane.getMaxRange());
-    }
 
-//  custo definido pela conecao da viagem mais barata. apos sleecionado pela coneccao a viagem mais barata (é guardado em costs)
+//  custo definido pela conecao da viagem mais barata. apos sleecionado pela coneccao a viagem mais barata (é guardado em costs) 2 fase
     public void setFlightCost() {
         // airplane returns how many liters will spend on the flight
         this.costs = this.airplane.getAirplaneCost(this.distance, this.connection.getWindSpeed(),this.connection.getAltitude());
 
     }
+
+    public float getFlightCostEuros(){
+        return Main.euroValue * this.costs;
+    }
+
 
 
     private void setPassengers(int passengers) {
