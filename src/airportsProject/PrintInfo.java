@@ -117,16 +117,16 @@ public class PrintInfo {
         System.out.printf("\n\n");
         System.out.format("%75s%3s%3s%8s", "Travels between ", start, " and ", end);
         System.out.printf("\n\n");
-        System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
+        System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
                 "Distance","Costs", "Nº Passengers", "Airplane Name");
         System.out.println();
-        System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s",    "----------------",  "---------------------",  "----", "--------",
+        System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s",    "----------------",  "---------------------",  "----", "--------",
                 "--------", "-----", "-------------", "-------------");
         System.out.printf("\n\n");
         for (Date f : flightST.keys()) {
             Flight flight = flightST.get(f);
             if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1 ) {
-                System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
+                System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
                         flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(),flight.getPassengers(),
                         flight.getAirplane().getName());
                 System.out.println();
@@ -143,16 +143,16 @@ public class PrintInfo {
         System.out.printf("\n\n");
         System.out.format("%70s%3s", "Travels of ", airport.getCode());
         System.out.printf("\n\n");
-        System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
+        System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
                 "Distance","Costs", "Nº Passengers", "Airplane Name");
         System.out.println();
-        System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s",    "----------------",  "---------------------",  "----", "--------",
+        System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s",    "----------------",  "---------------------",  "----", "--------",
                 "--------", "-----", "-------------", "-------------");
         System.out.printf("\n\n");
         RedBlackBST<Date, Flight> airportFlights = airport.getFlights();
         for (Date f : airportFlights.keys()) {
             Flight flight = airportFlights.get(f);
-            System.out.format("%20s%25s%26s%26s%11s%8s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
+            System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
                     flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(),flight.getPassengers(), flight.getAirplane().getName());
             System.out.println();
         }
@@ -166,16 +166,16 @@ public class PrintInfo {
         System.out.printf("\n\n");
         System.out.format("%90s%3s", "Travels made by Airplane: [" + airplane.getId() + "] ", airplane.getName());
         System.out.printf("\n\n");
-        System.out.format("%20s%25s%26s%26s%11s%8s%16s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
+        System.out.format("%20s%25s%26s%26s%11s%15s%16s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
                 "Distance","Costs", "Nº Passengers", "Airplane Name");
         System.out.println();
-        System.out.format("%20s%25s%26s%26s%11s%8s%16s%35s",    "-----------------",  "---------------------",  "----", "--------",
+        System.out.format("%20s%25s%26s%26s%11s%15s%16s%35s",    "-----------------",  "---------------------",  "----", "--------",
                 "--------", "-----", "-------------", "-------------");
         System.out.printf("\n\n");
         RedBlackBST<Date, Flight> airplaneFlights = airplane.getAirplaneFlights();
         for (Date d : airplaneFlights.keys()) {
             Flight flight = airplaneFlights.get(d);
-            System.out.format("%20s%25s%26s%26s%11s%8s%16s%35s", flight.getAirportOfOrigin().getCode(),
+            System.out.format("%20s%25s%26s%26s%11s%15s%16s%35s", flight.getAirportOfOrigin().getCode(),
                     flight.getAirportOfDestination().getCode(),flight.getDate(), flight.getDuration(), flight.getDistance(),
                     flight.getCosts(),flight.getPassengers(), flight.getAirplane().getName());
             System.out.println();
@@ -190,15 +190,15 @@ public class PrintInfo {
         System.out.printf("\n\n");
         System.out.format("%70s%3s", "Last travel made by Airplane: [" + airplane.getId() + "] ", airplane.getName());
         System.out.printf("\n\n");
-        System.out.format("%20s%25s%26s%26s%11s%8s%16s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
+        System.out.format("%20s%25s%26s%26s%11s%15s%16s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
                 "Distance", "Costs", "Nº Passengers", "Airplane Name");
         System.out.println();
-        System.out.format("%20s%25s%26s%26s%11s%8s%16s%35s",    "-----------------",  "---------------------",  "----", "--------",
+        System.out.format("%20s%25s%26s%26s%11s%15s%16s%35s",    "-----------------",  "---------------------",  "----", "--------",
                 "--------", "-----", "-------------", "-------------");
         System.out.printf("\n\n");
         Flight latestFlight = airplane.getLatestFlight();
         if(latestFlight != null){
-            System.out.format("%20s%25s%26s%26s%11s%8s%16s%35s", latestFlight.getAirportOfOrigin().getCode(),
+            System.out.format("%20s%25s%26s%26s%11s%15s%16s%35s", latestFlight.getAirportOfOrigin().getCode(),
                     latestFlight.getAirportOfDestination().getCode(),latestFlight.getDate(), latestFlight.getDuration(), latestFlight.getDistance(),
                     latestFlight.getCosts(), latestFlight.getPassengers(), latestFlight.getAirplane().getName());
             System.out.println();

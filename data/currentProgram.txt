@@ -1,4 +1,5 @@
 nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;
+rui;OLA;ole;oli;olo;99.0;
 Narita;NRT;Tokyo;Japan;Asia;9.8;
 Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
 Houari Boumediene;ALG;Algiers;Algeria;Africa;7.6;

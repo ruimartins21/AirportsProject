@@ -353,7 +353,6 @@ public class Main {
                         }
                     }
                     PrintInfo.flightsBetweenTimes(flightST, startingDate, endingDate);
-                    scanner.nextLine();
                     break;
                 case 7: // Airport with the most traffic
                     if(!(airportResults = mostTrafficAirport(airportST)).isEmpty()){
@@ -389,6 +388,7 @@ public class Main {
                         scanner.nextLine();
                     }
                     airplaneId = scanner.nextInt();
+                    airplaneId -= 1;
                     if(airplaneST.get(airplaneId) != null){
                         PrintInfo.latestFlightOfAirplane(airplaneST.get(airplaneId));
                     }else{
