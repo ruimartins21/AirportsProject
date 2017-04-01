@@ -30,10 +30,10 @@ public class Main {
         String pathAirplanes    = ".//data//airplanes.txt";
         String pathAirlines     = ".//data//airlines.txt";
 
-        SeparateChainingHashST<String, Airport> airportST = new SeparateChainingHashST<>();
+        SeparateChainingHashST<String, Airport> airportST  = new SeparateChainingHashST<>();
         SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
-        RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
-        RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
+        RedBlackBST<Integer, Airplane> airplaneST          = new RedBlackBST<>();
+        RedBlackBST<Date, Flight> flightST                 = new RedBlackBST<>();
 
         Airplane airplane;
         Airport airportOfDestination;
@@ -159,7 +159,7 @@ public class Main {
                                     "8 - Remove an airplane\n" +
                                     "9 - Remove an airline\n");
                     int newChoice = scanner.nextInt();
-                    if(newChoice >= 1 && newChoice <= 6){
+                    if(newChoice >= 1 && newChoice <= 9){
                         switch (newChoice){
                             case 1: // add a new airport
                                 if(!addAirportTerminal(airportST)){
