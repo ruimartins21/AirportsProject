@@ -16,6 +16,8 @@ import java.util.Scanner;
 public class Main {
     static int nValue = 200;
     static int mValue = 250;
+    static int euroValue = 30;  // 30 euros per liter
+    static int windCost = 10; // gasto adicional por km/hora de vento (10L/1000km)
 
     public static void main(String[] args) {
         boolean validChoice = false;
@@ -39,10 +41,14 @@ public class Main {
 
 
 
+
+
 //        debug rui
 //        ImportFromFile.importAirports(airportST, pathAirports);
 //        ImportFromFile.importAirlines(airlinesST, pathAirlines);
 //        ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
+
+        ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST);
 
 //        addAirplane("airplaneModel", "airplaneName",  "TAP Air Portugal", 345.0f, 1456f,
 //                4567f, "OPO", 450, 900, airportST, airplaneST, airlinesST);
@@ -55,6 +61,9 @@ public class Main {
 
 //        PrintInfo.allAirports(airportST);
 //        PrintInfo.allAirplanes(airplaneST);
+        PrintInfo.flightsBetweenTimes(flightST,new Date(1, 3, 2017, 9, 00, 00),new Date(31, 10, 2017, 9, 00, 00) );
+
+        System.out.println( "Custo da viagem: " +flightST.get(new Date(7, 3, 2017, 12, 50, 30)).getFlightCostEuros() + " €" );
 
 
 //        end debug rui
