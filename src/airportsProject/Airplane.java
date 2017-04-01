@@ -2,6 +2,11 @@ package airportsProject;
 
 import libs.RedBlackBST;
 
+/**
+ * The airplane class represents an airplane object with its characteristics and its connections (to an airport, to flights)
+ * Aswell as the usual methods that provides (getters and setters), the class calculates the airplane cost for a specific
+ * connection of a flight and it provides information on the flights already done, or still to be done
+ */
 public class Airplane {
 
     private int id;
@@ -30,9 +35,7 @@ public class Airplane {
         this.airline = airline;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public String getModel() {
         return model;
@@ -88,20 +91,32 @@ public class Airplane {
 
     public void setFuelCapacity(int fuelCapacity){this.fuelCapacity = fuelCapacity;}
 
-
+    /**
+     * Gets the latest flight
+     * this means, the latest flight occurred and not a flight still schedule to happen
+     * Compares to the current date on the RedBlack the highest key BEFORE the key given (current date): floor function
+     * @return returns that flight
+     */
     public Flight getLatestFlight() {
-        // apanhar o ultimo voo inserido e verificar pela duracao e data atual se ja acabou ou se ainda se encontra
-        // em viagem, se ainda se encontrar, retorna a viagem, senao retorna null e avisa que nao ha viagens em curso
         Date today = new Date();
         if(this.airplaneFlights.size() > 0)
-            return this.airplaneFlights.get(this.airplaneFlights.floor(today));
+            if(this.airplaneFlights.floor(today) != null)
+                return this.airplaneFlights.get(this.airplaneFlights.floor(today));
         return null;
     }
 
+    /**
+     * Consumption of fuel by the airplane considering its capacity and its max range
+     * @return returns the ammount of fuel it will spend each 1000 km
+     */
     private float planeConsumption() {
         return 1000*(this.getFuelCapacity()/this.getMaxRange());
     }
 
+    /**
+     * Adds a flight that the airplane will do
+     * @param currentFlight the flight to add
+     */
     public void setAirplaneFlight(Flight currentFlight) {
         this.airplaneFlights.put(currentFlight.getDate(), currentFlight);
     }
@@ -110,7 +125,21 @@ public class Airplane {
         return airline;
     }
 
-
+    /**
+     * Cost in fuel litres for the airplane considering various factors like
+     * -> distance of the flight
+     * -> wind speed of the current connection
+     * -> altitude or aereal tunnel of the connection
+     * with this weights in consideration, it will calculate:
+     * if the altitude of the connection is higher than the cruise altitude of the airplane the cost will be higher
+     * than the cost if it travelled in its cruise altitude and the same happens if the altitude is lower, it will cost more.
+     * the wind speed will affect aswell the cost in the way that if the wind is against the plane will require more power for it to push
+     * therefore will add to the fuel cost, contrary to that, if the wind is in favor it will help the plane and it can spend less fuel
+     * @param distance distance of the connection
+     * @param windSpeed speed of the wind (and its direction given by the signal)
+     * @param altitude altitude of the connection that the airplane must fly
+     * @return returns the cost in litres for the connection
+     */
     public float getAirplaneCost(float distance, float windSpeed, float altitude) {
         // cost of the wind speed
         float windCost = 0f;
@@ -121,8 +150,8 @@ public class Airplane {
             windCost = Main.windCost*windSpeed;
         }
         // cost of the altitude
-        float altitudeDiference = this.cruiseAltitude - altitude; // diferenca entre a alitude do aviao e do tunel aereo
-        altitudeDiference %= 1000;
+        float altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
+        altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
         if(altitudeDiference > 0){
             return  planeConsumption() + (Main.nValue * altitudeDiference) + (windCost*distance);
         }else if(altitudeDiference < 0){
@@ -130,7 +159,6 @@ public class Airplane {
         }
         return planeConsumption() + (windCost*distance);
     }
-
 
     @Override
     public String toString() {

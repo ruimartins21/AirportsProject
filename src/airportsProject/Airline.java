@@ -2,6 +2,11 @@ package airportsProject;
 
 import libs.RedBlackBST;
 
+/**
+ * The airline class represents an actual airline that owns airplanes and does their management:
+ * Insert/Removing airplanes
+ * It also gives information on its fleet, how many airplanes a company has
+ */
 public class Airline {
 
     private String name;
@@ -27,6 +32,14 @@ public class Airline {
 
     public String getNationality() {
         return nationality;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public RedBlackBST<Integer, Airplane> getFleet() {

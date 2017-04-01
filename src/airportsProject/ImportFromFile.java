@@ -6,6 +6,11 @@ import libs.SeparateChainingHashST;
 
 public class ImportFromFile {
 
+    /**
+     * Imports from the file the airports
+     * @param airportST ST that will populate with the airports read from the file
+     * @param path path to the file that contains the airports
+     */
     public static void importAirports(SeparateChainingHashST<String, Airport> airportST, String path) {
         In in = new In(path);
         int i = 0;
@@ -26,6 +31,13 @@ public class ImportFromFile {
         }
     }
 
+    /**
+     * Imports from the file the airplanes
+     * @param airportST ST needed to link airplanes to an airport because they need to be "parked" somewhere
+     * @param airplaneST ST populated with the airplanes read from the file
+     * @param airlineST ST needed to link an airplane to an airline that owns that airplane
+     * @param path path to the file that contains the airplanes
+     */
     public static void importPlanes(SeparateChainingHashST<String, Airport> airportST, RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airline> airlineST, String path) {
         In in = new In(path);
         int i = 0;
@@ -60,6 +72,11 @@ public class ImportFromFile {
         }
     }
 
+    /**
+     * Imports from the file the airlines
+     * @param airlineST ST populated with the airlines read from the file
+     * @param path path to the file that contains the airlines
+     */
     public static void importAirlines(SeparateChainingHashST<String, Airline> airlineST, String path) {
         In in = new In(path);
         int i = 0;
@@ -74,6 +91,16 @@ public class ImportFromFile {
         }
     }
 
+    /**
+     * File holding the previous program opened so changes like additions, editions and removals of any info is stored on it
+     * aswell as the flights occurred
+     * @param path path to the file
+     * @param airportST will populate this ST with the airports
+     * @param airlineST will populate this ST with the airlines
+     * @param airplaneST will populate this ST with the airplanes
+     * @param flightST will populate this ST with the flights
+     * @return returns false if the file is empty and true if the read was successful and there's data to begin the program
+     */
     public static boolean currentProgram( String path,SeparateChainingHashST<String, Airport> airportST,SeparateChainingHashST<String, Airline> airlineST,
                                           RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST) {
         In in = new In();

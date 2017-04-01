@@ -2,6 +2,11 @@ package airportsProject;
 
 import libs.RedBlackBST;
 
+/**
+ * The airport class has information (and provides it by getters aswell) on itself and on the airplanes that are parked
+ * on a certain airport aswell as an history of flights that passed through it, being the airport the origin, the destination,
+ * or simply a scale of a flight between two other airports
+ */
 public class Airport {
 
     private String name;
@@ -36,9 +41,7 @@ public class Airport {
         return airplanes;
     }
 
-    public RedBlackBST<Date, Flight> getFlights() {
-        return flights;
-    }
+    public RedBlackBST<Date, Flight> getFlights() { return flights; }
 
     public void newFlight(Flight flight) {
         this.flights.put(flight.getDate(), flight);
@@ -71,7 +74,6 @@ public class Airport {
     public void setName(String name){this.name = name;}
 
     public void setRating(Float rating){this.rating = rating;}
-
 
     @Override
     public String toString() {
