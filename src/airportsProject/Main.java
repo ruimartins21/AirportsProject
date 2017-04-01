@@ -403,7 +403,7 @@ public class Main {
 
     /**
      * Intermediate method for creating a flight, this will be done by an algorithm of the shortest path when we start
-     * implementing Graphs
+     * implementing Graphs.
      * @param distance distance to the destination
      * @param duration of the flight until the plane reaches the destination
      * @param date when the airplane will leave the origin airport
