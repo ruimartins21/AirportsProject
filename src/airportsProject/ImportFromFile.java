@@ -103,11 +103,12 @@ public class ImportFromFile {
      */
     public static boolean currentProgram( String path,SeparateChainingHashST<String, Airport> airportST,SeparateChainingHashST<String, Airline> airlineST,
                                           RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST) {
-        In in = new In();
+        In in;
         try{
             in = new In(path);
         }catch (Exception e){
             System.out.println("! No previous program saved !");
+            return false;
         }
 
         int i = 0,j=0;

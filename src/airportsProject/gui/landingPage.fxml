@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?scenebuilder-stylesheet vista.css?>
+
+<VBox fx:id="containLanding" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.landingPageController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1000.0" text="AIRPORTS MANAGEMENT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" VBox.vgrow="NEVER">
+         <font>
+            <Font name="Helvetica Light" size="40.0" />
+         </font>
+      </Label>
+      <Region prefHeight="20.0" prefWidth="1000.0" />
+      <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="separator" />
+      <Region prefHeight="30.0" prefWidth="1000.0" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="NEVER">
+         <children>
+            <Pane fx:id="newProgram" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="200.0" styleClass="menuOption">
+               <HBox.margin>
+                  <Insets right="60.0" />
+               </HBox.margin>
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="18.0" layoutY="25.0">
+                     <image>
+                        <Image url="@images/newProgram.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="whiteLabel" layoutX="85.0" layoutY="-2.0" prefHeight="104.0" prefWidth="127.0" text="NEW PROGRAM" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="loadProgram" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="200.0" styleClass="menuOption">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="18.0" layoutY="25.0">
+                     <image>
+                        <Image url="@images/loadProgram.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="whiteLabel" layoutX="85.0" layoutY="-2.0" prefHeight="104.0" prefWidth="127.0" text="LOAD PROGRAM" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+      <Label id="creditsLabel" fx:id="credits" alignment="CENTER" onMouseClicked="#openCredits" onMouseEntered="#inCredits" onMouseExited="#outCredits" text="CREDITS" textAlignment="CENTER" textFill="WHITE" translateY="150.0" wrapText="true" VBox.vgrow="NEVER">
+         <font>
+            <Font name="Helvetica Light" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" text="\@ UFP - 2016 / 2017" textAlignment="CENTER" textFill="WHITE" translateY="160.0">
+         <font>
+            <Font name="Helvetica Light" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

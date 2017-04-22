@@ -115,14 +115,14 @@ public class Main {
                 // Overwrites previous saved program
                 dump(airportST, airlinesST, airplaneST, flightST);
             }else if(choice == 2){
-                System.out.print("Loading previous program ...");
+                System.out.println("Loading previous program ...");
                 if(ImportFromFile.currentProgram(".//data//currentProgram.txt",airportST,airlinesST,airplaneST,flightST)){
                     File file = new File(".//data//currentProgram.txt");
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
                     validChoice = true;
                 }else{
-                    System.out.println("Error: no data found on the file.");
+                    System.out.println("Error opening previous program.");
                 }
             }
         }
@@ -553,7 +553,7 @@ public class Main {
 
     /**
      * Removes an airplane from the database (respective symbol table, airline and the current airport where it is parked)
-     * @param airplaneST is the symbol table where it is stored in this Main class
+     * @param airplaneST is the symbol table where it is stored in this MainGUI class
      * @param plane is the plane to remove
      */
     private static void removeAirplane(RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airport> airportST,
@@ -976,6 +976,7 @@ public class Main {
         RedBlackBST<Date, Flight> airportFlights;
         int max = 0, nPassengers;
         for(String code : airportST.keys()){
+            // ao inserir um voo num aeroporto ter atributo de passageiros e somar n passageiros do novo voo
             nPassengers = 0;
             airportFlights = airportST.get(code).getFlights();
             for(Date d : airportFlights.keys()){

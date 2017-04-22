@@ -1,0 +1,30 @@
+.mainBackground{
+    -fx-background-image: url("images/mainBack.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+.menuOption{
+    -fx-background-color: #4185d1;
+    -fx-cursor: hand;
+}
+.separator{
+    -fx-background-color: #4185d1;
+}
+#creditsLabel{
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-padding: 7 10;
+    -fx-cursor: hand;
+}
+.dialogBackground{
+    -fx-background-color: #444444;
+}
+.button-bar > .container{
+    -fx-background-color: #444444;
+}
+.dialog-pane .button{
+    -fx-background-color: #4185d1;
+    -fx-text-fill: white;
+    -fx-cursor:hand;
+    -fx-background-radius: 0,0,0,0;
+}

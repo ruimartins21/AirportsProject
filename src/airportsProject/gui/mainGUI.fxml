@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="airportsProject.gui.MainGUIController">
+  <children>
+    <StackPane fx:id="vistaHolder" VBox.vgrow="ALWAYS" />
+  </children>
+</VBox>

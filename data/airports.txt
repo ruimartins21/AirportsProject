@@ -32,9 +32,3 @@ Charles de Gaulle;CDG;Paris;France;Europe;8.1;
 Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
 Rio Galeão;GIG;Rio de Janeiro;Brazil;South America;5.3;
 Narita;NRT;Tokyo;Japan;Asia;9.8;
-
-
-
-
-
- 

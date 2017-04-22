@@ -125,6 +125,7 @@ public class PrintInfo {
         System.out.printf("\n\n");
         for (Date f : flightST.keys()) {
             Flight flight = flightST.get(f);
+//            procurar voos por key(start, end)
             if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1 ) {
                 System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
                         flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(),flight.getPassengers(),

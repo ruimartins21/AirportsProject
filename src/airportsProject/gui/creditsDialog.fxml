@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.*?>
+<DialogPane prefHeight="300.0" prefWidth="500.0" styleClass="dialogBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <header>
+      <Pane prefHeight="269.0" prefWidth="470.0">
+         <children>
+            <Label layoutX="183.0" layoutY="-2.0" text="CREDITS" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="25.0" />
+               </font>
+            </Label>
+             <Region layoutX="138.0" layoutY="39.0" prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="separator" />
+             <Label layoutX="48.0" layoutY="60.0" text="Ricardo Barbosa nº 31210" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="266.0" layoutY="60.0" text="Rui Martins nº 31217" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="17.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="85.0" fitWidth="270.0" layoutX="105.0" layoutY="184.0">
+               <image>
+                  <Image url="@images/ufp.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="156.0" layoutY="160.0" text="Engenharia Informática" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="48.0" layoutY="93.0" text="Within the subjects:" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="264.0" layoutY="80.0" prefHeight="45.0" prefWidth="200.0" text="Linguagens de Programação II" textFill="#4185d1" wrapText="true">
+               <font>
+                  <Font name="Helvetica Light" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="264.0" layoutY="110.0" prefHeight="45.0" prefWidth="200.0" text="Algoritmos e Estruturas de Dados II" textFill="#4185d1" wrapText="true">
+               <font>
+                  <Font name="Helvetica Light" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </header>
+</DialogPane>
