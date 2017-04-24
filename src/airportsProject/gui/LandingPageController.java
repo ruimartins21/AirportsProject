@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
-public class landingPageController {
+public class LandingPageController {
     @FXML
     private Pane newProgram;
     @FXML
@@ -46,7 +46,6 @@ public class landingPageController {
     @FXML
     void optionClicked(MouseEvent event){
         if(event.getSource().equals(newProgram)){
-            System.out.println("Going to create a new program");
 //            System.out.println("Creating new program ...");
 //            log("reset", ""); // clean the logs file
 //            ImportFromFile.importAirports(airportST, pathAirports);
@@ -54,7 +53,6 @@ public class landingPageController {
 //            ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
             VistaNavigator.loadVista(VistaNavigator.MENU); // jumps to the menu after the new program is created
         }else{
-            System.out.println("Going to load program");
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Text", "*.txt"),

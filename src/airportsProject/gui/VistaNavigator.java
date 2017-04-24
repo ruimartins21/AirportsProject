@@ -18,16 +18,15 @@ public class VistaNavigator {
     public static final String MAIN              = "mainGUI.fxml";
     public static final String LANDING           = "landingPage.fxml";
     public static final String MENU              = "menu.fxml";
-//    public static final String CREDITS           = "credits.fxml";
 //    public static final String STATS             = "stats.fxml";
 //    public static final String SEARCH            = "search.fxml";
-//    public static final String FLIGHTLIST        = "flightList.fxml";
+    public static final String FLIGHTLIST        = "flights.fxml";
 //    public static final String FLIGHTDETAILS     = "flightDetails.fxml";
 //    public static final String AIRPORTNETW       = "airportNetW.fxml";
 //    public static final String AIRPORTDETAILS    = "airportDetails.fxml";
-//    public static final String AIRPLANELIST      = "airplaneList.fxml";
+//    public static final String AIRPLANELIST      = "airplanes.fxml";
 //    public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
-//    public static final String AIRLINELIST       = "airlineList.fxml";
+    public static final String AIRLINELIST       = "airlines.fxml";
 //    public static final String AIRLINEDETAILS    = "airlineDetails.fxml";
 
     /** The main application layout controller. */
@@ -60,7 +59,6 @@ public class VistaNavigator {
      * @param fxml the fxml file to be loaded.
      */
     public static void loadVista(String fxml) {
-        System.out.println(fxml);
         try {
             mainGUIController.setVista(FXMLLoader.load(VistaNavigator.class.getResource(fxml)));
         } catch (IOException e) {

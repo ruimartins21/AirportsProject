@@ -20,6 +20,14 @@ public class Flight {
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
+    // remover este construtor
+    public Flight(float distance, Date duration, Date date, int passengers) {
+        this.distance = distance;
+        this.duration = duration;
+        this.date = date;
+        this.setPassengers(passengers);
+    }
+
     public Flight(float distance, Date duration, Date date,
                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
         this.distance = distance;
@@ -50,6 +58,10 @@ public class Flight {
 
     }
 
+    public void setCosts(float costs) {
+        this.costs = costs;
+    }
+
     /**
      * converts the cost given in litres to an actual cost for the airline or the airport to pay
      * @return returns the cost in euros
@@ -63,11 +75,11 @@ public class Flight {
      * @param passengers number of passengers to be on the flight
      */
     private void setPassengers(int passengers) {
-        if(passengers <= this.airplane.getPassengersCapacity()){
+//        if(passengers <= this.airplane.getPassengersCapacity()){
             this.passengers = passengers;
-        }else{
-            throw new IllegalArgumentException("Flight: Number of passengers exceeds the airplane capacity");
-        }
+//        }else{
+//            throw new IllegalArgumentException("Flight: Number of passengers exceeds the airplane capacity");
+//        }
     }
 
     /**

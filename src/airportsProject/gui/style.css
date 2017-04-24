@@ -8,7 +8,12 @@
     -fx-background-color: #4185d1;
     -fx-cursor: hand;
 }
-.separator{
+#statistics{
+    -fx-background-color: white;
+    -fx-border-width: 2px;
+    -fx-border-color: #4185d1;
+}
+.underLine{
     -fx-background-color: #4185d1;
 }
 #creditsLabel{
@@ -27,4 +32,43 @@
     -fx-text-fill: white;
     -fx-cursor:hand;
     -fx-background-radius: 0,0,0,0;
+}
+.radio-button{
+    -fx-padding: 0 5px 0 0;
+}
+.radio-button > .radio {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0px;
+    -fx-padding: 0.0em; /* 4 8 4 8 */
+}
+.radio-button > .radio > .dot{
+    -fx-background-insets: 0;
+    -fx-background-radius: 0px;
+    -fx-padding: 0.0em;
+}
+.radio-button:selected > .radio > .dot {
+    -fx-background-color: transparent;
+}
+.radio-button:selected{
+    -fx-background-color: rgba(270,270,270,0.2);
+}
+.flightBackground{
+    -fx-background-image: url('images/flightBack.jpg');
+    -fx-background-size: 1200 700;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+.airlineBackground{
+    -fx-background-image: url('images/airlineBack.jpg');
+    -fx-background-size: 1200 700;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+.listsBackground{
+    -fx-background-color: #4185d1;
+    -fx-box-border: transparent;
+}
+.newItemPane, .holdIcon{
+    -fx-cursor: hand;
 }

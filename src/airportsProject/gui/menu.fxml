@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="menuContainer" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.MenuController">
+    <children>
+        <ImageView fx:id="goBack" fitHeight="54.0" fitWidth="57.0" onMouseClicked="#optionClicked" translateX="-450.0" translateY="-90.0">
+             <image>
+                <Image url="@images/lastPage.png" />
+             </image>
+             <cursor>
+                <Cursor fx:constant="HAND" />
+             </cursor>
+        </ImageView>
+        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1000.0" text="AIRPORTS MANAGEMENT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" VBox.vgrow="NEVER">
+            <font>
+                <Font name="Helvetica Light" size="40.0" />
+            </font>
+        </Label>
+        <Region prefHeight="20.0" prefWidth="1000.0" />
+        <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="underLine" />
+        <Region prefHeight="30.0" prefWidth="1000.0" />
+        <HBox alignment="CENTER" prefHeight="88.0" prefWidth="1000.0" VBox.vgrow="NEVER">
+            <children>
+                <Pane fx:id="airportNetW" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <children>
+                        <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="AIRPORT NETWORK" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font name="Helvetica Light" size="20.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+            <Pane fx:id="airplanes" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
+               <children>
+                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="AIRPLANES" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane fx:id="airlines" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
+               <children>
+                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-7.0" prefHeight="104.0" prefWidth="177.0" text="AIRLINES" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane fx:id="flights" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
+               <children>
+                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-6.0" prefHeight="104.0" prefWidth="177.0" text="FLIGHTS" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Pane>
+            </children>
+        </HBox>
+      <Region prefHeight="20.0" prefWidth="1000.0" />
+      <HBox alignment="CENTER" prefHeight="88.0" prefWidth="1000.0">
+         <children>
+            <Pane id="statistics" fx:id="statistics" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="88.0" prefWidth="360.0" styleClass="menuOption">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <children>
+                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="STATISTICS" textAlignment="CENTER" textFill="#4185d1" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="saveProgram" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="88.0" prefWidth="360.0" styleClass="menuOption">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="23.0" layoutY="20.0">
+                     <image>
+                        <Image url="@images/saveProgram.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="whiteLabel" layoutX="89.0" layoutY="-7.0" prefHeight="104.0" prefWidth="264.0" text="SAVE CURRENT PROGRAM" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+        <Label id="creditsLabel" fx:id="credits" alignment="CENTER" onMouseClicked="#openCredits" onMouseEntered="#inCredits" onMouseExited="#outCredits" text="CREDITS" textAlignment="CENTER" textFill="WHITE" translateY="75.0" wrapText="true" VBox.vgrow="NEVER">
+            <font>
+                <Font name="Helvetica Light" size="16.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" text="\@ UFP - 2016 / 2017" textAlignment="CENTER" textFill="WHITE" translateY="85.0">
+            <font>
+                <Font name="Helvetica Light" size="14.0" />
+            </font>
+        </Label>
+    </children>
+</VBox>

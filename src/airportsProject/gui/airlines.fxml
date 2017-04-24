@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirlinesController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airlineBackground" HBox.hgrow="NEVER">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+            <Label alignment="CENTER" layoutX="90.0" layoutY="219.0" prefHeight="55.0" prefWidth="334.0" text="AIRLINES" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="45.0" />
+               </font>
+            </Label>
+            <Line endX="155.0" layoutX="235.0" layoutY="302.0" startX="-128.0" stroke="WHITE" />
+            <Pane fx:id="gotoMenu" layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
+               <children>
+                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="newAirline" layoutX="166.0" layoutY="340.0" styleClass="newItemPane">
+               <children>
+                  <Label alignment="CENTER" layoutX="20.0" layoutY="2.0" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" text="NEW AIRLINE" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" text="+" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
+         <content>
+            <VBox fx:id="airlinesContainer" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
+               <children>
+
+
+
+                   <!--<Pane prefHeight="39.0" prefWidth="480.0" style="-fx-background-color: #F9F9F9; -fx-border-color: #F0F0F0; -fx-border-width: 1;">-->
+                     <!--<children>-->
+                        <!--<HBox prefHeight="38.0" prefWidth="480.0">-->
+                           <!--<children>-->
+                              <!--<Label alignment="CENTER" prefHeight="40.0" prefWidth="219.0" text="TAP Air Portugal" textAlignment="CENTER" textFill="#4185d1" wrapText="true" HBox.hgrow="NEVER">-->
+                                 <!--<font>-->
+                                    <!--<Font name="Helvetica Bold" size="15.0" />-->
+                                 <!--</font>-->
+                              <!--</Label>-->
+                              <!--<Label alignment="CENTER" prefHeight="38.0" prefWidth="79.0" text="NATIONALITY:" textFill="#8f8f8f">-->
+                                 <!--<font>-->
+                                    <!--<Font name="Helvetica Light" size="9.0" />-->
+                                 <!--</font>-->
+                              <!--</Label>-->
+                              <!--<Label alignment="CENTER" prefHeight="39.0" prefWidth="64.0" text="Portugal" textFill="#4185d1">-->
+                                 <!--<font>-->
+                                    <!--<Font name="Helvetica Light" size="12.0" />-->
+                                 <!--</font>-->
+                              <!--</Label>-->
+                              <!--<Label alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="93.0" text="remove" textAlignment="CENTER" textFill="#4185d1">-->
+                                 <!--<font>-->
+                                    <!--<Font name="Helvetica Light" size="10.0" />-->
+                                 <!--</font>-->
+                              <!--</Label>-->
+                           <!--</children>-->
+                        <!--</HBox>-->
+                     <!--</children>-->
+                  <!--</Pane>-->
+
+
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>

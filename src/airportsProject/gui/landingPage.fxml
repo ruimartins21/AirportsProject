@@ -9,9 +9,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?scenebuilder-stylesheet vista.css?>
 
-<VBox fx:id="containLanding" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.landingPageController">
+<VBox fx:id="containLanding" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.LandingPageController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1000.0" text="AIRPORTS MANAGEMENT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" VBox.vgrow="NEVER">
          <font>
@@ -19,7 +18,7 @@
          </font>
       </Label>
       <Region prefHeight="20.0" prefWidth="1000.0" />
-      <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="separator" />
+      <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="underLine" />
       <Region prefHeight="30.0" prefWidth="1000.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="NEVER">
          <children>

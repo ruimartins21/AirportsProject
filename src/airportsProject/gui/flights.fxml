@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.FlightsController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="flightBackground" HBox.hgrow="NEVER">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+            <Label alignment="CENTER" layoutX="85.0" layoutY="220.0" prefHeight="55.0" prefWidth="334.0" text="FLIGHTS" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="45.0" />
+               </font>
+            </Label>
+            <Line endX="155.0" layoutX="235.0" layoutY="292.0" startX="-128.0" stroke="WHITE" />
+            <RadioButton fx:id="allFlights" contentDisplay="CENTER" layoutX="218.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" selected="true" text="ALL&#13;FLIGHTS" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <toggleGroup>
+                  <ToggleGroup fx:id="filter" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="nextFlights" layoutX="316.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="NEXT&#13;FLIGHTS" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter">
+               <font>
+                  <Font name="Helvetica Light" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </RadioButton>
+            <RadioButton fx:id="flightsFinished" layoutX="107.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="FLIGHTS&#13;FINISHED" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
+               <font>
+                  <Font name="Helvetica Light" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </RadioButton>
+            <Pane fx:id="gotoMenu" layoutX="14.0" layoutY="14.0" styleClass="holdIcon" onMouseClicked="#gotoMenu">
+               <children>
+                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="newFlight" layoutX="170.0" layoutY="392.0" styleClass="newItemPane">
+               <children>
+                  <Label alignment="CENTER" layoutX="20.0" layoutY="2.0" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" text="NEW FLIGHT" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" text="+" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
+         <content>
+            <VBox fx:id="listFlightsContainer" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
+               <children>
+                  <!--<Pane prefHeight="20.0" prefWidth="490.0" style="-fx-background-color: #4185d1;" VBox.vgrow="NEVER">-->
+                     <!--<children>-->
+                        <!--<Label layoutX="43.0" layoutY="2.0" text="25 MAY 2017" textFill="#ffffff">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="13.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                     <!--</children>-->
+                  <!--</Pane>-->
+                  <!--<Pane nodeOrientation="LEFT_TO_RIGHT" prefWidth="500.0" style="-fx-background-color: white;">-->
+                     <!--<children>-->
+                        <!--<Label layoutX="43.0" layoutY="14.0" text="DEPARTURE" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="10.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="41.0" layoutY="26.0" text="09:00" textFill="#4185d1">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Bold" size="35.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="41.0" layoutY="70.0" text="Airport XPTO" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="13.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="242.0" layoutY="37.0" text="&gt;" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="20.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="372.0" layoutY="14.0" text="DEPARTURE" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="10.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="356.0" layoutY="27.0" text="09:00" textFill="#4185d1">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Bold" size="35.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="363.0" layoutY="68.0" text="Airport XPTO" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="13.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Separator layoutX="1.0" layoutY="99.0" prefHeight="1.0" prefWidth="483.0" />-->
+                        <!--<Separator layoutX="-3.0" layoutY="137.0" prefHeight="1.0" prefWidth="490.0" />-->
+                        <!--<Separator layoutX="145.0" layoutY="99.0" orientation="VERTICAL" prefHeight="36.0" prefWidth="6.0" />-->
+                        <!--<Separator layoutX="308.0" layoutY="100.0" orientation="VERTICAL" prefHeight="36.0" prefWidth="6.0" />-->
+                        <!--<Label layoutX="311.0" layoutY="101.0" prefHeight="34.0" prefWidth="175.0" style="-fx-background-color: #4185d1;" text="       COST" textFill="WHITE">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="9.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="395.0" layoutY="108.0" text="20 000" textFill="WHITE">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Bold" size="16.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="9.0" layoutY="113.0" text="PASSENGERS" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font size="9.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="156.0" layoutY="113.0" text="DISTANCE" textFill="#838383">-->
+                           <!--<font>-->
+                              <!--<Font size="9.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="93.0" layoutY="109.0" text="120" textFill="#4185d1">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Bold" size="16.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                        <!--<Label layoutX="237.0" layoutY="109.0" text="10 000" textFill="#4185d1">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Bold" size="16.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                     <!--</children>-->
+                  <!--</Pane>-->
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>
