@@ -18,15 +18,15 @@ import javafx.scene.text.FontWeight;
 
 import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
 
-public class AirlinesController {
+public class AirlineDetailsController {
     @FXML
     private VBox airlinesContainer;
-    @FXML
-    private Pane newAirline;
 
     private int airlineId = 0;
 
     public void initialize(){
+        System.out.println("Airline nº " + airlineId);
+
         Airline airline1 = new Airline("Nome1 muito muito muito muito muito grande", "Nacionalidade 1");
         Airline airline2 = new Airline("Nome2", "Nacionalidade 2");
         Airline airline3 = new Airline("Nome3", "Nacionalidade 3");
@@ -42,6 +42,10 @@ public class AirlinesController {
         }
     }
 
+    public void setId(int id){
+        this.airlineId = id;
+    }
+
     @FXML
     void gotoMenu(MouseEvent event) {
         VistaNavigator.loadVista(VistaNavigator.MENU);
@@ -49,12 +53,12 @@ public class AirlinesController {
 
     @FXML
     void hoverIn(MouseEvent event) {
-        newAirline.setStyle("-fx-opacity: 0.7");
+//        newAirline.setStyle("-fx-opacity: 0.7");
     }
 
     @FXML
     void hoverOut(MouseEvent event) {
-        newAirline.setStyle("-fx-opacity: 1");
+//        newAirline.setStyle("-fx-opacity: 1");
     }
 
     @FXML
@@ -64,7 +68,7 @@ public class AirlinesController {
 
     private void newAirlineItem(Airline airline){
         Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: #F9F9F9;-fx-border-color: #F0F0F0; -fx-border-width: 1;");
+        newPane.setStyle("-fx-background-color: F9F9F9;-fx-border-color: #F0F0F0; -fx-border-width: 1;");
         newPane.setPrefWidth(480.0);
         newPane.setPrefHeight(40.0);
         newPane.setNodeOrientation(LEFT_TO_RIGHT);

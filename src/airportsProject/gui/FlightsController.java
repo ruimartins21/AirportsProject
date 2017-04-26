@@ -2,16 +2,15 @@ package airportsProject.gui;
 
 import airportsProject.Date;
 import airportsProject.Flight;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Separator;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -37,8 +36,6 @@ public class FlightsController {
     private RadioButton nextFlights;
     @FXML
     private RadioButton flightsFinished;
-    @FXML
-    private Pane gotoMenu;
     @FXML
     private Pane newFlight;
 
@@ -69,7 +66,19 @@ public class FlightsController {
             newFlightDate(flight.getDate());
             newFlightItem(flight);
         }
+
+        System.out.println("Default Filter : " + ((RadioButton)filter.getSelectedToggle()).getText());
+        filter.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            public void changed(ObservableValue<? extends Toggle> ov,
+                                Toggle old_toggle, Toggle new_toggle) {
+                if (filter.getSelectedToggle() != null) {
+                    System.out.println("Filter : " + ((RadioButton)new_toggle).getText());
+                }
+            }
+        });
     }
+
+
 
     @FXML
     void gotoMenu(MouseEvent event) {

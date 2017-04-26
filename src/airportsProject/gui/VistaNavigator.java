@@ -27,7 +27,7 @@ public class VistaNavigator {
 //    public static final String AIRPLANELIST      = "airplanes.fxml";
 //    public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
     public static final String AIRLINELIST       = "airlines.fxml";
-//    public static final String AIRLINEDETAILS    = "airlineDetails.fxml";
+    public static final String AIRLINEDETAILS    = "airlineDetails.fxml";
 
     /** The main application layout controller. */
     private static MainGUIController mainGUIController;
@@ -68,15 +68,20 @@ public class VistaNavigator {
 
     /**
      * Receives data as parameter
-     * @param lastVista data as parameter
+     * @param param data as parameter
      */
-    public static void loadVista(String fxml, int lastVista) {
+    public static void loadVista(String fxml, int param) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(VistaNavigator.class.getResource(fxml));
             Node node = loader.load();
             mainGUIController.setVista(node);
             switch (fxml) {
+                case AIRLINEDETAILS:
+                    AirlineDetailsController airline = loader.getController();
+                    if (airline != null)
+                        airline.setId(param);
+                    break;
                 default:
                     break;
             }

@@ -27,7 +27,7 @@
                </font>
             </Label>
             <Line endX="155.0" layoutX="235.0" layoutY="292.0" startX="-128.0" stroke="WHITE" />
-            <RadioButton fx:id="allFlights" contentDisplay="CENTER" layoutX="218.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" selected="true" text="ALL&#13;FLIGHTS" textAlignment="CENTER" textFill="WHITE">
+            <RadioButton fx:id="allFlights" contentDisplay="CENTER" layoutX="218.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="84.0" selected="true" text="ALL FLIGHTS" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
                <font>
                   <Font name="Helvetica Light" size="15.0" />
                </font>
@@ -38,7 +38,7 @@
                   <ToggleGroup fx:id="filter" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="nextFlights" layoutX="316.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="NEXT&#13;FLIGHTS" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter">
+            <RadioButton fx:id="nextFlights" layoutX="316.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="73.0" text="NEXT FLIGHTS" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
                <font>
                   <Font name="Helvetica Light" size="15.0" />
                </font>
@@ -46,7 +46,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <RadioButton fx:id="flightsFinished" layoutX="107.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="FLIGHTS&#13;FINISHED" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
+            <RadioButton fx:id="flightsFinished" layoutX="107.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="92.0" text="FLIGHTS FINISHED" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
                <font>
                   <Font name="Helvetica Light" size="15.0" />
                </font>
@@ -54,7 +54,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <Pane fx:id="gotoMenu" layoutX="14.0" layoutY="14.0" styleClass="holdIcon" onMouseClicked="#gotoMenu">
+            <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
                <children>
                   <ImageView fitHeight="29.0" fitWidth="29.0">
                      <image>
