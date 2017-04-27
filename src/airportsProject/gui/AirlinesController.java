@@ -62,7 +62,23 @@ public class AirlinesController {
         System.out.println("+ New Airline");
     }
 
+    private boolean removeThis = false;
     private void newAirlineItem(Airline airline){
+        // remove airline
+        Label removeAirline = new Label("remove");
+        removeAirline.setAlignment(Pos.CENTER_RIGHT);
+        removeAirline.setPrefWidth(93.0);
+        removeAirline.setPrefHeight(40.0);
+        removeAirline.setTextFill(Color.valueOf("4185d1"));
+        removeAirline.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        removeAirline.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // tells the event that handles the pane clicking that it was the element "remove" that was clicked inside the pane
+                // otherwise the pane would only know it was a click on the pane and would go to the airline details
+                removeThis = true;
+            }
+        });
         Pane newPane = new Pane();
         newPane.setStyle("-fx-background-color: #F9F9F9;-fx-border-color: #F0F0F0; -fx-border-width: 1;");
         newPane.setPrefWidth(480.0);
@@ -86,7 +102,13 @@ public class AirlinesController {
         newPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Clicked " + newPane.getId());
+                if(removeThis){
+                    System.out.println("Remove airline nº " + newPane.getId());
+                    // alert para verificar se quer mesmo remover
+                    removeThis = false; // reset variable
+                }else{
+                    VistaNavigator.loadVista(VistaNavigator.AIRLINEDETAILS, Integer.parseInt(newPane.getId()));
+                }
             }
         });
         airlineId += 1;
@@ -118,20 +140,6 @@ public class AirlinesController {
         airlineNationality.setTextFill(Color.valueOf("4185d1"));
         airlineNationality.setFont(Font.font("Helvetica", FontWeight.LIGHT, 14));
         newHBox.getChildren().add(airlineNationality);
-        // remove airline
-        Label removeAirline = new Label("remove");
-        removeAirline.setAlignment(Pos.CENTER_RIGHT);
-        removeAirline.setPrefWidth(93.0);
-        removeAirline.setPrefHeight(40.0);
-        removeAirline.setTextFill(Color.valueOf("4185d1"));
-        removeAirline.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        removeAirline.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("Clicked " + newPane.getId() + " to remove");
-                // fazer alert para verificar se quer mesmo cancelar
-            }
-        });
         newHBox.getChildren().add(removeAirline);
         newPane.getChildren().add(newHBox);
         airlinesContainer.getChildren().add(newPane);

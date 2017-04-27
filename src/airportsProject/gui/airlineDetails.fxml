@@ -23,7 +23,7 @@
                   <Font name="Helvetica Light" size="25.0" />
                </font>
             </Label>
-            <Label fx:id="airlineName" alignment="CENTER" layoutX="90.0" layoutY="239.0" prefWidth="334.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label fx:id="airlineName" alignment="CENTER" layoutX="90.0" layoutY="250.0" prefWidth="334.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Helvetica" size="28.0" />
                </font>
@@ -38,18 +38,18 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="editAirline" layoutX="107.0" layoutY="343.0">
+            <Pane fx:id="editAirline" layoutX="107.0" layoutY="343.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
                <children>
-                  <Label alignment="CENTER" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="55.0" prefWidth="94.0" text="EDIT AIRLINE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="EDIT AIRLINE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="17.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="297.0" layoutY="343.0">
+            <Pane fx:id="removeAirline" layoutX="297.0" layoutY="343.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
                <children>
-                  <Label fx:id="removeAirline" alignment="CENTER" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="55.0" prefWidth="94.0" text="REMOVE AIRLINE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="REMOVE AIRLINE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="17.0" />
                      </font>
@@ -64,19 +64,18 @@
                <children>
                   <Pane prefHeight="30.0" prefWidth="490.0" style="-fx-background-color: #4185d1;" VBox.vgrow="NEVER">
                      <children>
-                        <Label layoutX="223.0" layoutY="8.0" text="Fleet size : " textAlignment="CENTER" textFill="WHITE">
+                        <Label layoutX="170.0" layoutY="6.0" text="Fleet size : " textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Light" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="294.0" layoutY="8.0" textFill="WHITE">
+                        <Label fx:id="fleetSizeNumber" layoutX="261.0" layoutY="6.0" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Light" size="14.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="36.0" prefWidth="200.0" style="-fx-background-color: #F9F9F9; -fx-border-color: #F0F0F0; -fx-border-width: 1;" />
                </children>
             </VBox>
          </content>

@@ -25,7 +25,7 @@ public class VistaNavigator {
 //    public static final String AIRPORTNETW       = "airportNetW.fxml";
 //    public static final String AIRPORTDETAILS    = "airportDetails.fxml";
 //    public static final String AIRPLANELIST      = "airplanes.fxml";
-//    public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
+    public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
     public static final String AIRLINELIST       = "airlines.fxml";
     public static final String AIRLINEDETAILS    = "airlineDetails.fxml";
 
@@ -74,17 +74,34 @@ public class VistaNavigator {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(VistaNavigator.class.getResource(fxml));
+            // set controller factory allows the setting of the ID value needed for the page requested BEFORE the page is loaded
+            // without this control of the order the page would load and when the initialize function in the new page was called,
+            // the value needed there wouldn't be there yet
+            loader.setControllerFactory((Class<?> controllerType) -> {
+                if (controllerType == AirlineDetailsController.class) { // send the id of the airline to show its details
+                    AirlineDetailsController controller = new AirlineDetailsController();
+                    controller.setId(param);
+                    return controller;
+                } else {
+                    try {
+                        return controllerType.newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
             Node node = loader.load();
             mainGUIController.setVista(node);
-            switch (fxml) {
-                case AIRLINEDETAILS:
-                    AirlineDetailsController airline = loader.getController();
-                    if (airline != null)
-                        airline.setId(param);
-                    break;
-                default:
-                    break;
-            }
+//            switch (fxml) {
+//                case AIRLINEDETAILS:
+//                    AirlineDetailsController airline = loader.getController();
+//                    if (airline != null) {
+//                        airline.setId(param);
+//                    }
+//                    break;
+//                default:
+//                    break;
+//            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -33,7 +33,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="newAirline" layoutX="166.0" layoutY="340.0" styleClass="newItemPane">
+            <Pane fx:id="newAirline" layoutX="166.0" layoutY="340.0" styleClass="optionPane">
                <children>
                   <Label alignment="CENTER" layoutX="20.0" layoutY="2.0" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" text="NEW AIRLINE" textAlignment="CENTER" textFill="WHITE">
                      <font>

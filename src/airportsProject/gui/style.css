@@ -69,6 +69,6 @@
     -fx-background-color: #4185d1;
     -fx-box-border: transparent;
 }
-.newItemPane, .holdIcon{
+.optionPane, .holdIcon{
     -fx-cursor: hand;
 }

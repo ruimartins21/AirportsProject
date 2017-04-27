@@ -1,6 +1,6 @@
 package airportsProject.gui;
 
-import airportsProject.Airline;
+import airportsProject.Airplane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,35 +16,42 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
-
 public class AirlineDetailsController {
     @FXML
     private VBox airlinesContainer;
+    @FXML
+    private Label airlineName;
+    @FXML
+    private Pane editAirline;
+    @FXML
+    private Pane removeAirline;
+    @FXML
+    private Label fleetSizeNumber;
 
-    private int airlineId = 0;
+    private int airlineId = -1;
 
     public void initialize(){
-        System.out.println("Airline nº " + airlineId);
+        // ir buscar airline a ST pelo id dado
+        airlineName.setText(String.valueOf(airlineId));
+        fleetSizeNumber.setText(5 + " airplanes");
 
-        Airline airline1 = new Airline("Nome1 muito muito muito muito muito grande", "Nacionalidade 1");
-        Airline airline2 = new Airline("Nome2", "Nacionalidade 2");
-        Airline airline3 = new Airline("Nome3", "Nacionalidade 3");
-        Airline airline4 = new Airline("Nome4", "Nacionalidade 4");
+        Airplane airplane1 = new Airplane(1, "Airbus A340", "Fernão Mendes Pinto", 500, 2000, 10000, "OPO", 300, 3000, null);
+        Airplane airplane2 = new Airplane(2, "model2", "airplane2", 600, 1500, 8000, "FRA", 350, 2500, null);
+        Airplane airplane3 = new Airplane(3, "model3", "airplane3", 400, 2500, 12000, "JFK", 280, 4000, null);
+        Airplane airplane4 = new Airplane(4, "model4", "airplane4", 500, 2000, 10000, "BRA", 280, 3000, null);
 
-        ObservableList<Airline> airlinesList = FXCollections.observableArrayList();
-        airlinesList.add(airline1);
-        airlinesList.add(airline2);
-        airlinesList.add(airline3);
-        airlinesList.add(airline4);
-        for (Airline airline : airlinesList) {
-            newAirlineItem(airline);
+        ObservableList<Airplane> airplanesList = FXCollections.observableArrayList();
+        airplanesList.add(airplane1);
+        airplanesList.add(airplane2);
+        airplanesList.add(airplane3);
+        airplanesList.add(airplane4);
+        for (Airplane airplane : airplanesList) {
+            newAirplaneItem(airplane);
         }
+
     }
 
-    public void setId(int id){
-        this.airlineId = id;
-    }
+    public void setId(int id){this.airlineId = id;}
 
     @FXML
     void gotoMenu(MouseEvent event) {
@@ -53,26 +60,54 @@ public class AirlineDetailsController {
 
     @FXML
     void hoverIn(MouseEvent event) {
-//        newAirline.setStyle("-fx-opacity: 0.7");
+        if(event.getSource().equals(editAirline)){
+            editAirline.setStyle("-fx-background-color: rgba(270,270,270,0.2);");
+        }else{
+            removeAirline.setStyle("-fx-background-color: rgba(270,270,270,0.2);");
+        }
     }
 
     @FXML
     void hoverOut(MouseEvent event) {
-//        newAirline.setStyle("-fx-opacity: 1");
+        if(event.getSource().equals(editAirline)){
+            editAirline.setStyle("-fx-background-color: transparent;");
+        }else{
+            removeAirline.setStyle("-fx-background-color: transparent;");
+        }
     }
 
     @FXML
-    void newFlight(MouseEvent event) {
-        System.out.println("+ New Airline");
+    void optionClicked(MouseEvent event) {
+        if(event.getSource().equals(editAirline)){
+            System.out.println("Editing Airline");
+        }else{
+            System.out.println("Removing Airline");
+        }
     }
 
-    private void newAirlineItem(Airline airline){
+    private boolean removeThis = false;
+    private void newAirplaneItem(Airplane airplane){
+        // remove airplane
+        Label removeAirplane = new Label("remove");
+        removeAirplane.setAlignment(Pos.CENTER_RIGHT);
+        removeAirplane.setPrefWidth(38.0);
+        removeAirplane.setPrefHeight(40.0);
+        removeAirplane.setTextFill(Color.valueOf("4185d1"));
+        removeAirplane.setFont(Font.font("Helvetica", FontWeight.LIGHT, 10));
+        removeAirplane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // tells the event that handles the pane clicking that it was the element "remove" that was clicked inside the pane
+                // otherwise the pane would only know it was a click on the pane and would go to the airplane details
+                removeThis = true;
+            }
+        });
+        // container pane of a single airplane
         Pane newPane = new Pane();
         newPane.setStyle("-fx-background-color: F9F9F9;-fx-border-color: #F0F0F0; -fx-border-width: 1;");
         newPane.setPrefWidth(480.0);
         newPane.setPrefHeight(40.0);
-        newPane.setNodeOrientation(LEFT_TO_RIGHT);
-        newPane.setId(String.valueOf(airlineId));
+        newPane.setId(String.valueOf(airplane.getId()));
         newPane.setCursor(Cursor.HAND);
         newPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -86,57 +121,66 @@ public class AirlineDetailsController {
                 newPane.setStyle("-fx-background-color: white;");
             }
         });
-        // checks id to select the flight clicked to show its details
+        // checks id to select the airplane clicked to show its details
         newPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Clicked " + newPane.getId());
+                if(removeThis){
+                    System.out.println("Remove airplane id: " + airplane.getId());
+                    // alert para verificar se quer mesmo remover
+                    removeThis = false; // reset variable
+                }else{
+                    System.out.println("Open details of airplane id: " + airplane.getId());
+//                    VistaNavigator.loadVista(VistaNavigator.AIRPLANEDETAILS, airplane.getId());
+                }
             }
         });
-        airlineId += 1;
         // HBox
         HBox newHBox = new HBox();
         newHBox.setPrefWidth(480.0);
         newHBox.setPrefHeight(40.0);
-        // airline name
-        Label airlineName = new Label(airline.getName());
-        airlineName.setAlignment(Pos.CENTER);
-        airlineName.setPrefWidth(180.0);
-        airlineName.setPrefHeight(40.0);
-        airlineName.setTextFill(Color.valueOf("4185d1"));
-        airlineName.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
-        newHBox.getChildren().add(airlineName);
-        // nationality label
-        Label nationality = new Label("NATIONALITY :");
-        nationality.setAlignment(Pos.CENTER);
-        nationality.setPrefWidth(79.0);
-        nationality.setPrefHeight(40.0);
-        nationality.setTextFill(Color.valueOf("8f8f8f"));
-        nationality.setFont(Font.font("Helvetica", FontWeight.LIGHT, 9));
-        newHBox.getChildren().add(nationality);
-        // airline nationality
-        Label airlineNationality = new Label(airline.getNationality());
-        airlineNationality.setAlignment(Pos.CENTER);
-        airlineNationality.setPrefWidth(95.0);
-        airlineNationality.setPrefHeight(40.0);
-        airlineNationality.setTextFill(Color.valueOf("4185d1"));
-        airlineNationality.setFont(Font.font("Helvetica", FontWeight.LIGHT, 14));
-        newHBox.getChildren().add(airlineNationality);
-        // remove airline
-        Label removeAirline = new Label("remove");
-        removeAirline.setAlignment(Pos.CENTER_RIGHT);
-        removeAirline.setPrefWidth(93.0);
-        removeAirline.setPrefHeight(40.0);
-        removeAirline.setTextFill(Color.valueOf("4185d1"));
-        removeAirline.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        removeAirline.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("Clicked " + newPane.getId() + " to remove");
-                // fazer alert para verificar se quer mesmo cancelar
-            }
-        });
-        newHBox.getChildren().add(removeAirline);
+        // airplane id
+        Label airplaneId = new Label(String.valueOf(airplane.getId()));
+        airplaneId.setAlignment(Pos.CENTER);
+        airplaneId.setPrefWidth(30.0);
+        airplaneId.setPrefHeight(40.0);
+        airplaneId.setTextFill(Color.valueOf("4185d1"));
+        airplaneId.setFont(Font.font("Helvetica", FontWeight.BOLD, 17));
+        newHBox.getChildren().add(airplaneId);
+        // airplane model
+        Label airplaneModel = new Label(airplane.getModel().toUpperCase());
+        airplaneModel.setAlignment(Pos.CENTER);
+        airplaneModel.setPrefWidth(70.0);
+        airplaneModel.setPrefHeight(40.0);
+        airplaneModel.setTextFill(Color.valueOf("8f8f8f"));
+        airplaneModel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 9));
+        newHBox.getChildren().add(airplaneModel);
+        // airplane name
+        Label airplaneName = new Label(airplane.getName());
+        airplaneName.setAlignment(Pos.CENTER_LEFT);
+        airplaneName.setPrefWidth(181.0);
+        airplaneName.setPrefHeight(40.0);
+        airplaneName.setTextFill(Color.valueOf("4185d1"));
+        airplaneName.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
+        newHBox.getChildren().add(airplaneName);
+        // airline label
+        Label airlineLabel = new Label("AIRLINE :");
+        airlineLabel.setAlignment(Pos.CENTER);
+        airlineLabel.setPrefWidth(45.0);
+        airlineLabel.setPrefHeight(40.0);
+        airlineLabel.setTextFill(Color.valueOf("8f8f8f"));
+        airlineLabel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 9));
+        newHBox.getChildren().add(airlineLabel);
+        // airline
+//        Label airline = new Label(airplane.getAirline().getName());
+        Label airline = new Label("TAP Air Portugal");
+        airline.setAlignment(Pos.CENTER);
+        airline.setPrefWidth(111.0);
+        airline.setPrefHeight(40.0);
+        airline.setTextFill(Color.valueOf("4185d1"));
+        airline.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        newHBox.getChildren().add(airline);
+        newHBox.getChildren().add(removeAirplane);
         newPane.getChildren().add(newHBox);
         airlinesContainer.getChildren().add(newPane);
     }
