@@ -82,6 +82,10 @@ public class VistaNavigator {
                     AirlineDetailsController controller = new AirlineDetailsController();
                     controller.setId(param);
                     return controller;
+                }else if(controllerType == AirplaneDetailsController.class){
+                    AirplaneDetailsController controller = new AirplaneDetailsController();
+                    controller.setId(param);
+                    return controller;
                 } else {
                     try {
                         return controllerType.newInstance();

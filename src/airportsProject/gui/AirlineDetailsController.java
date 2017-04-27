@@ -130,8 +130,8 @@ public class AirlineDetailsController {
                     // alert para verificar se quer mesmo remover
                     removeThis = false; // reset variable
                 }else{
-                    System.out.println("Open details of airplane id: " + airplane.getId());
-//                    VistaNavigator.loadVista(VistaNavigator.AIRPLANEDETAILS, airplane.getId());
+//                    System.out.println("Open details of airplane id: " + airplane.getId());
+                    VistaNavigator.loadVista(VistaNavigator.AIRPLANEDETAILS, airplane.getId());
                 }
             }
         });

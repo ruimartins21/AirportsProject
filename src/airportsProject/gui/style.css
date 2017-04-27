@@ -65,6 +65,12 @@
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
 }
+.airplaneBackground{
+    -fx-background-image: url('images/airplaneBack.jpg');
+    -fx-background-size: 1200 700;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
 .listsBackground{
     -fx-background-color: #4185d1;
     -fx-box-border: transparent;
