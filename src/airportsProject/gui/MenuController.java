@@ -71,8 +71,7 @@ public class MenuController {
     @FXML
     void optionClicked(MouseEvent event){
         if (event.getSource().equals(airportNetW)) {
-            // airport network not list
-            VistaNavigator.loadVista(VistaNavigator.AIRPORTDETAILS);
+            VistaNavigator.loadVista(VistaNavigator.AIRPORTNETW);
         }else if(event.getSource().equals(airplanes)){
             VistaNavigator.loadVista(VistaNavigator.AIRPLANELIST);
         }else if(event.getSource().equals(airlines)){

@@ -16,14 +16,14 @@ public class VistaNavigator {
      * Convenience constants for fxml layouts managed by the navigator.
      */
     public static final String MAIN              = "mainGUI.fxml";
-    public static final String MAPTEST           = "mapTest.fxml";
+//    public static final String MAPTEST           = "mapTest.fxml";
     public static final String LANDING           = "landingPage.fxml";
     public static final String MENU              = "menu.fxml";
 //    public static final String STATS             = "stats.fxml";
 //    public static final String SEARCH            = "search.fxml";
     public static final String FLIGHTLIST        = "flights.fxml";
 //    public static final String FLIGHTDETAILS     = "flightDetails.fxml";
-//    public static final String AIRPORTNETW       = "airportNetW.fxml";
+    public static final String AIRPORTNETW       = "airportNetwork.fxml";
     public static final String AIRPORTDETAILS    = "airportDetails.fxml";
     public static final String AIRPLANELIST      = "airplanes.fxml";
     public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
@@ -68,8 +68,7 @@ public class VistaNavigator {
     }
 
     /**
-     * Receives data as parameter
-     * @param param data as parameter
+     * @param param receives an ID
      */
     public static void loadVista(String fxml, int param) {
         try {
@@ -97,16 +96,36 @@ public class VistaNavigator {
             });
             Node node = loader.load();
             mainGUIController.setVista(node);
-//            switch (fxml) {
-//                case AIRLINEDETAILS:
-//                    AirlineDetailsController airline = loader.getController();
-//                    if (airline != null) {
-//                        airline.setId(param);
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param code receives an airport code
+     */
+    public static void loadVista(String fxml, String code) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(VistaNavigator.class.getResource(fxml));
+            // set controller factory allows the setting of the ID value needed for the page requested BEFORE the page is loaded
+            // without this control of the order the page would load and when the initialize function in the new page was called,
+            // the value needed there wouldn't be there yet
+            loader.setControllerFactory((Class<?> controllerType) -> {
+                if (controllerType == AirportDetailsController.class) { // send the id of the airline to show its details
+                    AirportDetailsController controller = new AirportDetailsController();
+                    controller.setCode(code);
+                    return controller;
+                } else {
+                    try {
+                        return controllerType.newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            Node node = loader.load();
+            mainGUIController.setVista(node);
         } catch (IOException e) {
             e.printStackTrace();
         }

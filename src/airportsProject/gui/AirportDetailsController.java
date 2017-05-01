@@ -56,11 +56,22 @@ public class AirportDetailsController {
     private Label mapPin;
 
     Group zoomGroup;
-    private int airportId = -1;
+    private String code = "";
 
-    private Airport airport = new Airport("Francisco Sá Carneiro", "OPO", "Porto", "Portugal", "Europe", 10.0f);
+    private Airport airport;
 
     public void initialize(){
+        switch (code){
+            case "OPO":
+                airport = new Airport("Francisco Sá Carneiro", code, "Porto", "Portugal", "Europe", 10.0f);
+                break;
+            case "JFK":
+                airport = new Airport("International John Kennedy", code, "New York", "USA", "America", 6.0f);
+                break;
+            case "REC":
+                airport = new Airport("International from Recife", code, "Recife", "Brazil", "America", 8.5f);
+                break;
+        }
         // remove scroll bars and prevent scrolls with mouse on the map
         map.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         map.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -140,9 +151,9 @@ public class AirportDetailsController {
 
     /**
      * In this case of airports, the id is their code, in the airports RedBlack the code is the key used
-     * @param id -> code of the airport requested
+     * @param code -> code of the airport requested
      */
-    public void setId(int id){this.airportId = id;}
+    public void setCode(String code){this.code = code;}
 
     private void setPinLocation(){
         double mapWidth = zoomGroup.getBoundsInLocal().getWidth();
