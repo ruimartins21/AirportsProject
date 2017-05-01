@@ -1,6 +1,12 @@
 package airportsProject;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
 import libs.RedBlackBST;
+
+import java.io.IOException;
 
 /**
  * The airport class has information (and provides it by getters aswell) on itself and on the airplanes that are parked
@@ -17,6 +23,8 @@ public class Airport {
     private float rating;
     private RedBlackBST<Date, Flight> flights = new RedBlackBST<>();
     private RedBlackBST<Integer, Airplane> airplanes = new RedBlackBST<>();
+    private double latitude = -1;
+    private double longitude = -1;
 
     public Airport(String name, String code, String city, String country, String continent, float rating) {
         this.name = name;
@@ -25,6 +33,34 @@ public class Airport {
         this.country = country;
         this.continent = continent;
         this.rating = rating;
+        setCoordinates();
+    }
+
+    private void setCoordinates(){
+        final Geocoder geocoder = new Geocoder();
+        String location = this.city + ", " + this.country;
+        GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(location).setLanguage("en").getGeocoderRequest();
+        try {
+            GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+            if(geocoderResponse.getResults().isEmpty()){
+                System.out.println("Invalid Location");
+                return;
+            }
+            this.latitude  = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue();
+            this.longitude = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue();
+            this.latitude  = (Main.mapHeight) * (90 - latitude) / 180;
+            this.longitude = (Main.mapWidth) * (180 + longitude) / 360;
+        }catch (IOException e){
+            System.out.println("Maps Coordinates: Internet connection required.");
+        }
+    }
+
+    public double getLatitude(){
+        return latitude;
+    }
+
+    public double getLongitude(){
+        return longitude;
     }
 
     public void receivePlane(Airplane newPlane) {

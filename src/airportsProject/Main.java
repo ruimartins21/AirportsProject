@@ -18,6 +18,8 @@ public class Main {
     static int mValue = 250;
     static int euroValue = 30;  // 30 €/L
     static int windCost = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
+    static int mapWidth = 1536; // width of the world map used
+    static int mapHeight = 768; // height of the world map used
 
     public static void main(String[] args) {
         boolean validChoice = false;

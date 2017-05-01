@@ -22,13 +22,13 @@ public class Date implements Comparable<Date> {
   }
 
   public Date() {
-    Calendar gregCaelndar = new GregorianCalendar();
-    this.second = gregCaelndar.get(Calendar.SECOND);
-    this.minute = gregCaelndar.get(Calendar.MINUTE);
-    this.hour = gregCaelndar.get(Calendar.HOUR);
-    this.day = gregCaelndar.get(Calendar.DAY_OF_MONTH);
-    this.month = gregCaelndar.get(Calendar.MONTH) +1;
-    this.year = gregCaelndar.get(Calendar.YEAR);
+    Calendar gregCalendar = new GregorianCalendar();
+    this.second = gregCalendar.get(Calendar.SECOND);
+    this.minute = gregCalendar.get(Calendar.MINUTE);
+    this.hour = gregCalendar.get(Calendar.HOUR_OF_DAY);
+    this.day = gregCalendar.get(Calendar.DAY_OF_MONTH);
+    this.month = gregCalendar.get(Calendar.MONTH) +1;
+    this.year = gregCalendar.get(Calendar.YEAR);
   }
 
   public boolean isValid(){
@@ -57,6 +57,10 @@ public class Date implements Comparable<Date> {
     return Math.abs(difference);
   }
 
+    public int diferenceDays(Date d) {
+        int difference = this.day - d.day;
+        return Math.abs(difference);
+    }
 
   public static boolean isLeapYear(int year){
    return ((year%4 == 0) && ((year%100 !=0) || (year%400 == 0)));
@@ -114,6 +118,36 @@ public class Date implements Comparable<Date> {
     return false;
   }
 
+  private String monthName(int month){
+      switch (month){
+          case 1:
+              return "January";
+          case 2:
+              return "February";
+          case 3:
+              return "March";
+          case 4:
+              return "April";
+          case 5:
+              return "May";
+          case 6:
+              return "June";
+          case 7:
+              return "July";
+          case 8:
+              return "August";
+          case 9:
+              return "September";
+          case 10:
+              return "October";
+          case 11:
+              return "November";
+          case 12:
+              return "December";
+          default: return "";
+      }
+  }
+
   public boolean equals(Date d) {
     if(this.getYear() == d.year && this.getMonth() == d.month && this.getDay() == d.day && this.getHour() == d.hour && this.getMinute() == d.minute && this.getSecond() == d.second){
       return true;
@@ -122,10 +156,14 @@ public class Date implements Comparable<Date> {
   }
 
   public String getDuration(){
-      return (this.day > 0 ? this.day + " days " : "") +
-              (this.hour > 0 ? this.hour + " hours " : "") +
+      return (this.hour > 0 ? this.hour + " hours " : "") +
               (this.minute > 0 ? this.minute + " minutes " : "") +
               (this.second > 0 ? this.second + " seconds " : "");
+  }
+
+  public String getDurationLess(){
+      return (this.hour > 0 ? this.hour + "h" : "") +
+              (this.minute > 0 ? this.minute + "m " : "");
   }
 
   public String getSlashes(){
@@ -135,6 +173,10 @@ public class Date implements Comparable<Date> {
               this.hour + "/" +
               this.minute + "/" +
               this.second;
+  }
+
+  public String getDateLess(){
+      return this.day + " " + monthName(this.month) + " " + this.year;
   }
 
   @Override
@@ -186,7 +228,7 @@ public class Date implements Comparable<Date> {
 
   /**
    *
-   * @param o
+   * @param o date to compare to
    * @return 0 (if equals) / -1 (this date before another date) / 1 (this date after another date)
    */
   @Override

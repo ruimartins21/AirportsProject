@@ -78,3 +78,43 @@
 .optionPane, .holdIcon{
     -fx-cursor: hand;
 }
+.searchInput{
+    -fx-background-color: transparent;
+    -fx-box-border: transparent;
+    -fx-text-box-border: transparent;
+    -fx-border-width: 1.5px;
+    -fx-border-color: #4185d1;
+    -fx-border-radius: 30px;
+    -fx-prompt-text-fill: #ccc;
+}
+.searchInput:focused {
+    -fx-focus-color: transparent;
+}
+
+.pin {
+    -fx-shape: "M13.558,0C6.07,0,0,6.07,0,13.558s13.558,22.346,13.558,22.346s13.558-14.858,13.558-22.346S21.045,0,13.558,0z M13.558,20.762c-4.084,0-7.395-3.311-7.395-7.395s3.311-7.395,7.395-7.395c4.084,0,7.396,3.311,7.396,7.395 S17.642,20.762,13.558,20.762z";
+    -fx-background-color:white;
+    -fx-background-insets: 0, 2;
+    -fx-pref-width: 34;
+    -fx-pref-height: 45;
+}
+.mapPin .arrow-button .arrow {
+    -fx-padding: 0;
+}
+.scroll-pane:focused{
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.splitPane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+.flightItem{
+    -fx-background-color: white;
+    -fx-border-width:1px;
+    -fx-border-color: #d3d3d3;
+}
+.item{
+    -fx-background-color: #F9F9F9;
+    -fx-border-color: #F0F0F0;
+    -fx-border-width: 1;
+}

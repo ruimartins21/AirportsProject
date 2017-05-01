@@ -3,11 +3,13 @@ package airportsProject.gui;
 import airportsProject.Airplane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -16,25 +18,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class AirlineDetailsController {
+public class AirplanesController {
     @FXML
-    private VBox airlinesContainer;
+    private VBox airplanesContainer;
     @FXML
-    private Label airlineName;
+    private Pane newAirplane;
     @FXML
-    private Pane editAirline;
-    @FXML
-    private Pane removeAirline;
-    @FXML
-    private Label fleetSizeNumber;
-
-    private int airlineId = -1;
+    private TextField searchAirplane;
 
     public void initialize(){
-        // ir buscar airline a ST pelo id dado
-        airlineName.setText(String.valueOf(airlineId));
-        fleetSizeNumber.setText(5 + " airplanes");
-
+        searchAirplane.getParent().requestFocus();
+        searchAirplane.setFocusTraversable(false);
         Airplane airplane1 = new Airplane(1, "Airbus A340", "Fernão Mendes Pinto", 500, 2000, 10000, "OPO", 300, 3000, null);
         Airplane airplane2 = new Airplane(2, "model2", "airplane2", 600, 1500, 8000, "FRA", 350, 2500, null);
         Airplane airplane3 = new Airplane(3, "model3", "airplane3", 400, 2500, 12000, "JFK", 280, 4000, null);
@@ -51,8 +45,6 @@ public class AirlineDetailsController {
 
     }
 
-    public void setId(int id){this.airlineId = id;}
-
     @FXML
     void gotoMenu(MouseEvent event) {
         VistaNavigator.loadVista(VistaNavigator.MENU);
@@ -60,29 +52,22 @@ public class AirlineDetailsController {
 
     @FXML
     void hoverIn(MouseEvent event) {
-        if(event.getSource().equals(editAirline)){
-            editAirline.setStyle("-fx-background-color: rgba(270,270,270,0.2);");
-        }else{
-            removeAirline.setStyle("-fx-background-color: rgba(270,270,270,0.2);");
-        }
+        newAirplane.setStyle("-fx-opacity: 0.7");
     }
 
     @FXML
     void hoverOut(MouseEvent event) {
-        if(event.getSource().equals(editAirline)){
-            editAirline.setStyle("-fx-background-color: transparent;");
-        }else{
-            removeAirline.setStyle("-fx-background-color: transparent;");
-        }
+        newAirplane.setStyle("-fx-opacity: 1");
     }
 
     @FXML
-    void optionClicked(MouseEvent event) {
-        if(event.getSource().equals(editAirline)){
-            System.out.println("Editing Airline");
-        }else{
-            System.out.println("Removing Airline");
-        }
+    void getInput(ActionEvent actionEvent){
+        System.out.println("Searched for: \"" + searchAirplane.getText() + "\"");
+    }
+
+    @FXML
+    void newAirplane(MouseEvent event) {
+        System.out.println("+ New Airplane");
     }
 
     private boolean removeThis = false;
@@ -182,6 +167,6 @@ public class AirlineDetailsController {
         newHBox.getChildren().add(airline);
         newHBox.getChildren().add(removeAirplane);
         newPane.getChildren().add(newHBox);
-        airlinesContainer.getChildren().add(newPane);
+        airplanesContainer.getChildren().add(newPane);
     }
 }

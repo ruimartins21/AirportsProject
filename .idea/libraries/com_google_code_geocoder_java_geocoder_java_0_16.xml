@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="com.google.code.geocoder-java:geocoder-java:0.16" type="repository">
+    <properties maven-id="com.google.code.geocoder-java:geocoder-java:0.16" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/geocoder-java-0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson-2.2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-httpclient-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-99.0-does-not-exist.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.7.jar!/" />
+    </SOURCES>
+  </library>
+</component>

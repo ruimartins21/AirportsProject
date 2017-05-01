@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.FlightsController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@style.css"  styleClass="listsBackground" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.FlightsController">
    <children>
       <Pane prefHeight="200.0" prefWidth="500.0" styleClass="flightBackground" HBox.hgrow="NEVER">
          <effect>
@@ -63,7 +63,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="newFlight" layoutX="170.0" layoutY="392.0" styleClass="newItemPane">
+            <Pane fx:id="newFlight" layoutX="170.0" layoutY="392.0" styleClass="optionPane">
                <children>
                   <Label alignment="CENTER" layoutX="20.0" layoutY="2.0" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" text="NEW FLIGHT" textAlignment="CENTER" textFill="WHITE">
                      <font>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirplaneDetailsController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airplaneBackground" HBox.hgrow="NEVER">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+            <Label alignment="CENTER" layoutX="90.0" layoutY="191.0" prefHeight="55.0" prefWidth="334.0" text="AIRPLANE" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="airplaneName1" alignment="CENTER" layoutX="90.0" layoutY="250.0" prefWidth="334.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Helvetica" size="28.0" />
+               </font>
+            </Label>
+            <Line endX="155.0" layoutX="235.0" layoutY="312.0" startX="-128.0" stroke="WHITE" />
+            <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
+               <children>
+                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="editAirplane" layoutX="107.0" layoutY="343.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+               <children>
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="EDIT AIRPLANE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="removeAirplane" layoutX="297.0" layoutY="343.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+               <children>
+                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="REMOVE AIRPLANE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica Light" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <VBox fx:id="airplaneContainer" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white;" styleClass="listsBackground">
+         <children>
+            <Region prefHeight="135.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="NAME :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneName2" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#4185d1" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="MODEL :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneModel" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="AIRLINE :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneAirline" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="CRUISE SPEED :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneCruiseSpeed" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="CRUISE ALTITUDE :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneCruiseAltitude" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="MAX DISTANCE :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneMaxDistance" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="PASSENGERS CAPACITY :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplanePassengers" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="FUEL CAPACITY :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneFuelCap" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Region prefHeight="15.0" prefWidth="440.0" />
+            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
+               <children>
+                  <Label minHeight="27.0" text="CURRENT PARKED IN :" textFill="#8f8f8f">
+                     <font>
+                        <Font name="Helvetica Light" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="airplaneParked" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>

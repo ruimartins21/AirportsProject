@@ -58,7 +58,7 @@ public class AirlinesController {
     }
 
     @FXML
-    void newFlight(MouseEvent event) {
+    void newAirline(MouseEvent event) {
         System.out.println("+ New Airline");
     }
 
@@ -80,12 +80,12 @@ public class AirlinesController {
             }
         });
         Pane newPane = new Pane();
-        newPane.setStyle("-fx-background-color: #F9F9F9;-fx-border-color: #F0F0F0; -fx-border-width: 1;");
         newPane.setPrefWidth(480.0);
         newPane.setPrefHeight(40.0);
         newPane.setNodeOrientation(LEFT_TO_RIGHT);
         newPane.setId(String.valueOf(airlineId));
         newPane.setCursor(Cursor.HAND);
+        newPane.getStyleClass().add("item");
         newPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -95,7 +95,7 @@ public class AirlinesController {
         newPane.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                newPane.setStyle("-fx-background-color: white;");
+                newPane.setStyle("-fx-background-color: #F9F9F9;");
             }
         });
         // checks id to select the flight clicked to show its details

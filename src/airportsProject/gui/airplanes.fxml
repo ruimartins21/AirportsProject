@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirplanesController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airlineBackground" HBox.hgrow="NEVER">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+             <Label alignment="CENTER" layoutX="90.0" layoutY="219.0" prefHeight="55.0" prefWidth="334.0" text="AIRPLANES" textAlignment="CENTER" textFill="WHITE">
+                 <font>
+                     <Font name="Helvetica Light" size="45.0" />
+                 </font>
+             </Label>
+             <Line endX="155.0" layoutX="235.0" layoutY="302.0" startX="-128.0" stroke="WHITE" />
+            <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
+               <children>
+                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+             <Pane fx:id="newAirplane" layoutX="146.0" layoutY="340.0" styleClass="optionPane">
+                 <children>
+                     <Label alignment="CENTER" layoutX="20.0" layoutY="2.0" onMouseClicked="#newAirplane" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" text="NEW AIRPLANE" textAlignment="CENTER" textFill="WHITE">
+                         <font>
+                             <Font name="Helvetica" size="25.0" />
+                         </font>
+                     </Label>
+                     <Label alignment="CENTER" text="+" textAlignment="CENTER" textFill="WHITE">
+                         <font>
+                             <Font name="Helvetica" size="25.0" />
+                         </font>
+                     </Label>
+                 </children>
+             </Pane>
+         </children>
+      </Pane>
+      <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
+         <content>
+            <VBox fx:id="airplanesContainer" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
+               <children>
+                  <Pane prefHeight="30.0" prefWidth="490.0" VBox.vgrow="NEVER">
+                     <children>
+                        <TextField fx:id="searchAirplane" alignment="CENTER" layoutX="157.0" onAction="#getInput" prefHeight="30.0" prefWidth="190.0" promptText="SEARCH AIRPLANE" styleClass="searchInput">
+                           <font>
+                              <Font name="Helvetica" size="13.0" />
+                           </font>
+                        </TextField>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="171.0" layoutY="7.0">
+                           <image>
+                              <Image url="@images/search.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Pane>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirportNetworkController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airlineBackground" HBox.hgrow="NEVER">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+            <ScrollPane fx:id="map" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #444444;" styleClass="edge-to-edge">
+               <content>
+                  <Pane>
+                     <children>
+                        <ImageView>
+                           <image>
+                              <Image url="@images/world-map.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="mapPin" layoutX="175.0" layoutY="338.0" styleClass="pin" />
+                     </children>
+                  </Pane>
+               </content>
+            </ScrollPane>
+            <VBox alignment="TOP_CENTER" prefWidth="500.0">
+               <children>
+                  <Label alignment="CENTER" prefWidth="334.0" text="AIRPORT" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Light" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="airportName" alignment="CENTER" prefWidth="340.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="Helvetica" size="25.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Region prefHeight="8.0" prefWidth="500.0" />
+                  <Line endX="155.0" startX="-128.0" stroke="WHITE" />
+               </children>
+            </VBox>
+            <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
+               <children>
+                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
+         <content>
+            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
+               <children>
+                  <Pane prefHeight="30.0" prefWidth="490.0" style="-fx-background-color: #4185d1;" VBox.vgrow="NEVER">
+                     <children>
+                        <Pane fx:id="editAirport" layoutX="26.0" layoutY="6.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+                           <children>
+                              <Label text="EDIT AIRPORT" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="Helvetica Light" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="removeAirport" layoutX="338.0" layoutY="6.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+                           <children>
+                              <Label text="REMOVE AIRPORT" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="Helvetica Light" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="51.0" prefWidth="480.0" VBox.vgrow="NEVER">
+                     <children>
+                        <Label layoutX="28.0" layoutY="18.0" text="CODE :" textFill="#8f8f8f">
+                           <font>
+                              <Font name="Helvetica Light" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="airportCode" layoutX="118.0" layoutY="8.0" textFill="#4185d1">
+                           <font>
+                              <Font name="Helvetica Light" size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <Pane prefHeight="40.0" prefWidth="480.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="12.0" text="CITY :" textFill="#8f8f8f">
+                           <font>
+                              <Font name="Helvetica Light" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="airportCity" layoutX="118.0" layoutY="10.0" textFill="#949494">
+                           <font>
+                              <Font name="Helvetica" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <Pane prefHeight="40.0" prefWidth="480.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="12.0" text="COUNTRY :" textFill="#8f8f8f">
+                           <font>
+                              <Font name="Helvetica Light" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="airportCountry" layoutX="118.0" layoutY="10.0" textFill="#949494">
+                           <font>
+                              <Font name="Helvetica" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <Pane prefHeight="40.0" prefWidth="480.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="12.0" text="CONTINENT :" textFill="#8f8f8f">
+                           <font>
+                              <Font name="Helvetica Light" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="airportContinent" layoutX="118.0" layoutY="10.0" textFill="#949494">
+                           <font>
+                              <Font name="Helvetica" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <Pane prefHeight="40.0" prefWidth="480.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="12.0" text="RATING :" textFill="#8f8f8f">
+                           <font>
+                              <Font name="Helvetica Light" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="airportRating" layoutX="118.0" layoutY="10.0" textFill="#4185d1">
+                           <font>
+                              <Font name="Helvetica" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <Line endX="295.0" startX="-128.0" stroke="#d3d3d3">
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="10.0" />
+                     </VBox.margin>
+                  </Line>
+                  <Label text="PARKED PLANES" textFill="#4185d1">
+                     <font>
+                        <Font name="Helvetica" size="20.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="containAirplanes" alignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <Line endX="295.0" startX="-128.0" stroke="#d3d3d3">
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Line>
+                  <Label text="FLIGHT HISTORY" textFill="#4185d1">
+                     <font>
+                        <Font name="Helvetica" size="20.0" />
+                     </font>
+                  </Label>
+                  <SplitPane dividerPositions="0.5" prefHeight="131.0" prefWidth="480.0" styleClass="splitPane">
+                     <items>
+                        <Pane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Label layoutX="84.0" layoutY="14.0" text="ARRIVALS" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="Helvetica Light" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Pane layoutX="19.0" layoutY="45.0" prefHeight="87.0" prefWidth="210.0">
+                                 <children>
+                                    <HBox prefHeight="40.0" prefWidth="210.0" styleClass="item">
+                                       <children>
+                                          <VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #4185d1;">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica Light" size="10.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <Label prefHeight="40.0" prefWidth="100.0" text="Airport of Origin" textFill="#939393">
+                                             <font>
+                                                <Font name="Helvetica" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutY="39.0" prefHeight="40.0" prefWidth="210.0" styleClass="item">
+                                       <children>
+                                          <VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #4185d1;">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="10.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <Label prefHeight="40.0" prefWidth="100.0" text="Airport of Origin" textFill="#939393">
+                                             <font>
+                                                <Font name="Helvetica" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Label layoutX="71.0" layoutY="14.0" text="DEPARTURES" textFill="#8f8f8f">
+                                 <font>
+                                    <Font name="Helvetica Light" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Pane layoutX="14.0" layoutY="45.0">
+                                 <children>
+                                    <HBox prefHeight="40.0" prefWidth="210.0" styleClass="item">
+                                       <children>
+                                          <VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #888;">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="10.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <Label prefHeight="40.0" prefWidth="100.0" text="Airport of Destination" textFill="#939393">
+                                             <font>
+                                                <Font name="Helvetica" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutY="40.0" prefHeight="40.0" prefWidth="210.0" styleClass="item">
+                                       <children>
+                                          <VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #888;">
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Helvetica" size="10.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <Label prefHeight="40.0" prefWidth="100.0" text="Airport of Destination" textFill="#939393">
+                                             <font>
+                                                <Font name="Helvetica" size="13.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                     </items>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </SplitPane>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>

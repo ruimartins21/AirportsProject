@@ -17,6 +17,7 @@ public class MainGUI extends Application {
     public void start(Stage stage) throws Exception{
         stage.setTitle("Airports Management");
         stage.setScene(createScene(loadMainPane()));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -39,6 +40,7 @@ public class MainGUI extends Application {
 
         VistaNavigator.setMainGUIController(mainGUIController);
         VistaNavigator.loadVista(VistaNavigator.LANDING); // landing page, first page to show, the program flow will happen from here
+//        VistaNavigator.loadVista(VistaNavigator.MAPTEST);
 
         return mainPane;
     }
@@ -52,9 +54,9 @@ public class MainGUI extends Application {
      */
     private Scene createScene(Pane mainPane) {
         Scene scene = new Scene(mainPane);
-        scene.getStylesheets().setAll(
-            getClass().getResource("style.css").toExternalForm()
-        );
+//        scene.getStylesheets().setAll(
+//            getClass().getResource("style.css").toExternalForm()
+//        );
         return scene;
     }
 
