@@ -2,8 +2,8 @@ package airportsProject;
 
 import airportsProject.Exceptions.AirportNotExistException;
 
-import libs.RedBlackBST;
-import libs.SeparateChainingHashST;
+import edu.princeton.cs.algs4.StdOut;
+import libs.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,6 +22,25 @@ public class Main {
     static int mapHeight = 768; // height of the world map used
 
     public static void main(String[] args) {
+
+        SymbolEdgeWeightedDigraph symbolGraph =new SymbolEdgeWeightedDigraph(".//data//graph.txt",";");
+
+
+        System.out.println(symbolGraph.G());
+
+
+        DijkstraSP dijkstraSP = new DijkstraSP(symbolGraph.G(),0);
+
+        for (DirectedEdge e : dijkstraSP.pathTo(30)) {
+            StdOut.print(e + "   ");
+        }
+        StdOut.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+
+
         boolean validChoice = false;
         int choice, airplaneId;
         String airportCode, airlineName;

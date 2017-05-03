@@ -238,7 +238,7 @@ public class EdgeWeightedDigraph {
         for (int v = 0; v < V; v++) {
             s.append(v + ": ");
             for (Connection e : adj[v]) {
-                s.append(e + "  ");
+                s.append(e + "  " + e.getAltitude() + "  " + e.getWindSpeed() + "  ");
             }
             s.append(NEWLINE);
         }
