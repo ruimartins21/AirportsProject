@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.FlightDetailsController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airlineBackground" HBox.hgrow="NEVER">
+         <effect>
+            <Blend />
+         </effect>
+         <children>
+            <ScrollPane fx:id="map" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #444444;" styleClass="edge-to-edge">
+               <content>
+                  <Pane fx:id="mapPane">
+                     <children>
+                        <ImageView>
+                           <image>
+                              <Image url="@images/world-map.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </content>
+            </ScrollPane>
+            <VBox alignment="TOP_CENTER" prefWidth="500.0">
+               <children>
+                  <Label alignment="CENTER" prefWidth="334.0" text="FLIGHT DETAILS" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Light" size="25.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Line endX="70.0" startX="-128.0" stroke="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin></Line>
+                  <Pane VBox.vgrow="NEVER">
+                     <children>
+                        <Label layoutX="132.0" layoutY="-2.0" text="LEAVING DATE :" textFill="WHITE">
+                           <font>
+                              <Font name="Helvetica" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="254.0" layoutY="-2.0" text="25 MARCH 2017" textFill="WHITE">
+                           <font>
+                              <Font name="Helvetica Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Pane>
+               </children>
+            </VBox>
+            <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
+               <children>
+                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutY="556.0" prefWidth="500.0">
+               <children>
+                  <Slider fx:id="zoomSlider" layoutX="180.0" layoutY="4.0" />
+                  <Label layoutX="317.0" layoutY="-3.0" onMouseClicked="#zoomIn" styleClass="holdIcon" text="＋" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="23.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="158.0" layoutY="-4.0" onMouseClicked="#zoomOut" styleClass="holdIcon" text="−" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="23.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
+         <content>
+            <VBox fx:id="containFlight" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
+               <children>
+                  <HBox prefHeight="80.0" prefWidth="480.0">
+                     <children>
+                        <Pane prefHeight="100.0" prefWidth="220.0">
+                           <children>
+                              <Label fx:id="originCode" layoutX="5.0" layoutY="22.0" textFill="#4185d1">
+                                 <font>
+                                    <Font name="Helvetica Light" size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="originName" layoutX="76.0" layoutY="26.0" maxWidth="140.0" prefHeight="13.0" prefWidth="136.0" textFill="#5e5e5e">
+                                 <font>
+                                    <Font name="Helvetica" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="originLocation" layoutX="76.0" layoutY="42.0" maxWidth="140.0" textFill="#949494">
+                                 <font>
+                                    <Font name="Helvetica" size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Pane>
+                        <Pane>
+                           <children>
+                              <ImageView fitHeight="12.0" fitWidth="43.0" layoutX="-1.0" layoutY="34.0">
+                                 <image>
+                                    <Image url="@images/link.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="100.0" prefWidth="220.0">
+                           <children>
+                              <Label fx:id="destinationCode" layoutX="13.0" layoutY="22.0" textFill="#4185d1">
+                                 <font>
+                                    <Font name="Helvetica Light" size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="destinationName" layoutX="79.0" layoutY="26.0" maxWidth="140.0" textFill="#5e5e5e">
+                                 <font>
+                                    <Font name="Helvetica" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="destinationLocation" layoutX="79.0" layoutY="42.0" maxWidth="140.0" textFill="#949494">
+                                 <font>
+                                    <Font name="Helvetica" size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="39.0" prefWidth="436.0" style="-fx-background-color: eee;">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="143.0" layoutY="7.0">
+                           <image>
+                              <Image url="@images/clock.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="flightDuration" layoutX="190.0" layoutY="10.0" textFill="#979797">
+                           <font>
+                              <Font name="Helvetica Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                  </Pane>
+                  <!--<Pane prefHeight="200.0" prefWidth="480.0">-->
+                     <!--<children>-->
+                        <!--<HBox prefHeight="200.0" prefWidth="480.0">-->
+                           <!--<children>-->
+                              <!--<Pane prefHeight="200.0" prefWidth="200.0">-->
+                                 <!--<children>-->
+                                    <!--<ImageView fitHeight="132.0" fitWidth="25.0" layoutX="78.0" layoutY="33.0">-->
+                                       <!--<image>-->
+                                          <!--<Image url="@images/connection.png" />-->
+                                       <!--</image>-->
+                                    <!--</ImageView>-->
+                                    <!--<Label alignment="CENTER" layoutX="69.0" layoutY="9.0" prefWidth="40.0" text="9:30" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="15.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label alignment="CENTER" layoutX="69.0" layoutY="171.0" prefHeight="19.0" prefWidth="40.0" text="14:30" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="15.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                 <!--</children>-->
+                              <!--</Pane>-->
+                              <!--<Pane prefHeight="200.0" prefWidth="322.0" HBox.hgrow="ALWAYS">-->
+                                 <!--<children>-->
+                                    <!--<Label layoutX="14.0" layoutY="11.0" maxWidth="265.0" prefHeight="16.0" styleClass="optionPane" text="Francisco Sá Carneiro (OPO)" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="14.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="171.0" maxWidth="265.0" styleClass="optionPane" text="International John Kennedy (JFK)" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="14.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="54.0" text="Distance :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="79.0" text="Cost :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="104.0" text="Wind Speed :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="129.0" text="Altitude :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="54.0" text="10 000 km" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="79.0" text="10 000 €" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="104.0" text="- 10 km/h" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="129.0" text="5 000 km" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                 <!--</children>-->
+                              <!--</Pane>-->
+                           <!--</children>-->
+                        <!--</HBox>-->
+                     <!--</children>-->
+                  <!--</Pane>-->
+                  <!--<Pane prefHeight="40.0" prefWidth="480.0" style="-fx-background-color: #4185d1;">-->
+                     <!--<children>-->
+                        <!--<ImageView fitHeight="30.0" fitWidth="29.0" layoutX="143.0" layoutY="5.0">-->
+                           <!--<image>-->
+                              <!--<Image url="@images/refill.png" />-->
+                           <!--</image>-->
+                        <!--</ImageView>-->
+                        <!--<Label layoutX="211.0" layoutY="11.0" text="Refilling the airplane" textFill="WHITE">-->
+                           <!--<font>-->
+                              <!--<Font name="Helvetica Light" size="15.0" />-->
+                           <!--</font>-->
+                        <!--</Label>-->
+                     <!--</children>-->
+                  <!--</Pane>-->
+                  <!--<Pane prefHeight="200.0" prefWidth="200.0">-->
+                     <!--<children>-->
+                        <!--<HBox layoutY="5.0" prefHeight="190.0" prefWidth="480.0">-->
+                           <!--<children>-->
+                              <!--<Pane prefHeight="200.0" prefWidth="200.0">-->
+                                 <!--<children>-->
+                                    <!--<ImageView fitHeight="132.0" fitWidth="25.0" layoutX="78.0" layoutY="28.0">-->
+                                       <!--<image>-->
+                                          <!--<Image url="@images/connection.png" />-->
+                                       <!--</image>-->
+                                    <!--</ImageView>-->
+                                    <!--<Label alignment="CENTER" layoutX="69.0" layoutY="4.0" prefWidth="40.0" text="15:30" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="15.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label alignment="CENTER" layoutX="69.0" layoutY="166.0" prefHeight="19.0" prefWidth="40.0" text="18:30" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="15.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                 <!--</children>-->
+                              <!--</Pane>-->
+                              <!--<Pane prefHeight="190.0" prefWidth="322.0" HBox.hgrow="ALWAYS">-->
+                                 <!--<children>-->
+                                    <!--<Label layoutX="14.0" layoutY="11.0" maxWidth="265.0" prefHeight="16.0" styleClass="optionPane" text="International John Kennedy (JFK)" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="14.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="171.0" maxWidth="265.0" styleClass="optionPane" text="International from Recife (REC)" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="14.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="54.0" text="Distance :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="79.0" text="Cost :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="104.0" text="Wind Speed :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="14.0" layoutY="129.0" text="Altitude :" textFill="#4185d1">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="54.0" text="10 000 km" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="79.0" text="10 000 €" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="104.0" text="- 10 km/h" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                    <!--<Label layoutX="95.0" layoutY="129.0" text="5 000 km" textFill="#8a8a8a">-->
+                                       <!--<font>-->
+                                          <!--<Font name="Helvetica Light" size="12.0" />-->
+                                       <!--</font>-->
+                                    <!--</Label>-->
+                                 <!--</children>-->
+                              <!--</Pane>-->
+                           <!--</children>-->
+                        <!--</HBox>-->
+                     <!--</children>-->
+                  <!--</Pane>-->
+                  <Pane fx:id="airplaneInfo" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="151.0" layoutY="14.0" text="Airplane Information" textFill="#4185d1">
+                           <font>
+                              <Font name="Helvetica" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox layoutY="50.0" prefHeight="180.0" prefWidth="480.0">
+                           <children>
+                              <Pane maxWidth="240.0" prefHeight="179.0" prefWidth="240.0">
+                                 <children>
+                                    <Label layoutX="121.0" layoutY="16.0" text="Model" textFill="#4185d1">
+                                       <font>
+                                          <Font name="Helvetica" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="airplaneModel" layoutX="121.0" layoutY="32.0" textFill="#8a8a8a">
+                                       <font>
+                                          <Font name="Helvetica Light" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="84.0" layoutY="18.0">
+                                       <image>
+                                          <Image url="@images/aeroplane.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="121.0" layoutY="56.0" text="Name" textFill="#4185d1">
+                                       <font>
+                                          <Font name="Helvetica" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="airplaneName" layoutX="121.0" layoutY="72.0" textFill="#8a8a8a">
+                                       <font>
+                                          <Font name="Helvetica Light" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="84.0" layoutY="58.0">
+                                       <image>
+                                          <Image url="@images/name.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="121.0" layoutY="96.0" text="Airline" textFill="#4185d1">
+                                       <font>
+                                          <Font name="Helvetica" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="airplaneAirline" layoutX="121.0" layoutY="112.0" textFill="#8a8a8a">
+                                       <font>
+                                          <Font name="Helvetica Light" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="84.0" layoutY="98.0">
+                                       <image>
+                                          <Image url="@images/airline.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label layoutX="121.0" layoutY="136.0" text="Seats" textFill="#4185d1">
+                                       <font>
+                                          <Font name="Helvetica" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="airplaneSeats" layoutX="121.0" layoutY="152.0" textFill="#8a8a8a">
+                                       <font>
+                                          <Font name="Helvetica Light" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="84.0" layoutY="138.0">
+                                       <image>
+                                          <Image url="@images/seats.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                              <Pane maxWidth="240.0" prefHeight="200.0" prefWidth="240.0">
+                                 <children>
+                                    <ImageView fitHeight="83.0" fitWidth="83.0" layoutX="37.0" layoutY="49.0" opacity="0.2">
+                                       <image>
+                                          <Image url="@images/airplane.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>

@@ -1,4 +1,5 @@
 package airportsProject.gui;
+import airportsProject.Date;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
@@ -22,7 +23,7 @@ public class VistaNavigator {
 //    public static final String STATS             = "stats.fxml";
 //    public static final String SEARCH            = "search.fxml";
     public static final String FLIGHTLIST        = "flights.fxml";
-//    public static final String FLIGHTDETAILS     = "flightDetails.fxml";
+    public static final String FLIGHTDETAILS     = "flightDetails.fxml";
     public static final String AIRPORTNETW       = "airportNetwork.fxml";
     public static final String AIRPORTDETAILS    = "airportDetails.fxml";
     public static final String AIRPLANELIST      = "airplanes.fxml";
@@ -115,6 +116,36 @@ public class VistaNavigator {
                 if (controllerType == AirportDetailsController.class) { // send the id of the airline to show its details
                     AirportDetailsController controller = new AirportDetailsController();
                     controller.setCode(code);
+                    return controller;
+                } else {
+                    try {
+                        return controllerType.newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            Node node = loader.load();
+            mainGUIController.setVista(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param date receives the date of a flight
+     */
+    public static void loadVista(String fxml, Date date) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(VistaNavigator.class.getResource(fxml));
+            // set controller factory allows the setting of the ID value needed for the page requested BEFORE the page is loaded
+            // without this control of the order the page would load and when the initialize function in the new page was called,
+            // the value needed there wouldn't be there yet
+            loader.setControllerFactory((Class<?> controllerType) -> {
+                if (controllerType == FlightDetailsController.class) { // send the id of the airline to show its details
+                    FlightDetailsController controller = new FlightDetailsController();
+                    controller.setDate(date);
                     return controller;
                 } else {
                     try {
