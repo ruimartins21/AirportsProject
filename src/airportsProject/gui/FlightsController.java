@@ -138,7 +138,7 @@ public class FlightsController {
         newPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Clicked " + newPane.getId());
+                VistaNavigator.loadVista(VistaNavigator.FLIGHTDETAILS, flight.getDate());
             }
         });
         flightId += 1;

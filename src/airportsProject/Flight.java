@@ -144,6 +144,10 @@ public class Flight {
     return airportOfDestination;
   }
 
+    public Connection getConnection(){
+        return this.connection;
+    }
+
     @Override
     public String toString() {
         return "Flight{" +
