@@ -11,8 +11,9 @@ public class Connection extends DirectedEdge{
     private float altitude;
     private float windSpeed;
 
-    public Connection(int v, int w, double weight, float altitude, float windSpeed) {
-        super(v, w, weight);
+
+    public Connection(int airportOrigin, int airportDestination, double distance, float altitude, float windSpeed) {
+        super(airportOrigin, airportDestination, distance);
         this.altitude = altitude;
         this.windSpeed = windSpeed;
 //        this.altitude = 1080;
@@ -26,4 +27,13 @@ public class Connection extends DirectedEdge{
     public float getWindSpeed() {
         return windSpeed;
     }
+
+    public void setAltitude(float altitude) {
+        this.altitude = altitude;
+    }
+
+    public void setWindSpeed(float windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
 }
