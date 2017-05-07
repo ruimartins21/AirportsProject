@@ -2,424 +2,129 @@ package airportsProject;
 
 import airportsProject.Exceptions.AirportNotExistException;
 import airportsProject.Exceptions.WrongTypeFileException;
-import edu.princeton.cs.algs4.StdOut;
-import libs.*;
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
-    static int nValue = 200;
-    static int mValue = 250;
-    static int euroValue = 30;  // 30 €/L
-    static int windCost = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
-    static int mapWidth = 1536; // width of the world map used
-    static int mapHeight = 768; // height of the world map used
+public class Utils{
+    public static int nValue    = 200;
+    public static int mValue    = 250;
+    public static int euroValue = 30;  // 30 €/L
+    public static int windCost  = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
+    public static int mapWidth  = 1536; // width of the world map used
+    public static int mapHeight = 768; // height of the world map used
 
-    public static void main(String[] args) {
+    private static Utils instance = null;
 
-        SymbolEdgeWeightedDigraph symbolGraph =new SymbolEdgeWeightedDigraph(".//data//graph.txt",";");
+    // paths to default data
+    private static final String pathAirports     = ".//data//airports.txt";
+    private static final String pathAirplanes    = ".//data//airplanes.txt";
+    private static final String pathAirlines     = ".//data//airlines.txt";
 
+    // Symbol Tables
+    private static SeparateChainingHashST<String, Airport> airportST  = new SeparateChainingHashST<>();
+    private static SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
+    private static RedBlackBST<Integer, Airplane> airplaneST          = new RedBlackBST<>();
+    private static RedBlackBST<Date, Flight> flightST                 = new RedBlackBST<>();
 
-        System.out.println(symbolGraph.G());
+    protected Utils(){
+        // prevents instantiation
+    }
 
-
-        DijkstraSP dijkstraSP = new DijkstraSP(symbolGraph.G(),0);
-
-        for (DirectedEdge e : dijkstraSP.pathTo(30)) {
-            StdOut.print(e + "   ");
+    public static Utils getInstance(){
+        if(instance == null){
+            instance = new Utils();
         }
-        StdOut.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        return instance;
+    }
 
-
-
-        boolean validChoice = false;
-        int choice, airplaneId;
-        String airportCode, airlineName;
-        ArrayList<Airport> airportResults;
-        ArrayList<Flight> flightResults;
-
-        String pathAirports     = ".//data//airports.txt";
-        String pathAirplanes    = ".//data//airplanes.txt";
-        String pathAirlines     = ".//data//airlines.txt";
-
-        SeparateChainingHashST<String, Airport> airportST  = new SeparateChainingHashST<>();
-        SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
-        RedBlackBST<Integer, Airplane> airplaneST          = new RedBlackBST<>();
-        RedBlackBST<Date, Flight> flightST                 = new RedBlackBST<>();
-
-        Airplane airplane;
-        Airport airportOfDestination;
-        float distance;
-        Date duration, flightDate;
-        int passengers;
-
-        // New program or load previous program
-        Scanner scanner = new Scanner(System.in);
-        while(!validChoice){
-            System.out.println("# Airport Management #");
-            System.out.println("1 - New Program");
-            System.out.println("2 - Load Previous Program");
-            choice = scanner.nextInt();
-            if(choice == 1){
-                System.out.println("Creating new program ...");
-                log("reset", ""); // clean the logs file
-                validChoice = true;
-//                ImportFromFile.importAirports(airportST, pathAirports);
-                ImportFromFile.importAirlines(airlinesST, pathAirlines);
-                ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
-
-                // Hardcoded Flights to populate the ST
-                distance = 2000;
-                duration = new Date(0, 0, 0, 10, 0, 0);
-                flightDate = new Date(7, 3, 2017, 12, 50, 30);
-                passengers = 380;
-                airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
-                airportOfDestination = airportST.get("FRA");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 10000;
-                duration = new Date(1, 0, 0, 10, 0, 0);
-                flightDate = new Date(8, 4, 2017, 23, 1, 30);
-                passengers = 380;
-                airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
-                airportOfDestination = airportST.get("LAD");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 21500;
-                duration = new Date(0, 0, 0, 17, 43, 32);
-                flightDate = new Date(9, 2, 2017, 23, 1, 30);
-                passengers = 200;
-                airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
-                airportOfDestination = airportST.get("LAD");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 500;
-                duration = new Date(0, 0, 0, 7, 43, 32);
-                flightDate = new Date(10, 3, 2017, 23, 1, 30);
-                passengers = 100;
-                airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
-                airportOfDestination = airportST.get("OPO");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 1500;
-                duration = new Date(0, 0, 0, 4, 43, 32);
-                flightDate = new Date(10, 3, 2017, 23, 1, 30);
-                passengers = 100;
-                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-                airportOfDestination = airportST.get("NRT");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 1000;
-                duration = new Date(0, 0, 0, 4, 43, 32);
-                flightDate = new Date(11, 3, 2017, 23, 1, 30);
-                passengers = 50;
-                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-                airportOfDestination = airportST.get("NRT");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 5000;
-                duration = new Date(0, 0, 0, 4, 43, 32);
-                flightDate = new Date(27, 1, 1995, 17, 45, 30);
-                passengers = 150;
-                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-                airportOfDestination = airportST.get("OPO");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-                // Overwrites previous saved program
-                dump(airportST, airlinesST, airplaneST, flightST);
-            }else if(choice == 2){
-                System.out.println("Loading previous program ...");
-                try{
-                    ImportFromFile.loadProgram(".//data//loadProgram.txt",airportST,airlinesST,airplaneST,flightST);
-                    File file = new File(".//data//loadProgram.txt");
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    System.out.println("Last opened in: " + sdf.format(file.lastModified()));
-                }catch (WrongTypeFileException wt){
-                    System.out.println(wt.getMessage());
-                }
+    /**
+     * Will fill the symbol tables with the data required
+     * @param path -> will be empty if the user chooses to create a new program and will bring a file path if
+     *             he chooses to load a program
+     */
+    public static boolean initProgram(String path){
+        if(path.length() > 0){ // load program
+            try{
+                ImportFromFile.loadProgram(path,airportST,airlinesST,airplaneST,flightST);
+                File file = new File(path);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                System.out.println("Last opened in: " + sdf.format(file.lastModified()));
+            }catch (WrongTypeFileException wt){
+                System.out.println(wt.getMessage());
+                return false;
             }
+        }else{ // new program
+            log("reset", ""); // clean the log file from the previous program
+            ImportFromFile.importAirports(airportST, pathAirports);
+            ImportFromFile.importAirlines(airlinesST, pathAirlines);
+            ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
         }
+        return true;
+    }
 
-        /* Interaction Menu */
-        while(true){
-            validChoice = false;
-            System.out.println("\n# Operations Available #");
-            System.out.println("0 - Manage information (Insert / Edit / Remove)");
-            System.out.println("-----------------------------------");
-            System.out.println("* Statistics *");
-            System.out.println("1 - Show all information about an airport\n" +
-                    "2 - Show all information relative to an airplane\n" +
-                    "3 - Show all airports from a certain Country / Continent\n" +
-                    "4 - Show all flights with origin/destination on a certain airport\n" +
-                    "5 - Show all flights done by an airplane\n" +
-                    "6 - Show all flights done in a period of time\n" +
-                    "7 - Airport with the most traffic\n" +
-                    "8 - Flight that carried more passengers\n" +
-                    "9 - Airport that carried more passengers\n" +
-                    "10 - Latest flight of an airplane\n" +
-                    "-1 - Exit");
-            choice = scanner.nextInt();
-            scanner.nextLine();
-            switch (choice){
-                case 0: // Insert / Edit / Remove
-                    System.out.println("1 - Add a new airport\n" +
-                                    "2 - Add a new airplane\n" +
-                                    "3 - Add a new airline\n" +
-                                    "4 - Edit an airport\n" +
-                                    "5 - Edit an airplane\n" +
-                                    "6 - Edit an airline\n" +
-                                    "7 - Remove an airport\n" +
-                                    "8 - Remove an airplane\n" +
-                                    "9 - Remove an airline\n");
-                    int newChoice = scanner.nextInt();
-                    if(newChoice >= 1 && newChoice <= 9){
-                        switch (newChoice){
-                            case 1: // add a new airport
-                                if(!addAirportTerminal(airportST)){
-                                    System.out.println("Couldn't add the new airport.");
-                                }
-                                scanner.nextLine();
-                                break;
-                            case 2: // add a new airplane
-                                if(!addAirplaneTerminal(airportST, airplaneST, airlinesST)){
-                                    System.out.println("Couldn't add the new airplane.");
-                                }
-                                scanner.nextLine();
-                                break;
-                            case 3: // add a new airline
-                                if(!addAirlineTerminal(airlinesST)){
-                                    System.out.println("Couldn't add the new airline.");
-                                }
-                                scanner.nextLine();
-                                break;
-                            case 4: // edit an airport
-                                scanner.nextLine();
-                                System.out.print("Code of the airport: ");
-                                airportCode = scanner.nextLine();
-                                airportCode = airportCode.toUpperCase();
-                                if(!editAirportTerminal(airportCode, airportST)){
-                                    System.out.println("Error editing the airport.");
-                                }
-                                break;
-                            case 5: // edit an airplane
-                                scanner.nextLine();
-                                System.out.print("ID of the airplane: ");
-                                airplaneId = scanner.nextInt();
-                                if(!editAirplaneTerminal(airplaneId, airplaneST)){
-                                    System.out.println("Error editing the airplane.");
-                                }
-                                break;
-                            case 6: // edit an airline
-                                scanner.nextLine();
-                                System.out.print("Name of the airline: ");
-                                airlineName = scanner.nextLine();
-                                if(!editAirlineTerminal(airlineName, airlinesST)){
-                                    System.out.println("Error editing the airline.");
-                                }
-                                break;
-                            case 7: // remove an airport
-                                scanner.nextLine();
-                                System.out.print("Code of the airport: ");
-                                airportCode = scanner.nextLine();
-                                airportCode = airportCode.toUpperCase();
-                                try {
-                                    removeAirport(airportST, airplaneST, airportCode);
-                                    System.out.println("Airport removed successfully");
-                                }catch (AirportNotExistException ae){
-                                    System.out.println(ae.getMessage());
-                                }
-                                break;
-                            case 8: // remove an airplane
-                                scanner.nextLine();
-                                System.out.print("ID of the airplane: ");
-                                airplaneId = scanner.nextInt();
-                                Airplane airplaneToRemove;
-                                if((airplaneToRemove = airplaneST.get(airplaneId)) != null){
-                                    removeAirplane(airplaneST, airportST, airplaneToRemove);
-                                    System.out.println("Airplane removed successfully");
-                                }else{
-                                    System.out.println("! There's no airplane with that ID !");
-                                }
-                                break;
-                            case 9: // remove an airline
-                                scanner.nextLine();
-                                System.out.print("Name of the airline: ");
-                                airlineName = scanner.nextLine();
-                                Airline airlineToRemove;
-                                if((airlineToRemove = airlinesST.get(airlineName)) != null){
-                                    removeAirline(airlinesST, airplaneST, airportST, airlineToRemove);
-                                    System.out.println("Airline removed successfully");
-                                }else{
-                                    System.out.println("! There's no airline with that name !");
-                                }
-                                break;
-                        }
-                        // any change made will now be saved to the "loadProgram" file so when a new program is launched, when loading it,
-                        // the program will have the changes made
-                        dump(airportST, airlinesST, airplaneST, flightST);
-                    }else{
-                        System.out.println("Choose a valid number");
-                    }
-                    break;
-                case 1: // Show all information about an airport
-                    System.out.print("Code of the airport: ");
-                    airportCode = scanner.nextLine();
-                    airportCode = airportCode.toUpperCase();
-                    if(airportST.get(airportCode) != null){
-                        PrintInfo.airport(airportST, airportCode);
-                    }else{
-                        System.out.println("! There's no airport with that code !");
-                    }
-                    break;
-                case 2: // Show all information relative to an airplane
-                    System.out.print("ID of the airplane: ");
-                    airplaneId = scanner.nextInt();
-                    if(airplaneST.get(airplaneId) != null){
-                        PrintInfo.airplane(airplaneST, airplaneId);
-                    }else{
-                        System.out.println("! There's no airplane with that ID !");
-                    }
-                    scanner.nextLine();
-                    break;
-                case 3: // Show all airports from a certain Country / Continent
-                    System.out.print("Country or Continent: ");
-                    String countryContinent = scanner.nextLine();
-                    countryContinent = countryContinent.toLowerCase();
-                    if(!(airportResults = searchAirportsOf(airportST, countryContinent)).isEmpty()){
-                        for(Airport a : airportResults){
-                            System.out.println("\"" + a.getName() + "\"");
-                        }
-                    }else{
-                        System.out.println("! There's no airport from that country / continent !");
-                    }
-                    break;
-                case 4: // Show all flights with origin/destination on a certain airport
-                    System.out.print("Code of the airport: ");
-                    airportCode = scanner.nextLine();
-                    airportCode = airportCode.toUpperCase();
-                    Airport airport;
-                    if((airport = airportST.get(airportCode)) != null){
-                        PrintInfo.flightsOfThisAirport(airport);
-                    }else{
-                        System.out.println("! There's no airport with that code !");
-                    }
-                    break;
-                case 5: // Show all flights done by an airplane
-                    System.out.print("ID of the airplane: ");
-                    airplaneId = scanner.nextInt();
-                    Airplane airplaneToSearch;
-                    airplaneId -= 1; // ids of the planes are all one number below on the ST
-                    if((airplaneToSearch = airplaneST.get(airplaneId)) != null){
-                        PrintInfo.allTravelsPlane(airplaneToSearch);
-                    }else{
-                        System.out.println("! There's no airplane with that ID !");
-                    }
-                    scanner.nextLine();
-                    break;
-                case 6: // Show all flights done in a period of time
-                    Date startingDate = null, endingDate = null; // it will never send a null date to the method because of the conditions before the call
-                    while(!validChoice) {
-                        System.out.println("Insert starting date: ");
-                        System.out.print("Day: ");
-                        int day = scanner.nextInt();
-                        System.out.print("Month: ");
-                        int month = scanner.nextInt();
-                        System.out.print("Year: ");
-                        int year = scanner.nextInt();
-                        System.out.print("Hours: ");
-                        int hours = scanner.nextInt();
-                        System.out.print("Minutes: ");
-                        int minutes = scanner.nextInt();
-                        System.out.print("Seconds: ");
-                        int seconds = scanner.nextInt();
-                        startingDate = new Date(day, month, year, hours, minutes, seconds);
-                        if(startingDate.isValid()){
-                            validChoice = true;
-                        }else{
-                            System.out.println("Date not valid");
-                        }
-                    }
-                    validChoice = false;
-                    while(!validChoice) {
-                        System.out.println("Insert ending date: ");
-                        System.out.print("Day: ");
-                        int day = scanner.nextInt();
-                        System.out.print("Month: ");
-                        int month = scanner.nextInt();
-                        System.out.print("Year: ");
-                        int year = scanner.nextInt();
-                        System.out.print("Hours: ");
-                        int hours = scanner.nextInt();
-                        System.out.print("Minutes: ");
-                        int minutes = scanner.nextInt();
-                        System.out.print("Seconds: ");
-                        int seconds = scanner.nextInt();
-                        endingDate = new Date(day, month, year, hours, minutes, seconds);
-                        if(endingDate.isValid()){
-                            if(endingDate.beforeDate(startingDate) || endingDate.compareTo(startingDate) == 0){
-                                System.out.println("Ending date can't be previous or equal to the starting date");
-                            }else{
-                                validChoice = true;
-                            }
-                        }else{
-                            System.out.println("Date not valid");
-                        }
-                    }
-                    PrintInfo.flightsBetweenTimes(flightST, startingDate, endingDate);
-                    break;
-                case 7: // Airport with the most traffic
-                    if(!(airportResults = mostTrafficAirport(airportST)).isEmpty()){
-                        for(Airport a : airportResults){
-                            System.out.println("\"" + a.getName() + "\"");
-                        }
-                    }else{
-                        System.out.println("! There're no airports with traffic !");
-                    }
-                    break;
-                case 8: // Flight that carried more passengers
-                    if(!(flightResults = mostPassengersFlight(flightST)).isEmpty()){
-                        for(Flight a : flightResults){
-                            System.out.println(a);
-                        }
-                    }else{
-                        System.out.println("! There're no flights !");
-                    }
-                    break;
-                case 9: // Airport that carried more passengers
-                    if(!(airportResults = mostPassengersAirport(airportST)).isEmpty()){
-                        for(Airport a : airportResults){
-                            System.out.println("\"" + a.getName() + "\"");
-                        }
-                    }else{
-                        System.out.println("! There're no flights !");
-                    }
-                    break;
-                case 10: // Latest flight of an airplane
-                    System.out.print("ID of the airplane: ");
-                    while(!scanner.hasNextInt()) {
-                        System.out.print("Please enter an integer number");
-                        scanner.nextLine();
-                    }
-                    airplaneId = scanner.nextInt();
-                    airplaneId -= 1;
-                    if(airplaneST.get(airplaneId) != null){
-                        PrintInfo.latestFlightOfAirplane(airplaneST.get(airplaneId));
-                    }else{
-                        System.out.println("! There's no airplane with that ID !");
-                    }
-                    break;
-                case -1: return;
-                default: break;
-            }
+    public SeparateChainingHashST<String, Airport> getAirports(){
+        return airportST;
+    }
+
+    public void newAirport(Airport airport){
+        airportST.put(airport.getCode(), airport);
+    }
+
+    public SeparateChainingHashST<String, Airline> getAirlines(){
+        return airlinesST;
+    }
+
+    public void newAirline(Airline airline){
+        if(airlinesST.get(airline.getName()) == null) // there's no airline with that name, if there is, it can't be edited here
+            airlinesST.put(airline.getName(), airline);
+    }
+
+    public void editAirline(String oldName, String newName, String nationality){
+        if(oldName.compareTo(newName) == 0){ // same name (key), updates the entry
+            airlinesST.get(oldName).setNationality(nationality);
+        }else{ // otherwise the entry must be replaced
+            Airline newAirline = new Airline(newName, nationality);
+            newAirline.setFleet(airlinesST.get(oldName).getFleet()); // copies the airline fleet before replacing it
+            airlinesST.put(oldName, null); // removes the previous key
+            airlinesST.put(newName, newAirline);
         }
+        log("airlineST", "Edited airline \"" + oldName + "\" from " + nationality);
+    }
+
+    public RedBlackBST<Integer, Airplane> getAirplanes(){
+        return airplaneST;
+    }
+
+    public void newAirplane(Airplane airplane){
+        airplaneST.put(airplane.getId()-1, airplane);
+    }
+
+    public RedBlackBST<Date, Flight> getFlights(){
+        return flightST;
+    }
+
+    public void newFlight(Flight flight){
+        flightST.put(flight.getDate(), flight);
+    }
+
+    public ArrayList<Coordinates> createCoordinatesFile(){
+        ArrayList<Coordinates> coordinates = new ArrayList<>();
+        for(String code : airportST.keys()){
+            Airport airport = airportST.get(code);
+            coordinates.add(new Coordinates(code, airport.getLongitude(), airport.getLatitude()));
+        }
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(".//data//coordinates.bin"))) {
+            oos.writeObject(coordinates);
+            oos.close();
+        } catch (Exception ex) {
+            System.out.println("Couldn't create the file");
+        }
+        return coordinates;
     }
 
     /**
@@ -475,7 +180,6 @@ public class Main {
                             RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST){
         String path = ".//data/loadProgram.txt";
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){ // FileWriter with onle one parameter will overwrite the file content each time that is what we want
-            bw.write("#"); // we can check if a file is a valid program to load from this line
             bw.write("nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;");
             bw.newLine();
             for(String a : airportST.keys()){
@@ -575,11 +279,9 @@ public class Main {
 
     /**
      * Removes an airplane from the database (respective symbol table, airline and the current airport where it is parked)
-     * @param airplaneST is the symbol table where it is stored in this MainGUI class
      * @param plane is the plane to remove
      */
-    private static void removeAirplane(RedBlackBST<Integer, Airplane> airplaneST, SeparateChainingHashST<String, Airport> airportST,
-                                       Airplane plane){
+    public static void removeAirplane(Airplane plane){
         Airline airline = plane.getAirline();
         airline.removePlane(plane);
         airportST.get(plane.getAirportCode()).sendPlane(plane); // goes to the airport where the plane is parked to remove it
@@ -591,32 +293,26 @@ public class Main {
 
     /**
      * Removes an airline including all its airplanes
-     * @param airlineST ST with all the airlines
-     * @param airplaneST ST with all the airplanes
-     * @param airportST ST with all the airports
      * @param airline is the airline to remove
      */
-    private static void removeAirline(SeparateChainingHashST<String, Airline> airlineST, RedBlackBST<Integer, Airplane> airplaneST,
-                                      SeparateChainingHashST<String, Airport> airportST, Airline airline ){
+    public static void removeAirline(Airline airline){
         for (Integer p: airline.getFleet().keys()) {
-            removeAirplane(airplaneST, airportST, airline.getFleet().get(p));
+            removeAirplane(airline.getFleet().get(p));
         }
         log("AirlineST","Removed airline \"" + airline.getName() + "\"");
-        airlineST.put(airline.getName(),null);
+        airlinesST.put(airline.getName(),null);
     }
 
     /**
      * Removes an airport incluiding all the airplanes parked there
-     * @param airportST ST with all the airports
      * @param airportCode Code of the airport to remove
      */
-    private static void removeAirport(SeparateChainingHashST<String, Airport> airportST, RedBlackBST<Integer, Airplane> airplaneST,
-                                      String airportCode) throws AirportNotExistException{
+    public static void removeAirport(String airportCode) throws AirportNotExistException{
         boolean removed = false;
         for (String a : airportST.keys() ) {
             if(a.compareTo(airportCode) == 0){
                 for (Integer p : airportST.get(a).getAirplanes().keys() ) {
-                    removeAirplane(airplaneST, airportST, airportST.get(a).getAirplanes().get(p));
+                    removeAirplane(airportST.get(a).getAirplanes().get(p));
                 }
                 log("AirportST","Removed airport \"" + airportST.get(a).getName() + "\"");
                 airportST.put(a, null);

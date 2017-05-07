@@ -1,5 +1,6 @@
 package airportsProject;
 
+import airportsProject.Exceptions.WrongTypeFileException;
 import libs.In;
 import libs.RedBlackBST;
 import libs.SeparateChainingHashST;
@@ -101,25 +102,25 @@ public class ImportFromFile {
      * @param flightST will populate this ST with the flights
      * @return returns false if the file is empty and true if the read was successful and there's data to begin the program
      */
-    public static boolean currentProgram( String path,SeparateChainingHashST<String, Airport> airportST,SeparateChainingHashST<String, Airline> airlineST,
-                                          RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST) {
+    public static void loadProgram(String path, SeparateChainingHashST<String, Airport> airportST, SeparateChainingHashST<String, Airline> airlineST,
+                                      RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST) throws WrongTypeFileException {
         In in;
         try{
             in = new In(path);
         }catch (Exception e){
-            System.out.println("! No previous program saved !");
-            return false;
+            throw new WrongTypeFileException("No program saved with that name");
         }
 
-        int i = 0,j=0;
-        boolean hasContent = false;
+        int i = 0,j=-1;
+        boolean validFile = false;
         while (!in.isEmpty()) {
-            hasContent = true;
             String[] fileContent = in.readLine().split(";");
             if(fileContent[0].equals("#")){
+                if(!validFile) validFile = true; // check if the file is valid from the first line of the file
                 i = 0;
                 j++;
             }else {
+                if(!validFile) break;
                 if(i != 0) {  // first line of the file is to ignore
                     if(j==0){   // airports
                         String name = fileContent[0];
@@ -190,6 +191,8 @@ public class ImportFromFile {
                 i++;
             }
         }
-        return hasContent;
+        if(j < 3){ // it didn't load the correct information
+            throw new WrongTypeFileException("Wrong type of file selected");
+        }
     }
 }

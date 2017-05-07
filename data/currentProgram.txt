@@ -1,3 +1,4 @@
+#
 nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;
 Narita;NRT;Tokyo;Japan;Asia;9.8;
 Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;

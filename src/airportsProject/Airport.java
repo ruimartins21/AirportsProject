@@ -6,7 +6,8 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import libs.RedBlackBST;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * The airport class has information (and provides it by getters aswell) on itself and on the airplanes that are parked
@@ -26,6 +27,12 @@ public class Airport {
     private double latitude = -1;
     private double longitude = -1;
 
+    ArrayList<Coordinates> coordinates = null;
+    private boolean hasCoords = false;
+
+    /*
+        Constructor where no coordinates are passed
+     */
     public Airport(String name, String code, String city, String country, String continent, float rating) {
         this.name = name;
         this.code = code;
@@ -33,7 +40,45 @@ public class Airport {
         this.country = country;
         this.continent = continent;
         this.rating = rating;
-        setCoordinates();
+        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream(".//data//coordinates.bin"))) {
+            coordinates = (ArrayList<Coordinates>) oos.readObject();
+            oos.close();
+        } catch (Exception ex) {
+            // no file still exists
+        }
+        // checks if the airport coordinates are not yet on the file
+        if(coordinates != null){
+            for (int i = 0; i < coordinates.size(); i++) {
+                if(coordinates.get(i).getCode().compareTo(this.code) == 0){
+                    this.latitude = coordinates.get(i).getLatitude();
+                    this.longitude = coordinates.get(i).getLongitude();
+                    hasCoords = true;
+                }
+            }
+        }
+        // if the coordinates for this airport are not in the file it will calculate them
+        if(!hasCoords){
+            Thread t1 = new Thread(new Runnable() {
+                public void run() {
+                    setCoordinates();
+                }
+            });
+            t1.start();
+        }
+    }
+
+    /*
+        Constructor to pass the coordinates already calculated
+     */
+    public Airport(String name, String code, String city, String country, String continent, float rating, double latitude, double longitude) {
+        this.name = name;
+        this.code = code;
+        this.city = city;
+        this.country = country;
+        this.continent = continent;
+        this.rating = rating;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     private void setCoordinates(){
@@ -43,7 +88,7 @@ public class Airport {
         try {
             GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
             if(geocoderResponse.getResults().isEmpty()){
-                System.out.println("Invalid Location");
+                System.out.println(this.code + ": Invalid Location / Not strong enough connection, try again");
                 return;
             }
             this.latitude  = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue();

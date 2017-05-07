@@ -1,11 +1,13 @@
 package airportsProject.gui;
 
 import airportsProject.Airport;
+import airportsProject.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -15,6 +17,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Window;
+import libs.SeparateChainingHashST;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Optional;
 
 public class AirportNetworkController {
     @FXML
@@ -31,19 +40,12 @@ public class AirportNetworkController {
     private Slider zoomSlider;
 
     Group zoomGroup;
+    Utils utils = Utils.getInstance();
+    SeparateChainingHashST<String, Airport> airports = utils.getAirports();
 
     public void initialize(){
         searchAirport.getParent().requestFocus();
         searchAirport.setFocusTraversable(false);
-
-        Airport airport1 = new Airport("Francisco Sá Carneiro", "OPO", "Porto", "Portugal", "Europe", 10.0f);
-        Airport airport2 = new Airport("International John Kennedy", "JFK", "New York", "USA", "America", 6.0f);
-        Airport airport3 = new Airport("International from Recife", "REC", "Recife", "Brazil", "America", 8.5f);
-
-        ObservableList<Airport> airportsList = FXCollections.observableArrayList();
-        airportsList.add(airport1);
-        airportsList.add(airport2);
-        airportsList.add(airport3);
 
         // set zoom values
         zoomSlider.setMin(0.8);
@@ -62,12 +64,24 @@ public class AirportNetworkController {
         map.setHvalue(0.4);
         map.setVvalue(0.5);
 
-        for (Airport airport : airportsList) {
+        ObservableList<Airport> airportsList = FXCollections.observableArrayList();
+        for(String code : airports.keys()){
+            Airport airport = airports.get(code);
+            airportsList.add(airport);
             newAirportItem(airport);
-            // set airport location on the map
             if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                 setPinLocation(airport);
             }
+        }
+
+        // checks for the existence of the coordinates file, and creates it if it doesn't exist
+        // it is done here because if it doesn't exist, then each airport created had to get their coordinates and that takes time
+        // this way it is less probable that there will be wrong coordinates saved on the file
+        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream(".//data//coordinates.bin"))) {
+            oos.close();
+        } catch (Exception ex) {
+            // no file still exists, creates it and stores all the airports loaded
+            Utils.getInstance().createCoordinatesFile();
         }
     }
 
@@ -93,6 +107,18 @@ public class AirportNetworkController {
         mapPane.getChildren().add(pin);
     }
 
+    private void updateList(){
+        containAirports.getChildren().remove(0, airports.size()); // removes the previous list with the removed airline still showing
+        mapPane.getChildren().removeAll(); // resets pins locations to update now
+        for(String name : airports.keys()){ // lists all the existent airlines
+            Airport airport = airports.get(name);
+            newAirportItem(airport);
+            if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
+                setPinLocation(airport);
+            }
+        }
+    }
+
     @FXML
     void gotoMenu(MouseEvent event) {
         VistaNavigator.loadVista(VistaNavigator.MENU);
@@ -100,7 +126,28 @@ public class AirportNetworkController {
 
     @FXML
     void newAirport(MouseEvent event){
-        System.out.println("+ New Airport");
+        Dialog<ButtonType> dialog = new Dialog<>();
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> window.hide());
+        dialog.initOwner(containAirports.getScene().getWindow());
+        dialog.setTitle("New Airport");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("newAirportDialog.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        }catch(IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+        dialog.getDialogPane().getStyleClass().add("customDialog");
+        dialog.setContentText(null);
+        Optional<ButtonType> result = dialog.showAndWait();
+        // if the user closes the dialog, the list of airports will update
+
+        if(!result.isPresent()){
+            updateList();
+        }
     }
 
     @FXML

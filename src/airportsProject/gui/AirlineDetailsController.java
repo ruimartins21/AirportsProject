@@ -1,13 +1,20 @@
 package airportsProject.gui;
 
+import airportsProject.Airline;
 import airportsProject.Airplane;
+import airportsProject.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -15,6 +22,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class AirlineDetailsController {
     @FXML
@@ -28,30 +42,26 @@ public class AirlineDetailsController {
     @FXML
     private Label fleetSizeNumber;
 
-    private int airlineId = -1;
+    private Utils utils = Utils.getInstance();
+    SeparateChainingHashST<String, Airline> airlines = utils.getAirlines();
+    Airline airline;
 
     public void initialize(){
-        // ir buscar airline a ST pelo id dado
-        airlineName.setText(String.valueOf(airlineId));
-        fleetSizeNumber.setText(5 + " airplanes");
-
-        Airplane airplane1 = new Airplane(1, "Airbus A340", "Fernão Mendes Pinto", 500, 2000, 10000, "OPO", 300, 3000, null);
-        Airplane airplane2 = new Airplane(2, "model2", "airplane2", 600, 1500, 8000, "FRA", 350, 2500, null);
-        Airplane airplane3 = new Airplane(3, "model3", "airplane3", 400, 2500, 12000, "JFK", 280, 4000, null);
-        Airplane airplane4 = new Airplane(4, "model4", "airplane4", 500, 2000, 10000, "BRA", 280, 3000, null);
+        airlineName.setText(String.valueOf(airline.getName()));
+        fleetSizeNumber.setText(airline.getFleet().size() + " airplanes");
 
         ObservableList<Airplane> airplanesList = FXCollections.observableArrayList();
-        airplanesList.add(airplane1);
-        airplanesList.add(airplane2);
-        airplanesList.add(airplane3);
-        airplanesList.add(airplane4);
-        for (Airplane airplane : airplanesList) {
+        RedBlackBST<Integer, Airplane> fleet = airline.getFleet();
+        for(int id : fleet.keys()){
+            Airplane airplane = fleet.get(id);
+            airplanesList.add(airplane);
             newAirplaneItem(airplane);
         }
-
     }
 
-    public void setId(int id){this.airlineId = id;}
+    public void setAirline(String airlineName){
+        this.airline = airlines.get(airlineName);
+    }
 
     @FXML
     void gotoMenu(MouseEvent event) {
@@ -78,10 +88,45 @@ public class AirlineDetailsController {
 
     @FXML
     void optionClicked(MouseEvent event) {
-        if(event.getSource().equals(editAirline)){
-            System.out.println("Editing Airline");
-        }else{
-            System.out.println("Removing Airline");
+        if(event.getSource().equals(editAirline)){ // edit airline
+            Dialog<ButtonType> dialog = new Dialog<>();
+            Window window = dialog.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> window.hide()); // enables the user to close the dialog on the close button of the O.S.
+            dialog.initOwner(airlinesContainer.getScene().getWindow()); // confines the new window to an owner so the user can't interact with anything else while this window is open
+            dialog.setTitle("Edit Airline");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("newAirlineDialog.fxml")); // chooses the fxml to load
+            try{
+                dialog.getDialogPane().setContent(fxmlLoader.load());
+            }catch(IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            NewAirlineDialogController controller = fxmlLoader.getController(); // enables the preparation of data needed for editing beforehand
+            controller.setInputs(airline.getName(), airline.getNationality());
+            dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+            dialog.getDialogPane().getStyleClass().add("customDialog");
+            dialog.setContentText(null);
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("images/airline.png").toString()));
+            Optional<ButtonType> result = dialog.showAndWait();
+            // everytime, if the user inserts a new airline or not, when the dialog is closed, if the user edited the name, it must reopen the details of that airline
+            if(!result.isPresent()){
+                if(controller.getInitialName().compareTo(airline.getName()) != 0)
+                    VistaNavigator.loadVista(VistaNavigator.AIRLINELIST);
+            }
+        }else{ // delete airline
+            // alert to check if the user really wants to delete the airline
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+            // style the alert
+            alert.setTitle("Confirm Deletion");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete \"" + airline.getName() + "\" airline ?");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                Utils.removeAirline(airline);
+                VistaNavigator.loadVista(VistaNavigator.AIRLINELIST);
+            }
         }
     }
 
@@ -130,7 +175,6 @@ public class AirlineDetailsController {
                     // alert para verificar se quer mesmo remover
                     removeThis = false; // reset variable
                 }else{
-//                    System.out.println("Open details of airplane id: " + airplane.getId());
                     VistaNavigator.loadVista(VistaNavigator.AIRPLANEDETAILS, airplane.getId());
                 }
             }

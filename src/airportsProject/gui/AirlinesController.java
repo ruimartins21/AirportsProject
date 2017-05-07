@@ -1,13 +1,19 @@
 package airportsProject.gui;
 
 import airportsProject.Airline;
+import airportsProject.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -15,6 +21,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import libs.SeparateChainingHashST;
+
+import java.io.IOException;
+import java.util.Optional;
 
 import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
 
@@ -24,20 +36,25 @@ public class AirlinesController {
     @FXML
     private Pane newAirline;
 
-    private int airlineId = 0;
+    private int airlineId = 0; // used to find the airline on the list when updating it
+
+    Utils utils = Utils.getInstance();
+    SeparateChainingHashST<String, Airline> airlines = utils.getAirlines();
 
     public void initialize(){
-        Airline airline1 = new Airline("Nome1 muito muito muito muito muito grande", "Nacionalidade 1");
-        Airline airline2 = new Airline("Nome2", "Nacionalidade 2");
-        Airline airline3 = new Airline("Nome3", "Nacionalidade 3");
-        Airline airline4 = new Airline("Nome4", "Nacionalidade 4");
-
         ObservableList<Airline> airlinesList = FXCollections.observableArrayList();
-        airlinesList.add(airline1);
-        airlinesList.add(airline2);
-        airlinesList.add(airline3);
-        airlinesList.add(airline4);
-        for (Airline airline : airlinesList) {
+        for(String name : airlines.keys()){
+            Airline airline = airlines.get(name);
+            airlinesList.add(airline);
+            newAirlineItem(airline);
+        }
+    }
+
+    private void updateList(){
+        airlinesContainer.getChildren().remove(0, airlineId); // removes the previous list with the removed airline still showing
+        airlineId = 0; // resets the id counter
+        for(String name : airlines.keys()){ // lists all the existent airlines
+            Airline airline = airlines.get(name);
             newAirlineItem(airline);
         }
     }
@@ -59,7 +76,29 @@ public class AirlinesController {
 
     @FXML
     void newAirline(MouseEvent event) {
-        System.out.println("+ New Airline");
+        Dialog<ButtonType> dialog = new Dialog<>();
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> window.hide());
+        dialog.initOwner(airlinesContainer.getScene().getWindow());
+        dialog.setTitle("New Airline");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("newAirlineDialog.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        }catch(IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+        dialog.getDialogPane().getStyleClass().add("customDialog");
+        dialog.setContentText(null);
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("images/airline.png").toString()));
+        Optional<ButtonType> result = dialog.showAndWait();
+        // if the user closes the dialog, the list of airlines will update
+        if(!result.isPresent()){
+            updateList();
+        }
     }
 
     private boolean removeThis = false;
@@ -98,16 +137,25 @@ public class AirlinesController {
                 newPane.setStyle("-fx-background-color: #F9F9F9;");
             }
         });
-        // checks id to select the flight clicked to show its details
+        // checks id to select the airline clicked to show its details or remove it
         newPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if(removeThis){
-                    System.out.println("Remove airline nº " + newPane.getId());
-                    // alert para verificar se quer mesmo remover
+                    // alert to check if the user really wants to delete the airline
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+                    // style the alert
+                    alert.setTitle("Confirm Deletion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to delete \"" + airline.getName() + "\" airline ?");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.YES) {
+                        Utils.removeAirline(airline);
+                        updateList();
+                    }
                     removeThis = false; // reset variable
                 }else{
-                    VistaNavigator.loadVista(VistaNavigator.AIRLINEDETAILS, Integer.parseInt(newPane.getId()));
+                    VistaNavigator.loadVista(VistaNavigator.AIRLINEDETAILS, airline.getName());
                 }
             }
         });

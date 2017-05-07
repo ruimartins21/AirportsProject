@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -14,69 +13,59 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirplaneDetailsController">
    <children>
-      <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airplaneBackground" HBox.hgrow="NEVER">
-         <effect>
-            <Blend />
-         </effect>
+      <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="500.0" styleClass="airplaneBackground" HBox.hgrow="NEVER">
          <children>
-            <Label alignment="CENTER" layoutX="90.0" layoutY="191.0" prefHeight="55.0" prefWidth="334.0" text="AIRPLANE" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Helvetica Light" size="25.0" />
-               </font>
-            </Label>
-            <Label fx:id="airplaneName1" alignment="CENTER" layoutX="90.0" layoutY="250.0" prefWidth="334.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="Helvetica" size="28.0" />
-               </font>
-            </Label>
-            <Line endX="155.0" layoutX="235.0" layoutY="312.0" startX="-128.0" stroke="WHITE" />
-            <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
+            <Pane onMouseClicked="#gotoMenu" prefHeight="48.0" prefWidth="67.0" styleClass="holdIcon">
                <children>
-                  <ImageView fitHeight="29.0" fitWidth="29.0">
+                  <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="19.0" layoutY="10.0">
                      <image>
                         <Image url="@images/menu.png" />
                      </image>
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="editAirplane" layoutX="107.0" layoutY="343.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+            <Region prefHeight="148.0" prefWidth="67.0" />
+            <Label alignment="CENTER" prefHeight="55.0" prefWidth="334.0" text="AIRPLANE" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="airplaneName" alignment="CENTER" prefWidth="334.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Helvetica" size="28.0" />
+               </font>
+            </Label>
+            <Line endX="155.0" startX="-128.0" stroke="WHITE">
+               <VBox.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </VBox.margin></Line>
+            <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="EDIT AIRPLANE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="Helvetica Light" size="17.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Pane fx:id="removeAirplane" layoutX="297.0" layoutY="343.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
-               <children>
-                  <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="REMOVE AIRPLANE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="Helvetica Light" size="17.0" />
-                     </font>
-                  </Label>
+                  <Pane fx:id="editAirplane" layoutX="107.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="55.0" prefWidth="94.0" text="EDIT AIRPLANE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Helvetica Light" size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="removeAirplane" layoutX="288.0" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" styleClass="optionPane">
+                     <children>
+                        <Label alignment="CENTER" layoutX="8.0" prefHeight="55.0" prefWidth="94.0" text="REMOVE AIRPLANE" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Helvetica Light" size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </Pane>
          </children>
-      </Pane>
-      <VBox fx:id="airplaneContainer" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white;" styleClass="listsBackground">
+      </VBox>
+      <VBox nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white;" styleClass="listsBackground">
          <children>
             <Region prefHeight="135.0" prefWidth="440.0" />
-            <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
-               <children>
-                  <Label minHeight="27.0" text="NAME :" textFill="#8f8f8f">
-                     <font>
-                        <Font name="Helvetica Light" size="10.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="airplaneName2" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#4185d1" wrapText="true">
-                     <font>
-                        <Font name="Helvetica" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Region prefHeight="15.0" prefWidth="440.0" />
             <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
                <children>
                   <Label minHeight="27.0" text="MODEL :" textFill="#8f8f8f">
@@ -99,7 +88,7 @@
                         <Font name="Helvetica Light" size="10.0" />
                      </font>
                   </Label>
-                  <Label fx:id="airplaneAirline" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                  <Label fx:id="airplaneAirline" layoutX="136.0" minHeight="27.0" onMouseClicked="#gotoAirline" prefHeight="27.0" prefWidth="306.0" styleClass="optionPane" textFill="#4185d1" wrapText="true">
                      <font>
                         <Font name="Helvetica" size="15.0" />
                      </font>
@@ -184,12 +173,12 @@
             <Region prefHeight="15.0" prefWidth="440.0" />
             <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">
                <children>
-                  <Label minHeight="27.0" text="CURRENT PARKED IN :" textFill="#8f8f8f">
+                  <Label minHeight="27.0" text="CURRENTLY PARKED IN :" textFill="#8f8f8f">
                      <font>
                         <Font name="Helvetica Light" size="10.0" />
                      </font>
                   </Label>
-                  <Label fx:id="airplaneParked" layoutX="136.0" minHeight="27.0" prefHeight="27.0" prefWidth="306.0" textFill="#8f8f8f" wrapText="true">
+                  <Label fx:id="airplaneParked" layoutX="136.0" minHeight="27.0" onMouseClicked="#gotoAirport" prefHeight="27.0" prefWidth="306.0" styleClass="optionPane" textFill="#4185d1" wrapText="true">
                      <font>
                         <Font name="Helvetica" size="15.0" />
                      </font>

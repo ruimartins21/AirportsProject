@@ -191,22 +191,6 @@ public class FlightsController {
         arrivalAirport.setTextFill(Color.valueOf("838383"));
         arrivalAirport.setFont(Font.font("Helvetica", 13.0));
         newPane.getChildren().add(arrivalAirport);
-        // cancel button - only if the flight hasn't happened yet !!
-        if(!flight.getDate().beforeDate(new Date())){
-            Label cancelFlight = new Label("cancel");
-            cancelFlight.setLayoutX(440);
-            cancelFlight.setLayoutY(41);
-            cancelFlight.setTextFill(Color.valueOf("4185d1"));
-            cancelFlight.setFont(Font.font("Helvetica", FontWeight.LIGHT, 10.0));
-            newPane.getChildren().add(cancelFlight);
-            cancelFlight.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    System.out.println("Clicked " + newPane.getId() + " to cancel");
-                    // fazer alert para verificar se quer mesmo cancelar
-                }
-            });
-        }
         // horizontal separator between information
         Separator horizontal = new Separator();
         horizontal.setLayoutX(0.0);

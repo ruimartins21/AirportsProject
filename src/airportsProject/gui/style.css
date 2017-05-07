@@ -21,18 +21,6 @@
     -fx-padding: 7 10;
     -fx-cursor: hand;
 }
-.dialogBackground{
-    -fx-background-color: #444444;
-}
-.button-bar > .container{
-    -fx-background-color: #444444;
-}
-.dialog-pane .button{
-    -fx-background-color: #4185d1;
-    -fx-text-fill: white;
-    -fx-cursor:hand;
-    -fx-background-radius: 0,0,0,0;
-}
 .radio-button{
     -fx-padding: 0 5px 0 0;
 }
@@ -71,6 +59,12 @@
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
 }
+.airportBackground{
+    -fx-background-image: url('images/world-map.png');
+    -fx-background-size: 1200 700;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
 .listsBackground{
     -fx-background-color: #4185d1;
     -fx-box-border: transparent;
@@ -95,8 +89,8 @@
     -fx-shape: "M13.558,0C6.07,0,0,6.07,0,13.558s13.558,22.346,13.558,22.346s13.558-14.858,13.558-22.346S21.045,0,13.558,0z M13.558,20.762c-4.084,0-7.395-3.311-7.395-7.395s3.311-7.395,7.395-7.395c4.084,0,7.396,3.311,7.396,7.395 S17.642,20.762,13.558,20.762z";
     -fx-background-color:white;
     -fx-background-insets: 0, 2;
-    -fx-pref-width: 34;
-    -fx-pref-height: 45;
+    -fx-pref-width: 24;
+    -fx-pref-height: 33;
 }
 .mapPin .arrow-button .arrow {
     -fx-padding: 0;
@@ -125,4 +119,50 @@
 .slider .thumb{
     -fx-background-color: white;
     -fx-cursor: hand;
+}
+.dialog-pane > .button-bar > .container > .button{
+    -fx-background-color: #4185d1;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-padding: 10px;
+    -fx-font-size: 15px;
+    -fx-font-family: "Helvetica";
+    -fx-pref-width: 100px;
+    -fx-border-insets: 0;
+}
+.dialog-pane > .button-bar > .container > .button:hover{
+    -fx-background-color: #2C598A;
+}
+.dialogButton, .dialogButtonBlack{
+     -fx-background-color: white;
+     -fx-cursor: hand;
+     -fx-text-fill: #4185d1;
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+     -fx-border-width: 1px;
+     -fx-border-color: white;
+     -fx-padding: 2px 20px;
+     -fx-font-size: 20px;
+     -fx-font-family: "Helvetica";
+     -fx-border-insets: 0;
+ }
+.dialogButtonBlack{
+    -fx-text-fill: black !important;
+}
+.dialogButton:hover, .dialogButton:focused, .dialogButtonBlack:hover, .dialogButtonBlack:focused{
+    -fx-background-color: transparent;
+    -fx-text-fill: white !important;
+}
+.customDialog > *.button-bar > *.container {
+    -fx-pref-height: 0;
+}
+.newItemInput{
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.8);
 }

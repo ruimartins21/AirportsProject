@@ -1,9 +1,6 @@
 package airportsProject.gui;
 
-import airportsProject.Airplane;
-import airportsProject.Airport;
-import airportsProject.Date;
-import airportsProject.Flight;
+import airportsProject.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -26,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import libs.SeparateChainingHashST;
 
 public class AirportDetailsController {
     @FXML
@@ -58,20 +56,12 @@ public class AirportDetailsController {
     Group zoomGroup;
     private String code = "";
 
+    Utils utils = Utils.getInstance();
+    SeparateChainingHashST<String, Airport> airports = utils.getAirports();
     private Airport airport;
 
     public void initialize(){
-        switch (code){
-            case "OPO":
-                airport = new Airport("Francisco Sá Carneiro", code, "Porto", "Portugal", "Europe", 10.0f);
-                break;
-            case "JFK":
-                airport = new Airport("International John Kennedy", code, "New York", "USA", "America", 6.0f);
-                break;
-            case "REC":
-                airport = new Airport("International from Recife", code, "Recife", "Brazil", "America", 8.5f);
-                break;
-        }
+        airport = airports.get(code);
         // remove scroll bars and prevent scrolls with mouse on the map
         map.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         map.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

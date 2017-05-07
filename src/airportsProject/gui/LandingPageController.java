@@ -1,5 +1,6 @@
 package airportsProject.gui;
 
+import airportsProject.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +11,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 public class LandingPageController {
     @FXML
@@ -45,32 +46,21 @@ public class LandingPageController {
 
     @FXML
     void optionClicked(MouseEvent event){
-        if(event.getSource().equals(newProgram)){
-//            System.out.println("Creating new program ...");
-//            log("reset", ""); // clean the logs file
-//            ImportFromFile.importAirports(airportST, pathAirports);
-//            ImportFromFile.importAirlines(airlinesST, pathAirlines);
-//            ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
+        if(event.getSource().equals(newProgram)){ // new program
+            Utils.initProgram("");
             VistaNavigator.loadVista(VistaNavigator.MENU); // jumps to the menu after the new program is created
-        }else{
+        }else{ // load a program
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Text", "*.txt"),
                     new FileChooser.ExtensionFilter("Binary", "*.bin")
             );
+            // opens a dialog window where the user chooses the file, this dialog is created inside the scene window what prevents
+            // the user from dragging it and from using the program while this dialog is open
             File pathToFile = fileChooser.showOpenDialog(containLanding.getScene().getWindow());
             if(pathToFile != null){
-                System.out.println("File: " + pathToFile.getPath());
-//                if(ImportFromFile.currentProgram(pathToFile,airportST,airlinesST,airplaneST,flightST)){
-//                    File file = new File(".//data//currentProgram.txt");
-//                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//                    System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
-//                    validChoice = true;
-//                }else{
-//                    System.out.println("Error opening previous program.");
-//                }
-            }else{
-                System.out.println("Load program cancelled");
+                if(Utils.initProgram(pathToFile.getPath())) // loads the program requested
+                    VistaNavigator.loadVista(VistaNavigator.MENU); // jumps to the menu page
             }
         }
     }
@@ -89,20 +79,16 @@ public class LandingPageController {
     void openCredits(MouseEvent event) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(containLanding.getScene().getWindow());
+        dialog.initStyle(StageStyle.UNDECORATED);
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("creditsDialog.fxml"));
-            dialog.getDialogPane().setContent(root);
+            Parent credits = FXMLLoader.load(getClass().getResource("creditsDialog.fxml"));
+            dialog.getDialogPane().setContent(credits);
+            dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
         }catch (IOException e){
-            System.out.println("Couldn't load the credits window");
             e.printStackTrace();
             return;
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.CLOSE){
-//            System.out.println("Close Credits");
-        }else{
-            System.out.println("Action not recognized");
-        }
+        dialog.showAndWait();
     }
 }

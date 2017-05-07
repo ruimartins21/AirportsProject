@@ -46,6 +46,10 @@ public class Airline {
         return airplanes;
     }
 
+    public void setFleet(RedBlackBST<Integer, Airplane> fleet){
+        this.airplanes = fleet;
+    }
+
     @Override
     public String toString() {
         return "Airline{" +

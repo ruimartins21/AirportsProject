@@ -79,11 +79,7 @@ public class VistaNavigator {
             // without this control of the order the page would load and when the initialize function in the new page was called,
             // the value needed there wouldn't be there yet
             loader.setControllerFactory((Class<?> controllerType) -> {
-                if (controllerType == AirlineDetailsController.class) { // send the id of the airline to show its details
-                    AirlineDetailsController controller = new AirlineDetailsController();
-                    controller.setId(param);
-                    return controller;
-                }else if(controllerType == AirplaneDetailsController.class){
+                if(controllerType == AirplaneDetailsController.class){ // sends the id of the airplane to show
                     AirplaneDetailsController controller = new AirplaneDetailsController();
                     controller.setId(param);
                     return controller;
@@ -103,9 +99,9 @@ public class VistaNavigator {
     }
 
     /**
-     * @param code receives an airport code
+     * @param key receives an airport code or an airline name depending on what to show
      */
-    public static void loadVista(String fxml, String code) {
+    public static void loadVista(String fxml, String key) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(VistaNavigator.class.getResource(fxml));
@@ -113,11 +109,15 @@ public class VistaNavigator {
             // without this control of the order the page would load and when the initialize function in the new page was called,
             // the value needed there wouldn't be there yet
             loader.setControllerFactory((Class<?> controllerType) -> {
-                if (controllerType == AirportDetailsController.class) { // send the id of the airline to show its details
+                if (controllerType == AirportDetailsController.class) { // send the code of the airport to show its details
                     AirportDetailsController controller = new AirportDetailsController();
-                    controller.setCode(code);
+                    controller.setCode(key);
                     return controller;
-                } else {
+                }else if(controllerType == AirlineDetailsController.class) { // send the name of the airline
+                    AirlineDetailsController controller = new  AirlineDetailsController();
+                    controller.setAirline(key);
+                    return controller;
+                }else{
                     try {
                         return controllerType.newInstance();
                     } catch (Exception e) {

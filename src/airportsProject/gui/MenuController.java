@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -104,12 +105,14 @@ public class MenuController {
         try{
             Parent root = FXMLLoader.load(getClass().getResource("creditsDialog.fxml"));
             dialog.getDialogPane().setContent(root);
+            dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
         }catch (IOException e){
             System.out.println("Couldn't load the credits window");
             e.printStackTrace();
             return;
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        dialog.initStyle(StageStyle.UNDECORATED);
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.CLOSE){
 //            System.out.println("Close Credits");

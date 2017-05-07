@@ -1,6 +1,7 @@
 package airportsProject.gui;
 
 import airportsProject.Airplane;
+import airportsProject.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import libs.RedBlackBST;
 
 public class AirplanesController {
     @FXML
@@ -26,23 +30,27 @@ public class AirplanesController {
     @FXML
     private TextField searchAirplane;
 
+    Utils utils = Utils.getInstance();
+    RedBlackBST<Integer, Airplane> airplanes = utils.getAirplanes();
+
     public void initialize(){
         searchAirplane.getParent().requestFocus();
         searchAirplane.setFocusTraversable(false);
-        Airplane airplane1 = new Airplane(1, "Airbus A340", "Fernão Mendes Pinto", 500, 2000, 10000, "OPO", 300, 3000, null);
-        Airplane airplane2 = new Airplane(2, "model2", "airplane2", 600, 1500, 8000, "FRA", 350, 2500, null);
-        Airplane airplane3 = new Airplane(3, "model3", "airplane3", 400, 2500, 12000, "JFK", 280, 4000, null);
-        Airplane airplane4 = new Airplane(4, "model4", "airplane4", 500, 2000, 10000, "BRA", 280, 3000, null);
 
         ObservableList<Airplane> airplanesList = FXCollections.observableArrayList();
-        airplanesList.add(airplane1);
-        airplanesList.add(airplane2);
-        airplanesList.add(airplane3);
-        airplanesList.add(airplane4);
-        for (Airplane airplane : airplanesList) {
+        for (int id : airplanes.keys()) {
+            Airplane airplane = airplanes.get(id);
+            airplanesList.add(airplane);
             newAirplaneItem(airplane);
         }
+    }
 
+    private void updateList(){
+        airplanesContainer.getChildren().remove(1, airplanes.size()+2); // removes the previous list with the removed airline still showing
+        for(int id : airplanes.keys()){ // lists all the existent airlines
+            Airplane airplane = airplanes.get(id);
+            newAirplaneItem(airplane);
+        }
     }
 
     @FXML
@@ -111,11 +119,19 @@ public class AirplanesController {
             @Override
             public void handle(MouseEvent event) {
                 if(removeThis){
-                    System.out.println("Remove airplane id: " + airplane.getId());
-                    // alert para verificar se quer mesmo remover
+                    // alert to check if the user really wants to delete the airline
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+                    // style the alert
+                    alert.setTitle("Confirm Deletion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to delete \"" + airplane.getName() + "\" airplane ?");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.YES) {
+                        Utils.removeAirplane(airplane);
+                        updateList();
+                    }
                     removeThis = false; // reset variable
                 }else{
-//                    System.out.println("Open details of airplane id: " + airplane.getId());
                     VistaNavigator.loadVista(VistaNavigator.AIRPLANEDETAILS, airplane.getId());
                 }
             }
@@ -158,7 +174,7 @@ public class AirplanesController {
         newHBox.getChildren().add(airlineLabel);
         // airline
 //        Label airline = new Label(airplane.getAirline().getName());
-        Label airline = new Label("TAP Air Portugal");
+        Label airline = new Label(airplane.getAirline().getName());
         airline.setAlignment(Pos.CENTER);
         airline.setPrefWidth(111.0);
         airline.setPrefHeight(40.0);
