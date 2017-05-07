@@ -67,7 +67,7 @@ public class SymbolEdgeWeightedDigraph {
             a = in.readLine().split(delimiter);
             if (!st.contains(a[0]))
                 st.put(a[0], st.size());
-            System.out.println(a[0]);
+//            System.out.println(a[0]);
         }
 
 
@@ -75,6 +75,7 @@ public class SymbolEdgeWeightedDigraph {
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
+//            System.out.println(keys[st.get(name)]);
         }
 
         // second pass builds the digraph by connecting first vertex on each
@@ -88,10 +89,11 @@ public class SymbolEdgeWeightedDigraph {
             for (int i = 1; i < a.length; i+=4) {
                 int w = st.get(a[i]);
 
-                float weight = Float.parseFloat(a[i+1]);
+                float distance = Float.parseFloat(a[i+1]);
                 float altitude = Float.parseFloat(a[i+2]);
                 float windSpeed = Float.parseFloat(a[i+3]);
-                Connection c = new Connection(v,w,weight,altitude,windSpeed);
+//                System.out.println("airportDestination: " + v );
+                Connection c = new Connection(v,w,distance,altitude,windSpeed);
                 graph.addEdge(c);
             }
         }
@@ -178,6 +180,7 @@ public class SymbolEdgeWeightedDigraph {
         if (v < 0 || v >= V)
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
     }
+
 
     /**
      * Unit tests the {@code SymbolDigraph} data type.

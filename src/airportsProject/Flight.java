@@ -9,8 +9,8 @@ package airportsProject;
  */
 public class Flight {
 
-    private float distance;
-    private float costs;
+    private double distance;
+    private double costs;
     private Date duration;
     private Date date;
     private int passengers;
@@ -21,14 +21,14 @@ public class Flight {
     private Airport airportOfDestination;
 
     // remover este construtor
-    public Flight(float distance, Date duration, Date date, int passengers) {
+    public Flight(double distance, Date duration, Date date, int passengers) {
         this.distance = distance;
         this.duration = duration;
         this.date = date;
         this.setPassengers(passengers);
     }
 
-    public Flight(float distance, Date duration, Date date,
+    public Flight(double distance, Date duration, Date date,
                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
         this.distance = distance;
         this.duration = duration;
@@ -66,7 +66,7 @@ public class Flight {
      * converts the cost given in litres to an actual cost for the airline or the airport to pay
      * @return returns the cost in euros
      */
-    public float getFlightCostEuros(){
+    public double getFlightCostEuros(){
         return Main.euroValue * this.costs;
     }
 
@@ -112,11 +112,11 @@ public class Flight {
         this.airportOfDestination = destination;
     }
 
-    public float getDistance() {
+    public double getDistance() {
     return distance;
   }
 
-    public float getCosts() {
+    public double getCosts() {
     return costs;
   }
 

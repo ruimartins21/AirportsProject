@@ -140,24 +140,67 @@ public class Airplane {
      * @param altitude altitude of the connection that the airplane must fly
      * @return returns the cost in litres for the connection
      */
-    public float getAirplaneCost(float distance, float windSpeed, float altitude) {
-        // cost of the wind speed
-        float windCost = 0f;
-        if(windSpeed < 0){ // against the airplane, adds cost
-            windSpeed = Math.abs(windSpeed);
-            windCost = -(Main.windCost*windSpeed);
-        }else{ // in favor of the airplane, reduces cost
-            windCost = Main.windCost*windSpeed;
-        }
+    public double getAirplaneCost(double distance, double windSpeed, double altitude) {
+
+//        // cost of the wind speed
+//        double windCost = 0f;
+//        if(windSpeed < 0){ // against the airplane, adds cost
+//            windSpeed = Math.abs(windSpeed);
+//            windCost = -(Main.windCost*windSpeed);
+//        }else{ // in favor of the airplane, reduces cost
+//            windCost = Main.windCost*windSpeed;
+//        }
+//        // cost of the altitude
+//        double altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
+//        altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
+//        if(altitudeDiference > 0){
+//            return  planeConsumption() + (Main.nValue * altitudeDiference) + (windCost*distance);
+//        }else if(altitudeDiference < 0){
+//            return  planeConsumption() + (Main.mValue * altitudeDiference) + (windCost*distance);
+//        }
+//        return planeConsumption() + (windCost*distance);
+
         // cost of the altitude
-        float altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
+        double altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
         altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
         if(altitudeDiference > 0){
-            return  planeConsumption() + (Main.nValue * altitudeDiference) + (windCost*distance);
+            altitudeDiference =  planeConsumption() + Main.nValue * altitudeDiference;
         }else if(altitudeDiference < 0){
-            return  planeConsumption() + (Main.mValue * altitudeDiference) + (windCost*distance);
+            altitudeDiference =  planeConsumption() + Main.mValue * altitudeDiference;
         }
-        return planeConsumption() + (windCost*distance);
+
+        return getFlightDuration(distance,windSpeed) * planeConsumption() + Math.abs(this.cruiseAltitude - altitude) * altitudeDiference;
+    }
+
+    public double getAirplaneCost(Connection connection) {
+
+        // cost of the altitude
+        double altitudeDiference = this.cruiseAltitude - connection.getAltitude(); // difference between airplane cruise altitude and the connection altitude
+        altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
+        if(altitudeDiference > 0){
+            altitudeDiference =  planeConsumption() + Main.nValue * altitudeDiference;
+        }else if(altitudeDiference < 0){
+            altitudeDiference =  planeConsumption() + Main.mValue * altitudeDiference;
+        }
+
+        return getFlightDuration(connection) * planeConsumption() + Math.abs(this.cruiseAltitude - connection.getAltitude()) * altitudeDiference;
+    }
+
+
+    public double getFlightDuration(Connection connection){
+        return connection.weight() / (this.cruiseSpeed + connection.getWindSpeed());
+    }
+
+    public double getFlightDuration(double distance, double windSpeed){
+        return distance / (this.cruiseSpeed + windSpeed);
+    }
+
+    public void convertTime(double finalBuildTime){
+        int hours = (int) finalBuildTime;
+        int minutes = (int) (finalBuildTime * 60) % 60;
+        int seconds = (int) (finalBuildTime * (60*60)) % 60;
+
+        System.out.println(String.format("%s(h) %s(m) %s(s)", hours, minutes, seconds));
     }
 
     @Override
