@@ -158,14 +158,14 @@ public class Main {
                 dump(airportST, airlinesST, airplaneST, flightST);
             } else if (choice == 2) {
                 System.out.println("Loading previous program ...");
-                if (ImportFromFile.currentProgram(".//data//currentProgram.txt", airportST, airlinesST, airplaneST, flightST)) {
+//                if (ImportFromFile.currentProgram(".//data//currentProgram.txt", airportST, airlinesST, airplaneST, flightST)) {
                     File file = new File(".//data//currentProgram.txt");
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                     System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
                     validChoice = true;
-                } else {
-                    System.out.println("Error opening previous program.");
-                }
+//                } else {
+//                    System.out.println("Error opening previous program.");
+//                }
             }
         }
 
