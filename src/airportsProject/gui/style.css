@@ -61,9 +61,9 @@
 }
 .airportBackground{
     -fx-background-image: url('images/world-map.png');
-    -fx-background-size: 1200 700;
-    -fx-background-repeat: stretch;
-    -fx-background-position: center center;
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }
 .listsBackground{
     -fx-background-color: #4185d1;
@@ -135,7 +135,7 @@
 .dialog-pane > .button-bar > .container > .button:hover{
     -fx-background-color: #2C598A;
 }
-.dialogButton, .dialogButtonBlack{
+.dialogButton{
      -fx-background-color: white;
      -fx-cursor: hand;
      -fx-text-fill: #4185d1;
@@ -148,10 +148,7 @@
      -fx-font-family: "Helvetica";
      -fx-border-insets: 0;
  }
-.dialogButtonBlack{
-    -fx-text-fill: black !important;
-}
-.dialogButton:hover, .dialogButton:focused, .dialogButtonBlack:hover, .dialogButtonBlack:focused{
+.dialogButton:hover, .dialogButton:focused{
     -fx-background-color: transparent;
     -fx-text-fill: white !important;
 }
@@ -164,5 +161,24 @@
     -fx-border-width: 0;
     -fx-text-fill: white;
     -fx-font-size: 20px;
-    -fx-prompt-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.9);
+}
+.infoLabel{
+    -fx-text-fill: #888888;
+    -fx-font-size: 13px;
+    -fx-font-family: "Helvetica light";
+}
+.resetButton{
+    -fx-background-color: #4185d1;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-border-radius: 30px !important;
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 30px;
+    -fx-padding: 7px 20px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Helvetica";
+}
+.resetButton:hover{
+    -fx-background-color: #3A76B9;
 }

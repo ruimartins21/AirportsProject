@@ -75,11 +75,11 @@ public class Flight {
      * @param passengers number of passengers to be on the flight
      */
     private void setPassengers(int passengers) {
-//        if(passengers <= this.airplane.getPassengersCapacity()){
+        if(passengers <= this.airplane.getPassengersCapacity()){
             this.passengers = passengers;
-//        }else{
-//            throw new IllegalArgumentException("Flight: Number of passengers exceeds the airplane capacity");
-//        }
+        }else{
+            throw new IllegalArgumentException("Flight: Number of passengers exceeds the airplane capacity");
+        }
     }
 
     /**

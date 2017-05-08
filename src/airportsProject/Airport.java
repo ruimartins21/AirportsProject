@@ -122,7 +122,7 @@ public class Airport {
         return airplanes;
     }
 
-    public RedBlackBST<Date, Flight> getFlights() { return flights; }
+    public RedBlackBST<Date, Flight> getFlights() { return this.flights; }
 
     public void newFlight(Flight flight) {
         this.flights.put(flight.getDate(), flight);

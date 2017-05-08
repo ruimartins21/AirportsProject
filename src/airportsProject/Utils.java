@@ -1,6 +1,5 @@
 package airportsProject;
 
-import airportsProject.Exceptions.AirportNotExistException;
 import airportsProject.Exceptions.WrongTypeFileException;
 import libs.RedBlackBST;
 import libs.SeparateChainingHashST;
@@ -64,6 +63,15 @@ public class Utils{
             ImportFromFile.importAirlines(airlinesST, pathAirlines);
             ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
         }
+        /*
+                TO REMOVE !!!!
+         */
+        Flight flight1 = new Flight(10000, new Date(0,0,0,3,20,10), new Date(1,2,2015,0,0,0), 100, airplaneST.get(0), airportST.get("OPO"), airportST.get("NRT"));
+        Flight flight2 = new Flight(10000, new Date(0,0,0,7,20,10), new Date(2,4,2017,0,0,0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
+        Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,13,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
+        flightST.put(flight1.getDate(), flight1);
+        flightST.put(flight2.getDate(), flight2);
+        flightST.put(flight3.getDate(), flight3);
         return true;
     }
 
@@ -73,6 +81,14 @@ public class Utils{
 
     public void newAirport(Airport airport){
         airportST.put(airport.getCode(), airport);
+    }
+
+    public void editAirport(String airportCode, String name, float rating){
+        if(airportST.get(airportCode) != null){
+            airportST.get(airportCode).setName(name);
+            airportST.get(airportCode).setRating(rating);
+        }
+        log("airportST", "Edited airport " + airportCode + " - \"" + name + "\"");
     }
 
     public SeparateChainingHashST<String, Airline> getAirlines(){
@@ -300,28 +316,21 @@ public class Utils{
             removeAirplane(airline.getFleet().get(p));
         }
         log("AirlineST","Removed airline \"" + airline.getName() + "\"");
-        airlinesST.put(airline.getName(),null);
+        airlinesST.put(airline.getName(), null);
     }
 
     /**
      * Removes an airport incluiding all the airplanes parked there
-     * @param airportCode Code of the airport to remove
+     * @param airport airport to remove
      */
-    public static void removeAirport(String airportCode) throws AirportNotExistException{
-        boolean removed = false;
-        for (String a : airportST.keys() ) {
-            if(a.compareTo(airportCode) == 0){
-                for (Integer p : airportST.get(a).getAirplanes().keys() ) {
-                    removeAirplane(airportST.get(a).getAirplanes().get(p));
-                }
-                log("AirportST","Removed airport \"" + airportST.get(a).getName() + "\"");
-                airportST.put(a, null);
-                removed = true;
+    public static void removeAirport(Airport airport){
+        if(!airport.getAirplanes().isEmpty()){
+            for (Integer p : airportST.get(airport.getCode()).getAirplanes().keys() ) {
+                removeAirplane(airportST.get(airport.getCode()).getAirplanes().get(p));
             }
         }
-        if(!removed){
-            throw new AirportNotExistException("Airport with code \"" + airportCode + "\" does not exist!\n");
-        }
+        log("AirportST","Removed airport \"" + airportST.get(airport.getCode()).getName() + "\"");
+        airportST.put(airport.getCode(), null);
     }
 
     /**

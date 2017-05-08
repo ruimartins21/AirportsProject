@@ -4,16 +4,14 @@ import airportsProject.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
@@ -22,10 +20,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import libs.SeparateChainingHashST;
 
+import java.io.IOException;
+import java.util.Optional;
+
 public class AirportDetailsController {
+    @FXML
+    private HBox containAirportDetails;
     @FXML
     private VBox containAirplanes;
     @FXML
@@ -90,52 +94,34 @@ public class AirportDetailsController {
             setPinLocation();
 
         // airplanes parked on this airport
-        Airplane airplane1 = new Airplane(1, "Airbus A340", "Fernão Mendes Pinto", 500, 2000, 10000, "OPO", 300, 3000, null);
-        Airplane airplane2 = new Airplane(2, "model2", "airplane2", 600, 1500, 8000, "FRA", 350, 2500, null);
-        Airplane airplane3 = new Airplane(3, "model3", "airplane3", 400, 2500, 12000, "JFK", 280, 4000, null);
-        Airplane airplane4 = new Airplane(4, "model4", "airplane4", 500, 2000, 10000, "BRA", 280, 3000, null);
-
-        ObservableList<Airplane> airplanesList = FXCollections.observableArrayList();
-        airplanesList.add(airplane1);
-        airplanesList.add(airplane2);
-        airplanesList.add(airplane3);
-        airplanesList.add(airplane4);
-        for (Airplane airplane : airplanesList) {
-            newAirplaneItem(airplane);
+        if(airport.getAirplanes().size() == 0){
+            Label node = new Label("No airplanes parked here");
+            node.getStyleClass().add("infoLabel");
+            containAirplanes.getChildren().add(node);
+        }else {
+            for (int id : airport.getAirplanes().keys()) {
+                Airplane airplane = airport.getAirplanes().get(id);
+                newAirplaneItem(airplane);
+            }
         }
 
         // set airport flight history
-        Flight flight1 = new Flight(1000, new Date(), new Date(10, 2, 2017, 10, 10, 10), 150);
-        Flight flight2 = new Flight(20000, new Date(), new Date(), 200);
-        Flight flight3 = new Flight(10000, new Date(), new Date(), 300);
-        Flight flight4 = new Flight(5000, new Date(), new Date(), 350);
-        Flight flight5 = new Flight(15000, new Date(), new Date(), 400);
-        Flight flight6 = new Flight(15000, new Date(), new Date(), 400);
-        flight2.setCosts(10000);
-        flight3.setCosts(5000);
-        flight4.setCosts(15000);
-        flight5.setCosts(1000);
-
-        ObservableList<Flight> flightList = FXCollections.observableArrayList();
-        flightList.add(flight1);
-        flightList.add(flight2);
-        flightList.add(flight3);
-        flightList.add(flight4);
-        flightList.add(flight5);
-        flightList.add(flight6);
-        int i = 0;
-        for (Flight flight : flightList) {
-//            if(flight.getAirportOfDestination().equals(airport)){
-//                // arrivals
-//            }else{
-//                // departures
-//            }
-            if(i < 3){
-                containArrivals.getChildren().add(newFlightItem(flight));
-            }else{
-                containDepartures.getChildren().add(newFlightItem(flight));
+        if(airport.getFlights().size() == 0){
+            Label node = new Label("No flights arriving here");
+            node.getStyleClass().add("infoLabel");
+            containArrivals.getChildren().add(node);
+            Label node2 = new Label("No flights departing from here");
+            node2.getStyleClass().add("infoLabel");
+            containDepartures.getChildren().add(node2);
+        }else {
+            for (Date date : airport.getFlights().keys()) {
+                Flight flight = airport.getFlights().get(date);
+                if (flight.getAirportOfDestination().equals(airport)) { // arrivals
+                    containArrivals.getChildren().add(newFlightItem(flight));
+                } else { // departures
+                    containDepartures.getChildren().add(newFlightItem(flight));
+                }
             }
-            i++;
         }
     }
 
@@ -189,9 +175,53 @@ public class AirportDetailsController {
     @FXML
     void optionClicked(MouseEvent event) {
         if(event.getSource().equals(editAirport)){
-            System.out.println("Editing Airport");
+            Dialog<ButtonType> dialog = new Dialog<>();
+            Window window = dialog.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> window.hide());
+            dialog.initOwner(containAirportDetails.getScene().getWindow());
+            dialog.setTitle("Edit Airport");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("newAirportDialog.fxml"));
+            fxmlLoader.setControllerFactory((Class<?> controllerType) -> {
+                if (controllerType == NewAirportDialogController.class) { // send the code of the airport to show its details
+                    NewAirportDialogController controller = new NewAirportDialogController();
+                    controller.setEdit(airport);
+                    return controller;
+                }else{
+                    try {
+                        return controllerType.newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            try{
+                dialog.getDialogPane().setContent(fxmlLoader.load());
+            }catch(IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+            dialog.getDialogPane().getStyleClass().add("customDialog");
+            dialog.setContentText(null);
+            Optional<ButtonType> result = dialog.showAndWait();
+            // if the user closes the dialog, the list of airports will update
+            if(!result.isPresent()){
+                airportName.setText(airports.get(code).getName());
+                airportRating.setText(String.valueOf(airports.get(code).getRating()));
+            }
         }else{
-            System.out.println("Removing Airport");
+            // alert to check if the user really wants to delete the airline
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+            // style the alert
+            alert.setTitle("Confirm Deletion");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete \"" + airport.getName() + "\" airport ?");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                Utils.removeAirport(airport);
+                VistaNavigator.loadVista(VistaNavigator.AIRPORTNETW);
+            }
         }
     }
 
@@ -226,8 +256,7 @@ public class AirportDetailsController {
         newHBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-//                VistaNavigator.loadVista(VistaNavigator.FLIGHTDETAILS, flight.getDate());
-                System.out.println("Clicked -> " + flight.getDate());
+                VistaNavigator.loadVista(VistaNavigator.FLIGHTDETAILS, flight.getDate());
             }
         });
         // flight date
@@ -244,15 +273,10 @@ public class AirportDetailsController {
         newHBox.getChildren().add(flightDuration);
         // "to" or "from" label
         Label airportLabel;
-//        if(flight.getAirportOfDestination().equals(airport)){
-//             airportLabel = new Label("from :");
-//        }else{
-//             airportLabel = new Label("to :");
-//        }
-        if(count < 3){
-            airportLabel = new Label("from :");
+        if(flight.getAirportOfDestination().equals(airport)){
+             airportLabel = new Label("from :");
         }else{
-            airportLabel = new Label("to :");
+             airportLabel = new Label("to :");
         }
         airportLabel.setTextFill(Color.valueOf("9a9a9a"));
         airportLabel.setPadding(new Insets(0, 10, 0, 0));
@@ -260,15 +284,10 @@ public class AirportDetailsController {
         newHBox.getChildren().add(airportLabel);
         // airport name
         Label airportName;
-//        if(flight.getAirportOfDestination().equals(airport)){
-//            airportName = new Label(flight.getAirportOfOrigin().getName());
-//        }else{
-//            airportName = new Label(flight.getAirportOfDestination().getName());
-//        }
-        if(count < 3){
-            airportName = new Label("Airport of Origin Very Long Long Name");
+        if(flight.getAirportOfDestination().equals(airport)){
+            airportName = new Label(flight.getAirportOfOrigin().getName());
         }else{
-            airportName = new Label("Airport of Destination Very Long Long Name");
+            airportName = new Label(flight.getAirportOfDestination().getName());
         }
         airportName.setMaxWidth(150);
         airportName.setTextFill(Color.valueOf("5e5d5d"));
@@ -338,8 +357,7 @@ public class AirportDetailsController {
         airlineLabel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 9));
         newHBox.getChildren().add(airlineLabel);
         // airline
-//        Label airline = new Label(airplane.getAirline().getName());
-        Label airline = new Label("TAP Air Portugal");
+        Label airline = new Label(airplane.getAirline().getName());
         airline.setAlignment(Pos.CENTER);
         airline.setPrefWidth(90.0);
         airline.setPrefHeight(40.0);

@@ -2,8 +2,6 @@ package airportsProject.gui;
 
 import airportsProject.Airport;
 import airportsProject.Utils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -39,6 +37,7 @@ public class AirportNetworkController {
     @FXML
     private Slider zoomSlider;
 
+    private static boolean updated = false; // will tell the update method if a user added/removed an airport or not, to know if it is needed to update the list
     Group zoomGroup;
     Utils utils = Utils.getInstance();
     SeparateChainingHashST<String, Airport> airports = utils.getAirports();
@@ -64,10 +63,8 @@ public class AirportNetworkController {
         map.setHvalue(0.4);
         map.setVvalue(0.5);
 
-        ObservableList<Airport> airportsList = FXCollections.observableArrayList();
         for(String code : airports.keys()){
             Airport airport = airports.get(code);
-            airportsList.add(airport);
             newAirportItem(airport);
             if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                 setPinLocation(airport);
@@ -108,15 +105,28 @@ public class AirportNetworkController {
     }
 
     private void updateList(){
-        containAirports.getChildren().remove(0, airports.size()); // removes the previous list with the removed airline still showing
-        mapPane.getChildren().removeAll(); // resets pins locations to update now
-        for(String name : airports.keys()){ // lists all the existent airlines
-            Airport airport = airports.get(name);
-            newAirportItem(airport);
-            if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
-                setPinLocation(airport);
+        if(updated){
+            containAirports.getChildren().clear(); // removes the previous list
+            mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
+            for(String name : airports.keys()){ // lists all the existent airports
+                Airport airport = airports.get(name);
+                newAirportItem(airport);
+                if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
+                    setPinLocation(airport);
+                }
             }
         }
+        updated = false;
+    }
+
+    public static void setUpdate(){
+        updated = true;
+    }
+
+    @FXML
+    void clearSearch(){
+        updated = true;
+        updateList();
     }
 
     @FXML
@@ -126,6 +136,7 @@ public class AirportNetworkController {
 
     @FXML
     void newAirport(MouseEvent event){
+        updated = false;
         Dialog<ButtonType> dialog = new Dialog<>();
         Window window = dialog.getDialogPane().getScene().getWindow();
         window.setOnCloseRequest(e -> window.hide());
@@ -144,15 +155,44 @@ public class AirportNetworkController {
         dialog.setContentText(null);
         Optional<ButtonType> result = dialog.showAndWait();
         // if the user closes the dialog, the list of airports will update
-
         if(!result.isPresent()){
             updateList();
+        }
+    }
+
+    private void getResults(String search){
+        search = search.toUpperCase();
+        SeparateChainingHashST<String, Airport> resultAirports = new SeparateChainingHashST<>();
+        for(String code : airports.keys()){
+            if(search.compareTo(code) == 0){ // searches on the code of the airport, and if not, it searches the airport name
+                resultAirports.put(code, airports.get(code));
+            }else if(search.compareTo(airports.get(code).getName().toUpperCase()) == 0){
+                resultAirports.put(code, airports.get(code));
+            }
+        }
+        containAirports.getChildren().clear(); // removes the previous list
+        mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
+        if(!resultAirports.isEmpty()){
+            for(String name : resultAirports.keys()){ // lists all the existent airports
+                Airport airport = resultAirports.get(name);
+                newAirportItem(airport);
+                if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
+                    setPinLocation(airport);
+                }
+            }
         }
     }
 
     @FXML
     void getInput(ActionEvent actionEvent){
         System.out.println("Searched for: \"" + searchAirport.getText() + "\"");
+        if(searchAirport.getText().length() != 0){
+            getResults(searchAirport.getText());
+            searchAirport.setText("");
+        }else{
+            updated = true;
+            updateList();
+        }
     }
 
     @FXML
@@ -226,8 +266,18 @@ public class AirportNetworkController {
             @Override
             public void handle(MouseEvent event) {
                 if(removeThis){
-                    System.out.println("Remove airport -> " + airport.getCode());
-                    // alert para verificar se quer mesmo remover
+                    // alert to check if the user really wants to delete the airline
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+                    // style the alert
+                    alert.setTitle("Confirm Deletion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to delete \"" + airport.getName() + "\" airport ?");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.YES) {
+                        Utils.removeAirport(airport);
+                        updated = true;
+                        updateList();
+                    }
                     removeThis = false; // reset variable
                 }else{
                     VistaNavigator.loadVista(VistaNavigator.AIRPORTDETAILS, airport.getCode());
