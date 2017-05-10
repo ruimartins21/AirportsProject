@@ -110,6 +110,8 @@ public class Airplane {
      * @return returns the ammount of fuel it will spend each 1000 km
      */
     private float planeConsumption() {
+//        System.out.println("getFuelCapacity: " + this.getFuelCapacity() + "Max range: " + this.getMaxRange());
+//        System.out.println("total: " + (1000*(this.getFuelCapacity()/this.getMaxRange())));
         return 1000*(this.getFuelCapacity()/this.getMaxRange());
     }
 
@@ -142,53 +144,31 @@ public class Airplane {
      */
     public double getAirplaneCost(double distance, double windSpeed, double altitude) {
 
-//        // cost of the wind speed
-//        double windCost = 0f;
-//        if(windSpeed < 0){ // against the airplane, adds cost
-//            windSpeed = Math.abs(windSpeed);
-//            windCost = -(Main.windCost*windSpeed);
-//        }else{ // in favor of the airplane, reduces cost
-//            windCost = Main.windCost*windSpeed;
-//        }
-//        // cost of the altitude
-//        double altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
-//        altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
-//        if(altitudeDiference > 0){
-//            return  planeConsumption() + (Main.nValue * altitudeDiference) + (windCost*distance);
-//        }else if(altitudeDiference < 0){
-//            return  planeConsumption() + (Main.mValue * altitudeDiference) + (windCost*distance);
-//        }
-//        return planeConsumption() + (windCost*distance);
-
-        // cost of the altitude
         double altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
-        altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
-        if(altitudeDiference > 0){
-            altitudeDiference =  planeConsumption() + Main.nValue * altitudeDiference;
-        }else if(altitudeDiference < 0){
-            altitudeDiference =  planeConsumption() + Main.mValue * altitudeDiference;
+        altitudeDiference /= 1000; // adds cost at each 1000 km difference in height
+        if(altitudeDiference < 0){
+            altitudeDiference =   Main.nValue * altitudeDiference;
+        }else if(altitudeDiference > 0){
+            altitudeDiference =  Main.mValue * - altitudeDiference;
         }
-
-        return getFlightDuration(distance,windSpeed) * planeConsumption() + Math.abs(this.cruiseAltitude - altitude) * altitudeDiference;
+        return getFlightDuration(distance,windSpeed) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - altitude)/1000) * altitudeDiference));
     }
 
     public double getAirplaneCost(Connection connection) {
-
-        // cost of the altitude
         double altitudeDiference = this.cruiseAltitude - connection.getAltitude(); // difference between airplane cruise altitude and the connection altitude
-        altitudeDiference %= 1000; // adds cost at each 1000 km difference in height
-        if(altitudeDiference > 0){
-            altitudeDiference =  planeConsumption() + Main.nValue * altitudeDiference;
-        }else if(altitudeDiference < 0){
-            altitudeDiference =  planeConsumption() + Main.mValue * altitudeDiference;
+        altitudeDiference /= 1000; // adds cost at each 1000 km difference in height
+        if(altitudeDiference < 0){
+            altitudeDiference =   Main.nValue * altitudeDiference;
+        }else if(altitudeDiference > 0){
+            altitudeDiference =  Main.mValue * - altitudeDiference;
         }
-
-        return getFlightDuration(connection) * planeConsumption() + Math.abs(this.cruiseAltitude - connection.getAltitude()) * altitudeDiference;
+        return getFlightDuration(connection) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - connection.getAltitude())/1000) * altitudeDiference));
     }
 
 
     public double getFlightDuration(Connection connection){
-        return connection.weight() / (this.cruiseSpeed + connection.getWindSpeed());
+//        return connection.weight() / (this.cruiseSpeed + connection.getWindSpeed());
+        return connection.weight() / this.cruiseSpeed;
     }
 
     public double getFlightDuration(double distance, double windSpeed){
@@ -200,7 +180,7 @@ public class Airplane {
         int minutes = (int) (finalBuildTime * 60) % 60;
         int seconds = (int) (finalBuildTime * (60*60)) % 60;
 
-        System.out.println(String.format("%s(h) %s(m) %s(s)", hours, minutes, seconds));
+        System.out.print(String.format("%sh %sm %ss ", hours, minutes, seconds));
     }
 
     @Override

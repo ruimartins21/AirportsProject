@@ -2,10 +2,7 @@ package airportsProject;
 
 import airportsProject.Exceptions.AirportNotExistException;
 import edu.princeton.cs.algs4.StdOut;
-import libs.DijkstraSP;
-import libs.RedBlackBST;
-import libs.SeparateChainingHashST;
-import libs.SymbolEdgeWeightedDigraph;
+import libs.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,9 +14,9 @@ import java.util.Scanner;
 
 public class Main {
     static int nValue = 200;
-    static int mValue = 250;
-    static int euroValue = 30;  // 30 €/L
-    static int windCost = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
+    static int mValue = 200;
+    static double euroValue = 2;  // 30 €/L
+    static int windCost = 20;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
     static int mapWidth = 1536; // width of the world map used
     static int mapHeight = 768; // height of the world map used
 
@@ -50,26 +47,47 @@ public class Main {
         ImportFromFile.importAirlines(airlinesST, pathAirlines);
         ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
-        int airportOfOrigin = 0;
-        airplane = airplaneST.get(30); // id = 2 -> D. João de Castro
+        int airportOfOrigin = 0, airportDestination = 13;
+        airplane = airplaneST.get(1);
         SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
         DijkstraSP dijkstraSP = null;
 
+//        System.out.println("Custo do aviao 1: " + (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100)*100)/100f + " L");
+//        System.out.println("Custo do aviao 1: " + euroValue * (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100)*100)/100f + " €" + "\n\n");
 
-        System.out.println("Custo do aviao 1: " + airplane.getAirplaneCost(277, -5, 21000) + "\n\n");
-
+        System.out.println("airportOfOrigin: 1 - " + airplaneST.get(1).getAirportCode());
+        System.out.println("airportOfDestination: 30 - " + airplaneST.get(airportDestination).getAirportCode() + "\n");
         System.out.println("by distance: ");
-        dijkstraSP = new DijkstraSP(symbolGraph.G(),airportOfOrigin, null,"distance");
-        printShortestPath(dijkstraSP, symbolGraph, 30, airplane, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), airportOfOrigin, null, "distance");
+        printShortestPath(dijkstraSP, symbolGraph, airportDestination, airplane, "distance");
         System.out.println("by monetary: ");
         dijkstraSP = new DijkstraSP(symbolGraph.G(), airportOfOrigin, airplane, "monetary");
-        printShortestPath(dijkstraSP, symbolGraph, 30, airplane, "monetary");
+        printShortestPath(dijkstraSP, symbolGraph, airportDestination, airplane, "monetary");
         System.out.println("by time: ");
         dijkstraSP = new DijkstraSP(symbolGraph.G(), airportOfOrigin, airplane, "time");
-        printShortestPath(dijkstraSP, symbolGraph, 30, airplane, "time");
+        printShortestPath(dijkstraSP, symbolGraph, airportDestination, airplane, "time");
+
+//        System.out.println("\n\nprintAllConnections\n");
+//        dijkstraSP = new DijkstraSP(symbolGraph.G(),airportOfOrigin, null,"distance");
+//        dijkstraSP.printAllConnections(symbolGraph.G(),airportOfOrigin, null,"distance", dijkstraSP);
 
 
+//        mais rapido por menos conecoes
+        DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.G(), airportOfOrigin);
+        System.out.println("\n\nDFS\n");
+        dfs.printGraph(symbolGraph.G(), airportOfOrigin);
+//        System.out.println("Nº componentes: " + dfs.count());
 
+
+        BreadthFirstPaths bfs = new BreadthFirstPaths(symbolGraph.G(), airportOfOrigin);
+        System.out.println("\n\nBFS\n");
+        bfs.printAllConnections(symbolGraph.G(), airportOfOrigin, bfs);
+
+        System.out.println("\n\nCaminho mais rapido (menos ligacoes): [" + airportOfOrigin + "] OPO" + " to [" + airportDestination + "] DME\n");
+        printAShortestPath(bfs, symbolGraph, airportDestination);
+
+//        se o grafo é conexo
+        checkGraphIsConnected(symbolGraph.G());
 
 
         // New program or load previous program
@@ -159,10 +177,10 @@ public class Main {
             } else if (choice == 2) {
                 System.out.println("Loading previous program ...");
 //                if (ImportFromFile.currentProgram(".//data//currentProgram.txt", airportST, airlinesST, airplaneST, flightST)) {
-                    File file = new File(".//data//currentProgram.txt");
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
-                    validChoice = true;
+                File file = new File(".//data//currentProgram.txt");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                System.out.println(" (Last opened in: " + sdf.format(file.lastModified()) + ")");
+                validChoice = true;
 //                } else {
 //                    System.out.println("Error opening previous program.");
 //                }
@@ -1060,31 +1078,55 @@ public class Main {
         return airports;
     }
 
-    //    pesquisa do caminho mais curto com base na distancia
-    private static void shortestPathDistance(DijkstraSP dijkstraSP, SymbolEdgeWeightedDigraph symbolGraph, int airportOfOrigin, int airportOfDestination) {
-
-
-//        printShortestPath(dijkstraSP, symbolGraph, airportOfDestination);
-
-    }
-
+    //    imprimir caminho mais barato, curto , monetario, rapido (tempo)
     private static void printShortestPath(DijkstraSP dijkstraSP, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination, Airplane airplane, String typeOfSearch) {
         for (Connection e : dijkstraSP.pathTo(airportOfDestination)) {
 
             if (typeOfSearch.compareTo("distance") == 0) {
-                StdOut.print(symbolGraph.nameOf(e.from()) + "-> " + symbolGraph.nameOf(e.to()) + " : " + e.weight());
+                StdOut.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + e.weight() + " Km");
             } else if (typeOfSearch.compareTo("monetary") == 0) {
-                StdOut.print(symbolGraph.nameOf(e.from()) + "-> " + symbolGraph.nameOf(e.to()) + " : " + airplane.getAirplaneCost(e));
+                StdOut.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
             } else if (typeOfSearch.compareTo("time") == 0) {
-                StdOut.print(symbolGraph.nameOf(e.from()) + "-> " + symbolGraph.nameOf(e.to()) + " : " + airplane.getFlightDuration(e));
-//                airplane.convertTime(airplane.getFlightDuration(e));
+                StdOut.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : ");
+                airplane.convertTime(airplane.getFlightDuration(e));
             }
             System.out.println();
         }
-        StdOut.println();
-        System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination));
+        if (typeOfSearch.compareTo("time") == 0) {
+            System.out.print("Total Cost: ");
+            airplane.convertTime(dijkstraSP.distTo(airportOfDestination));
+        } else if (typeOfSearch.compareTo("distance") == 0) {
+            System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " km");
+        } else if (typeOfSearch.compareTo("monetary") == 0) {
+            System.out.println("Total Cost: " + euroValue * (double) Math.round(dijkstraSP.distTo(airportOfDestination) * 100) / 100f + " €");
+        }
         System.out.println();
-        System.out.println();
-        System.out.println();
+    }
+
+    //    imprimir caminho mais rapido (menos ligacoes)
+    public static void printAShortestPath(BreadthFirstPaths bfs, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination) {
+        if (bfs.hasPathTo(airportOfDestination)) {
+            for (int x : bfs.pathTo(airportOfDestination)) {
+                if (x == airportOfDestination) System.out.print(x);
+                else System.out.print(x + " - ");
+            }
+            System.out.println();
+//            com traducao de nomes
+            for (int x : bfs.pathTo(airportOfDestination)) {
+                if (x == airportOfDestination) System.out.print(symbolGraph.nameOf(x));
+                else System.out.print(symbolGraph.nameOf(x) + " - ");
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public static void checkGraphIsConnected(EdgeWeightedDigraph graph){
+        KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
+        if(kosarajuSharirSCC.count() == 1){
+            System.out.println("Grafo de ligações entre aeroportos é conexo! \n");
+        }else{
+            System.out.println("Grafo não é conexo! \n");
+        }
+
     }
 }

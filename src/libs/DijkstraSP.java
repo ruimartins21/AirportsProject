@@ -36,6 +36,7 @@ import airportsProject.Airplane;
 import airportsProject.Connection;
 import edu.princeton.cs.algs4.IndexMinPQ;
 import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.StdOut;
 
 /**
  * The {@code DijkstraSP} class represents a data type for solving the
@@ -231,35 +232,21 @@ public class DijkstraSP {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
 
-    /**
-     * Unit tests the {@code DijkstraSP} data type.
-     *
-     * @param args the command-line arguments
-     */
-//    public static void main(String[] args) {
-//        In in = new In(args[0]);
-//        EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
-//        int s = Integer.parseInt(args[1]);
-//
-//        // compute shortest paths
-//        DijkstraSP sp = new DijkstraSP(G, s);
-//
-//        // print shortest path
-//        for (int t = 0; t < G.V(); t++) {
-//            if (sp.hasPathTo(t)) {
-//                StdOut.printf("%d to %d (%.2f)  ", s, t, sp.distTo(t));
-//                for (Connection e : sp.pathTo(t)) {
-//                    StdOut.print(e + "   " );
-//                }
-//                StdOut.println();
-//            }
-//            else {
-//                StdOut.printf("%d to %d         no path\n", s, t);
-//            }
-//        }
-//    }
-
-
+    public static void printAllConnections(EdgeWeightedDigraph G, int s, Airplane airplane, String typeOfSearch,  DijkstraSP sp){
+        // print shortest path
+        for (int t = 0; t < G.V(); t++) {
+            if (sp.hasPathTo(t)) {
+                StdOut.printf("%d to %d  ", s, t, sp.distTo(t));
+                for (Connection e : sp.pathTo(t)) {
+                    StdOut.print(e.from() + "-" );
+                }
+                StdOut.println();
+            }
+            else {
+                StdOut.printf("%d to %d         no path\n", s, t);
+            }
+        }
+    }
 }
 
 /******************************************************************************
