@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.NewAirportDialogController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="airportBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.NewAirportDialogController">
    <children>
       <TextField fx:id="airportName" layoutX="57.0" layoutY="35.0" prefHeight="40.0" prefWidth="211.0" promptText="Name" styleClass="newItemInput" stylesheets="@style.css" />
       <TextField fx:id="airportCode" layoutX="345.0" layoutY="34.0" prefHeight="40.0" prefWidth="211.0" promptText="Code" styleClass="newItemInput" stylesheets="@style.css" />
       <TextField fx:id="airportCity" layoutX="54.0" layoutY="109.0" prefHeight="40.0" prefWidth="211.0" promptText="City" styleClass="newItemInput" stylesheets="@style.css" />
       <TextField fx:id="airportCountry" layoutX="344.0" layoutY="109.0" prefHeight="40.0" prefWidth="211.0" promptText="Country" styleClass="newItemInput" stylesheets="@style.css" />
       <TextField fx:id="airportContinent" layoutX="54.0" layoutY="179.0" prefHeight="40.0" prefWidth="211.0" promptText="Continent" styleClass="newItemInput" stylesheets="@style.css" />
-      <Slider fx:id="airportRating" blockIncrement="0.1" layoutX="346.0" layoutY="204.0" max="10.0" prefHeight="15.0" prefWidth="152.0" showTickLabels="true" />
+      <Slider fx:id="airportRating" blockIncrement="0.1" layoutX="346.0" layoutY="204.0" max="10.0" prefHeight="15.0" prefWidth="152.0" />
       <Label layoutX="397.0" layoutY="179.0" text="Rating" textFill="WHITE">
          <font>
             <Font name="Helvetica Light" size="17.0" />
@@ -25,11 +25,11 @@
             <Font name="Helvetica Light" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="warning" layoutX="78.0" layoutY="236.0" text="Please fill all the fields (remember, the Code must be 3 characters long!)" textFill="RED">
+      <Label fx:id="warning" layoutX="78.0" layoutY="236.0" text="Please fill all the fields (the code must be 3 characters long!)" textFill="RED">
          <font>
             <Font name="Helvetica Light" size="14.0" />
          </font>
       </Label>
-      <Button defaultButton="true" layoutX="248.0" layoutY="262.0" mnemonicParsing="false" onAction="#getNewAirportInput" prefHeight="40.0" prefWidth="111.0" styleClass="dialogButtonBlack" text="Submit" />
+      <Button defaultButton="true" layoutX="248.0" layoutY="262.0" mnemonicParsing="false" onAction="#getNewAirportInput" prefHeight="40.0" prefWidth="111.0" styleClass="dialogButton" text="Submit" />
    </children>
 </Pane>

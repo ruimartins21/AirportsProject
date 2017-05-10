@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirportDetailsController">
+<HBox fx:id="containAirportDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="listsBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.AirportDetailsController">
    <children>
       <Pane prefHeight="200.0" prefWidth="500.0" styleClass="airlineBackground" HBox.hgrow="NEVER">
          <effect>
@@ -211,7 +211,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="containArrivals">
+                  <VBox fx:id="containArrivals" alignment="TOP_CENTER">
                      <!--<children>-->
                         <!--<Pane>-->
                            <!--<children>-->
@@ -263,7 +263,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox fx:id="containDepartures" />
+                  <VBox fx:id="containDepartures" alignment="TOP_CENTER" />
                   <!--<SplitPane dividerPositions="0.5" prefHeight="131.0" prefWidth="480.0" styleClass="splitPane">-->
                      <!--<items>-->
                         <!--<Pane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">-->
