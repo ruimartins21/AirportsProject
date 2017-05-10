@@ -63,7 +63,7 @@
             </Pane>
          </children>
       </VBox>
-      <VBox nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white;" styleClass="listsBackground">
+      <VBox fx:id="containAirplaneDetails" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" style="-fx-background-color: white;" styleClass="listsBackground">
          <children>
             <Region prefHeight="135.0" prefWidth="440.0" />
             <Pane minHeight="20.0" prefHeight="27.0" prefWidth="440.0">

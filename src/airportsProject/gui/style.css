@@ -92,6 +92,11 @@
     -fx-pref-width: 24;
     -fx-pref-height: 33;
 }
+.pin:hover{
+    -fx-background-color:#4185d1;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+}
 .mapPin .arrow-button .arrow {
     -fx-padding: 0;
 }
@@ -163,6 +168,24 @@
     -fx-font-size: 20px;
     -fx-prompt-text-fill: rgba(255, 255, 255, 0.9);
 }
+/*.spinner{*/
+    /*-fx-background-color: rgba(255, 255, 255, 0.2);*/
+    /*-fx-border-radius: 0;*/
+    /*-fx-border-width: 0;*/
+    /*-fx-text-fill: white;*/
+    /*-fx-font-size: 20px;*/
+    /*-fx-prompt-text-fill: rgba(255, 255, 255, 0.9);*/
+/*}*/
+/*.spinner .increment-arrow-button,*/
+/*.spinner .decrement-arrow-button {*/
+    /*!*-fx-background-color: white;*!*/
+/*}*/
+/*.spinner .arrow{*/
+    /*-fx-background-color: #fff;*/
+/*}*/
+.airplaneInput{
+    -fx-font-size: 18px !important;
+}
 .infoLabel{
     -fx-text-fill: #888888;
     -fx-font-size: 13px;
@@ -181,4 +204,23 @@
 }
 .resetButton:hover{
     -fx-background-color: #3A76B9;
+}
+.choiceButton{
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    /*-fx-mark-color: white ;*/
+    -fx-font-size: 18px;
+}
+.choiceButton > .label{
+    -fx-text-fill: white;
+}
+.choiceButton .context-menu {
+    -fx-background-color: rgba(255, 255, 255, 0.8) ;
+    -fx-font-size: 15px;
+    -fx-max-height: 500px;
+}
+.choiceButton .menu-item{
+    -fx-cursor: hand;
+}
+.choiceButton .menu-item:focused{
+    -fx-background-color: #4185d1;
 }

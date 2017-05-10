@@ -4,20 +4,28 @@ import airportsProject.Airplane;
 import airportsProject.Airport;
 import airportsProject.Utils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Window;
 import libs.RedBlackBST;
 import libs.SeparateChainingHashST;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Optional;
 
 public class AirplaneDetailsController {
+    @FXML
+    private VBox containAirplaneDetails;
     @FXML
     private Pane editAirplane;
     @FXML
@@ -108,7 +116,46 @@ public class AirplaneDetailsController {
     @FXML
     void optionClicked(MouseEvent event) {
         if(event.getSource().equals(editAirplane)){
-            System.out.println("Editing Airplane");
+            Dialog<ButtonType> dialog = new Dialog<>();
+            Window window = dialog.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> window.hide());
+            dialog.initOwner(containAirplaneDetails.getScene().getWindow());
+            dialog.setTitle("Edit Airplane");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("newAirplaneDialog.fxml"));
+            fxmlLoader.setControllerFactory((Class<?> controllerType) -> {
+                if (controllerType == NewAirplaneDialogController.class) { // send the code of the airport to show its details
+                    NewAirplaneDialogController controller = new NewAirplaneDialogController();
+                    controller.setEdit(airplane);
+                    return controller;
+                }else{
+                    try {
+                        return controllerType.newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            try{
+                dialog.getDialogPane().setContent(fxmlLoader.load());
+            }catch(IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+            dialog.getDialogPane().getStyleClass().add("customDialog");
+            dialog.setContentText(null);
+            Optional<ButtonType> result = dialog.showAndWait();
+            // if the user closes the dialog, the airplane informations will update
+            if(!result.isPresent()){
+                airplaneName.setText(airplanes.get(airplane.getId()-1).getName().toUpperCase());
+                airplaneModel.setText(airplanes.get(airplane.getId()-1).getModel());
+                airplaneCruiseSpeed.setText(formatter.format(airplanes.get(airplane.getId()-1).getCruiseSpeed()) + " km/h");
+                airplaneCruiseAltitude.setText(formatter.format(airplanes.get(airplane.getId()-1).getCruiseAltitude()) + " km");
+                airplaneMaxDistance.setText(formatter.format(airplanes.get(airplane.getId()-1).getMaxRange()) + " km");
+                airplanePassengers.setText(String.valueOf(airplanes.get(airplane.getId()-1).getPassengersCapacity()));
+                airplaneFuelCap.setText(formatter.format(airplanes.get(airplane.getId()-1).getFuelCapacity()) + " L");
+            }
         }else{
             // alert to check if the user really wants to delete the airline
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);

@@ -116,6 +116,7 @@ public class AirportNetworkController {
                 }
             }
         }
+        searchAirport.setText("");
         updated = false;
     }
 
@@ -164,9 +165,13 @@ public class AirportNetworkController {
         search = search.toUpperCase();
         SeparateChainingHashST<String, Airport> resultAirports = new SeparateChainingHashST<>();
         for(String code : airports.keys()){
-            if(search.compareTo(code) == 0){ // searches on the code of the airport, and if not, it searches the airport name
-                resultAirports.put(code, airports.get(code));
-            }else if(search.compareTo(airports.get(code).getName().toUpperCase()) == 0){
+            // searches the keyword occurrence on the airports
+            if(search.compareTo(code) == 0 ||
+            search.compareTo(airports.get(code).getName().toUpperCase()) == 0 ||
+            Utils.isNumeric(search) && Float.valueOf(search).compareTo(airports.get(code).getRating()) == 0 ||
+            search.compareTo(airports.get(code).getCity().toUpperCase()) == 0 ||
+            search.compareTo(airports.get(code).getCountry().toUpperCase()) == 0 ||
+            search.compareTo(airports.get(code).getContinent().toUpperCase()) == 0){
                 resultAirports.put(code, airports.get(code));
             }
         }
@@ -185,13 +190,9 @@ public class AirportNetworkController {
 
     @FXML
     void getInput(ActionEvent actionEvent){
-        System.out.println("Searched for: \"" + searchAirport.getText() + "\"");
-        if(searchAirport.getText().length() != 0){
+        if(searchAirport.getText().trim().length() != 0){
             getResults(searchAirport.getText());
             searchAirport.setText("");
-        }else{
-            updated = true;
-            updateList();
         }
     }
 

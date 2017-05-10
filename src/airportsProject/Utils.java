@@ -68,7 +68,7 @@ public class Utils{
          */
         Flight flight1 = new Flight(10000, new Date(0,0,0,3,20,10), new Date(1,2,2015,0,0,0), 100, airplaneST.get(0), airportST.get("OPO"), airportST.get("NRT"));
         Flight flight2 = new Flight(10000, new Date(0,0,0,7,20,10), new Date(2,4,2017,0,0,0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
-        Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,13,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
+        Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,16,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
         flightST.put(flight1.getDate(), flight1);
         flightST.put(flight2.getDate(), flight2);
         flightST.put(flight3.getDate(), flight3);
@@ -83,13 +83,13 @@ public class Utils{
         airportST.put(airport.getCode(), airport);
     }
 
-    public void editAirport(String airportCode, String name, float rating){
-        if(airportST.get(airportCode) != null){
-            airportST.get(airportCode).setName(name);
-            airportST.get(airportCode).setRating(rating);
-        }
-        log("airportST", "Edited airport " + airportCode + " - \"" + name + "\"");
-    }
+//    public void editAirport(String airportCode, String name, float rating){
+//        if(airportST.get(airportCode) != null){
+//            airportST.get(airportCode).setName(name);
+//            airportST.get(airportCode).setRating(rating);
+//        }
+//        log("airportST", "Edited airport " + airportCode + " - \"" + name + "\"");
+//    }
 
     public SeparateChainingHashST<String, Airline> getAirlines(){
         return airlinesST;
@@ -100,6 +100,14 @@ public class Utils{
             airlinesST.put(airline.getName(), airline);
     }
 
+
+    /**
+     * Receives the data possible to be edited on an airline and changes it using the class setters
+     * @param oldName previous name of the airline to match it in the ST
+     * @param newName new name of the airline
+     * @param nationality airline nationality
+     * @return returns false if the airline does not exist and true if the editing was successful
+     */
     public void editAirline(String oldName, String newName, String nationality){
         if(oldName.compareTo(newName) == 0){ // same name (key), updates the entry
             airlinesST.get(oldName).setNationality(nationality);
@@ -116,9 +124,9 @@ public class Utils{
         return airplaneST;
     }
 
-    public void newAirplane(Airplane airplane){
-        airplaneST.put(airplane.getId()-1, airplane);
-    }
+//    public void newAirplane(Airplane airplane){
+//        airplaneST.put(airplane.getId()-1, airplane);
+//    }
 
     public RedBlackBST<Date, Flight> getFlights(){
         return flightST;
@@ -128,7 +136,7 @@ public class Utils{
         flightST.put(flight.getDate(), flight);
     }
 
-    public ArrayList<Coordinates> createCoordinatesFile(){
+    public void createCoordinatesFile(){
         ArrayList<Coordinates> coordinates = new ArrayList<>();
         for(String code : airportST.keys()){
             Airport airport = airportST.get(code);
@@ -140,7 +148,6 @@ public class Utils{
         } catch (Exception ex) {
             System.out.println("Couldn't create the file");
         }
-        return coordinates;
     }
 
     /**
@@ -331,6 +338,7 @@ public class Utils{
         }
         log("AirportST","Removed airport \"" + airportST.get(airport.getCode()).getName() + "\"");
         airportST.put(airport.getCode(), null);
+        Utils.getInstance().createCoordinatesFile();
     }
 
     /**
@@ -401,8 +409,9 @@ public class Utils{
         scanner.nextLine();
         System.out.print("Fuel capacity: ");
         int fuelCap = scanner.nextInt();
-        return addAirplane(model, name, airlineName, cruiseSpeed, cruiseAltitude, maxRange, airportCode, passengersCap, fuelCap,
-                airportST, airplaneST, airlineST);
+//        return addAirplane(model, name, airlineName, cruiseSpeed, cruiseAltitude, maxRange, airportCode, passengersCap, fuelCap,
+//                airportST, airplaneST, airlineST);
+        return true;
     }
 
     /**
@@ -437,7 +446,8 @@ public class Utils{
             scanner.nextLine();
         }
         float rating = scanner.nextFloat();
-        return editAirport(airportCode, name, rating, airportST);
+//        return editAirport(airportCode, name, rating, airportST);
+        return true;
     }
 
     /**
@@ -476,7 +486,26 @@ public class Utils{
         scanner.nextLine();
         System.out.print("Fuel capacity: ");
         int fuelCap = scanner.nextInt();
-        return editAirplane(airplaneId, model, name, cruiseSpeed, cruiseAltitude, maxRange, passengersCap, fuelCap, airplaneST);
+//        return editAirplane(airplaneId, model, name, cruiseSpeed, cruiseAltitude, maxRange, passengersCap, fuelCap, airplaneST);
+        return true;
+    }
+
+    /**
+     * Utility function to check for a search input to be numeric or not
+     * @param str -> search input
+     * @return returns true if it is a number and false if not
+     */
+    public static boolean isNumeric(String str){
+        try{
+            double d = Integer.parseInt(str);
+        }catch(NumberFormatException nfe) {
+            try{
+                double d = Float.parseFloat(str);
+            }catch(NumberFormatException nfe2) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -490,7 +519,8 @@ public class Utils{
         System.out.println("Edit an airline:");
         System.out.print("Name: ");
         String newName = scanner.nextLine();
-        return editAirline(airlineName, newName, airlineST);
+        return true;
+//        return editAirline(airlineName, newName, airlineST);
     }
 
     /**
@@ -505,21 +535,16 @@ public class Utils{
      * @param airportCode airport where the airplane will be parked at first
      * @param passengersCapacity passengers capacity of the airplane
      * @param fuelCapacity fuel capacity of the airplane
-     * @param airportST ST that has all the airports to check the consistency of the airport where the airplane will be
-     * @param airplaneST ST where will be stored the new airplane
-     * @param airlineST ST that has all the airlines to check the consistency of the airline that owns the airplane
      * @return returns false if the airline or the airport in question does not exist
      */
-    private static boolean addAirplane(String model, String name, String airlineName,  float cruiseSpeed, float cruiseAltitude,
-                                        float maxRange, String airportCode, int passengersCapacity, int fuelCapacity,
-                                    SeparateChainingHashST<String, Airport> airportST, RedBlackBST<Integer, Airplane> airplaneST,
-                                    SeparateChainingHashST<String, Airline> airlineST){
+    public boolean addAirplane(String model, String name, String airlineName,  float cruiseSpeed, float cruiseAltitude,
+                                        float maxRange, String airportCode, int passengersCapacity, int fuelCapacity){
         int id = 1; // if the airplanes ST is empty this will be the first entry
         if(!airplaneST.isEmpty())
             id = airplaneST.max() + 2; // adds 2 because 1 is for the id to match airplanes ids and another to add the new plane
 
         // searches for the airline existence
-        Airline thisPlaneAirline = airlineST.get(airlineName);
+        Airline thisPlaneAirline = airlinesST.get(airlineName);
         if(thisPlaneAirline == null)
             return false;
 
@@ -547,18 +572,12 @@ public class Utils{
      * @param maxRange new max range of the airplane
      * @param passengersCapacity new passengers capacity of the airplane
      * @param fuelCapacity new fuel capacity of the airplane
-     * @param airplaneST ST where will be stored the new airplane
-     * @return returns false if the airplane with the ID passed does not exist and true if the editing was successful
      */
-    private static boolean editAirplane(int idAirplane, String model, String name,  float cruiseSpeed, float cruiseAltitude,
-                                     float maxRange, int passengersCapacity, int fuelCapacity,
-                                     RedBlackBST<Integer, Airplane> airplaneST){
+    public void editAirplane(int idAirplane, String model, String name,  float cruiseSpeed, float cruiseAltitude,
+                                     float maxRange, int passengersCapacity, int fuelCapacity){
         idAirplane -= 1; // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
         // searches for the airplane existence
         Airplane plane = airplaneST.get(idAirplane);
-        if(plane == null) {
-            return false;
-        }
         plane.setModel(model);
         plane.setName(name);
         plane.setCruiseSpeed(cruiseSpeed);
@@ -567,7 +586,6 @@ public class Utils{
         plane.setPassengersCapacity(passengersCapacity);
         plane.setFuelCapacity(fuelCapacity);
         log("airplaneST", "Edited airplane [" + plane.getId() +"] \"" + plane.getName() + "\"");
-        return true;
     }
 
     /**
@@ -598,19 +616,13 @@ public class Utils{
      * @param code code of the airport to edit
      * @param name new name of the airport
      * @param rating new rating of the airport
-     * @param airportST ST holding the airport
-     * @return returns false if the airport does not exist and true if the editing was successful
      */
-    private static boolean editAirport(String code, String name, Float rating, SeparateChainingHashST<String, Airport> airportST){
-        // searches for the airportCode existence
+    public void editAirport(String code, String name, Float rating){
         Airport thisPlaneAirport = airportST.get(code);
-        if(thisPlaneAirport == null)
-            return false;
         airportST.get(code).setName(name);
         airportST.get(code).setRating(rating);
         log("airportST", "Edited airport [" +  airportST.get(code).getCode() +  "] \" Name:" + airportST.get(code).getName() + "\" Rating:" +
                 airportST.get(code).getRating());
-        return true;
     }
 
     /**
@@ -638,15 +650,15 @@ public class Utils{
      * @param airlineST ST that holds the airline to edit
      * @return returns false if the airline does not exist and true if the editing was successful
      */
-    private static boolean editAirline(String airlineName, String newName, SeparateChainingHashST<String, Airline> airlineST){
-        // searches for the airline existence
-        Airline airline = airlineST.get(airlineName);
-        if(airline == null)
-            return false;
-        airline.setName(newName);
-        log("airlineST", "Edited airline \"" + airline.getName() + "\" from " + airline.getNationality());
-        return true;
-    }
+//    private static boolean editAirline(String airlineName, String newName, SeparateChainingHashST<String, Airline> airlineST){
+//        // searches for the airline existence
+//        Airline airline = airlineST.get(airlineName);
+//        if(airline == null)
+//            return false;
+//        airline.setName(newName);
+//        log("airlineST", "Edited airline \"" + airline.getName() + "\" from " + airline.getNationality());
+//        return true;
+//    }
 
     /* STATICtistics */
 

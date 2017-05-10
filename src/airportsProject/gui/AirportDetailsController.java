@@ -205,7 +205,7 @@ public class AirportDetailsController {
             dialog.getDialogPane().getStyleClass().add("customDialog");
             dialog.setContentText(null);
             Optional<ButtonType> result = dialog.showAndWait();
-            // if the user closes the dialog, the list of airports will update
+            // if the user closes the dialog, the information edited will update
             if(!result.isPresent()){
                 airportName.setText(airports.get(code).getName());
                 airportRating.setText(String.valueOf(airports.get(code).getRating()));
