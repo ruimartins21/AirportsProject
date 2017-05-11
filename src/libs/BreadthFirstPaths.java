@@ -46,6 +46,8 @@ import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.ArrayList;
+
 /**
  * The {@code BreadthFirstPaths} class represents a data type for finding
  * shortest paths (number of edges) from a source vertex <em>s</em>

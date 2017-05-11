@@ -185,7 +185,7 @@ public class ImportFromFile {
                         Airport airportOfOrigin = airportST.get(fileContent[6]);
                         Airport airportOfDestination = airportST.get(fileContent[7]);
 
-                        Main.newFlight(distance, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, flightST);
+                        Main.newFlight(null,null, duration, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, 0,flightST);
                     }
                 }
                 i++;

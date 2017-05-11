@@ -3,6 +3,7 @@ package airportsProject;
 import airportsProject.Exceptions.AirportNotExistException;
 import edu.princeton.cs.algs4.StdOut;
 import libs.*;
+import org.slf4j.helpers.Util;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -83,9 +84,9 @@ public class Main {
 
 
 //        mais rapido por menos conecoes
-        DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.G(), gIdAirportOrig);
-        System.out.println("\n\nDFS\n");
-        dfs.printGraph(symbolGraph.G(), gIdAirportOrig);
+//        DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.G(), gIdAirportOrig);
+//        System.out.println("\n\nDFS\n");
+//        dfs.printGraph(symbolGraph.G(), gIdAirportOrig);
 //        System.out.println("Nº componentes: " + dfs.count());
 
 
@@ -108,8 +109,54 @@ public class Main {
         flightDate = new Date(7, 3, 2017, 12, 50, 30);
         passengers = 380;
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
-        newFlight(null, symbolGraph, dijkstraSP, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()),
-                airportOfDestination, gIdAirportDest, flightST);
+//        newFlight(bfs, symbolGraph, null, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
+        newFlight(null, dijkstraSP, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
+
+        gIdAirportDest = 12;
+        airplane = airplaneST.get(2);
+        airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
+        flightDate = new Date(7, 3, 2017, 12, 30, 30);
+        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        newFlight(null, dijkstraSP, duration, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
+
+        gIdAirportDest = 23;
+        airplane = airplaneST.get(36);
+        airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
+        flightDate = new Date(7, 3, 2017, 11, 30, 30);
+        dijkstraSP = new DijkstraSP(symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
+        newFlight(null, dijkstraSP, duration, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
+
+
+
+//        PrintInfo.allAirplanes(airplaneST);
+//        System.out.format("%20s%25s%26s%26s%11s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
+//                "Nº Passengers", "Airplane Name");
+//        System.out.println();
+//        System.out.format("%20s%25s%26s%26s%11s%35s", "----------------", "---------------------", "----", "-----", "-------------", "-------------");
+//        System.out.printf("\n\n");
+//        for (Date d : flightST.keys()) {
+//            Flight flight = flightST.get(d);
+//            System.out.format("%20s%25s%26s%26s%11s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
+//                    flight.getDate(), flight.getDuration(), flight.getPassengers(), flight.getAirplane().getName());
+//            for (String code : flight.getConnections()) {
+//                System.out.print("   " + code + " ");
+//            }
+//            System.out.println();
+//
+//        }
+
+
+
+
+//        System.out.println();
+//        System.out.println();
+//        for (String a: airportST.get(airplane.getAirportCode()).getFlights().get(flightDate).getConnections()) {
+//            System.out.print(a + " ");
+//
+//        }
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
 
 
         // New program or load previous program
@@ -130,70 +177,70 @@ public class Main {
                 // Hardcoded Flights to populate the ST
 
 
-                distance = 2000;
-                duration = new Date(0, 0, 0, 10, 0, 0);
-                flightDate = new Date(7, 3, 2017, 12, 50, 30);
-                passengers = 380;
-                airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
-                airportOfDestination = airportST.get("FRA");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//                distance = 2000;
+//                duration = new Date(0, 0, 0, 10, 0, 0);
+//                flightDate = new Date(7, 3, 2017, 12, 50, 30);
+//                passengers = 380;
+//                airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
+//                airportOfDestination = airportST.get("FRA");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
 
-                distance = 2000;
-                duration = new Date(0, 0, 0, 10, 0, 0);
-                flightDate = new Date(7, 3, 2017, 12, 50, 30);
-                passengers = 380;
-                airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
-                airportOfDestination = airportST.get("FRA");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//                distance = 2000;
+//                duration = new Date(0, 0, 0, 10, 0, 0);
+//                flightDate = new Date(7, 3, 2017, 12, 50, 30);
+//                passengers = 380;
+//                airplane = airplaneST.get(1); // id = 2 -> D. João de Castro
+//                airportOfDestination = airportST.get("FRA");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//
+//                distance = 10000;
+//                duration = new Date(1, 0, 0, 10, 0, 0);
+//                flightDate = new Date(8, 4, 2017, 23, 1, 30);
+//                passengers = 380;
+//                airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
+//                airportOfDestination = airportST.get("LAD");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
-                distance = 10000;
-                duration = new Date(1, 0, 0, 10, 0, 0);
-                flightDate = new Date(8, 4, 2017, 23, 1, 30);
-                passengers = 380;
-                airplane = airplaneST.get(2); // id = 3 -> Wenceslau de Moraes
-                airportOfDestination = airportST.get("LAD");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//                distance = 21500;
+//                duration = new Date(0, 0, 0, 17, 43, 32);
+//                flightDate = new Date(9, 2, 2017, 23, 1, 30);
+//                passengers = 200;
+//                airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
+//                airportOfDestination = airportST.get("LAD");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//
+//                distance = 500;
+//                duration = new Date(0, 0, 0, 7, 43, 32);
+//                flightDate = new Date(10, 3, 2017, 23, 1, 30);
+//                passengers = 100;
+//                airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
+//                airportOfDestination = airportST.get("OPO");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
-                distance = 21500;
-                duration = new Date(0, 0, 0, 17, 43, 32);
-                flightDate = new Date(9, 2, 2017, 23, 1, 30);
-                passengers = 200;
-                airplane = airplaneST.get(3); // id = 4 -> D. Francisco de Almeida
-                airportOfDestination = airportST.get("LAD");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//                distance = 1500;
+//                duration = new Date(0, 0, 0, 4, 43, 32);
+//                flightDate = new Date(10, 3, 2017, 23, 1, 30);
+//                passengers = 100;
+//                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+//                airportOfDestination = airportST.get("NRT");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
-                distance = 500;
-                duration = new Date(0, 0, 0, 7, 43, 32);
-                flightDate = new Date(10, 3, 2017, 23, 1, 30);
-                passengers = 100;
-                airplane = airplaneST.get(4); // id = 5 -> Pero Vaz de Caminha
-                airportOfDestination = airportST.get("OPO");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//                distance = 1000;
+//                duration = new Date(0, 0, 0, 4, 43, 32);
+//                flightDate = new Date(11, 3, 2017, 23, 1, 30);
+//                passengers = 50;
+//                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+//                airportOfDestination = airportST.get("NRT");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
 
-                distance = 1500;
-                duration = new Date(0, 0, 0, 4, 43, 32);
-                flightDate = new Date(10, 3, 2017, 23, 1, 30);
-                passengers = 100;
-                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-                airportOfDestination = airportST.get("NRT");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 1000;
-                duration = new Date(0, 0, 0, 4, 43, 32);
-                flightDate = new Date(11, 3, 2017, 23, 1, 30);
-                passengers = 50;
-                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-                airportOfDestination = airportST.get("NRT");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
-
-                distance = 5000;
-                duration = new Date(0, 0, 0, 4, 43, 32);
-                flightDate = new Date(27, 1, 1995, 17, 45, 30);
-                passengers = 150;
-                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
-                airportOfDestination = airportST.get("OPO");
-                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
+//                distance = 5000;
+//                duration = new Date(0, 0, 0, 4, 43, 32);
+//                flightDate = new Date(27, 1, 1995, 17, 45, 30);
+//                passengers = 150;
+//                airplane = airplaneST.get(5); // id = 6 -> Luís vaz de camões
+//                airportOfDestination = airportST.get("OPO");
+//                newFlight(distance, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, flightST);
                 // Overwrites previous saved program
                 dump(airportST, airlinesST, airplaneST, flightST);
             } else if (choice == 2) {
@@ -498,18 +545,18 @@ public class Main {
      * @param airportOfDestination where the airplane will arrive
      * @param flightST             ST of all the flights where will be stored the new one
      */
-    public static void newFlight(float distance, Date duration, Date date, int passengers, Airplane airplane,
-                                 Airport airportOfOrigin, Airport airportOfDestination, RedBlackBST<Date, Flight> flightST) {
-
-        Flight newFlight = new Flight(distance, duration, date, passengers, airplane, airportOfOrigin, airportOfDestination);
-        flightST.put(newFlight.getDate(), newFlight);
-        log("flightST", "New flight leaving at:" + newFlight.getDate() +
-                "; duration: " + newFlight.getDuration().getDuration() +
-                "; from \"" + newFlight.getAirportOfOrigin().getName() +
-                " ( " + newFlight.getDistance() + "m) " +
-                "\"; to \"" + newFlight.getAirportOfDestination().getName() +
-                "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
-    }
+//    public static void newFlight(float distance, Date duration, Date date, int passengers, Airplane airplane,
+//                                 Airport airportOfOrigin, Airport airportOfDestination, RedBlackBST<Date, Flight> flightST) {
+//
+//        Flight newFlight = new Flight(distance, duration, date, passengers, airplane, airportOfOrigin, airportOfDestination);
+//        flightST.put(newFlight.getDate(), newFlight);
+//        log("flightST", "New flight leaving at:" + newFlight.getDate() +
+//                "; duration: " + newFlight.getDuration().getDuration() +
+//                "; from \"" + newFlight.getAirportOfOrigin().getName() +
+//                " ( " + newFlight.getDistance() + "m) " +
+//                "\"; to \"" + newFlight.getAirportOfDestination().getName() +
+//                "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
+//    }
 
     /**
      * searches airports of a certain country / continent
@@ -595,9 +642,7 @@ public class Main {
             for (Date d : flightST.keys()) {
                 Flight flight = flightST.get(d);
                 bw.write(
-                        flight.getDistance() + ";" +
-                                flight.getCosts() + ";" +
-                                flight.getDuration().getSlashes() + ";" +
+                        flight.getDuration().getSlashes() + ";" +
                                 flight.getDate().getSlashes() + ";" +
                                 flight.getPassengers() + ";" +
                                 flight.getAirplane().getId() + ";" +
@@ -1154,39 +1199,67 @@ public class Main {
     }
 
     //    criar voo
-    public static void newFlight(BreadthFirstPaths bfs, SymbolEdgeWeightedDigraph symbolGraph, DijkstraSP dijkstraSP, Date duration, Date date, int passengers, Airplane airplane,
+    public static void newFlight(BreadthFirstPaths bfs, DijkstraSP dijkstraSP, Date duration, Date date, int passengers, Airplane airplane,
                                  Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, RedBlackBST<Date, Flight> flightST) {
 
+        double distance = 0, cost= 0, timeDuration = 0;
+        int comp = 0;
 
         Flight newFlight = new Flight(duration, date, passengers, airplane, airportOfOrigin, airportOfDestination);
         if (dijkstraSP != null && dijkstraSP.hasPathTo(gIdAirportDest)) {
+            System.out.println("\n------");
             for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
-                newFlight.setConnection(symbolGraph.nameOf(e.from()));
+                newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(e.from()));
+                if(Utils.getInstance().getSymbolGraph().nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0){
+                    Utils.getInstance().getAirports().get(Utils.getInstance().getSymbolGraph().nameOf(e.from())).newFlight(newFlight);
+                }
+                System.out.print(Utils.getInstance().getSymbolGraph().nameOf(e.from()) + " ");
             }
-            newFlight.setConnection(symbolGraph.nameOf(gIdAirportDest));
-        }else if(bfs != null && bfs.hasPathTo(gIdAirportDest) ){
+            newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(gIdAirportDest));
+            System.out.print(Utils.getInstance().getSymbolGraph().nameOf(gIdAirportDest) + " ");
+//            System.out.println("Distancia total: "+ dijkstraSP.distTo(gIdAirportDest));
+        } else if (bfs != null && bfs.hasPathTo(gIdAirportDest)) {
+            System.out.println("\n------");
             for (int x : bfs.pathTo(gIdAirportDest)) {
-                newFlight.setConnection(symbolGraph.nameOf(x));
+                newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(x));
+                if(Utils.getInstance().getSymbolGraph().nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && Utils.getInstance().getSymbolGraph().nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
+                    Utils.getInstance().getAirports().get(Utils.getInstance().getSymbolGraph().nameOf(x)).newFlight(newFlight);
+                }
+                System.out.print(Utils.getInstance().getSymbolGraph().nameOf(x) + " ");
             }
         }
+        System.out.println("\n");
+
+
+        for (String code : newFlight.getConnections()) {
+//            System.out.print(code + ": ");
+            for (Connection e : Utils.getInstance().getSymbolGraph().G().adj(Utils.getInstance().getSymbolGraph().indexOf(code))) {
+                if(comp+1 >= newFlight.getConnections().size()){ }
+                else if(Utils.getInstance().getSymbolGraph().nameOf(e.to()).compareTo(newFlight.getConnections().get(comp+1)) == 0){
+                    distance += e.weight();
+                    cost += euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f;
+                    timeDuration += airplane.getFlightDuration(e);
+//                    System.out.println(symbolGraph.indexOf(code) + " : " + e.to());
+
+                }
+
+            }
+            System.out.println();
+            comp++;
+        }
+
+        System.out.println("Total Distance: " + distance + " km");
+        System.out.println("Total Cost: " + cost + " €");
+        System.out.print("Total Duration: " );
+        airplane.convertTime(timeDuration);
+
+
         flightST.put(newFlight.getDate(), newFlight);
         log("flightST", "New flight leaving at:" + newFlight.getDate() +
                 "; duration: " + newFlight.getDuration().getDuration() +
                 "; from \"" + newFlight.getAirportOfOrigin().getName() +
-                " ( " + newFlight.getDistance() + "m) " +
                 "\"; to \"" + newFlight.getAirportOfDestination().getName() +
                 "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
 
-        PrintInfo.flightsOfThisAirport(airportOfOrigin);
-
-        System.out.println();
-        System.out.println();
-        for (String a: newFlight.getConnections()) {
-            System.out.print(a + " ");
-
-        }
-        System.out.println();
-        System.out.println();
-        System.out.println();
     }
 }

@@ -44,16 +44,12 @@ public class FlightsController {
     NumberFormat formatter = new DecimalFormat("#0.##");
 
     public void initialize(){
-        Flight flight1 = new Flight(1000, new Date(), new Date(10, 2, 2017, 10, 10, 10), 150);
-        Flight flight2 = new Flight(20000, new Date(), new Date(), 200);
+        Flight flight1 = new Flight(10000,new Date(), new Date(10, 2, 2017, 10, 10, 10), 150);
+        Flight flight2 = new Flight(10000, new Date(), new Date(), 200);
         Flight flight3 = new Flight(10000, new Date(), new Date(), 300);
-        Flight flight4 = new Flight(5000, new Date(), new Date(), 350);
-        Flight flight5 = new Flight(15000, new Date(), new Date(), 400);
-        Flight flight6 = new Flight(15000, new Date(), new Date(), 400);
-        flight2.setCosts(10000);
-        flight3.setCosts(5000);
-        flight4.setCosts(15000);
-        flight5.setCosts(1000);
+        Flight flight4 = new Flight(10000, new Date(), new Date(), 350);
+        Flight flight5 = new Flight(10000,new Date(), new Date(), 400);
+        Flight flight6 = new Flight(10000, new Date(), new Date(), 400);
 
         ObservableList<Flight> flightList = FXCollections.observableArrayList();
         flightList.add(flight1);
@@ -252,7 +248,7 @@ public class FlightsController {
         costNumber.setTextFill(Color.WHITE);
         costNumber.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 16.0));
         newPane.getChildren().add(costNumber);
-        // horizontal separator between different flights
+//         horizontal separator between different flights
         Separator horizontalF = new Separator();
         horizontalF.setLayoutX(0.0);
         horizontalF.setLayoutY(137);

@@ -75,14 +75,13 @@ public class FlightDetailsController {
     private Airport airport1 = new Airport("Francisco Sá Carneiro", "OPO", "Porto", "Portugal", "Europe", 10.0f);
     private Airport airport2 = new Airport("International John Kennedy", "JFK", "New York", "USA", "America", 6.0f);
     private Airplane airplane = new Airplane(1, "model1", "Fernão Mendes Pinto", 400, 5000, 10000, "OPO", 350, 500, null);
-    private Flight flight = new Flight(10000, new Date(0,0,0,9,20,10), new Date(), 300, airplane, airport1, airport2);
+    private Flight flight = new Flight(new Date(0,0,0,9,20,10), new Date(), 300, airplane, airport1, airport2);
 
     public void initialize(){
         // set separator symbol for large numbers: 1000 -> 1 000
         symbols.setGroupingSeparator(' ');
         formatter.setDecimalFormatSymbols(symbols);
 
-        flight.setCosts(5000);
         // fill labels with info from the flight
         originCode.setText(flight.getAirportOfOrigin().getCode());
         originName.setText(flight.getAirportOfOrigin().getName());
@@ -310,19 +309,19 @@ public class FlightDetailsController {
         altitudeLabel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
         rightPane.getChildren().add(altitudeLabel);
         // distance number
-        Label distance = new Label(formatter.format(flight.getDistance()) + " km");
-        distance.setLayoutX(95);
-        distance.setLayoutY(54);
-        distance.setTextFill(Color.valueOf("8a8a8a"));
-        distance.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        rightPane.getChildren().add(distance);
+//        Label distance = new Label(formatter.format(flight.getDistance()) + " km");
+//        distance.setLayoutX(95);
+//        distance.setLayoutY(54);
+//        distance.setTextFill(Color.valueOf("8a8a8a"));
+//        distance.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+//        rightPane.getChildren().add(distance);
         // cost number
-        Label cost = new Label(formatter.format(flight.getFlightCostEuros()) + " €");
-        cost.setLayoutX(95);
-        cost.setLayoutY(79);
-        cost.setTextFill(Color.valueOf("8a8a8a"));
-        cost.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        rightPane.getChildren().add(cost);
+//        Label cost = new Label(formatter.format(flight.getFlightCostEuros()) + " €");
+//        cost.setLayoutX(95);
+//        cost.setLayoutY(79);
+//        cost.setTextFill(Color.valueOf("8a8a8a"));
+//        cost.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+//        rightPane.getChildren().add(cost);
         // wind speed number
 //        Label windSpeed = new Label(formatter.format(flight.getConnection().getWindSpeed()) + " km/h");
 //        windSpeed.setLayoutX(95);
