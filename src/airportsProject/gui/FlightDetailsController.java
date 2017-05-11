@@ -324,19 +324,19 @@ public class FlightDetailsController {
         cost.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
         rightPane.getChildren().add(cost);
         // wind speed number
-        Label windSpeed = new Label(formatter.format(flight.getConnection().getWindSpeed()) + " km/h");
-        windSpeed.setLayoutX(95);
-        windSpeed.setLayoutY(104);
-        windSpeed.setTextFill(Color.valueOf("8a8a8a"));
-        windSpeed.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        rightPane.getChildren().add(windSpeed);
+//        Label windSpeed = new Label(formatter.format(flight.getConnection().getWindSpeed()) + " km/h");
+//        windSpeed.setLayoutX(95);
+//        windSpeed.setLayoutY(104);
+//        windSpeed.setTextFill(Color.valueOf("8a8a8a"));
+//        windSpeed.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+//        rightPane.getChildren().add(windSpeed);
         // altitude number
-        Label altitude = new Label(formatter.format(flight.getConnection().getAltitude()) + " km");
-        altitude.setLayoutX(95);
-        altitude.setLayoutY(129);
-        altitude.setTextFill(Color.valueOf("8a8a8a"));
-        altitude.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        rightPane.getChildren().add(altitude);
+//        Label altitude = new Label(formatter.format(flight.getConnection().getAltitude()) + " km");
+//        altitude.setLayoutX(95);
+//        altitude.setLayoutY(129);
+//        altitude.setTextFill(Color.valueOf("8a8a8a"));
+//        altitude.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+//        rightPane.getChildren().add(altitude);
         // airport of destination for this connection
         Label destinationAirport = new Label(flight.getAirportOfDestination().getName() + " (" + flight.getAirportOfDestination().getCode() + ")");
         destinationAirport.setTextFill(Color.valueOf("8a8a8a"));

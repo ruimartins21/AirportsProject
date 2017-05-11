@@ -32,8 +32,7 @@
 package libs;
 
 
-import airportsProject.Airplane;
-import airportsProject.Connection;
+import airportsProject.*;
 import edu.princeton.cs.algs4.IndexMinPQ;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
@@ -62,17 +61,23 @@ public class DijkstraSP {
     private Connection[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
     private IndexMinPQ<Double> pq;    // priority queue of vertices
     private String typeOfSearch;
+    private Utils utils = Utils.getInstance();
+    private double minCostMonetary;
 
     /**
      * Computes a shortest-paths tree from the source vertex {@code s} to every other
      * vertex in the edge-weighted digraph {@code G}.
      *
-     * @param G the edge-weighted digraph
-     * @param s the source vertex
+     * @param airportOrigin the source vertex
      * @throws IllegalArgumentException if an edge weight is negative
      * @throws IllegalArgumentException unless {@code 0 <= s < V}
      */
-    public DijkstraSP(EdgeWeightedDigraph G, int s, Airplane airplane, String typeOfSearch) {
+    public DijkstraSP(int airportOrigin, Airplane airplane, String typeOfSearch) {
+        EdgeWeightedDigraph G = this.utils.getSymbolGraph().G();
+        Utils.initProgram("");
+
+
+//
         for (Connection e : G.edges()) {
             if (e.weight() < 0)
                 throw new IllegalArgumentException("edge " + e + " has negative weight");
@@ -81,27 +86,27 @@ public class DijkstraSP {
         distTo = new double[G.V()];
         edgeTo = new Connection[G.V()];
 
-        validateVertex(s);
+        validateVertex(airportOrigin);
 
         for (int v = 0; v < G.V(); v++)
             distTo[v] = Double.POSITIVE_INFINITY;
-        distTo[s] = 0.0;
+        distTo[airportOrigin] = 0.0;
 
         // relax vertices in order of distance from s
         pq = new IndexMinPQ<Double>(G.V());
-        pq.insert(s, distTo[s]);
+        pq.insert(airportOrigin, distTo[airportOrigin]);
         while (!pq.isEmpty()) {
             int v = pq.delMin();
             for (Connection e : G.adj(v))
-                relax(e, airplane, typeOfSearch);
+                relax(e, airportOrigin, airplane, typeOfSearch);
         }
 
         // check optimality conditions
-        assert check(G, s);
+        assert check(G, airportOrigin);
     }
 
     // relax edge e and update pq if changed
-    private void relax(Connection e, Airplane airplane, String typeOfSearch) {
+    private void relax(Connection e, int airportOrigin, Airplane airplane, String typeOfSearch) {
         int v = e.from(), w = e.to();
         if (typeOfSearch.compareTo("distance") == 0) {
             if (distTo[w] > distTo[v] + e.weight()) {
@@ -111,7 +116,6 @@ public class DijkstraSP {
                 else pq.insert(w, distTo[w]);
             }
         } else if (typeOfSearch.compareTo("monetary") == 0) {
-//            if (distTo[w] > distTo[v] + airplane.getAirplaneCost(e.weight(),e.getWindSpeed(),e.getAltitude())) {
             if (distTo[w] > distTo[v] + airplane.getAirplaneCost(e)) {
                 distTo[w] = distTo[v] + airplane.getAirplaneCost(e);
                 edgeTo[w] = e;
@@ -126,7 +130,6 @@ public class DijkstraSP {
                 else pq.insert(w, distTo[w]);
             }
         }
-
     }
 
     /**
@@ -232,17 +235,40 @@ public class DijkstraSP {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
 
-    public static void printAllConnections(EdgeWeightedDigraph G, int s, Airplane airplane, String typeOfSearch,  DijkstraSP sp){
+    public void printAllConnections(EdgeWeightedDigraph G, int s, Airplane airplane, String typeOfSearch, DijkstraSP sp) {
+        // print shortest path
+//        for (int t = 0; t < G.V(); t++) {
+//            if (sp.hasPathTo(t)) {
+//                StdOut.printf("%d to %d  ", s, t, sp.distTo(t));
+//                for (Connection e : sp.pathTo(t)) {
+//                    StdOut.print(e.from() + "-" );
+//                }
+//                StdOut.println();
+//            }
+//            else {
+//                StdOut.printf("%d to %d         no path\n", s, t);
+//            }
+//        }
+
+
+//        In in = new In(args[0]);
+//        EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
+//        int s = Integer.parseInt(args[1]);
+
+        // compute shortest paths
+//        DijkstraSP sp = new DijkstraSP(G, s);
+
+
         // print shortest path
         for (int t = 0; t < G.V(); t++) {
             if (sp.hasPathTo(t)) {
-                StdOut.printf("%d to %d  ", s, t, sp.distTo(t));
-                for (Connection e : sp.pathTo(t)) {
-                    StdOut.print(e.from() + "-" );
+                StdOut.printf("%d to %d : ", s, t);
+                for (DirectedEdge e : sp.pathTo(t)) {
+                    StdOut.print(e.from() + "-" + e.to() + " ");
+
                 }
                 StdOut.println();
-            }
-            else {
+            } else {
                 StdOut.printf("%d to %d         no path\n", s, t);
             }
         }

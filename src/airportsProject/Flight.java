@@ -1,5 +1,7 @@
 package airportsProject;
 
+import java.util.ArrayList;
+
 /**
  * Class responsible for the flight information together with its connections
  * It is capable of giving informations on the airplane that will do the respective flight
@@ -15,8 +17,8 @@ public class Flight {
     private Date date;
     private int passengers;
     private Airplane airplane;
-//    private ArrayList<Connection> connections = new ArrayList<>();
-    private Connection connection = new Connection(0,0,0,930,400);
+    private ArrayList<String> connections = new ArrayList<>();
+//    private Connection connection = new Connection(0,0,0,930,400);
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
@@ -37,26 +39,40 @@ public class Flight {
         this.setAirports(airportOfOrigin, airportOfDestination);
         this.setAirplane();
         this.setPassengers(passengers);
-        this.setFlightCost();
+//        this.setFlightCost();
+
+    }
+
+    public Flight(Date duration, Date date,
+                  int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
+        this.distance = distance;
+        this.duration = duration;
+        this.date = date;
+        this.airplane = airplane;
+        this.setAirports(airportOfOrigin, airportOfDestination);
+        this.setAirplane();
+        this.setPassengers(passengers);
+//        this.setFlightCost();
+
     }
 
     /**
      * hard coded for the 1st phase, this method will set a link between two airports
      * this connection can be between the origin and the destination or not
      */
-    private void setConnection(){
-//        this.connection = new Connection();
+    public void setConnection(String airportCode){
+        this.connections.add(airportCode);
     }
 
     /**
      * Cost is defined by the shortest path algorithm that will take in consideration various weights like distance, altitude and wind speed
      * being used as it should in the 2nd phase
      */
-    public void setFlightCost() {
+//    public void setFlightCost() {
         // airplane returns how many liters will spend on the flight
-        this.costs = this.airplane.getAirplaneCost(this.distance, this.connection.getWindSpeed(),this.connection.getAltitude());
+//        this.costs = this.airplane.getAirplaneCost(this.distance, this.connection.getWindSpeed(),this.connection.getAltitude());
 
-    }
+//    }
 
     public void setCosts(float costs) {
         this.costs = costs;
@@ -144,8 +160,8 @@ public class Flight {
     return airportOfDestination;
   }
 
-    public Connection getConnection(){
-        return this.connection;
+    public ArrayList<String> getConnections() {
+        return connections;
     }
 
     @Override

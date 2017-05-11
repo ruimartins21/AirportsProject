@@ -47,47 +47,69 @@ public class Main {
         ImportFromFile.importAirlines(airlinesST, pathAirlines);
         ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
-        int airportOfOrigin = 0, airportDestination = 13;
+        int gIdAirportOrig = 0, gIdAirportDest = 23;
         airplane = airplaneST.get(1);
-        SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
+//        SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
+        SymbolEdgeWeightedDigraph symbolGraph = Utils.getInstance().getSymbolGraph();
         DijkstraSP dijkstraSP = null;
+
+
+        for (int i = 0; i < symbolGraph.G().V(); i++) {
+            System.out.println(i + " - " + symbolGraph.nameOf(i));
+        }
+
 
 //        System.out.println("Custo do aviao 1: " + (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100)*100)/100f + " L");
 //        System.out.println("Custo do aviao 1: " + euroValue * (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100)*100)/100f + " €" + "\n\n");
 
         System.out.println("airportOfOrigin: 1 - " + airplaneST.get(1).getAirportCode());
-        System.out.println("airportOfDestination: 30 - " + airplaneST.get(airportDestination).getAirportCode() + "\n");
-        System.out.println("by distance: ");
-        dijkstraSP = new DijkstraSP(symbolGraph.G(), airportOfOrigin, null, "distance");
-        printShortestPath(dijkstraSP, symbolGraph, airportDestination, airplane, "distance");
-        System.out.println("by monetary: ");
-        dijkstraSP = new DijkstraSP(symbolGraph.G(), airportOfOrigin, airplane, "monetary");
-        printShortestPath(dijkstraSP, symbolGraph, airportDestination, airplane, "monetary");
-        System.out.println("by time: ");
-        dijkstraSP = new DijkstraSP(symbolGraph.G(), airportOfOrigin, airplane, "time");
-        printShortestPath(dijkstraSP, symbolGraph, airportDestination, airplane, "time");
+        System.out.println("airportOfDestination: 30 - " + airplaneST.get(gIdAirportDest).getAirportCode() + "\n");
 
-//        System.out.println("\n\nprintAllConnections\n");
-//        dijkstraSP = new DijkstraSP(symbolGraph.G(),airportOfOrigin, null,"distance");
-//        dijkstraSP.printAllConnections(symbolGraph.G(),airportOfOrigin, null,"distance", dijkstraSP);
+        System.out.println("by distance: ");
+        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "distance");
+
+        System.out.println("by monetary: ");
+        dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "monetary");
+        printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "monetary");
+
+        System.out.println("by time: ");
+        dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "time");
+        printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "time");
+
+        System.out.println("\n\nprintAllConnections\n");
+        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "distance", dijkstraSP);
 
 
 //        mais rapido por menos conecoes
-        DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.G(), airportOfOrigin);
+        DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.G(), gIdAirportOrig);
         System.out.println("\n\nDFS\n");
-        dfs.printGraph(symbolGraph.G(), airportOfOrigin);
+        dfs.printGraph(symbolGraph.G(), gIdAirportOrig);
 //        System.out.println("Nº componentes: " + dfs.count());
 
 
-        BreadthFirstPaths bfs = new BreadthFirstPaths(symbolGraph.G(), airportOfOrigin);
+        BreadthFirstPaths bfs = new BreadthFirstPaths(symbolGraph.G(), gIdAirportOrig);
         System.out.println("\n\nBFS\n");
-        bfs.printAllConnections(symbolGraph.G(), airportOfOrigin, bfs);
+        bfs.printAllConnections(symbolGraph.G(), gIdAirportOrig, bfs);
 
-        System.out.println("\n\nCaminho mais rapido (menos ligacoes): [" + airportOfOrigin + "] OPO" + " to [" + airportDestination + "] DME\n");
-        printAShortestPath(bfs, symbolGraph, airportDestination);
+        System.out.print("\n\nCaminho mais rapido (menos ligacoes): [" + gIdAirportOrig + "] OPO" + " to [" + gIdAirportDest + "] DME\n");
+        printAShortestPath(bfs, symbolGraph, gIdAirportDest);
 
 //        se o grafo é conexo
         checkGraphIsConnected(symbolGraph.G());
+
+
+//        criar voo
+        // a duracao como fazemos? enviamos deniamico ???? pois no bfs nao e possivel saber a duracao
+        // desta forma o voo nao sabe a distancia total que ira ter ????
+//        os custos???
+        duration = new Date(0, 0, 0, 10, 0, 0);
+        flightDate = new Date(7, 3, 2017, 12, 50, 30);
+        passengers = 380;
+        airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
+        newFlight(null, symbolGraph, dijkstraSP, duration, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()),
+                airportOfDestination, gIdAirportDest, flightST);
 
 
         // New program or load previous program
@@ -1120,13 +1142,51 @@ public class Main {
         System.out.println("\n");
     }
 
-    public static void checkGraphIsConnected(EdgeWeightedDigraph graph){
+    //    verificar se grafo é conexo
+    public static void checkGraphIsConnected(EdgeWeightedDigraph graph) {
         KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
-        if(kosarajuSharirSCC.count() == 1){
+        if (kosarajuSharirSCC.count() == 1) {
             System.out.println("Grafo de ligações entre aeroportos é conexo! \n");
-        }else{
+        } else {
             System.out.println("Grafo não é conexo! \n");
         }
 
+    }
+
+    //    criar voo
+    public static void newFlight(BreadthFirstPaths bfs, SymbolEdgeWeightedDigraph symbolGraph, DijkstraSP dijkstraSP, Date duration, Date date, int passengers, Airplane airplane,
+                                 Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, RedBlackBST<Date, Flight> flightST) {
+
+
+        Flight newFlight = new Flight(duration, date, passengers, airplane, airportOfOrigin, airportOfDestination);
+        if (dijkstraSP != null && dijkstraSP.hasPathTo(gIdAirportDest)) {
+            for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
+                newFlight.setConnection(symbolGraph.nameOf(e.from()));
+            }
+            newFlight.setConnection(symbolGraph.nameOf(gIdAirportDest));
+        }else if(bfs != null && bfs.hasPathTo(gIdAirportDest) ){
+            for (int x : bfs.pathTo(gIdAirportDest)) {
+                newFlight.setConnection(symbolGraph.nameOf(x));
+            }
+        }
+        flightST.put(newFlight.getDate(), newFlight);
+        log("flightST", "New flight leaving at:" + newFlight.getDate() +
+                "; duration: " + newFlight.getDuration().getDuration() +
+                "; from \"" + newFlight.getAirportOfOrigin().getName() +
+                " ( " + newFlight.getDistance() + "m) " +
+                "\"; to \"" + newFlight.getAirportOfDestination().getName() +
+                "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
+
+        PrintInfo.flightsOfThisAirport(airportOfOrigin);
+
+        System.out.println();
+        System.out.println();
+        for (String a: newFlight.getConnections()) {
+            System.out.print(a + " ");
+
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
 }

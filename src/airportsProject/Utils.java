@@ -3,6 +3,7 @@ package airportsProject;
 import airportsProject.Exceptions.WrongTypeFileException;
 import libs.RedBlackBST;
 import libs.SeparateChainingHashST;
+import libs.SymbolEdgeWeightedDigraph;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class Utils{
     private static SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
     private static RedBlackBST<Integer, Airplane> airplaneST          = new RedBlackBST<>();
     private static RedBlackBST<Date, Flight> flightST                 = new RedBlackBST<>();
+    private static SymbolEdgeWeightedDigraph symbolGraph             = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
 
     protected Utils(){
         // prevents instantiation
@@ -39,6 +41,10 @@ public class Utils{
             instance = new Utils();
         }
         return instance;
+    }
+
+    public SymbolEdgeWeightedDigraph getSymbolGraph() {
+        return symbolGraph;
     }
 
     /**
