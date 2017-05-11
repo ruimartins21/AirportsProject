@@ -600,4 +600,21 @@ public class Utils{
         System.out.println("# Passengers transported: " + max + " #");
         return airports;
     }
+
+
+    public void convertTime(double finalBuildTime){
+        int hours = (int) finalBuildTime;
+        int minutes = (int) (finalBuildTime * 60) % 60;
+        int seconds = (int) (finalBuildTime * (60*60)) % 60;
+
+        System.out.print(String.format("%sh %sm %ss ", hours, minutes, seconds));
+    }
+
+    public Date convertTimeToDate(double finalBuildTime){
+        int hours = (int) finalBuildTime;
+        int minutes = (int) (finalBuildTime * 60) % 60;
+        int seconds = (int) (finalBuildTime * (60*60)) % 60;
+
+        return new Date(0,0,0,hours,minutes,seconds);
+    }
 }

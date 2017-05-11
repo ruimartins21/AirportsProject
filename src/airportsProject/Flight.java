@@ -43,7 +43,22 @@ public class Flight {
 
     }
 
+//    remover este construtor pois ricardo esta a usar no flight controller
     public Flight(Date duration, Date date,
+                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
+        this.distance = distance;
+        this.duration = duration;
+        this.date = date;
+        this.airplane = airplane;
+        this.setAirports(airportOfOrigin, airportOfDestination);
+        this.setAirplane();
+        this.setPassengers(passengers);
+//        this.setFlightCost();
+
+    }
+
+//    atual rui graphs
+    public Flight( Date date,
                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
         this.distance = distance;
         this.duration = duration;
@@ -74,8 +89,17 @@ public class Flight {
 
 //    }
 
-    public void setCosts(float costs) {
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void setCosts(double costs) {
         this.costs = costs;
+    }
+
+    public void setDuration(Date duration) {
+        this.duration = duration;
     }
 
     /**

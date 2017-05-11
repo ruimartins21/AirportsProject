@@ -175,14 +175,6 @@ public class Airplane {
         return distance / (this.cruiseSpeed + windSpeed);
     }
 
-    public void convertTime(double finalBuildTime){
-        int hours = (int) finalBuildTime;
-        int minutes = (int) (finalBuildTime * 60) % 60;
-        int seconds = (int) (finalBuildTime * (60*60)) % 60;
-
-        System.out.print(String.format("%sh %sm %ss ", hours, minutes, seconds));
-    }
-
     @Override
     public String toString() {
         return "Airplane{" +
