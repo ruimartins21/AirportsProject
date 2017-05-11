@@ -1,9 +1,7 @@
 package airportsProject;
 
 import airportsProject.Exceptions.WrongTypeFileException;
-import libs.RedBlackBST;
-import libs.SeparateChainingHashST;
-import libs.SymbolEdgeWeightedDigraph;
+import libs.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -616,5 +614,111 @@ public class Utils{
         int seconds = (int) (finalBuildTime * (60*60)) % 60;
 
         return new Date(0,0,0,hours,minutes,seconds);
+    }
+
+    //    imprimir caminho mais barato, curto , monetario, rapido (tempo)
+    public void printShortestPath(DijkstraSP dijkstraSP, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination, Airplane airplane, String typeOfSearch) {
+        for (Connection e : dijkstraSP.pathTo(airportOfDestination)) {
+
+            if (typeOfSearch.compareTo("distance") == 0) {
+                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + e.weight() + " Km");
+            } else if (typeOfSearch.compareTo("monetary") == 0) {
+                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
+            } else if (typeOfSearch.compareTo("time") == 0) {
+                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : ");
+                Utils.getInstance().convertTime(airplane.getFlightDuration(e));
+            }
+            System.out.println();
+        }
+        if (typeOfSearch.compareTo("time") == 0) {
+            System.out.print("Total Cost: ");
+            Utils.getInstance().convertTime(dijkstraSP.distTo(airportOfDestination));
+        } else if (typeOfSearch.compareTo("distance") == 0) {
+            System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " km");
+        } else if (typeOfSearch.compareTo("monetary") == 0) {
+            System.out.println("Total Cost: " + euroValue * (double) Math.round(dijkstraSP.distTo(airportOfDestination) * 100) / 100f + " €");
+        }
+        System.out.println();
+    }
+
+    //    imprimir caminho mais rapido (menos ligacoes)
+    public void printAShortestPath(BreadthFirstPaths bfs, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination) {
+        if (bfs.hasPathTo(airportOfDestination)) {
+            for (int x : bfs.pathTo(airportOfDestination)) {
+                if (x == airportOfDestination) System.out.print(x);
+                else System.out.print(x + " - ");
+            }
+            System.out.println();
+//            com traducao de nomes
+            for (int x : bfs.pathTo(airportOfDestination)) {
+                if (x == airportOfDestination) System.out.print(symbolGraph.nameOf(x));
+                else System.out.print(symbolGraph.nameOf(x) + " - ");
+            }
+        }
+        System.out.println("\n");
+    }
+    //    verificar se grafo é conexo
+    public void checkGraphIsConnected(EdgeWeightedDigraph graph) {
+        KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
+        if (kosarajuSharirSCC.count() == 1) {
+            System.out.println("Grafo de ligações entre aeroportos é conexo! \n");
+        } else {
+            System.out.println("Grafo não é conexo! \n");
+        }
+
+    }
+
+    //    criar voo
+    public void newFlight(BreadthFirstPaths bfs, DijkstraSP dijkstraSP, Date date, int passengers, Airplane airplane,
+                                 Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, RedBlackBST<Date, Flight> flightST) {
+
+        double distance = 0, cost= 0, timeDuration = 0;
+        int comp = 0;
+
+        Flight newFlight = new Flight(date, passengers, airplane, airportOfOrigin, airportOfDestination);
+        if (dijkstraSP != null && dijkstraSP.hasPathTo(gIdAirportDest)) {
+            for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
+                newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(e.from()));
+                if(Utils.getInstance().getSymbolGraph().nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0){
+                    Utils.getInstance().getAirports().get(Utils.getInstance().getSymbolGraph().nameOf(e.from())).newFlight(newFlight);
+                }
+            }
+            newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(gIdAirportDest));
+        } else if (bfs != null && bfs.hasPathTo(gIdAirportDest)) {
+            for (int x : bfs.pathTo(gIdAirportDest)) {
+                newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(x));
+                if(Utils.getInstance().getSymbolGraph().nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && Utils.getInstance().getSymbolGraph().nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
+                    Utils.getInstance().getAirports().get(Utils.getInstance().getSymbolGraph().nameOf(x)).newFlight(newFlight);
+                }
+            }
+        }
+
+//        ir buscar pela conecoes as informacoes dos pessos pretendidos
+        for (String code : newFlight.getConnections()) {
+            for (Connection e : Utils.getInstance().getSymbolGraph().G().adj(Utils.getInstance().getSymbolGraph().indexOf(code))) {
+                if(comp+1 >= newFlight.getConnections().size()){ }
+                else if(Utils.getInstance().getSymbolGraph().nameOf(e.to()).compareTo(newFlight.getConnections().get(comp+1)) == 0){
+                    distance += e.weight();
+                    cost += euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f;
+                    timeDuration += airplane.getFlightDuration(e);
+                }
+            }
+            comp++;
+        }
+
+//        definir valores totais da viagem
+        Date duration = Utils.getInstance().convertTimeToDate(timeDuration);
+        newFlight.setDuration(duration);
+        newFlight.setCosts(cost);
+        newFlight.setDistance(distance);
+
+
+        flightST.put(newFlight.getDate(), newFlight);
+        log("flightST", "New flight leaving at:" + newFlight.getDate() +
+                "; duration: " + newFlight.getDuration().getDuration() +
+                "; from \"" + newFlight.getAirportOfOrigin().getName() +
+                "\"; to \"" + newFlight.getAirportOfDestination().getName() +
+                "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
+
     }
 }
