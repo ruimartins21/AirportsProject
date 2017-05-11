@@ -1239,7 +1239,6 @@ public class Main {
                     distance += e.weight();
                     cost += euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f;
                     timeDuration += airplane.getFlightDuration(e);
-//                    System.out.println(symbolGraph.indexOf(code) + " : " + e.to());
 
                 }
 
