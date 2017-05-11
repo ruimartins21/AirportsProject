@@ -25,7 +25,7 @@
             <Font name="Helvetica Light" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="warning" layoutX="78.0" layoutY="236.0" text="Please fill all the fields (the code must be 3 characters long!)" textFill="RED">
+      <Label fx:id="warning" alignment="CENTER" layoutX="-2.0" layoutY="236.0" prefHeight="16.0" prefWidth="600.0" text="Please fill all the fields (the code must be 3 characters long!)" textFill="RED">
          <font>
             <Font name="Helvetica Light" size="14.0" />
          </font>

@@ -106,7 +106,8 @@ public class NewAirportDialogController {
                             airportCountry.getText(), airportContinent.getText(), (float) Math.round(airportRating.getValue()*10)/10f, latitude, longitude);
                     Utils.getInstance().newAirport(airport);
                 }catch (IOException e){
-                    System.out.println("Maps Coordinates: Internet connection required.");
+                    warning.setText("Maps Coordinates: Internet connection required.");
+                    warning.setStyle("-fx-opacity: 1");
                 }
                 if(!invalidLocation){ // the location passed was validated and the airport created
                     if(this.latitude != -1 && this.longitude != -1){

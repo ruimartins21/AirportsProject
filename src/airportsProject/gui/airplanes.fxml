@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -53,25 +54,27 @@
       </Pane>
       <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
          <content>
-            <VBox fx:id="airplanesContainer" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
+            <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
                <children>
                   <Pane prefHeight="30.0" prefWidth="490.0" VBox.vgrow="NEVER">
                      <children>
-                        <TextField fx:id="searchAirplane" alignment="CENTER" layoutX="157.0" onAction="#getInput" prefHeight="30.0" prefWidth="190.0" promptText="SEARCH AIRPLANE" styleClass="searchInput">
+                        <TextField fx:id="searchAirplane" alignment="CENTER" layoutX="102.0" onAction="#getInput" prefHeight="30.0" prefWidth="190.0" promptText="SEARCH AIRPLANE" styleClass="searchInput">
                            <font>
                               <Font name="Helvetica" size="13.0" />
                            </font>
                         </TextField>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="171.0" layoutY="7.0">
+                        <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="116.0" layoutY="7.0">
                            <image>
                               <Image url="@images/search.png" />
                            </image>
                         </ImageView>
+                        <Button layoutX="304.0" layoutY="1.0" mnemonicParsing="false" onAction="#clearSearch" styleClass="resetButton" text="Clear" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Pane>
+                  <VBox fx:id="airplanesContainer" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" />
                </children>
             </VBox>
          </content>

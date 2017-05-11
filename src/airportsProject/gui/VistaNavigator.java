@@ -30,6 +30,7 @@ public class VistaNavigator {
     public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
     public static final String AIRLINELIST       = "airlines.fxml";
     public static final String AIRLINEDETAILS    = "airlineDetails.fxml";
+    public static final String GRAPHS            = "graphStreamEx.fxml";
 
     /** The main application layout controller. */
     private static MainGUIController mainGUIController;

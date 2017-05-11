@@ -2,10 +2,10 @@ package airportsProject.gui;
 
 import airportsProject.Date;
 import airportsProject.Flight;
+import airportsProject.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import libs.RedBlackBST;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -38,29 +39,27 @@ public class FlightsController {
     private RadioButton flightsFinished;
     @FXML
     private Pane newFlight;
+    @FXML
+    private TextField searchFlight;
 
-    private int flightId = 0; // will use Dates from flights RedBlack table, flights are ordered by date
+    private int count = 1;
+    Utils utils = Utils.getInstance();
+    private RedBlackBST<Date, Flight> flights = utils.getFlights();
 
     NumberFormat formatter = new DecimalFormat("#0.##");
 
     public void initialize(){
-        Flight flight1 = new Flight(10000,new Date(), new Date(10, 2, 2017, 10, 10, 10), 150);
-        Flight flight2 = new Flight(10000, new Date(), new Date(), 200);
-        Flight flight3 = new Flight(10000, new Date(), new Date(), 300);
-        Flight flight4 = new Flight(10000, new Date(), new Date(), 350);
-        Flight flight5 = new Flight(10000,new Date(), new Date(), 400);
-        Flight flight6 = new Flight(10000, new Date(), new Date(), 400);
-
-        ObservableList<Flight> flightList = FXCollections.observableArrayList();
-        flightList.add(flight1);
-        flightList.add(flight2);
-        flightList.add(flight3);
-        flightList.add(flight4);
-        flightList.add(flight5);
-        flightList.add(flight6);
-        for (Flight flight : flightList) {
-            newFlightDate(flight.getDate());
+        Date currentDate = flights.select(0);
+        newFlightDate(currentDate);
+        for (Date date : flights.keys()) {
+            Flight flight = flights.get(date);
+            flight.setCosts(1000*count);
+            if(flight.getDate().compareTo(currentDate) != 0){
+                newFlightDate(date);
+            }
             newFlightItem(flight);
+            currentDate = flight.getDate();
+            count++;
         }
 
         System.out.println("Default Filter : " + ((RadioButton)filter.getSelectedToggle()).getText());
@@ -91,6 +90,46 @@ public class FlightsController {
         newFlight.setStyle("-fx-opacity: 1");
     }
 
+    private void updateList(){
+        listFlightsContainer.getChildren().clear(); // removes the previous list
+        for(Date date : flights.keys()){ // lists all the existent flights
+            Flight flight = flights.get(date);
+            newFlightItem(flight);
+        }
+        searchFlight.setText("");
+    }
+
+    @FXML
+    void clearSearch(){
+        updateList();
+    }
+
+    private void getResults(String search){
+        search = search.toUpperCase();
+        RedBlackBST<Date, Flight> resultFlights = new RedBlackBST<>();
+        for(Date date : flights.keys()){
+            // searches the keyword occurrence on the flights
+//            if(){
+//                resultFlights.put(date, flights.get(date));
+//            }
+        }
+        listFlightsContainer.getChildren().clear(); // removes the previous list
+        if(!resultFlights.isEmpty()){
+            for(Date date : resultFlights.keys()){ // lists all the existent airports
+                Flight flight = resultFlights.get(date);
+                newFlightItem(flight);
+            }
+        }
+    }
+
+    @FXML
+    void getInput(ActionEvent actionEvent){
+        if(searchFlight.getText().trim().length() != 0){
+            getResults(searchFlight.getText());
+            searchFlight.setText("");
+        }
+    }
+
     @FXML
     void newFlight(MouseEvent event) {
         System.out.println("+ New Flight");
@@ -102,7 +141,7 @@ public class FlightsController {
         newPane.setPrefWidth(490.0);
         newPane.setPrefHeight(20.0);
         newPane.setNodeOrientation(LEFT_TO_RIGHT);
-        Label newDateLabel = new Label(date.toString());
+        Label newDateLabel = new Label(date.getDateLess());
         newDateLabel.setLayoutX(43.0);
         newDateLabel.setLayoutY(2.0);
         newDateLabel.setTextFill(Color.WHITE);
@@ -116,7 +155,6 @@ public class FlightsController {
         newPane.setStyle("-fx-background-color: white;");
         newPane.setPrefWidth(490.0);
         newPane.setNodeOrientation(LEFT_TO_RIGHT);
-        newPane.setId(String.valueOf(flightId));
         newPane.setCursor(Cursor.HAND);
         newPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -137,7 +175,6 @@ public class FlightsController {
                 VistaNavigator.loadVista(VistaNavigator.FLIGHTDETAILS, flight.getDate());
             }
         });
-        flightId += 1;
         // departure label
         Label departure = new Label("DEPARTURE");
         departure.setLayoutX(43.0);
@@ -146,14 +183,14 @@ public class FlightsController {
         departure.setFont(Font.font("Helvetica Light", 10.0));
         newPane.getChildren().add(departure);
         // departure hour
-        Label departureHour = new Label("09:00");
+        Label departureHour = new Label(flight.getDate().getHourString() + ":" + flight.getDate().getMinuteString());
         departureHour.setLayoutX(43.0);
         departureHour.setLayoutY(26.0);
         departureHour.setTextFill(Color.valueOf("4185d1"));
         departureHour.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 35.0));
         newPane.getChildren().add(departureHour);
         // departure airport
-        Label departureAirport = new Label("Airport XPTO");
+        Label departureAirport = new Label(flight.getAirportOfOrigin().getName());
         departureAirport.setLayoutX(43.0);
         departureAirport.setLayoutY(70.0);
         departureAirport.setTextFill(Color.valueOf("838383"));
@@ -174,14 +211,16 @@ public class FlightsController {
         arrival.setFont(Font.font("Helvetica Light", 10.0));
         newPane.getChildren().add(arrival);
         // arrival hour
-        Label arrivalHour = new Label("11:30");
+        Date arrivalDate = flight.getDate().plus(flight.getDuration());
+        Label arrivalHour = new Label(arrivalDate.getHourString() + ":" + arrivalDate.getMinuteString());
         arrivalHour.setLayoutX(336.0);
         arrivalHour.setLayoutY(26.0);
         arrivalHour.setTextFill(Color.valueOf("4185d1"));
         arrivalHour.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 35.0));
         newPane.getChildren().add(arrivalHour);
         // arrival airport
-        Label arrivalAirport = new Label("Airport ABCD");
+        Label arrivalAirport = new Label(flight.getAirportOfDestination().getName());
+        arrivalAirport.setMaxWidth(140);
         arrivalAirport.setLayoutX(336.0);
         arrivalAirport.setLayoutY(68.0);
         arrivalAirport.setTextFill(Color.valueOf("838383"));
@@ -248,7 +287,7 @@ public class FlightsController {
         costNumber.setTextFill(Color.WHITE);
         costNumber.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 16.0));
         newPane.getChildren().add(costNumber);
-//         horizontal separator between different flights
+        // horizontal separator between different flights
         Separator horizontalF = new Separator();
         horizontalF.setLayoutX(0.0);
         horizontalF.setLayoutY(137);

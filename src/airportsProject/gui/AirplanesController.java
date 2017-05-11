@@ -2,17 +2,14 @@ package airportsProject.gui;
 
 import airportsProject.Airplane;
 import airportsProject.Utils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,7 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import libs.RedBlackBST;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class AirplanesController {
     @FXML
@@ -37,20 +39,19 @@ public class AirplanesController {
         searchAirplane.getParent().requestFocus();
         searchAirplane.setFocusTraversable(false);
 
-        ObservableList<Airplane> airplanesList = FXCollections.observableArrayList();
         for (int id : airplanes.keys()) {
             Airplane airplane = airplanes.get(id);
-            airplanesList.add(airplane);
             newAirplaneItem(airplane);
         }
     }
 
     private void updateList(){
-        airplanesContainer.getChildren().remove(1, airplanes.size()+2); // removes the previous list with the removed airline still showing
+        airplanesContainer.getChildren().clear(); // removes the previous list with the removed airline still showing
         for(int id : airplanes.keys()){ // lists all the existent airlines
             Airplane airplane = airplanes.get(id);
             newAirplaneItem(airplane);
         }
+        searchAirplane.setText("");
     }
 
     @FXML
@@ -68,14 +69,67 @@ public class AirplanesController {
         newAirplane.setStyle("-fx-opacity: 1");
     }
 
+    private void getResults(String search){
+        search = search.toUpperCase();
+        RedBlackBST<Integer, Airplane> resultAirplanes = new RedBlackBST<>();
+        for(int id : airplanes.keys()){
+            // searches the keyword occurrence on the airports
+            if(Utils.isNumeric(search) && Integer.valueOf(search).compareTo(id+1) == 0 ||
+                    search.compareTo(airplanes.get(id).getName().toUpperCase()) == 0 ||
+                    search.compareTo(airplanes.get(id).getAirportCode()) == 0 ||
+                    search.compareTo(airplanes.get(id).getModel().toUpperCase()) == 0 ||
+                    search.compareTo(airplanes.get(id).getAirline().getName().toUpperCase()) == 0){
+                resultAirplanes.put(id, airplanes.get(id));
+            }
+        }
+        airplanesContainer.getChildren().clear(); // removes the previous list
+        if(!resultAirplanes.isEmpty()){
+            for(int id : resultAirplanes.keys()){ // lists all the existent airports
+                Airplane airplane = resultAirplanes.get(id);
+                newAirplaneItem(airplane);
+            }
+        }
+    }
+
     @FXML
     void getInput(ActionEvent actionEvent){
-        System.out.println("Searched for: \"" + searchAirplane.getText() + "\"");
+        if(searchAirplane.getText().trim().length() != 0){
+            getResults(searchAirplane.getText());
+            searchAirplane.setText("");
+        }
+    }
+
+    @FXML
+    void clearSearch(){
+        updateList();
     }
 
     @FXML
     void newAirplane(MouseEvent event) {
-        System.out.println("+ New Airplane");
+        Dialog<ButtonType> dialog = new Dialog<>();
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> window.hide());
+        dialog.initOwner(airplanesContainer.getScene().getWindow());
+        dialog.setTitle("New Airplane");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("newAirplaneDialog.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        }catch(IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+        dialog.getDialogPane().getStyleClass().add("customDialog");
+        dialog.setContentText(null);
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("images/aeroplane.png").toString()));
+        Optional<ButtonType> result = dialog.showAndWait();
+        // if the user closes the dialog, the list of airplanes will update
+        if(!result.isPresent()){
+            updateList();
+        }
+
     }
 
     private boolean removeThis = false;

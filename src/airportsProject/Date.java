@@ -52,7 +52,7 @@ public class Date implements Comparable<Date> {
     return Math.abs(difference);
   }
 
-  public int diferenceMoths(Date d) {
+  public int diferenceMonths(Date d) {
     int difference = this.month - d.month+(this.year-d.year) *12;
     return Math.abs(difference);
   }
@@ -149,10 +149,53 @@ public class Date implements Comparable<Date> {
   }
 
   public boolean equals(Date d) {
-    if(this.getYear() == d.year && this.getMonth() == d.month && this.getDay() == d.day && this.getHour() == d.hour && this.getMinute() == d.minute && this.getSecond() == d.second){
-      return true;
-    }
-    return false;
+    return this.getYear() == d.year && this.getMonth() == d.month && this.getDay() == d.day && this.getHour() == d.hour && this.getMinute() == d.minute && this.getSecond() == d.second;
+  }
+
+    /**
+     * Adds a date to this one, gets a date of a flight and adds the duration to know the arrival time
+     * @param d -> date to add
+     * @return returns the new date
+     */
+  public Date plus(Date d){
+      Date newDate = new Date();
+      newDate.setDay(this.day);
+      newDate.setMonth(this.month);
+      newDate.setYear(this.year);
+      newDate.hour = this.hour;
+      newDate.minute = this.minute;
+      newDate.second = this.second;
+      while(d.getDay() > newDate.day){
+          newDate.incrementDate();
+      }
+      newDate.hour += d.getHour();
+      if(newDate.hour > 24){ // it reached the 24 hours of a day, it is time to increment the day
+          newDate.hour -= 24;
+          newDate.incrementDate();
+      }
+      newDate.minute += d.getMinute();
+      if(newDate.minute > 60){ // it reached the 24 hours of a day, it is time to increment the day
+          newDate.minute -= 60;
+          newDate.hour += 1;
+          if(newDate.hour > 24){ // it reached the 24 hours of a day, it is time to increment the day
+              newDate.hour -= 24;
+              newDate.incrementDate();
+          }
+      }
+      newDate.second += d.getSecond();
+      if(newDate.second > 60){ // it reached the 24 hours of a day, it is time to increment the day
+          newDate.second -= 60;
+          newDate.minute += 1;
+          if(newDate.minute > 60){ // it reached the 24 hours of a day, it is time to increment the day
+              newDate.minute -= 60;
+              newDate.hour += 1;
+              if(newDate.hour > 24){ // it reached the 24 hours of a day, it is time to increment the day
+                  newDate.hour -= 24;
+                  newDate.incrementDate();
+              }
+          }
+      }
+      return newDate;
   }
 
   public String getDuration(){
@@ -217,13 +260,21 @@ public class Date implements Comparable<Date> {
   public int getHour() {
     return hour;
   }
-
   public int getMinute() {
     return minute;
   }
-
   public int getSecond() {
     return second;
+  }
+
+  public String getHourString(){
+      return (hour < 10 ? "0"+hour : String.valueOf(hour));
+  }
+  public String getMinuteString(){
+      return (minute < 10 ? "0"+minute : String.valueOf(minute));
+  }
+  public String getSecondString(){
+      return (second < 10 ? "0"+second : String.valueOf(second));
   }
 
   /**
