@@ -5,7 +5,6 @@ import libs.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
-import libs.SymbolEdgeWeightedDigraph;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -31,7 +30,7 @@ public class Utils{
     private static SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
     private static RedBlackBST<Integer, Airplane> airplaneST          = new RedBlackBST<>();
     private static RedBlackBST<Date, Flight> flightST                 = new RedBlackBST<>();
-    private static SymbolEdgeWeightedDigraph symbolGraph             = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
+    private static SymbolEdgeWeightedDigraph symbolGraph              = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
 
     protected Utils(){
         // prevents instantiation
@@ -101,13 +100,12 @@ public class Utils{
      * @param rating new rating of the airport
      */
     public void editAirport(String code, String name, Float rating){
-        Airport thisPlaneAirport = airportST.get(code);
         airportST.get(code).setName(name);
         airportST.get(code).setRating(rating);
         log("airportST", "Edited airport [" +  airportST.get(code).getCode() +  "] \" Name:" + airportST.get(code).getName() + "\" Rating:" +
                 airportST.get(code).getRating());
     }
-
+    
     /**
      * Removes an airport incluiding all the airplanes parked there
      * @param airport airport to remove

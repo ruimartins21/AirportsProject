@@ -84,7 +84,7 @@ public class MenuController {
         }else if(event.getSource().equals(goBack)){
             VistaNavigator.loadVista(VistaNavigator.LANDING);
         }else{
-//            System.out.println("Showing statistics page");
+            VistaNavigator.loadVista(VistaNavigator.STATS);
         }
     }
 
