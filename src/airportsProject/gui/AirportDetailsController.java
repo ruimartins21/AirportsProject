@@ -225,7 +225,6 @@ public class AirportDetailsController {
         }
     }
 
-    int count = 0;
     private Pane newFlightItem(Flight flight){
         // container pane of a single flight
         Pane newPane = new Pane();
@@ -294,7 +293,6 @@ public class AirportDetailsController {
         airportName.setFont(Font.font("Helvetica", 15));
         newHBox.getChildren().add(airportName);
         newPane.getChildren().add(newHBox);
-        count++;
         return newPane;
     }
 

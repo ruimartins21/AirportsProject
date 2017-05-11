@@ -168,21 +168,6 @@
     -fx-font-size: 20px;
     -fx-prompt-text-fill: rgba(255, 255, 255, 0.9);
 }
-/*.spinner{*/
-    /*-fx-background-color: rgba(255, 255, 255, 0.2);*/
-    /*-fx-border-radius: 0;*/
-    /*-fx-border-width: 0;*/
-    /*-fx-text-fill: white;*/
-    /*-fx-font-size: 20px;*/
-    /*-fx-prompt-text-fill: rgba(255, 255, 255, 0.9);*/
-/*}*/
-/*.spinner .increment-arrow-button,*/
-/*.spinner .decrement-arrow-button {*/
-    /*!*-fx-background-color: white;*!*/
-/*}*/
-/*.spinner .arrow{*/
-    /*-fx-background-color: #fff;*/
-/*}*/
 .airplaneInput{
     -fx-font-size: 18px !important;
 }

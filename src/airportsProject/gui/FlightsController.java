@@ -5,6 +5,7 @@ import airportsProject.Flight;
 import airportsProject.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -38,6 +39,8 @@ public class FlightsController {
     private RadioButton flightsFinished;
     @FXML
     private Pane newFlight;
+    @FXML
+    private TextField searchFlight;
 
     private int count = 1;
     Utils utils = Utils.getInstance();
@@ -85,6 +88,46 @@ public class FlightsController {
     @FXML
     void hoverOut(MouseEvent event) {
         newFlight.setStyle("-fx-opacity: 1");
+    }
+
+    private void updateList(){
+        listFlightsContainer.getChildren().clear(); // removes the previous list
+        for(Date date : flights.keys()){ // lists all the existent flights
+            Flight flight = flights.get(date);
+            newFlightItem(flight);
+        }
+        searchFlight.setText("");
+    }
+
+    @FXML
+    void clearSearch(){
+        updateList();
+    }
+
+    private void getResults(String search){
+        search = search.toUpperCase();
+        RedBlackBST<Date, Flight> resultFlights = new RedBlackBST<>();
+        for(Date date : flights.keys()){
+            // searches the keyword occurrence on the flights
+//            if(){
+//                resultFlights.put(date, flights.get(date));
+//            }
+        }
+        listFlightsContainer.getChildren().clear(); // removes the previous list
+        if(!resultFlights.isEmpty()){
+            for(Date date : resultFlights.keys()){ // lists all the existent airports
+                Flight flight = resultFlights.get(date);
+                newFlightItem(flight);
+            }
+        }
+    }
+
+    @FXML
+    void getInput(ActionEvent actionEvent){
+        if(searchFlight.getText().trim().length() != 0){
+            getResults(searchFlight.getText());
+            searchFlight.setText("");
+        }
     }
 
     @FXML
