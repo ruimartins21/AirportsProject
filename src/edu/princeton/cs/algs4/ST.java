@@ -228,6 +228,13 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
         for (String s : st.keys())
             StdOut.println(s + " " + st.get(s));
     }
+
+    @Override
+    public String toString() {
+        return "ST{" +
+                "st=" + st +
+                '}';
+    }
 }
 
 /******************************************************************************

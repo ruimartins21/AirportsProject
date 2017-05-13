@@ -75,6 +75,7 @@ public class DijkstraSP {
     public DijkstraSP(int airportOrigin, Airplane airplane, String typeOfSearch) {
         EdgeWeightedDigraph G = this.utils.getSymbolGraph().G();
         Utils.initProgram("");
+//        EdgeWeightedDigraph G = utils.filterGraph("Europe");
 
 
 //
