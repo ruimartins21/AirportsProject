@@ -688,7 +688,7 @@ public class Utils {
             for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
                 newFlight.setConnection(symbolGraph.nameOf(e.from()));
                 if (symbolGraph.nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0) {
-                    airportST.get(symbolGraph.nameOf(e.from())).newFlight(newFlight);
+                    getAirports().get(symbolGraph.nameOf(e.from())).newFlight(newFlight);
                 }
             }
             newFlight.setConnection(symbolGraph.nameOf(gIdAirportDest));
@@ -696,7 +696,7 @@ public class Utils {
             for (int x : bfs.pathTo(gIdAirportDest)) {
                 newFlight.setConnection(symbolGraph.nameOf(x));
                 if (symbolGraph.nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && symbolGraph.nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
-                    airportST.get(symbolGraph.nameOf(x)).newFlight(newFlight);
+                    getAirports().get(symbolGraph.nameOf(x)).newFlight(newFlight);
                 }
             }
         }

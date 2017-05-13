@@ -21,6 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         Utils utils = new Utils().getInstance();
+        utils.initProgram("");
         boolean validChoice = false;
         int choice, airplaneId;
         String airportCode, airlineName;
