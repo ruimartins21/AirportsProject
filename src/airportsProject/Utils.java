@@ -128,6 +128,10 @@ public class Utils {
                 flightST.put(date, null);
             }
         }
+        // removes it from the symbol graph
+        ArrayList<String> remove = new ArrayList<>();
+        remove.add(airport.getCode());
+        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
         log("AirportST", "Removed airport \"" + airportST.get(airport.getCode()).getName() + "\"");
         airportST.put(airport.getCode(), null);
         Utils.getInstance().createCoordinatesFile();
@@ -743,16 +747,6 @@ public class Utils {
             }
         }
         return filter;
-    }
-
-
-//    funcao remover, recebe um airport/code que vai inserir num arraylist para enviar para new SymbolEdgeWeightedDigraph(, e vai fazer override da symbolgraph na utils,
-//            fazer uma nova symbolgraph e depois igua-la a nova
-
-    public void removeAirport(String code) {
-        ArrayList<String> remove = new ArrayList<>();
-        remove.add(code);
-        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
     }
 
     /* STATICtistics */

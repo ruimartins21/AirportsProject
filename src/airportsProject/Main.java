@@ -114,19 +114,19 @@ public class Main {
         airplane = airplaneST.get(2);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         flightDate = new Date(27, 3, 2016, 2, 30, 30);
-        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(),gIdAirportOrig, null, "distance");
         utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
         dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, null, "distance");
-        utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
+        utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
 
         gIdAirportDest = 27;
         airplane = airplaneST.get(3);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         flightDate = new Date(7, 1, 2014, 11, 30, 30);
-        dijkstraSP = new DijkstraSP(symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
         utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
         dijkstraSP = new DijkstraSP(symbolGraph.G(), symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
-        utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
+        utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
 
 
 //        PrintInfo.allAirplanes(airplaneST);
@@ -210,7 +210,7 @@ public class Main {
 
 //        remove a ariport of graph
         System.out.println("Remove OPO Airport of graph");
-        utils.removeAirport("OPO");
+        Utils.removeAirport(airportSearch);
         System.out.println("Airport remove sucessefuly! :)\n\n");
 
         System.out.println(utils.getSymbolGraph().G());
