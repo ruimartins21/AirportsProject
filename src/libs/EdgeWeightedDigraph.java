@@ -238,12 +238,25 @@ public class EdgeWeightedDigraph {
         for (int v = 0; v < V; v++) {
             s.append(v + ": ");
             for (Connection e : adj[v]) {
-                s.append(e + "  " + e.getAltitude() + "  " + e.getWindSpeed() + "  ");
+                s.append("["+e + "]");
             }
             s.append(NEWLINE);
         }
         return s.toString();
     }
+
+//    public String toString() {
+//        StringBuilder s = new StringBuilder();
+//        s.append(V + " " + E + NEWLINE);
+//        for (int v = 0; v < V; v++) {
+//            s.append(v + ": ");
+//            for (Connection e : adj[v]) {
+//                s.append(e + "  " + e.getAltitude() + "  " + e.getWindSpeed() + "  ");
+//            }
+//            s.append(NEWLINE);
+//        }
+//        return s.toString();
+//    }
 
     /**
      * Unit tests the {@code EdgeWeightedDigraph} data type.
@@ -255,6 +268,8 @@ public class EdgeWeightedDigraph {
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
         StdOut.println(G);
     }
+
+
 
 }
 

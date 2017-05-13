@@ -151,9 +151,8 @@ public class Utils {
 
     /**
      * Receives the data possible to be edited on an airline and changes it using the class setters
-     *
-     * @param oldName     previous name of the airline to match it in the ST
-     * @param newName     new name of the airline
+     * @param oldName previous name of the airline to match it in the ST
+     * @param newName new name of the airline
      * @param nationality airline nationality
      */
     public void editAirline(String oldName, String newName, String nationality) {
@@ -170,11 +169,10 @@ public class Utils {
 
     /**
      * Removes an airline including all its airplanes
-     *
      * @param airline is the airline to remove
      */
-    public static void removeAirline(Airline airline) {
-        for (Integer p : airline.getFleet().keys()) {
+    public static void removeAirline(Airline airline){
+        for (Integer p: airline.getFleet().keys()) {
             removeAirplane(airline.getFleet().get(p));
         }
         log("AirlineST", "Removed airline \"" + airline.getName() + "\"");
@@ -206,7 +204,7 @@ public class Utils {
      * @param maxRange           max range of the airplane
      * @param airportCode        airport where the airplane will be parked at first
      * @param passengersCapacity passengers capacity of the airplane
-     * @param fuelCapacity       fuel capacity of the airplane
+     * @param fuelCapacity fuel capacity of the airplane
      * @return returns false if the airline or the airport in question does not exist
      */
     public boolean addAirplane(String model, String name, String airlineName, float cruiseSpeed, float cruiseAltitude,
@@ -670,10 +668,10 @@ public class Utils {
     //  Recebe um numero e retorna uma SeparateChainingHashST com os aeroportos que tem esse numero de ligacoes
     public SeparateChainingHashST<String, Airport> quantityOfConnections(int number){
         SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
-        for (String key: airportST.keys() ) {
+        for (String key : airportST.keys()) {
             Airport airport = airportST.get(key);
-            if(airportConnections(airport).size() == number){
-                results.put(key,airport);
+            if (airportConnections(airport).size() == number) {
+                results.put(key, airport);
             }
         }
         return results;
@@ -693,8 +691,8 @@ public class Utils {
         RedBlackBST<Date, Flight> results = new RedBlackBST<>();
         for (Date f : airport.getFlights().keys()) {
             Flight flight = airport.getFlights().get(f);
-            if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1 ) {
-                results.put(flight.getDate(),flight);
+            if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1) {
+                results.put(flight.getDate(), flight);
             }
         }
         return results;
@@ -705,30 +703,56 @@ public class Utils {
         EdgeWeightedDigraph newGraph = new EdgeWeightedDigraph(searchAirportsOfContinent(airportST, searchContinent).size());
 //        criar tabela de simbolos para mapear os codigos originais da symbolDiagraph nos novos
         ST<Integer, Integer> map = new ST<>();
-
-
         int i = 0;
-//        for (String code : airportST.keys()) {
-//            System.out.println("pesquisa: " + airportST.get(code).getCode() + " " + airportST.get(code).getContinent() );
-//            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
-//                for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
-//                    System.out.println("   Conecao: " + e.from() + " " + (airportST.get(symbolGraph.nameOf(e.from())).getCode()));
-//                    if (airportST.get(symbolGraph.nameOf(e.from())).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
-//                        System.out.println("Conecao a inserir no novo grafo: " + e);
-//                        newGraph.addEdge(e);
-//                        map.put(i,e.from());
-//                    }
-//                    i++;
-//                }
-//            }
-//        }
-
-        System.out.println("key "+  "value");
-        for (Integer inte: map.keys()) {
-
-            System.out.println(inte + " " + map.get(inte) );
+        System.out.println(symbolGraph.G());
+//        impirmir lista de adjacencias com filtro
+        for (String code : airportST.keys()) {
+            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
+                for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+                    map.put(i, symbolGraph.indexOf(code));
+                }
+                i++;
+            }
         }
+
+        System.out.println("\n\nnovo grafo criado: \n");
+
+
+        System.out.println("key " + "value");
+        for (Integer inte : map.keys()) {
+
+            System.out.println("[" + inte + "]   " + map.get(inte));
+        }
+        System.out.println();
         return newGraph;
+    }
+
+    public static ArrayList<String> cloneList(ArrayList<String> list) {
+        ArrayList<String> clone = new ArrayList<String>(list.size());
+        for (String item : list) clone.add(item);
+        return clone;
+    }
+
+
+    //    funcao que retorna um arraylist dos aeroportos a ser ignorados (por continente)
+    public ArrayList<String> filterAirportsByContinent(String continent) {
+        ArrayList<String> filter = new ArrayList<>();
+        for (String code : airportST.keys()) {
+            if (airportST.get(code).getContinent().toUpperCase().compareTo(continent.toUpperCase()) != 0) {
+                filter.add(code);
+            }
+        }
+        return filter;
+    }
+
+
+//    funcao remover, recebe um airport/code que vai inserir num arraylist para enviar para new SymbolEdgeWeightedDigraph(, e vai fazer override da symbolgraph na utils,
+//            fazer uma nova symbolgraph e depois igua-la a nova
+
+    public void removeAirport(String code) {
+        ArrayList<String> remove = new ArrayList<>();
+        remove.add(code);
+        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
     }
 
     /* STATICtistics */

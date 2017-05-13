@@ -3,7 +3,7 @@
  *  Execution:    java SymbolDigraph
  *  Dependencies: ST.java Digraph.java In.java
  *  Data files:   http://algs4.cs.princeton.edu/42digraph/routes.txt
- *  
+ *
  *  %  java SymbolDigraph routes.txt " "
  *  JFK
  *     MCO
@@ -19,41 +19,46 @@
 package libs;
 
 import airportsProject.Connection;
-import edu.princeton.cs.algs4.*;
+import airportsProject.Utils;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.ST;
+
+import java.util.ArrayList;
 
 /**
- *  The {@code SymbolDigraph} class represents a digraph, where the
- *  vertex names are arbitrary strings.
- *  By providing mappings between string vertex names and integers,
- *  it serves as a wrapper around the
- *  {@link Digraph} data type, which assumes the vertex names are integers
- *  between 0 and <em>V</em> - 1.
- *  It also supports initializing a symbol digraph from a file.
- *  <p>
- *  This implementation uses an {@link ST} to map from strings to integers,
- *  an array to map from integers to strings, and a {@link Digraph} to store
- *  the underlying graph.
- *  The <em>indexOf</em> and <em>contains</em> operations take time 
- *  proportional to log <em>V</em>, where <em>V</em> is the number of vertices.
- *  The <em>nameOf</em> operation takes constant time.
- *  <p>
- *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * The {@code SymbolDigraph} class represents a digraph, where the
+ * vertex names are arbitrary strings.
+ * By providing mappings between string vertex names and integers,
+ * it serves as a wrapper around the
+ * {@link Digraph} data type, which assumes the vertex names are integers
+ * between 0 and <em>V</em> - 1.
+ * It also supports initializing a symbol digraph from a file.
+ * <p>
+ * This implementation uses an {@link ST} to map from strings to integers,
+ * an array to map from integers to strings, and a {@link Digraph} to store
+ * the underlying graph.
+ * The <em>indexOf</em> and <em>contains</em> operations take time
+ * proportional to log <em>V</em>, where <em>V</em> is the number of vertices.
+ * The <em>nameOf</em> operation takes constant time.
+ * <p>
+ * For additional documentation, see <a href="http://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
+ * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
  */
-public class SymbolEdgeWeightedDigraph  {
+public class SymbolEdgeWeightedDigraph {
     private ST<String, Integer> st;  // string -> index
     private String[] keys;           // index  -> string
     private EdgeWeightedDigraph graph;           // the underlying digraph
 
-    /**  
+    /**
      * Initializes a digraph from a file using the specified delimiter.
      * Each line in the file contains
      * the name of a vertex, followed by a list of the names
      * of the vertices adjacent to that vertex, separated by the delimiter.
-     * @param filename the name of the file
+     *
+     * @param filename  the name of the file
      * @param delimiter the delimiter between fields
      */
     public SymbolEdgeWeightedDigraph(String filename, String delimiter) {
@@ -67,15 +72,12 @@ public class SymbolEdgeWeightedDigraph  {
             a = in.readLine().split(delimiter);
             if (!st.contains(a[0]))
                 st.put(a[0], st.size());
-//            System.out.println(a[0]);
         }
-
 
         // inverted index to get string keys in an aray
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
-//            System.out.println(keys[st.get(name)]);
         }
 
         // second pass builds the digraph by connecting first vertex on each
@@ -86,14 +88,99 @@ public class SymbolEdgeWeightedDigraph  {
         while (in.hasNextLine()) {
             a = in.readLine().split(delimiter);
             int v = st.get(a[0]);
-            for (int i = 1; i < a.length; i+=4) {
+            for (int i = 1; i < a.length; i += 4) {
                 int w = st.get(a[i]);
+                float distance = Float.parseFloat(a[i + 1]);
+                float windSpeed = Float.parseFloat(a[i + 3]);
+                float altitude = Float.parseFloat(a[i + 2]);
+                Connection c = new Connection(v, w, distance, altitude, windSpeed);
+                graph.addEdge(c);
+            }
+        }
+    }
 
-                float distance = Float.parseFloat(a[i+1]);
-                float altitude = Float.parseFloat(a[i+2]);
-                float windSpeed = Float.parseFloat(a[i+3]);
-//                System.out.println("airportDestination: " + v );
-                Connection c = new Connection(v,w,distance,altitude,windSpeed);
+    public SymbolEdgeWeightedDigraph(String filename, String delimiter, ArrayList<String> ignoredAirports) {
+        st = new ST<String, Integer>();
+
+        // First pass builds the index by reading strings to associate // colocar as chaves da symbol table com os codigos dos aeroportos
+        // distinct strings with an index
+        In in = new In(filename);
+        String[] a = in.readLine().split(delimiter); // passar a primeira linha
+        ArrayList<String> clone1 = Utils.cloneList(ignoredAirports);
+        int index;
+        while (in.hasNextLine()) {
+            index = 0;
+            a = in.readLine().split(delimiter);
+
+            if (clone1.size() == 0) {
+                st.put(a[0], st.size());
+                continue;
+            }
+
+//          ignore the airports of ignoredAirports
+            for (String ignore : clone1) {
+                if (!st.contains(a[0]) && ignore.toUpperCase().compareTo(a[0].toUpperCase()) != 0) {
+                    st.put(a[0], st.size());
+                } else if (ignore.toUpperCase().compareTo(a[0].toUpperCase()) == 0) {
+                    clone1.remove(index);
+                    break;
+                }
+                index++;
+            }
+        }
+
+        // inverted index to get string keys in an aray
+        keys = new String[st.size()];
+        for (String name : st.keys()) {
+            keys[st.get(name)] = name;
+        }
+
+        // second pass builds the digraph by connecting first vertex on each
+        // line to all others
+        graph = new EdgeWeightedDigraph(st.size());
+        in = new In(filename);
+        a = in.readLine().split(delimiter);
+        int v = 0;
+        ArrayList<String> clone2 = Utils.cloneList(ignoredAirports);
+        while (in.hasNextLine()) {
+            a = in.readLine().split(delimiter);
+            if (st.get(a[0]) == null) {
+                continue;
+            }
+            v = st.get(a[0]);
+
+            if (clone2.size() == 0) {
+                for (int i = 1; i < a.length; i += 4) {
+                    if (st.get(a[i]) == null) {  // if airport was ignored in ST
+                        continue;
+                    }
+                    int w = st.get(a[i]);
+                    float distance = Float.parseFloat(a[i + 1]);
+                    float windSpeed = Float.parseFloat(a[i + 3]);
+                    float altitude = Float.parseFloat(a[i + 2]);
+                    Connection c = new Connection(v, w, distance, altitude, windSpeed);
+                    graph.addEdge(c);
+                }
+                continue;
+            }
+
+            for (int i = 1; i < a.length; i += 4) {
+                if (st.get(a[i]) == null) {  // if airport was ignored in ST
+                    continue;
+                }
+                int w = st.get(a[i]);
+                index = 0;
+                for(String ignore : clone2){
+                    if(ignore.toUpperCase().compareTo(a[i].toUpperCase()) == 0){
+                        clone2.remove(index);
+                        continue;
+                    }
+                    index++;
+                }
+                float distance = Float.parseFloat(a[i + 1]);
+                float windSpeed = Float.parseFloat(a[i + 3]);
+                float altitude = Float.parseFloat(a[i + 2]);
+                Connection c = new Connection(v, w, distance, altitude, windSpeed);
                 graph.addEdge(c);
             }
         }
@@ -101,6 +188,7 @@ public class SymbolEdgeWeightedDigraph  {
 
     /**
      * Does the digraph contain the vertex named {@code s}?
+     *
      * @param s the name of a vertex
      * @return {@code true} if {@code s} is the name of a vertex, and {@code false} otherwise
      */
@@ -110,6 +198,7 @@ public class SymbolEdgeWeightedDigraph  {
 
     /**
      * Returns the integer associated with the vertex named {@code s}.
+     *
      * @param s the name of a vertex
      * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
      * @deprecated Replaced by {@link #indexOf(String)}.
@@ -121,6 +210,7 @@ public class SymbolEdgeWeightedDigraph  {
 
     /**
      * Returns the integer associated with the vertex named {@code s}.
+     *
      * @param s the name of a vertex
      * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
      */
@@ -130,7 +220,8 @@ public class SymbolEdgeWeightedDigraph  {
 
     /**
      * Returns the name of the vertex associated with the integer {@code v}.
-     * @param  v the integer corresponding to a vertex (between 0 and <em>V</em> - 1) 
+     *
+     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
      * @return the name of the vertex associated with the integer {@code v}
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @deprecated Replaced by {@link #nameOf(int)}.
@@ -143,7 +234,8 @@ public class SymbolEdgeWeightedDigraph  {
 
     /**
      * Returns the name of the vertex associated with the integer {@code v}.
-     * @param  v the integer corresponding to a vertex (between 0 and <em>V</em> - 1) 
+     *
+     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
      * @return the name of the vertex associated with the integer {@code v}
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
@@ -176,12 +268,10 @@ public class SymbolEdgeWeightedDigraph  {
 
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
-         int V = graph.V();
+        int V = graph.V();
         if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
-
-
 
 
     /**
