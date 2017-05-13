@@ -74,16 +74,16 @@ public class Utils {
         /*
                 TO REMOVE !!!!
          */
-        Flight flight1 = new Flight(10000, new Date(0,0,0,3,20,10), new Date(1,2,2015,0,0,0), 100, airplaneST.get(0), airportST.get("OPO"), airportST.get("NRT"));
-        Flight flight2 = new Flight(10000, new Date(0,0,0,7,20,10), new Date(2,4,2017,0,0,0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
-        Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,16,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
-        Flight flight4 = new Flight(10000, new Date(0,0,0,11,20,0), new Date(2,11,2016,16,5,0), 150, airplaneST.get(0), airportST.get("NRT"), airportST.get("ALG"));
-        Flight flight5 = new Flight(10000, new Date(0,0,0,2,20,10), new Date(2,4,2017,4,0,0), 100, airplaneST.get(5), airportST.get("LIS"), airportST.get("OPO"));
-        flightST.put(flight1.getDate(), flight1);
-        flightST.put(flight2.getDate(), flight2);
-        flightST.put(flight3.getDate(), flight3);
-        flightST.put(flight4.getDate(), flight4);
-        flightST.put(flight5.getDate(), flight5);
+//        Flight flight1 = new Flight(10000, new Date(0,0,0,3,20,10), new Date(1,2,2015,0,0,0), 100, airplaneST.get(0), airportST.get("OPO"), airportST.get("NRT"));
+//        Flight flight2 = new Flight(10000, new Date(0,0,0,7,20,10), new Date(2,4,2017,0,0,0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
+//        Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,16,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
+//        Flight flight4 = new Flight(10000, new Date(0,0,0,11,20,0), new Date(2,11,2016,16,5,0), 150, airplaneST.get(0), airportST.get("NRT"), airportST.get("ALG"));
+//        Flight flight5 = new Flight(10000, new Date(0,0,0,2,20,10), new Date(2,4,2017,4,0,0), 100, airplaneST.get(5), airportST.get("LIS"), airportST.get("OPO"));
+//        flightST.put(flight1.getDate(), flight1);
+//        flightST.put(flight2.getDate(), flight2);
+//        flightST.put(flight3.getDate(), flight3);
+//        flightST.put(flight4.getDate(), flight4);
+//        flightST.put(flight5.getDate(), flight5);
         return true;
     }
 

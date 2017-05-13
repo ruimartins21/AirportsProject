@@ -101,12 +101,10 @@ public class AirportNetworkController {
                         origin = airport.getCode();
                     }
                 } else if(airport.getCode().compareTo(origin) != 0){ // can't choose the same airport as origin and destination
-                    if(!airport.getAirplanes().isEmpty()){ // if the chosen destination has airplanes parked to perform the flight
-                        destination = airport.getCode();
-                        setNewFlight(origin, destination);
-                        origin = "";
-                        destination = "";
-                    }
+                    destination = airport.getCode();
+                    setNewFlight(origin, destination);
+                    origin = "";
+                    destination = "";
                 }
             }
         });
