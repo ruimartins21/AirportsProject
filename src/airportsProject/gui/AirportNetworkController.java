@@ -38,9 +38,10 @@ public class AirportNetworkController {
     private Slider zoomSlider;
 
     private static boolean updated = false; // will tell the update method if a user added/removed an airport or not, to know if it is needed to update the list
-    Group zoomGroup;
-    Utils utils = Utils.getInstance();
-    SeparateChainingHashST<String, Airport> airports = utils.getAirports();
+    private Group zoomGroup;
+    private Utils utils = Utils.getInstance();
+    private SeparateChainingHashST<String, Airport> airports = utils.getAirports();
+    private String origin = "", destination = "";
 
     public void initialize(){
         searchAirport.getParent().requestFocus();
@@ -95,13 +96,61 @@ public class AirportNetworkController {
         pin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                VistaNavigator.loadVista(VistaNavigator.AIRPORTDETAILS, pin.getId());
+                if (origin.isEmpty()) {
+                    origin = airport.getCode();
+                } else if(airport.getCode().compareTo(origin) != 0){ // can't choose the same airport as origin and destination
+                    destination = airport.getCode();
+                    setNewFlight(origin, destination);
+                    origin = "";
+                    destination = "";
+                }
             }
         });
         pin.setLayoutX(airport.getLongitude() - (34 / 2)); // 34 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
         pin.setLayoutY(airport.getLatitude() - (45)); // 45 is the pin height
         pin.setVisible(true);
         mapPane.getChildren().add(pin);
+    }
+
+    private void setNewFlight(String o, String d){
+        // pops up the new flight dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(e -> window.hide());
+        dialog.initOwner(containAirports.getScene().getWindow());
+        dialog.setTitle("New Flight");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("newFlightDialog.fxml"));
+        fxmlLoader.setControllerFactory((Class<?> controllerType) -> {
+            if (controllerType == NewFlightDialogController.class) { // send the code of the airport to show its details
+                NewFlightDialogController controller = new NewFlightDialogController();
+                controller.setPoints(o, d);
+                return controller;
+            } else {
+                try {
+                    return controllerType.newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        // reset strings to accept another flight creation
+        origin = "";
+        destination = "";
+        try {
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
+        dialog.getDialogPane().getStyleClass().add("customDialog");
+        dialog.setContentText(null);
+        Optional<ButtonType> result = dialog.showAndWait();
+        // Closes the dialog
+        if (!result.isPresent()) {
+            System.out.println("Closed new flight");
+        }
     }
 
     private void updateList(){

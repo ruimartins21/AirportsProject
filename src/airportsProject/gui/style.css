@@ -23,6 +23,7 @@
 }
 .radio-button{
     -fx-padding: 0 5px 0 0;
+    -fx-cursor: hand;
 }
 .radio-button > .radio {
     -fx-background-color: transparent;
@@ -40,6 +41,9 @@
 }
 .radio-button:selected{
     -fx-background-color: rgba(270,270,270,0.2);
+}
+.radioButton{
+    -fx-padding: 5px 10px;
 }
 .flightBackground{
     -fx-background-image: url('images/flightBack.jpg');
@@ -60,7 +64,7 @@
     -fx-background-position: center center;
 }
 .airportBackground{
-    -fx-background-image: url('images/world-map.png');
+    -fx-background-image: url('images/worldBack.png');
     -fx-background-size: stretch;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
@@ -153,6 +157,9 @@
      -fx-font-family: "Helvetica";
      -fx-border-insets: 0;
  }
+.calcRoute{
+    -fx-font-size:15px;
+}
 .dialogButton:hover, .dialogButton:focused{
     -fx-background-color: transparent;
     -fx-text-fill: white !important;
@@ -208,4 +215,39 @@
 }
 .choiceButton .menu-item:focused{
     -fx-background-color: #4185d1;
+}
+.date-picker{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-show-week-numbers: false;
+    /*-fx-font-size:12px;*/
+    -fx-font-family: "Helvetica light";
+}
+.date-picker .text-field{
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: white;
+}
+.date-picker > .arrow-button{
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-shape : null ;
+    -fx-background-image : url("images/calendar.png");
+    -fx-pref-width: 19px;
+    -fx-pref-height: 23px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+    /*-fx-background-position: center;*/
+}
+.underlineInput{
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: white;
 }

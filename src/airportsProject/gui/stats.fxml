@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.StatsController">
+   <children>
+       <ImageView fx:id="goBack" fitHeight="54.0" fitWidth="57.0" onMouseClicked="#optionClicked" translateX="-450.0" translateY="10.0">
+           <image>
+               <Image url="@images/lastPage.png" />
+           </image>
+           <cursor>
+               <Cursor fx:constant="HAND" />
+           </cursor>
+       </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1000.0" text="STATISTICS" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" VBox.vgrow="NEVER">
+         <font>
+            <Font name="Helvetica Light" size="40.0" />
+         </font>
+      </Label>
+      <Region prefHeight="20.0" prefWidth="1000.0" />
+      <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="underLine" />
+      <Region prefHeight="30.0" prefWidth="1000.0" />
+      <HBox fx:id="containCharts" alignment="CENTER" prefWidth="0.0" />
+   </children>
+</VBox>

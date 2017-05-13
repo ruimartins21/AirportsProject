@@ -33,12 +33,12 @@ public class Utils {
     private static RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
     private static SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
 
-    protected Utils() {
+    protected Utils(){
         // prevents instantiation
     }
 
-    public static Utils getInstance() {
-        if (instance == null) {
+    public static Utils getInstance(){
+        if(instance == null){
             instance = new Utils();
         }
         return instance;
@@ -74,14 +74,16 @@ public class Utils {
         /*
                 TO REMOVE !!!!
          */
-        Flight flight1 = new Flight(10000, new Date(0, 0, 0, 3, 20, 10), new Date(1, 2, 2015, 0, 0, 0), 100, airplaneST.get(0), airportST.get("OPO"), airportST.get("NRT"));
-        Flight flight2 = new Flight(10000, new Date(0, 0, 0, 7, 20, 10), new Date(2, 4, 2017, 0, 0, 0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
-        Flight flight3 = new Flight(10000, new Date(0, 0, 0, 9, 20, 0), new Date(12, 11, 2016, 16, 5, 0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
-        Flight flight4 = new Flight(10000, new Date(0, 0, 0, 11, 20, 0), new Date(2, 11, 2016, 16, 5, 0), 150, airplaneST.get(0), airportST.get("NRT"), airportST.get("ALG"));
+        Flight flight1 = new Flight(10000, new Date(0,0,0,3,20,10), new Date(1,2,2015,0,0,0), 100, airplaneST.get(0), airportST.get("OPO"), airportST.get("NRT"));
+        Flight flight2 = new Flight(10000, new Date(0,0,0,7,20,10), new Date(2,4,2017,0,0,0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
+        Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,16,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
+        Flight flight4 = new Flight(10000, new Date(0,0,0,11,20,0), new Date(2,11,2016,16,5,0), 150, airplaneST.get(0), airportST.get("NRT"), airportST.get("ALG"));
+        Flight flight5 = new Flight(10000, new Date(0,0,0,2,20,10), new Date(2,4,2017,4,0,0), 100, airplaneST.get(5), airportST.get("LIS"), airportST.get("OPO"));
         flightST.put(flight1.getDate(), flight1);
         flightST.put(flight2.getDate(), flight2);
         flightST.put(flight3.getDate(), flight3);
         flightST.put(flight4.getDate(), flight4);
+        flightST.put(flight5.getDate(), flight5);
         return true;
     }
 
@@ -102,52 +104,49 @@ public class Utils {
      * @param name   new name of the airport
      * @param rating new rating of the airport
      */
-    public void editAirport(String code, String name, Float rating) {
-        Airport thisPlaneAirport = airportST.get(code);
+    public void editAirport(String code, String name, Float rating){
         airportST.get(code).setName(name);
         airportST.get(code).setRating(rating);
-        log("airportST", "Edited airport [" + airportST.get(code).getCode() + "] \" Name:" + airportST.get(code).getName() + "\" Rating:" +
+        log("airportST", "Edited airport [" +  airportST.get(code).getCode() +  "] \" Name:" + airportST.get(code).getName() + "\" Rating:" +
                 airportST.get(code).getRating());
     }
 
     /**
      * Removes an airport incluiding all the airplanes parked there
-     *
      * @param airport airport to remove
      */
-    public static void removeAirport(Airport airport) {
-        if (!airport.getAirplanes().isEmpty()) {
-            for (Integer p : airportST.get(airport.getCode()).getAirplanes().keys()) {
+    public static void removeAirport(Airport airport){
+        if(!airport.getAirplanes().isEmpty()){
+            for (Integer p : airportST.get(airport.getCode()).getAirplanes().keys() ) {
                 removeAirplane(airportST.get(airport.getCode()).getAirplanes().get(p));
             }
         }
-        log("AirportST", "Removed airport \"" + airportST.get(airport.getCode()).getName() + "\"");
+        log("AirportST","Removed airport \"" + airportST.get(airport.getCode()).getName() + "\"");
         airportST.put(airport.getCode(), null);
         Utils.getInstance().createCoordinatesFile();
     }
 
     /* AIRLINES */
 
-    public SeparateChainingHashST<String, Airline> getAirlines() {
+    public SeparateChainingHashST<String, Airline> getAirlines(){
         return airlinesST;
     }
 
-    public void newAirline(Airline airline) {
-        if (airlinesST.get(airline.getName()) == null) // there's no airline with that name, if there is, it can't be edited here
+    public void newAirline(Airline airline){
+        if(airlinesST.get(airline.getName()) == null) // there's no airline with that name, if there is, it can't be edited here
             airlinesST.put(airline.getName(), airline);
     }
 
     /**
      * Receives the data possible to be edited on an airline and changes it using the class setters
-     *
-     * @param oldName     previous name of the airline to match it in the ST
-     * @param newName     new name of the airline
+     * @param oldName previous name of the airline to match it in the ST
+     * @param newName new name of the airline
      * @param nationality airline nationality
      */
-    public void editAirline(String oldName, String newName, String nationality) {
-        if (oldName.compareTo(newName) == 0) { // same name (key), updates the entry
+    public void editAirline(String oldName, String newName, String nationality){
+        if(oldName.compareTo(newName) == 0){ // same name (key), updates the entry
             airlinesST.get(oldName).setNationality(nationality);
-        } else { // otherwise the entry must be replaced
+        }else{ // otherwise the entry must be replaced
             Airline newAirline = new Airline(newName, nationality);
             newAirline.setFleet(airlinesST.get(oldName).getFleet()); // copies the airline fleet before replacing it
             airlinesST.put(oldName, null); // removes the previous key
@@ -158,20 +157,20 @@ public class Utils {
 
     /**
      * Removes an airline including all its airplanes
-     *
      * @param airline is the airline to remove
      */
-    public static void removeAirline(Airline airline) {
-        for (Integer p : airline.getFleet().keys()) {
+    public static void removeAirline(Airline airline){
+        for (Integer p: airline.getFleet().keys()) {
             removeAirplane(airline.getFleet().get(p));
         }
-        log("AirlineST", "Removed airline \"" + airline.getName() + "\"");
+        log("AirlineST","Removed airline \"" + airline.getName() + "\"");
         airlinesST.put(airline.getName(), null);
     }
 
     /* AIRPLANES */
 
     /**
+     *
      * @return returns the airplanes symbol table
      */
     public RedBlackBST<Integer, Airplane> getAirplanes() {
@@ -190,48 +189,47 @@ public class Utils {
      * @param maxRange           max range of the airplane
      * @param airportCode        airport where the airplane will be parked at first
      * @param passengersCapacity passengers capacity of the airplane
-     * @param fuelCapacity       fuel capacity of the airplane
+     * @param fuelCapacity fuel capacity of the airplane
      * @return returns false if the airline or the airport in question does not exist
      */
-    public boolean addAirplane(String model, String name, String airlineName, float cruiseSpeed, float cruiseAltitude,
-                               float maxRange, String airportCode, int passengersCapacity, int fuelCapacity) {
+    public boolean addAirplane(String model, String name, String airlineName,  float cruiseSpeed, float cruiseAltitude,
+                               float maxRange, String airportCode, int passengersCapacity, int fuelCapacity){
         int id = 1; // if the airplanes ST is empty this will be the first entry
-        if (!airplaneST.isEmpty())
+        if(!airplaneST.isEmpty())
             id = airplaneST.max() + 2; // adds 2 because 1 is for the id to match airplanes ids and another to add the new plane
 
         // searches for the airline existence
         Airline thisPlaneAirline = airlinesST.get(airlineName);
-        if (thisPlaneAirline == null)
+        if(thisPlaneAirline == null)
             return false;
 
         // searches for the airport existence
         Airport thisPlaneAirport = airportST.get(airportCode);
-        if (thisPlaneAirport == null)
+        if(thisPlaneAirport == null)
             return false;
 
         Airplane newPlane = new Airplane(id, model, name, cruiseSpeed, cruiseAltitude, maxRange, airportCode,
                 passengersCapacity, fuelCapacity, thisPlaneAirline);
         airportST.get(airportCode).receivePlane(newPlane);  // adds this new plane to the respective airport
         thisPlaneAirline.addPlane(newPlane); // adds this new plane to the respective airline
-        airplaneST.put(id - 1, newPlane); // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
+        airplaneST.put(id-1, newPlane); // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
         log("airplaneST", "Inserted airplane \"" + newPlane.getName() + "\"");
         return true;
     }
 
     /**
      * Receives the data possible to be edited on an airplane and changes it using the class setters
-     *
-     * @param idAirplane         id of the airplane to edit
-     * @param model              new model of the airplane
-     * @param name               new name of the airplane
-     * @param cruiseSpeed        new cruise speed of the airplane
-     * @param cruiseAltitude     new cruise altitude of the airplane
-     * @param maxRange           new max range of the airplane
+     * @param idAirplane id of the airplane to edit
+     * @param model new model of the airplane
+     * @param name new name of the airplane
+     * @param cruiseSpeed new cruise speed of the airplane
+     * @param cruiseAltitude new cruise altitude of the airplane
+     * @param maxRange new max range of the airplane
      * @param passengersCapacity new passengers capacity of the airplane
-     * @param fuelCapacity       new fuel capacity of the airplane
+     * @param fuelCapacity new fuel capacity of the airplane
      */
-    public void editAirplane(int idAirplane, String model, String name, float cruiseSpeed, float cruiseAltitude,
-                             float maxRange, int passengersCapacity, int fuelCapacity) {
+    public void editAirplane(int idAirplane, String model, String name,  float cruiseSpeed, float cruiseAltitude,
+                             float maxRange, int passengersCapacity, int fuelCapacity){
         idAirplane -= 1; // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
         // searches for the airplane existence
         Airplane plane = airplaneST.get(idAirplane);
@@ -242,35 +240,34 @@ public class Utils {
         plane.setMaxRange(maxRange);
         plane.setPassengersCapacity(passengersCapacity);
         plane.setFuelCapacity(fuelCapacity);
-        log("airplaneST", "Edited airplane [" + plane.getId() + "] \"" + plane.getName() + "\"");
+        log("airplaneST", "Edited airplane [" + plane.getId() +"] \"" + plane.getName() + "\"");
     }
 
     /**
      * Removes an airplane from the database (respective symbol table, airline and the current airport where it is parked)
-     *
      * @param plane is the plane to remove
      */
-    public static void removeAirplane(Airplane plane) {
+    public static void removeAirplane(Airplane plane){
         Airline airline = plane.getAirline();
         airline.removePlane(plane);
         airportST.get(plane.getAirportCode()).sendPlane(plane); // goes to the airport where the plane is parked to remove it
-        airplaneST.put(plane.getId() - 1, null); // ids on the ST starts from 0 and airplanes ids from 1
+        airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
         log("Airline \"" + airline.getName() + "\"", "Removed airplane \"" + plane.getName() + "\"");
         log("AirplaneST", "Removed airplane \"" + plane.getName() + "\"");
         log("Airport \"" + airportST.get(plane.getAirportCode()) + "\"", "Removed airplane \"" + plane.getName() + "\"");
     }
 
-    public RedBlackBST<Date, Flight> getFlights() {
+    public RedBlackBST<Date, Flight> getFlights(){
         return flightST;
     }
 
-    public void newFlight(Flight flight) {
+    public void newFlight(Flight flight){
         flightST.put(flight.getDate(), flight);
     }
 
-    public void createCoordinatesFile() {
+    public void createCoordinatesFile(){
         ArrayList<Coordinates> coordinates = new ArrayList<>();
-        for (String code : airportST.keys()) {
+        for(String code : airportST.keys()){
             Airport airport = airportST.get(code);
             coordinates.add(new Coordinates(code, airport.getLongitude(), airport.getLatitude()));
         }
@@ -329,20 +326,20 @@ public class Utils {
      * Creates a copy of the current program so the next time the program runs there will be an option of loading the previous program
      * or create a new one from the data imported from the files and without flights
      */
-    public static void dump() {
+    public static void dump(){
         String path = ".//data/backup.txt";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) { // FileWriter with onle one parameter will overwrite the file content each time that is what we want
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){ // FileWriter with onle one parameter will overwrite the file content each time that is what we want
             bw.write("nome_aeroporto;código_aeroporto;cidade;país;continente;classificação;");
             bw.newLine();
-            for (String a : airportST.keys()) {
+            for(String a : airportST.keys()){
                 Airport airport = airportST.get(a);
                 bw.write(
                         airport.getName() + ";" +
-                                airport.getCode() + ";" +
-                                airport.getCity() + ";" +
-                                airport.getCountry() + ";" +
-                                airport.getContinent() + ";" +
-                                airport.getRating() + ";"
+                        airport.getCode() + ";" +
+                        airport.getCity() + ";" +
+                        airport.getCountry() + ";" +
+                        airport.getContinent() + ";" +
+                        airport.getRating() + ";"
                 );
                 bw.newLine();
             }
@@ -350,11 +347,11 @@ public class Utils {
             bw.newLine();
             bw.write("nome;nacionalidade;");
             bw.newLine();
-            for (String al : airlinesST.keys()) {
+            for(String al : airlinesST.keys()){
                 Airline airline = airlinesST.get(al);
                 bw.write(
                         airline.getName() + ";" +
-                                airline.getNationality() + ";"
+                        airline.getNationality() + ";"
                 );
                 bw.newLine();
             }
@@ -363,19 +360,19 @@ public class Utils {
             bw.write("id_avião;modelo;nome;companhia_aérea;velocidade_cruzeiro;altitude_cruzeiro;distância_máxima;cod_aeroporto;" +
                     "capacidade_de_passageiros;capacidade_do_depósito");
             bw.newLine();
-            for (Integer ap : airplaneST.keys()) {
+            for(Integer ap : airplaneST.keys()){
                 Airplane airplane = airplaneST.get(ap);
                 bw.write(
                         airplane.getId() + ";" +
-                                airplane.getModel() + ";" +
-                                airplane.getName() + ";" +
-                                airplane.getAirline().getName() + ";" +
-                                airplane.getCruiseSpeed() + ";" +
-                                airplane.getCruiseAltitude() + ";" +
-                                airplane.getMaxRange() + ";" +
-                                airplane.getAirportCode() + ";" +
-                                airplane.getPassengersCapacity() + ";" +
-                                airplane.getFuelCapacity() + ";"
+                        airplane.getModel() + ";" +
+                        airplane.getName() + ";" +
+                        airplane.getAirline().getName() + ";" +
+                        airplane.getCruiseSpeed() + ";" +
+                        airplane.getCruiseAltitude() + ";" +
+                        airplane.getMaxRange() + ";" +
+                        airplane.getAirportCode() + ";" +
+                        airplane.getPassengersCapacity() + ";" +
+                        airplane.getFuelCapacity() + ";"
                 );
                 bw.newLine();
             }
@@ -383,48 +380,47 @@ public class Utils {
             bw.newLine();
             bw.write("distancia;custo;duracao;data;passageiros;aviao;aeroportoOrigem;aeroportoDestino;");
             bw.newLine();
-            for (Date d : flightST.keys()) {
+            for(Date d : flightST.keys()){
                 Flight flight = flightST.get(d);
                 bw.write(
                         flight.getDistance() + ";" +
-                                flight.getCosts() + ";" +
-                                flight.getDuration().getSlashes() + ";" +
-                                flight.getDate().getSlashes() + ";" +
-                                flight.getPassengers() + ";" +
-                                flight.getAirplane().getId() + ";" +
-                                flight.getAirportOfOrigin().getCode() + ";" +
-                                flight.getAirportOfDestination().getCode() + ";"
+                        flight.getCosts() + ";" +
+                        flight.getDuration().getSlashes() + ";" +
+                        flight.getDate().getSlashes() + ";" +
+                        flight.getPassengers() + ";" +
+                        flight.getAirplane().getId() + ";" +
+                        flight.getAirportOfOrigin().getCode() + ";" +
+                        flight.getAirportOfDestination().getCode() + ";"
                 );
                 bw.newLine();
             }
             bw.close();
-        } catch (IOException e) {
+        }catch(IOException e){
             e.printStackTrace();
         }
     }
 
     /**
      * Stores actions like insertions of airports, airlines and airplanes, editings and removals in a log file
-     *
-     * @param from       tells from wich class the action was made
+     * @param from tells from wich class the action was made
      * @param changeMade is the action made
      */
-    public static void log(String from, String changeMade) {
+    public static void log(String from, String changeMade){
         String path = ".//data//logs.txt";
-        if (from.contentEquals("reset")) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+        if(from.contentEquals("reset")){
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
                 bw.write("");
                 bw.close();
-            } catch (IOException e) {
+            }catch(IOException e){
                 e.printStackTrace();
             }
-        } else {
+        }else{
             String timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) { // passing the boolean true for appending and not rewriting the file
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){ // passing the boolean true for appending and not rewriting the file
                 bw.write(timeStamp + " # From " + from + ": " + changeMade);
                 bw.newLine();
                 bw.close();
-            } catch (IOException e) {
+            }catch(IOException e){
                 e.printStackTrace();
             }
         }
@@ -436,38 +432,38 @@ public class Utils {
      * @param str -> search input
      * @return returns true if it is a number and false if not
      */
-    public static boolean isNumeric(String str) {
-        try {
+    public static boolean isNumeric(String str){
+        try{
             double d = Integer.parseInt(str);
-        } catch (NumberFormatException nfe) {
-            try {
+        }catch(NumberFormatException nfe) {
+            try{
                 double d = Float.parseFloat(str);
-            } catch (NumberFormatException nfe2) {
+            }catch(NumberFormatException nfe2) {
                 return false;
             }
         }
         return true;
     }
 
-    public static void showGraphs() {
+    public static void showGraphs(){
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
         Graph graph = new SingleGraph("SymbolGraph");
         for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-            for (Connection c : symbolGraph.digraph().adj(i)) {
-                try {
-                    graph.addNode("" + c.from());
-                } catch (Exception e) {
+            for(Connection c : symbolGraph.digraph().adj(i)){
+                try{
+                    graph.addNode(""+c.from());
+                }catch (Exception e){
                     // ignore
                 }
-                try {
-                    graph.addNode("" + c.to());
-                } catch (Exception e) {
+                try{
+                    graph.addNode(""+c.to());
+                }catch (Exception e){
                     // ignore
                 }
-                try {
-                    graph.addEdge("" + c.from() + "-" + "" + c.to(), "" + c.from(), "" + c.to(), false);
-                } catch (Exception e) {
+                try{
+                    graph.addEdge(""+c.from()+"-"+""+c.to(), ""+c.from(), ""+c.to(), false);
+                }catch (Exception e){
                     // ignore
                 }
             }
@@ -529,7 +525,7 @@ public class Utils {
                         "   text-size: 17px;" +
                         "   size: 20px; " +
                         "}" +
-                        "edge {" +
+                "edge {" +
                         "   fill-color:#4185d1;" +
                         "   padding: 4px;" +
                         "}";
@@ -541,20 +537,19 @@ public class Utils {
 
     /**
      * Determines the airport (or more than one if the ammount is the same) with the most traffic (number of flights)
-     *
      * @param airportST Symbol table that stores all the available airports
      * @return returns the arraylist with all the matches for the most traffic airport, can be more than one with the same ammount
      */
-    private static ArrayList<Airport> mostTrafficAirport(SeparateChainingHashST<String, Airport> airportST) {
+    private static ArrayList<Airport> mostTrafficAirport(SeparateChainingHashST<String, Airport> airportST){
         ArrayList<Airport> airports = new ArrayList<>();
         int max = 0, current;
-        for (String code : airportST.keys()) {
+        for(String code : airportST.keys()){
             current = airportST.get(code).getFlights().size();
-            if (current > max) { // sets the current airport as the one with the most traffic
+            if(current > max){ // sets the current airport as the one with the most traffic
                 max = current;
                 airports.clear();
                 airports.add(0, airportST.get(code));
-            } else if (current == max) { // if an airport has the same ammount of traffic than other, will add this new one to the array
+            }else if(current == max){ // if an airport has the same ammount of traffic than other, will add this new one to the array
                 airports.add(airports.size(), airportST.get(code));
             }
         }
@@ -564,20 +559,19 @@ public class Utils {
 
     /**
      * Determines the flight (or more than one if the ammount is the same) with the most passengers transported
-     *
      * @param flightST Symbol table that stores all the flights
      * @return returns the arraylist with all the matches for the flight that transported most passengers, can be more than one
      */
-    private static ArrayList<Flight> mostPassengersFlight(RedBlackBST<Date, Flight> flightST) {
+    private static ArrayList<Flight> mostPassengersFlight(RedBlackBST<Date, Flight> flightST){
         ArrayList<Flight> flights = new ArrayList<>();
         int max = 0, current;
-        for (Date d : flightST.keys()) {
+        for(Date d : flightST.keys()){
             current = flightST.get(d).getPassengers();
-            if (current > max) { // sets the current flight as the one with the most passengers transported
+            if(current > max){ // sets the current flight as the one with the most passengers transported
                 max = current;
                 flights.clear();
                 flights.add(0, flightST.get(d));
-            } else if (current == max) { // if an flight has the same ammount of transported passengers than other, will add this new one to the array
+            }else if(current == max){ // if an flight has the same ammount of transported passengers than other, will add this new one to the array
                 flights.add(flights.size(), flightST.get(d));
             }
         }
@@ -586,26 +580,25 @@ public class Utils {
 
     /**
      * Determines the airport (or more than one if the ammount is the same) wich had the most passengers passing through it
-     *
      * @param airportST Symbol table that stores all the available airports
      * @return returns the arraylist with all the matches for the most passengers passed through, can be more than one if the same ammount
      */
-    private static ArrayList<Airport> mostPassengersAirport(SeparateChainingHashST<String, Airport> airportST) {
+    private static ArrayList<Airport> mostPassengersAirport(SeparateChainingHashST<String, Airport> airportST){
         ArrayList<Airport> airports = new ArrayList<>();
         RedBlackBST<Date, Flight> airportFlights;
         int max = 0, nPassengers;
-        for (String code : airportST.keys()) {
+        for(String code : airportST.keys()){
             // ao inserir um voo num aeroporto ter atributo de passageiros e somar n passageiros do novo voo
             nPassengers = 0;
             airportFlights = airportST.get(code).getFlights();
-            for (Date d : airportFlights.keys()) {
+            for(Date d : airportFlights.keys()){
                 nPassengers += airportFlights.get(d).getPassengers();
             }
-            if (nPassengers > max) { // sets the current airport as the one with the most passengers transported
+            if(nPassengers > max){ // sets the current airport as the one with the most passengers transported
                 max = nPassengers;
                 airports.clear();
                 airports.add(0, airportST.get(code));
-            } else if (nPassengers == max) { // if an airport has the same ammount of transported passengers than other, will add this new one to the array
+            }else if(nPassengers == max){ // if an airport has the same ammount of transported passengers than other, will add this new one to the array
                 airports.add(airports.size(), airportST.get(code));
             }
         }

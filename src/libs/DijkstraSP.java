@@ -74,11 +74,7 @@ public class DijkstraSP {
      */
     public DijkstraSP(int airportOrigin, Airplane airplane, String typeOfSearch) {
         EdgeWeightedDigraph G = this.utils.getSymbolGraph().G();
-        Utils.initProgram("");
-//        EdgeWeightedDigraph G = utils.filterGraph("Europe");
 
-
-//
         for (Connection e : G.edges()) {
             if (e.weight() < 0)
                 throw new IllegalArgumentException("edge " + e + " has negative weight");
@@ -93,13 +89,13 @@ public class DijkstraSP {
             distTo[v] = Double.POSITIVE_INFINITY;
         distTo[airportOrigin] = 0.0;
 
-        // relax vertices in order of distance from s
+        // relax vertices in order of distance
         pq = new IndexMinPQ<Double>(G.V());
         pq.insert(airportOrigin, distTo[airportOrigin]);
         while (!pq.isEmpty()) {
             int v = pq.delMin();
             for (Connection e : G.adj(v))
-                relax(e, airportOrigin, airplane, typeOfSearch);
+                relax(e, airplane, typeOfSearch);
         }
 
         // check optimality conditions
@@ -107,7 +103,7 @@ public class DijkstraSP {
     }
 
     // relax edge e and update pq if changed
-    private void relax(Connection e, int airportOrigin, Airplane airplane, String typeOfSearch) {
+    private void relax(Connection e, Airplane airplane, String typeOfSearch) {
         int v = e.from(), w = e.to();
         if (typeOfSearch.compareTo("distance") == 0) {
             if (distTo[w] > distTo[v] + e.weight()) {

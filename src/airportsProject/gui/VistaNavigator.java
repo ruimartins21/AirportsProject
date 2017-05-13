@@ -17,11 +17,9 @@ public class VistaNavigator {
      * Convenience constants for fxml layouts managed by the navigator.
      */
     public static final String MAIN              = "mainGUI.fxml";
-//    public static final String MAPTEST           = "mapTest.fxml";
     public static final String LANDING           = "landingPage.fxml";
     public static final String MENU              = "menu.fxml";
-//    public static final String STATS             = "stats.fxml";
-//    public static final String SEARCH            = "search.fxml";
+    public static final String STATS             = "stats.fxml";
     public static final String FLIGHTLIST        = "flights.fxml";
     public static final String FLIGHTDETAILS     = "flightDetails.fxml";
     public static final String AIRPORTNETW       = "airportNetwork.fxml";
@@ -30,7 +28,6 @@ public class VistaNavigator {
     public static final String AIRPLANEDETAILS   = "airplaneDetails.fxml";
     public static final String AIRLINELIST       = "airlines.fxml";
     public static final String AIRLINEDETAILS    = "airlineDetails.fxml";
-    public static final String GRAPHS            = "graphStreamEx.fxml";
 
     /** The main application layout controller. */
     private static MainGUIController mainGUIController;

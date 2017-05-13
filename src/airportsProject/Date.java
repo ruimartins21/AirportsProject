@@ -277,6 +277,20 @@ public class Date implements Comparable<Date> {
       return (second < 10 ? "0"+second : String.valueOf(second));
   }
 
+    /**
+     * Compare only the year, month and day
+     * @param o date to compare to
+     * @return 0 (if equals) / -1 (this date before another date) / 1 (this date after another date)
+     */
+  public int compareDate(Date o){
+      if(this.year == o.year && this.month == o.month && this.day == o.day){
+          return 0;
+      }else if( beforeDate(o) ){
+          return -1;
+      }
+      return 1;
+  }
+
   /**
    *
    * @param o date to compare to
