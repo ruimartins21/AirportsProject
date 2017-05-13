@@ -160,6 +160,11 @@
 .calcRoute{
     -fx-font-size:15px;
 }
+.routeScrollPane{
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background: transparent;
+}
 .dialogButton:hover, .dialogButton:focused{
     -fx-background-color: transparent;
     -fx-text-fill: white !important;
@@ -250,4 +255,7 @@
     -fx-background-color: transparent;
     -fx-border-width: 0 0 1px 0;
     -fx-border-color: white;
+}
+.routeItem{
+    -fx-background-color: rgba(255, 255, 255, 0.2) ;
 }

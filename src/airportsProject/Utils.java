@@ -613,12 +613,12 @@ public class Utils {
     }
 
 
-    public void convertTime(double finalBuildTime) {
+    public String convertTime(double finalBuildTime) {
         int hours = (int) finalBuildTime;
         int minutes = (int) (finalBuildTime * 60) % 60;
         int seconds = (int) (finalBuildTime * (60 * 60)) % 60;
-
-        System.out.print(String.format("%sh %sm %ss ", hours, minutes, seconds));
+        return String.format("%sh %sm %ss ", hours, minutes, seconds);
+//        System.out.print(String.format("%sh %sm %ss ", hours, minutes, seconds));
     }
 
     public Date convertTimeToDate(double finalBuildTime) {
@@ -632,20 +632,19 @@ public class Utils {
     //    imprimir caminho mais barato, curto , monetario, rapido (tempo)
     public void printShortestPath(DijkstraSP dijkstraSP, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination, Airplane airplane, String typeOfSearch) {
         for (Connection e : dijkstraSP.pathTo(airportOfDestination)) {
-
             if (typeOfSearch.compareTo("distance") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + e.weight() + " Km");
             } else if (typeOfSearch.compareTo("monetary") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
             } else if (typeOfSearch.compareTo("time") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : ");
-                Utils.getInstance().convertTime(airplane.getFlightDuration(e));
+                System.out.println(convertTime(airplane.getFlightDuration(e)));
             }
             System.out.println();
         }
         if (typeOfSearch.compareTo("time") == 0) {
             System.out.print("Total Cost: ");
-            convertTime(dijkstraSP.distTo(airportOfDestination));
+            System.out.println(convertTime(dijkstraSP.distTo(airportOfDestination)));
         } else if (typeOfSearch.compareTo("distance") == 0) {
             System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " km");
         } else if (typeOfSearch.compareTo("monetary") == 0) {
@@ -684,7 +683,7 @@ public class Utils {
 
     //    criar voo
     public void newFlight(BreadthFirstPaths bfs, DijkstraSP dijkstraSP, Date date, int passengers, Airplane airplane,
-                          Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, RedBlackBST<Date, Flight> flightST) {
+                          Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest) {
 
         double distance = 0, cost = 0, timeDuration = 0;
         int comp = 0;

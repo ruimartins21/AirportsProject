@@ -2,9 +2,9 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -82,7 +82,7 @@
                    </RadioButton>
                </children>
             </Pane>
-            <Region prefHeight="20.0" prefWidth="650.0" />
+            <Region prefHeight="25.0" prefWidth="650.0" />
             <Button mnemonicParsing="false" onAction="#calculateRoute" text="CALCULATE ROUTE">
                <styleClass>
                   <String fx:value="dialogButton" />
@@ -90,14 +90,36 @@
                </styleClass>
             </Button>
             <Region prefHeight="20.0" prefWidth="650.0" />
-            <Pane fx:id="routeContainer" maxHeight="140.0" prefHeight="140.0" prefWidth="650.0" />
+            <ScrollPane prefHeight="142.0" prefWidth="669.0">
+               <content>
+                  <VBox fx:id="routeContainer" prefWidth="632.0">
+                     <children>
+
+                     </children>
+                  </VBox>
+               </content>
+               <styleClass>
+                  <String fx:value="edge-to-edge" />
+                  <String fx:value="routeScrollPane" />
+               </styleClass>
+            </ScrollPane>
             <Region prefHeight="20.0" prefWidth="600.0" />
             <Pane>
                <children>
-                  <DatePicker fx:id="departureDate" layoutX="68.0" layoutY="2.0" opacity="0.0" prefHeight="27.0" prefWidth="148.0" promptText="Departure Date" />
-                  <TextField alignment="CENTER" layoutX="237.0" opacity="0.0" prefHeight="28.0" prefWidth="53.0" promptText="Hours" styleClass="underlineInput" />
-                  <TextField alignment="CENTER" layoutX="315.0" opacity="0.0" prefHeight="28.0" prefWidth="69.0" promptText="Minutes" styleClass="underlineInput" />
-                  <TextField fx:id="flightPassengers" alignment="CENTER" layoutX="272.0" layoutY="-3.0" prefHeight="28.0" prefWidth="106.0" promptText="Nº Passengers" styleClass="underlineInput" />
+                  <!--<DatePicker fx:id="departureDate" layoutX="68.0" layoutY="2.0" opacity="0.0" prefHeight="27.0" prefWidth="148.0" promptText="Departure Date" />-->
+                  <!--<TextField alignment="CENTER" layoutX="237.0" opacity="0.0" prefHeight="28.0" prefWidth="53.0" promptText="Hours" styleClass="underlineInput" />-->
+                  <!--<TextField alignment="CENTER" layoutX="315.0" opacity="0.0" prefHeight="28.0" prefWidth="69.0" promptText="Minutes" styleClass="underlineInput" />-->
+                  <TextField fx:id="flightPassengers" alignment="CENTER" layoutX="274.0" layoutY="-3.0" prefHeight="28.0" prefWidth="106.0" promptText="Nº Passengers" styleClass="underlineInput" />
+                  <Label fx:id="totalLabel" layoutX="31.0" layoutY="1.0" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalValue" layoutX="151.0" layoutY="1.0" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Light" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
             <Region prefHeight="17.0" prefWidth="600.0" />

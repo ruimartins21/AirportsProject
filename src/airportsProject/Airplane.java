@@ -162,7 +162,8 @@ public class Airplane {
         }else if(altitudeDiference > 0){
             altitudeDiference =  Main.mValue * - altitudeDiference;
         }
-        return getFlightDuration(connection) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - connection.getAltitude())/1000) * altitudeDiference));
+//        return getFlightDuration(connection) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - connection.getAltitude())/1000) * altitudeDiference));
+        return getFlightDuration(connection) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - connection.getAltitude())/1000)) * altitudeDiference + connection.getWindSpeed() * 20);
     }
 
 

@@ -264,6 +264,17 @@
                      </VBox.margin>
                   </Label>
                   <VBox fx:id="containDepartures" alignment="TOP_CENTER" />
+                  <Line endX="295.0" startX="-128.0" stroke="#d3d3d3">
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Line>
+                  <Label text="CONNECTION TO" textFill="#4185d1">
+                     <font>
+                        <Font name="Helvetica" size="20.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="containConnections" alignment="TOP_CENTER" />
                   <!--<SplitPane dividerPositions="0.5" prefHeight="131.0" prefWidth="480.0" styleClass="splitPane">-->
                      <!--<items>-->
                         <!--<Pane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">-->
