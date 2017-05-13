@@ -48,8 +48,9 @@ public class Main {
         ImportFromFile.importAirlines(airlinesST, pathAirlines);
         ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
-        int gIdAirportOrig = 0, gIdAirportDest = 23;
-        airplane = airplaneST.get(1);
+        int gIdAirportOrig = 30, gIdAirportDest = 23;
+        airplane = airplaneST.get(4); // da erro
+//        airplane = airplaneST.get(1);
 //        SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
         SymbolEdgeWeightedDigraph symbolGraph = utils.getSymbolGraph();
         DijkstraSP dijkstraSP = null;
@@ -71,7 +72,9 @@ public class Main {
         utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, null, "distance");
 
         System.out.println("by monetary: ");
+        System.out.println(airplane);
         dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "monetary");
+        dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "monetary", dijkstraSP);
         utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "monetary");
 
         System.out.println("by time: ");
@@ -103,7 +106,7 @@ public class Main {
 
 //        criar voo
         flightDate = new Date(7, 3, 2017, 12, 50, 30);
-        passengers = 380;
+        passengers = 30;
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         utils.newFlight(null, dijkstraSP, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
 
@@ -163,19 +166,31 @@ public class Main {
         System.out.println("\n\n");
 
 
+//        -------------------------------------------
 //        filtros para um novo grafo
-        EdgeWeightedDigraph newGraph = utils.filterGraph("europe");
+//        EdgeWeightedDigraph newGraph = utils.filterGraph("europe");
 
-        System.out.println(symbolGraph.G());
+//        System.out.println(symbolGraph.G());
 
 //        System.out.println("\n\n");
 //        for (int i = 0; i < newGraph.V(); i++) {
 //            System.out.println(i + " - " + symbolGraph.nameOf(i) + " " + airportST.get(symbolGraph.nameOf(i)).getContinent());
 //        }
 
-        System.out.println("\nby distance: ");
-        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
-        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "distance");
+//        System.out.println("\nby distance: ");
+//        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+//        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "distance");
+
+//        -------------------------------------------
+
+
+//        pesquisar aeroportos apenas com x numero de connections
+        SeparateChainingHashST<String, Airport> results = utils.quantityOfConnections(4);
+        System.out.println("\n\nPesquisar aeroportos apenas com 4 connections\n");
+        for (String a : results.keys()) {
+            System.out.println(a);
+        }
+        System.out.println("\n\n");
 
 
 

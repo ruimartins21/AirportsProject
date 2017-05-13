@@ -1,8 +1,14 @@
 package airportsProject;
 
 import airportsProject.Exceptions.WrongTypeFileException;
-import edu.princeton.cs.algs4.ST;
+import edu.princeton.cs.algs4.*;
 import libs.*;
+import libs.BreadthFirstPaths;
+import libs.DijkstraSP;
+import libs.EdgeWeightedDigraph;
+import libs.KosarajuSharirSCC;
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -730,6 +736,17 @@ public class Utils {
 
     }
 
+//  Recebe um numero e retorna uma SeparateChainingHashST com os aeroportos que tem esse numero de ligacoes
+    public SeparateChainingHashST<String, Airport> quantityOfConnections(int number){
+        SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
+        for (String key: airportST.keys() ) {
+            Airport airport = airportST.get(key);
+            if(airportConnections(airport).size() == number){
+                results.put(key,airport);
+            }
+        }
+        return results;
+    }
 
     //    Retorna as ligações aéreas que passam num determinado aeroporto
     public ArrayList<String> airportConnections(Airport airport) {
