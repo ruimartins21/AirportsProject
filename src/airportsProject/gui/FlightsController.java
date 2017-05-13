@@ -30,20 +30,14 @@ public class FlightsController {
     @FXML
     private VBox listFlightsContainer;
     @FXML
-    private RadioButton allFlights;
-    @FXML
     private ToggleGroup filter;
-    @FXML
-    private RadioButton nextFlights;
-    @FXML
-    private RadioButton flightsFinished;
     @FXML
     private Pane newFlight;
     @FXML
     private TextField searchFlight;
 
     private int count = 1;
-    Utils utils = Utils.getInstance();
+    private Utils utils = Utils.getInstance();
     private RedBlackBST<Date, Flight> flights = utils.getFlights();
 
     NumberFormat formatter = new DecimalFormat("#0.##");
@@ -54,7 +48,7 @@ public class FlightsController {
         for (Date date : flights.keys()) {
             Flight flight = flights.get(date);
             flight.setCosts(1000*count);
-            if(flight.getDate().compareTo(currentDate) != 0){
+            if(flight.getDate().compareDate(currentDate) != 0){
                 newFlightDate(date);
             }
             newFlightItem(flight);
@@ -72,8 +66,6 @@ public class FlightsController {
             }
         });
     }
-
-
 
     @FXML
     void gotoMenu(MouseEvent event) {

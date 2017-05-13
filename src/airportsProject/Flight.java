@@ -18,33 +18,11 @@ public class Flight {
     private int passengers;
     private Airplane airplane;
     private ArrayList<String> connections = new ArrayList<>();
-//    private Connection connection = new Connection(0,0,0,930,400);
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
-    // remover este construtor
-    public Flight(double distance, Date duration, Date date, int passengers) {
-        this.distance = distance;
-        this.duration = duration;
-        this.date = date;
-        this.setPassengers(passengers);
-    }
-
-    public Flight(double distance, Date duration, Date date,
-                  int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
-        this.distance = distance;
-        this.duration = duration;
-        this.date = date;
-        this.airplane = airplane;
-        this.setAirports(airportOfOrigin, airportOfDestination);
-        this.setAirplane();
-        this.setPassengers(passengers);
-//        this.setFlightCost();
-
-    }
-
 //    remover este construtor pois ricardo esta a usar no flight controller
-    public Flight(Date duration, Date date,
+    public Flight(double distance, Date duration, Date date,
                    int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
         this.distance = distance;
         this.duration = duration;

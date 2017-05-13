@@ -1,7 +1,6 @@
 package airportsProject;
 
 import airportsProject.Exceptions.AirportNotExistException;
-import edu.princeton.cs.algs4.StdOut;
 import libs.*;
 
 import java.io.BufferedWriter;
@@ -68,7 +67,7 @@ public class Main {
 
         System.out.println("by distance: ");
         dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
-        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "distance");
+        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, null, "distance");
 
         System.out.println("by monetary: ");
         dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "monetary");

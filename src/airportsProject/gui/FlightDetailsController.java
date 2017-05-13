@@ -75,7 +75,7 @@ public class FlightDetailsController {
     private Airport airport1 = new Airport("Francisco Sá Carneiro", "OPO", "Porto", "Portugal", "Europe", 10.0f);
     private Airport airport2 = new Airport("International John Kennedy", "JFK", "New York", "USA", "America", 6.0f);
     private Airplane airplane = new Airplane(1, "model1", "Fernão Mendes Pinto", 400, 5000, 10000, "OPO", 350, 500, null);
-    private Flight flight = new Flight(new Date(0,0,0,9,20,10), new Date(), 300, airplane, airport1, airport2);
+    private Flight flight = new Flight(10000, new Date(0,0,0,9,20,10), new Date(), 300, airplane, airport1, airport2);
 
     public void initialize(){
         // set separator symbol for large numbers: 1000 -> 1 000

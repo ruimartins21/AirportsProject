@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.jfxtras:jfxtras-fxml:8.0-r5" type="repository">
+    <properties maven-id="org.jfxtras:jfxtras-fxml:8.0-r5" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jfxtras-fxml-8.0-r5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

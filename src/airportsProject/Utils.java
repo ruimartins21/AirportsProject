@@ -76,10 +76,12 @@ public class Utils{
         Flight flight2 = new Flight(10000, new Date(0,0,0,7,20,10), new Date(2,4,2017,0,0,0), 100, airplaneST.get(5), airportST.get("ALG"), airportST.get("OPO"));
         Flight flight3 = new Flight(10000, new Date(0,0,0,9,20,0), new Date(12,11,2016,16,5,0), 100, airplaneST.get(9), airportST.get("NRT"), airportST.get("ALG"));
         Flight flight4 = new Flight(10000, new Date(0,0,0,11,20,0), new Date(2,11,2016,16,5,0), 150, airplaneST.get(0), airportST.get("NRT"), airportST.get("ALG"));
+        Flight flight5 = new Flight(10000, new Date(0,0,0,2,20,10), new Date(2,4,2017,4,0,0), 100, airplaneST.get(5), airportST.get("LIS"), airportST.get("OPO"));
         flightST.put(flight1.getDate(), flight1);
         flightST.put(flight2.getDate(), flight2);
         flightST.put(flight3.getDate(), flight3);
         flightST.put(flight4.getDate(), flight4);
+        flightST.put(flight5.getDate(), flight5);
         return true;
     }
 
@@ -676,26 +678,26 @@ public class Utils{
         Flight newFlight = new Flight(date, passengers, airplane, airportOfOrigin, airportOfDestination);
         if (dijkstraSP != null && dijkstraSP.hasPathTo(gIdAirportDest)) {
             for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
-                newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(e.from()));
-                if(Utils.getInstance().getSymbolGraph().nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0){
-                    Utils.getInstance().getAirports().get(Utils.getInstance().getSymbolGraph().nameOf(e.from())).newFlight(newFlight);
+                newFlight.setConnection(symbolGraph.nameOf(e.from()));
+                if(symbolGraph.nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0){
+                    getAirports().get(symbolGraph.nameOf(e.from())).newFlight(newFlight);
                 }
             }
-            newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(gIdAirportDest));
+            newFlight.setConnection(symbolGraph.nameOf(gIdAirportDest));
         } else if (bfs != null && bfs.hasPathTo(gIdAirportDest)) {
             for (int x : bfs.pathTo(gIdAirportDest)) {
-                newFlight.setConnection(Utils.getInstance().getSymbolGraph().nameOf(x));
-                if(Utils.getInstance().getSymbolGraph().nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && Utils.getInstance().getSymbolGraph().nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
-                    Utils.getInstance().getAirports().get(Utils.getInstance().getSymbolGraph().nameOf(x)).newFlight(newFlight);
+                newFlight.setConnection(symbolGraph.nameOf(x));
+                if(symbolGraph.nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && symbolGraph.nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
+                    getAirports().get(symbolGraph.nameOf(x)).newFlight(newFlight);
                 }
             }
         }
 
 //        ir buscar pela conecoes as informacoes dos pessos pretendidos
         for (String code : newFlight.getConnections()) {
-            for (Connection e : Utils.getInstance().getSymbolGraph().G().adj(Utils.getInstance().getSymbolGraph().indexOf(code))) {
+            for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
                 if(comp+1 >= newFlight.getConnections().size()){ }
-                else if(Utils.getInstance().getSymbolGraph().nameOf(e.to()).compareTo(newFlight.getConnections().get(comp+1)) == 0){
+                else if(getSymbolGraph().nameOf(e.to()).compareTo(newFlight.getConnections().get(comp+1)) == 0){
                     distance += e.weight();
                     cost += euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f;
                     timeDuration += airplane.getFlightDuration(e);
@@ -705,7 +707,7 @@ public class Utils{
         }
 
 //        definir valores totais da viagem
-        Date duration = Utils.getInstance().convertTimeToDate(timeDuration);
+        Date duration = convertTimeToDate(timeDuration);
         newFlight.setDuration(duration);
         newFlight.setCosts(cost);
         newFlight.setDistance(distance);
