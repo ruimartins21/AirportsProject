@@ -97,12 +97,16 @@ public class AirportNetworkController {
             @Override
             public void handle(MouseEvent event) {
                 if (origin.isEmpty()) {
-                    origin = airport.getCode();
+                    if(!airport.getAirplanes().isEmpty()){ // if the chosen origin has airplanes parked to perform the flight
+                        origin = airport.getCode();
+                    }
                 } else if(airport.getCode().compareTo(origin) != 0){ // can't choose the same airport as origin and destination
-                    destination = airport.getCode();
-                    setNewFlight(origin, destination);
-                    origin = "";
-                    destination = "";
+                    if(!airport.getAirplanes().isEmpty()){ // if the chosen destination has airplanes parked to perform the flight
+                        destination = airport.getCode();
+                        setNewFlight(origin, destination);
+                        origin = "";
+                        destination = "";
+                    }
                 }
             }
         });

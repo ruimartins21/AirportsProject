@@ -102,18 +102,14 @@ public class NewFlightDialogController {
                break;
            case "Cheapest Flight":
                System.out.println("Calculating... Cheapest Flight");
-               if(airplanes.isEmpty()){
-                   System.out.println("ERR");
-               }else{
-                   for(int id : airplanes.keys()){
-                       System.out.println("Calculating " + id);
-                       DijkstraSP dijkstra = new DijkstraSP(originPos, airplanes.get(id), "monetary");
-                       System.out.println(id + " -> " + dijkstra.distTo(destinPos));
-                       if(dijkstra.distTo(destinPos) < minWeight){
-                           minWeight = dijkstra.distTo(destinPos);
-                           dijkstraSP = dijkstra;
-                           airplaneUsed = airplanes.get(id);
-                       }
+               for(int id : airplanes.keys()){
+                   System.out.println("Calculating " + id);
+                   DijkstraSP dijkstra = new DijkstraSP(originPos, airplanes.get(id), "monetary");
+                   System.out.println(id + " -> " + dijkstra.distTo(destinPos));
+                   if(dijkstra.distTo(destinPos) < minWeight){
+                       minWeight = dijkstra.distTo(destinPos);
+                       dijkstraSP = dijkstra;
+                       airplaneUsed = airplanes.get(id);
                    }
                }
                System.out.println("Min cost: " + minWeight + " | " + airplaneUsed.getId() + " ->" + dijkstraSP.distTo(destinPos));
