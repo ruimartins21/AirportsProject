@@ -36,6 +36,8 @@ public class AirportNetworkController {
     private Pane mapPane;
     @FXML
     private Slider zoomSlider;
+    @FXML
+    private Label warning;
 
     private static boolean updated = false; // will tell the update method if a user added/removed an airport or not, to know if it is needed to update the list
     private Group zoomGroup;
@@ -44,6 +46,7 @@ public class AirportNetworkController {
     private String origin = "", destination = "";
 
     public void initialize(){
+        warning.setStyle("-fx-opacity: 0");
         searchAirport.getParent().requestFocus();
         searchAirport.setFocusTraversable(false);
 
@@ -64,8 +67,8 @@ public class AirportNetworkController {
         map.setHvalue(0.4);
         map.setVvalue(0.5);
 
-        for(String code : airports.keys()){
-            Airport airport = airports.get(code);
+        for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+            Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
             newAirportItem(airport);
             if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                 setPinLocation(airport);
@@ -97,7 +100,12 @@ public class AirportNetworkController {
             @Override
             public void handle(MouseEvent event) {
                 if (origin.isEmpty()) {
-                    origin = airport.getCode();
+                    if(!airport.getAirplanes().isEmpty()){ // if the chosen origin has airplanes parked to perform the flight
+                        origin = airport.getCode();
+                    }else{
+                        pin.setStyle("-fx-background-color: red");
+                        warning.setStyle("-fx-opacity: 1");
+                    }
                 } else if(airport.getCode().compareTo(origin) != 0){ // can't choose the same airport as origin and destination
                     destination = airport.getCode();
                     setNewFlight(origin, destination);
@@ -146,19 +154,15 @@ public class AirportNetworkController {
         dialog.getDialogPane().getStylesheets().add("airportsProject/gui/style.css");
         dialog.getDialogPane().getStyleClass().add("customDialog");
         dialog.setContentText(null);
-        Optional<ButtonType> result = dialog.showAndWait();
-        // Closes the dialog
-        if (!result.isPresent()) {
-            System.out.println("Closed new flight");
-        }
+        dialog.showAndWait();
     }
 
     private void updateList(){
         if(updated){
             containAirports.getChildren().clear(); // removes the previous list
             mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
-            for(String name : airports.keys()){ // lists all the existent airports
-                Airport airport = airports.get(name);
+            for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+                Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
                 newAirportItem(airport);
                 if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                     setPinLocation(airport);

@@ -59,19 +59,20 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane layoutY="556.0" prefWidth="500.0">
+            <Pane layoutY="544.0" prefHeight="42.0" prefWidth="500.0">
                <children>
-                  <Slider fx:id="zoomSlider" layoutX="180.0" layoutY="4.0" />
-                  <Label layoutX="317.0" layoutY="-3.0" onMouseClicked="#zoomIn" styleClass="holdIcon" text="＋" textFill="WHITE">
+                  <Slider fx:id="zoomSlider" layoutX="180.0" layoutY="15.0" />
+                  <Label layoutX="317.0" layoutY="8.0" onMouseClicked="#zoomIn" styleClass="holdIcon" text="＋" textFill="WHITE">
                      <font>
                         <Font name="Helvetica" size="23.0" />
                      </font>
                   </Label>
-                  <Label layoutX="158.0" layoutY="-4.0" onMouseClicked="#zoomOut" styleClass="holdIcon" text="−" textFill="WHITE">
+                  <Label layoutX="158.0" layoutY="7.0" onMouseClicked="#zoomOut" styleClass="holdIcon" text="−" textFill="WHITE">
                      <font>
                         <Font name="Helvetica" size="23.0" />
                      </font>
                   </Label>
+                  <Label fx:id="warning" alignment="CENTER" layoutY="-7.0" prefHeight="17.0" prefWidth="481.0" text="Airport doesn't have airplanes to start a flight" textFill="RED" />
                </children>
             </Pane>
          </children>

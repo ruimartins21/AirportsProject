@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,39 +20,12 @@
             <Blend />
          </effect>
          <children>
-            <Label alignment="CENTER" layoutX="85.0" layoutY="220.0" prefHeight="55.0" prefWidth="334.0" text="FLIGHTS" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="83.0" layoutY="263.0" prefHeight="55.0" prefWidth="334.0" text="FLIGHTS" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Helvetica Light" size="45.0" />
                </font>
             </Label>
-            <Line endX="155.0" layoutX="235.0" layoutY="292.0" startX="-128.0" stroke="WHITE" />
-            <RadioButton fx:id="allFlights" contentDisplay="CENTER" layoutX="218.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="84.0" selected="true" text="ALL FLIGHTS" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
-               <font>
-                  <Font name="Helvetica Light" size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <toggleGroup>
-                  <ToggleGroup fx:id="filter" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="nextFlights" layoutX="316.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="73.0" text="NEXT FLIGHTS" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
-               <font>
-                  <Font name="Helvetica Light" size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
-            <RadioButton fx:id="flightsFinished" layoutX="107.0" layoutY="317.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="92.0" text="FLIGHTS FINISHED" textAlignment="CENTER" textFill="WHITE" toggleGroup="$filter" wrapText="true">
-               <font>
-                  <Font name="Helvetica Light" size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
+            <Line endX="155.0" layoutX="233.0" layoutY="335.0" startX="-128.0" stroke="WHITE" />
             <Pane layoutX="14.0" layoutY="14.0" onMouseClicked="#gotoMenu" styleClass="holdIcon">
                <children>
                   <ImageView fitHeight="29.0" fitWidth="29.0">
@@ -63,20 +33,6 @@
                         <Image url="@images/menu.png" />
                      </image>
                   </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="newFlight" layoutX="170.0" layoutY="392.0" styleClass="optionPane">
-               <children>
-                  <Label alignment="CENTER" layoutX="20.0" layoutY="2.0" onMouseClicked="#newFlight" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" text="NEW FLIGHT" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Helvetica" size="25.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" text="+" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Helvetica" size="25.0" />
-                     </font>
-                  </Label>
                </children>
             </Pane>
          </children>
@@ -97,7 +53,7 @@
                               <Image url="@images/search.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="305.0" layoutY="7.0" mnemonicParsing="false" styleClass="resetButton" text="Clear" onAction="#clearSearch" textFill="WHITE">
+                        <Button layoutX="305.0" layoutY="7.0" mnemonicParsing="false" onAction="#clearSearch" styleClass="resetButton" text="Clear" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Light" size="13.0" />
                            </font>

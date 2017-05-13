@@ -3,14 +3,14 @@ package airportsProject.gui;
 import airportsProject.Date;
 import airportsProject.Flight;
 import airportsProject.Utils;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -30,56 +30,31 @@ public class FlightsController {
     @FXML
     private VBox listFlightsContainer;
     @FXML
-    private ToggleGroup filter;
-    @FXML
-    private Pane newFlight;
-    @FXML
     private TextField searchFlight;
 
-    private int count = 1;
     private Utils utils = Utils.getInstance();
     private RedBlackBST<Date, Flight> flights = utils.getFlights();
 
     NumberFormat formatter = new DecimalFormat("#0.##");
 
     public void initialize(){
-        Date currentDate = flights.select(0);
-        newFlightDate(currentDate);
-        for (Date date : flights.keys()) {
-            Flight flight = flights.get(date);
-            flight.setCosts(1000*count);
-            if(flight.getDate().compareDate(currentDate) != 0){
-                newFlightDate(date);
-            }
-            newFlightItem(flight);
-            currentDate = flight.getDate();
-            count++;
-        }
-
-        System.out.println("Default Filter : " + ((RadioButton)filter.getSelectedToggle()).getText());
-        filter.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-            public void changed(ObservableValue<? extends Toggle> ov,
-                                Toggle old_toggle, Toggle new_toggle) {
-                if (filter.getSelectedToggle() != null) {
-                    System.out.println("Filter : " + ((RadioButton)new_toggle).getText());
+        if(!flights.isEmpty()){
+            Date currentDate = flights.select(0);
+            newFlightDate(currentDate);
+            for (Date date : flights.keys()) {
+                Flight flight = flights.get(date);
+                if(flight.getDate().compareDate(currentDate) != 0){
+                    newFlightDate(date);
                 }
+                newFlightItem(flight);
+                currentDate = flight.getDate();
             }
-        });
+        }
     }
 
     @FXML
     void gotoMenu(MouseEvent event) {
         VistaNavigator.loadVista(VistaNavigator.MENU);
-    }
-
-    @FXML
-    void hoverIn(MouseEvent event) {
-        newFlight.setStyle("-fx-opacity: 0.7");
-    }
-
-    @FXML
-    void hoverOut(MouseEvent event) {
-        newFlight.setStyle("-fx-opacity: 1");
     }
 
     private void updateList(){
@@ -120,11 +95,6 @@ public class FlightsController {
             getResults(searchFlight.getText());
             searchFlight.setText("");
         }
-    }
-
-    @FXML
-    void newFlight(MouseEvent event) {
-        System.out.println("+ New Flight");
     }
 
     private void newFlightDate(Date date){

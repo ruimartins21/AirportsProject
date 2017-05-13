@@ -53,6 +53,8 @@ public class AirportDetailsController {
     @FXML
     private VBox containDepartures;
     @FXML
+    private VBox containConnections;
+    @FXML
     private ScrollPane map;
     @FXML
     private Label mapPin;
