@@ -2,6 +2,7 @@ package airportsProject;
 
 import airportsProject.Exceptions.WrongTypeFileException;
 import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.DirectedEdge;
 import libs.*;
 import libs.BreadthFirstPaths;
 import libs.DijkstraSP;
@@ -775,9 +776,24 @@ public class Utils {
         EdgeWeightedDigraph newGraph = new EdgeWeightedDigraph(searchAirportsOfContinent(airportST, searchContinent).size());
 //        criar tabela de simbolos para mapear os codigos originais da symbolDiagraph nos novos
         ST<Integer, Integer> map = new ST<>();
-
-
         int i = 0;
+        System.out.println(symbolGraph.G());
+//        impirmir lista de adjacencias com filtro
+        for (String code : airportST.keys()) {
+            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
+                for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+                    map.put(i,symbolGraph.indexOf(code));
+                }
+                i++;
+            }
+        }
+
+        System.out.println("\n\nnovo grafo criado: \n");
+
+
+
+
+//        int i = 0;
 //        for (String code : airportST.keys()) {
 //            System.out.println("pesquisa: " + airportST.get(code).getCode() + " " + airportST.get(code).getContinent() );
 //            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
@@ -796,9 +812,12 @@ public class Utils {
         System.out.println("key "+  "value");
         for (Integer inte: map.keys()) {
 
-            System.out.println(inte + " " + map.get(inte) );
+            System.out.println( "["+ inte + "]   " + map.get(inte) );
         }
+        System.out.println();
         return newGraph;
     }
+
+
 
 }

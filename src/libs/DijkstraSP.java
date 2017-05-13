@@ -106,6 +106,7 @@ public class DijkstraSP {
     private void relax(Connection e, Airplane airplane, String typeOfSearch) {
         int v = e.from(), w = e.to();
         if (typeOfSearch.compareTo("distance") == 0) {
+            System.out.println(Utils.getInstance().getSymbolGraph().nameOf(e.to()));
             if (distTo[w] > distTo[v] + e.weight()) {
                 distTo[w] = distTo[v] + e.weight();
                 edgeTo[w] = e;

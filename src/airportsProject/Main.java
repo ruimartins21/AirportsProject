@@ -48,8 +48,8 @@ public class Main {
         ImportFromFile.importAirlines(airlinesST, pathAirlines);
         ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
-        int gIdAirportOrig = 30, gIdAirportDest = 23;
-        airplane = airplaneST.get(4); // da erro
+        int gIdAirportOrig = 5, gIdAirportDest = 23;
+        airplane = airplaneST.get(5); // da erro
 //        airplane = airplaneST.get(1);
 //        SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
         SymbolEdgeWeightedDigraph symbolGraph = utils.getSymbolGraph();
@@ -74,7 +74,7 @@ public class Main {
         System.out.println("by monetary: ");
         System.out.println(airplane);
         dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "monetary");
-        dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "monetary", dijkstraSP);
+//        dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "monetary", dijkstraSP);
         utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "monetary");
 
         System.out.println("by time: ");
@@ -166,11 +166,19 @@ public class Main {
         System.out.println("\n\n");
 
 
+//        pesquisar aeroportos apenas com x numero de connections
+        SeparateChainingHashST<String, Airport> results = utils.quantityOfConnections(4);
+        System.out.println("\n\nPesquisar aeroportos apenas com 4 connections\n");
+        for (String a : results.keys()) {
+            System.out.println(a);
+        }
+        System.out.println("\n\n");
+
 //        -------------------------------------------
 //        filtros para um novo grafo
-//        EdgeWeightedDigraph newGraph = utils.filterGraph("europe");
+        EdgeWeightedDigraph newGraph = utils.filterGraph("europe");
 
-//        System.out.println(symbolGraph.G());
+        System.out.println(symbolGraph.G());
 
 //        System.out.println("\n\n");
 //        for (int i = 0; i < newGraph.V(); i++) {
@@ -184,13 +192,6 @@ public class Main {
 //        -------------------------------------------
 
 
-//        pesquisar aeroportos apenas com x numero de connections
-        SeparateChainingHashST<String, Airport> results = utils.quantityOfConnections(4);
-        System.out.println("\n\nPesquisar aeroportos apenas com 4 connections\n");
-        for (String a : results.keys()) {
-            System.out.println(a);
-        }
-        System.out.println("\n\n");
 
 
 
