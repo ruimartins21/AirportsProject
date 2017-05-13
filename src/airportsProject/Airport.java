@@ -156,6 +156,7 @@ public class Airport {
 
     public void setRating(Float rating){this.rating = rating;}
 
+
     @Override
     public String toString() {
         return "Airport{" +

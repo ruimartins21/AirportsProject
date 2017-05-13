@@ -21,6 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         Utils utils = new Utils().getInstance();
+        utils.initProgram("");
         boolean validChoice = false;
         int choice, airplaneId;
         String airportCode, airlineName;
@@ -109,14 +110,14 @@ public class Main {
         gIdAirportDest = 12;
         airplane = airplaneST.get(2);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
-        flightDate = new Date(7, 3, 2017, 12, 30, 30);
+        flightDate = new Date(27, 3, 2016, 2, 30, 30);
         dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
         utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
 
         gIdAirportDest = 27;
         airplane = airplaneST.get(3);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
-        flightDate = new Date(7, 3, 2017, 11, 30, 30);
+        flightDate = new Date(7, 1, 2014, 11, 30, 30);
         dijkstraSP = new DijkstraSP(symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
         utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, flightST);
 
@@ -140,6 +141,41 @@ public class Main {
             System.out.println();
 
         }
+
+
+//        Listar as ligações aéreas que passam num determinado aeroporto
+        Airport airportSearch = airportST.get("OPO");
+        System.out.println( "\n\n Ligações que passam no aeroporto: '"+ airportSearch.getCode() + "'  " + utils.airportConnections(airportSearch) + "\n\n");
+
+        //    Listar informação detalhada do tráfego do aeroporto num determinando período de tempo
+        Date start = new Date(7, 3, 2016, 11, 30, 30);
+        Date end = new Date(1, 3, 2017, 7, 30, 30);
+        RedBlackBST<Date, Flight> flights = utils.flightsBetweenTimesOfAirport(airportSearch,start,end);
+
+        System.out.println("Listar informação detalhada do tráfego do aeroporto num determinando período de tempo:\n");
+        for (Date f: flights.keys()) {
+            Flight flight = flights.get(f);
+            System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
+                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(),flight.getPassengers(),
+                    flight.getAirplane().getName());
+            System.out.println();
+        }
+        System.out.println("\n\n");
+
+
+//        filtros para um novo grafo
+        EdgeWeightedDigraph newGraph = utils.filterGraph("europe");
+
+        System.out.println(symbolGraph.G());
+
+//        System.out.println("\n\n");
+//        for (int i = 0; i < newGraph.V(); i++) {
+//            System.out.println(i + " - " + symbolGraph.nameOf(i) + " " + airportST.get(symbolGraph.nameOf(i)).getContinent());
+//        }
+
+        System.out.println("\nby distance: ");
+        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "distance");
 
 
 

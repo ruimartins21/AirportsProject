@@ -700,7 +700,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (x == null) return black == 0;
         if (!isRed(x)) black--;
         return isBalanced(x.left, black) && isBalanced(x.right, black);
-    } 
+    }
 
 
     /**

@@ -1,6 +1,7 @@
 package airportsProject;
 
 import airportsProject.Exceptions.WrongTypeFileException;
+import edu.princeton.cs.algs4.ST;
 import libs.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
@@ -10,27 +11,27 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Utils{
-    public static int nValue    = 200;
-    public static int mValue    = 250;
+public class Utils {
+    public static int nValue = 200;
+    public static int mValue = 250;
     public static int euroValue = 30;  // 30 €/L
-    public static int windCost  = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
-    public static int mapWidth  = 1536; // width of the world map used
+    public static int windCost = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
+    public static int mapWidth = 1536; // width of the world map used
     public static int mapHeight = 768; // height of the world map used
 
     private static Utils instance = null;
 
     // paths to default data
-    private static final String pathAirports     = ".//data//airports.txt";
-    private static final String pathAirplanes    = ".//data//airplanes.txt";
-    private static final String pathAirlines     = ".//data//airlines.txt";
+    private static final String pathAirports = ".//data//airports.txt";
+    private static final String pathAirplanes = ".//data//airplanes.txt";
+    private static final String pathAirlines = ".//data//airlines.txt";
 
     // Symbol Tables
-    private static SeparateChainingHashST<String, Airport> airportST  = new SeparateChainingHashST<>();
+    private static SeparateChainingHashST<String, Airport> airportST = new SeparateChainingHashST<>();
     private static SeparateChainingHashST<String, Airline> airlinesST = new SeparateChainingHashST<>();
-    private static RedBlackBST<Integer, Airplane> airplaneST          = new RedBlackBST<>();
-    private static RedBlackBST<Date, Flight> flightST                 = new RedBlackBST<>();
-    private static SymbolEdgeWeightedDigraph symbolGraph              = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
+    private static RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
+    private static RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
+    private static SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
 
     protected Utils(){
         // prevents instantiation
@@ -49,21 +50,22 @@ public class Utils{
 
     /**
      * Will fill the symbol tables with the data required
+     *
      * @param path -> will be empty if the user chooses to create a new program and will bring a file path if
      *             he chooses to load a program
      */
-    public static boolean initProgram(String path){
-        if(path.length() > 0){ // load program
-            try{
-                ImportFromFile.loadProgram(path,airportST,airlinesST,airplaneST,flightST);
+    public static boolean initProgram(String path) {
+        if (path.length() > 0) { // load program
+            try {
+                ImportFromFile.loadProgram(path, airportST, airlinesST, airplaneST, flightST);
                 File file = new File(path);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 System.out.println("Last opened in: " + sdf.format(file.lastModified()));
-            }catch (WrongTypeFileException wt){
+            } catch (WrongTypeFileException wt) {
                 System.out.println(wt.getMessage());
                 return false;
             }
-        }else{ // new program
+        } else { // new program
             log("reset", ""); // clean the log file from the previous program
             ImportFromFile.importAirports(airportST, pathAirports);
             ImportFromFile.importAirlines(airlinesST, pathAirlines);
@@ -87,18 +89,19 @@ public class Utils{
 
     /* AIRPORTS */
 
-    public SeparateChainingHashST<String, Airport> getAirports(){
+    public SeparateChainingHashST<String, Airport> getAirports() {
         return airportST;
     }
 
-    public void newAirport(Airport airport){
+    public void newAirport(Airport airport) {
         airportST.put(airport.getCode(), airport);
     }
 
     /**
      * Receives the data possible to be edited on an airport and changes it using the class setters
-     * @param code code of the airport to edit
-     * @param name new name of the airport
+     *
+     * @param code   code of the airport to edit
+     * @param name   new name of the airport
      * @param rating new rating of the airport
      */
     public void editAirport(String code, String name, Float rating){
@@ -107,7 +110,7 @@ public class Utils{
         log("airportST", "Edited airport [" +  airportST.get(code).getCode() +  "] \" Name:" + airportST.get(code).getName() + "\" Rating:" +
                 airportST.get(code).getRating());
     }
-    
+
     /**
      * Removes an airport incluiding all the airplanes parked there
      * @param airport airport to remove
@@ -170,20 +173,21 @@ public class Utils{
      *
      * @return returns the airplanes symbol table
      */
-    public RedBlackBST<Integer, Airplane> getAirplanes(){
+    public RedBlackBST<Integer, Airplane> getAirplanes() {
         return airplaneST;
     }
 
     /**
      * Receives all the data needed to create a new airplane and creates it
      * Checking first if the airport and the airline connected to it are real
-     * @param model model of the airplane
-     * @param name name of the airplane
-     * @param airlineName airline that owns the airplane
-     * @param cruiseSpeed cruise speed of the airplane
-     * @param cruiseAltitude cruise altitude of the airplane
-     * @param maxRange max range of the airplane
-     * @param airportCode airport where the airplane will be parked at first
+     *
+     * @param model              model of the airplane
+     * @param name               name of the airplane
+     * @param airlineName        airline that owns the airplane
+     * @param cruiseSpeed        cruise speed of the airplane
+     * @param cruiseAltitude     cruise altitude of the airplane
+     * @param maxRange           max range of the airplane
+     * @param airportCode        airport where the airplane will be parked at first
      * @param passengersCapacity passengers capacity of the airplane
      * @param fuelCapacity fuel capacity of the airplane
      * @return returns false if the airline or the airport in question does not exist
@@ -301,20 +305,22 @@ public class Utils{
 //    }
 
     /**
-     * searches airports of a certain country / continent
+     * searches airports of a certain continent
+     *
      * @param airportST Symbol table that stores all the available airports
-     * @param search the continent or country to search for
+     * @param search    the continent to search for
      * @return returns all the airports that matched the search
      */
-//    private static ArrayList<Airport> searchAirportsOf(SeparateChainingHashST<String, Airport> airportST, String search){
-//        ArrayList<Airport> airportSearch = new ArrayList<>();
-//        for (String code: airportST.keys()) {
-//            if(airportST.get(code).getContinent().toLowerCase().compareTo(search) == 0 || airportST.get(code).getCountry().toLowerCase().compareTo(search) == 0){
-//                airportSearch.add(airportSearch.size(), airportST.get(code));
-//            }
-//        }
-//        return airportSearch;
-//    }
+    public static ArrayList<Airport> searchAirportsOfContinent(SeparateChainingHashST<String, Airport> airportST, String search) {
+        ArrayList<Airport> airportSearch = new ArrayList<>();
+        search = search.toLowerCase();
+        for (String code : airportST.keys()) {
+            if (airportST.get(code).getContinent().toLowerCase().compareTo(search) == 0) {
+                airportSearch.add(airportSearch.size(), airportST.get(code));
+            }
+        }
+        return airportSearch;
+    }
 
     /**
      * Creates a copy of the current program so the next time the program runs there will be an option of loading the previous program
@@ -422,6 +428,7 @@ public class Utils{
 
     /**
      * Utility function to check for a search input to be numeric or not
+     *
      * @param str -> search input
      * @return returns true if it is a number and false if not
      */
@@ -600,20 +607,20 @@ public class Utils{
     }
 
 
-    public void convertTime(double finalBuildTime){
+    public void convertTime(double finalBuildTime) {
         int hours = (int) finalBuildTime;
         int minutes = (int) (finalBuildTime * 60) % 60;
-        int seconds = (int) (finalBuildTime * (60*60)) % 60;
+        int seconds = (int) (finalBuildTime * (60 * 60)) % 60;
 
         System.out.print(String.format("%sh %sm %ss ", hours, minutes, seconds));
     }
 
-    public Date convertTimeToDate(double finalBuildTime){
+    public Date convertTimeToDate(double finalBuildTime) {
         int hours = (int) finalBuildTime;
         int minutes = (int) (finalBuildTime * 60) % 60;
-        int seconds = (int) (finalBuildTime * (60*60)) % 60;
+        int seconds = (int) (finalBuildTime * (60 * 60)) % 60;
 
-        return new Date(0,0,0,hours,minutes,seconds);
+        return new Date(0, 0, 0, hours, minutes, seconds);
     }
 
     //    imprimir caminho mais barato, curto , monetario, rapido (tempo)
@@ -632,7 +639,7 @@ public class Utils{
         }
         if (typeOfSearch.compareTo("time") == 0) {
             System.out.print("Total Cost: ");
-            Utils.getInstance().convertTime(dijkstraSP.distTo(airportOfDestination));
+            convertTime(dijkstraSP.distTo(airportOfDestination));
         } else if (typeOfSearch.compareTo("distance") == 0) {
             System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " km");
         } else if (typeOfSearch.compareTo("monetary") == 0) {
@@ -657,6 +664,7 @@ public class Utils{
         }
         System.out.println("\n");
     }
+
     //    verificar se grafo é conexo
     public void checkGraphIsConnected(EdgeWeightedDigraph graph) {
         KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
@@ -670,16 +678,16 @@ public class Utils{
 
     //    criar voo
     public void newFlight(BreadthFirstPaths bfs, DijkstraSP dijkstraSP, Date date, int passengers, Airplane airplane,
-                                 Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, RedBlackBST<Date, Flight> flightST) {
+                          Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, RedBlackBST<Date, Flight> flightST) {
 
-        double distance = 0, cost= 0, timeDuration = 0;
+        double distance = 0, cost = 0, timeDuration = 0;
         int comp = 0;
 
         Flight newFlight = new Flight(date, passengers, airplane, airportOfOrigin, airportOfDestination);
         if (dijkstraSP != null && dijkstraSP.hasPathTo(gIdAirportDest)) {
             for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
                 newFlight.setConnection(symbolGraph.nameOf(e.from()));
-                if(symbolGraph.nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0){
+                if (symbolGraph.nameOf(e.from()).compareTo(airportOfOrigin.getCode()) != 0) {
                     getAirports().get(symbolGraph.nameOf(e.from())).newFlight(newFlight);
                 }
             }
@@ -687,7 +695,7 @@ public class Utils{
         } else if (bfs != null && bfs.hasPathTo(gIdAirportDest)) {
             for (int x : bfs.pathTo(gIdAirportDest)) {
                 newFlight.setConnection(symbolGraph.nameOf(x));
-                if(symbolGraph.nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && symbolGraph.nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
+                if (symbolGraph.nameOf(x).compareTo(airportOfOrigin.getCode()) != 0 && symbolGraph.nameOf(x).compareTo(airportOfDestination.getCode()) != 0) {
                     getAirports().get(symbolGraph.nameOf(x)).newFlight(newFlight);
                 }
             }
@@ -696,8 +704,8 @@ public class Utils{
 //        ir buscar pela conecoes as informacoes dos pessos pretendidos
         for (String code : newFlight.getConnections()) {
             for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
-                if(comp+1 >= newFlight.getConnections().size()){ }
-                else if(getSymbolGraph().nameOf(e.to()).compareTo(newFlight.getConnections().get(comp+1)) == 0){
+                if (comp + 1 >= newFlight.getConnections().size()) {
+                } else if (symbolGraph.nameOf(e.to()).compareTo(newFlight.getConnections().get(comp + 1)) == 0) {
                     distance += e.weight();
                     cost += euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f;
                     timeDuration += airplane.getFlightDuration(e);
@@ -721,4 +729,59 @@ public class Utils{
                 "\"; airplane: \"" + newFlight.getAirplane().getName() + "\"");
 
     }
+
+
+    //    Retorna as ligações aéreas que passam num determinado aeroporto
+    public ArrayList<String> airportConnections(Airport airport) {
+        ArrayList<String> results = new ArrayList<>();
+        for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(airport.getCode()))) {
+            results.add(symbolGraph.nameOf(e.to()));
+        }
+        return results;
+    }
+
+//    Retorna informação detalhada do tráfego do aeroporto num determinando período de tempo, retorna uma redblack de blick com o filtro do tempo de um determinado aeroporto
+    public RedBlackBST<Date, Flight> flightsBetweenTimesOfAirport(Airport airport, Date start, Date end) {
+        RedBlackBST<Date, Flight> results = new RedBlackBST<>();
+        for (Date f : airport.getFlights().keys()) {
+            Flight flight = airport.getFlights().get(f);
+            if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1 ) {
+                results.put(flight.getDate(),flight);
+            }
+        }
+        return results;
+    }
+
+
+    //    criar um novo grafo perante
+    public EdgeWeightedDigraph filterGraph(String searchContinent) {
+        EdgeWeightedDigraph newGraph = new EdgeWeightedDigraph(searchAirportsOfContinent(airportST, searchContinent).size());
+//        criar tabela de simbolos para mapear os codigos originais da symbolDiagraph nos novos
+        ST<Integer, Integer> map = new ST<>();
+
+
+        int i = 0;
+//        for (String code : airportST.keys()) {
+//            System.out.println("pesquisa: " + airportST.get(code).getCode() + " " + airportST.get(code).getContinent() );
+//            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
+//                for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+//                    System.out.println("   Conecao: " + e.from() + " " + (airportST.get(symbolGraph.nameOf(e.from())).getCode()));
+//                    if (airportST.get(symbolGraph.nameOf(e.from())).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
+//                        System.out.println("Conecao a inserir no novo grafo: " + e);
+//                        newGraph.addEdge(e);
+//                        map.put(i,e.from());
+//                    }
+//                    i++;
+//                }
+//            }
+//        }
+
+        System.out.println("key "+  "value");
+        for (Integer inte: map.keys()) {
+
+            System.out.println(inte + " " + map.get(inte) );
+        }
+        return newGraph;
+    }
+
 }
