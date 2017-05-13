@@ -49,7 +49,7 @@ public class Main {
         ImportFromFile.importPlanes(airportST, airplaneST, airlinesST, pathAirplanes);
 
         int gIdAirportOrig = 5, gIdAirportDest = 23;
-        airplane = airplaneST.get(5); // da erro
+        airplane = airplaneST.get(1); // da erro
 //        airplane = airplaneST.get(1);
 //        SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
         SymbolEdgeWeightedDigraph symbolGraph = utils.getSymbolGraph();
@@ -61,28 +61,28 @@ public class Main {
         }
 
 
-//        System.out.println("Custo do aviao 1: " + (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100)*100)/100f + " L");
-//        System.out.println("Custo do aviao 1: " + euroValue * (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100)*100)/100f + " €" + "\n\n");
+        System.out.println("Custo do aviao 1: " + (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100) * 100) / 100f + " L");
+        System.out.println("Custo do aviao 1: " + euroValue * (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100) * 100) / 100f + " €" + "\n\n");
 
         System.out.println("airportOfOrigin: 1 - " + airplaneST.get(1).getAirportCode());
         System.out.println("airportOfDestination: 30 - " + airplaneST.get(gIdAirportDest).getAirportCode() + "\n");
 
         System.out.println("by distance: ");
-        dijkstraSP = new DijkstraSP(0, null, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), 0, null, "distance");
         utils.printShortestPath(dijkstraSP, symbolGraph, 1, null, "distance");
 
         System.out.println("by monetary: ");
         System.out.println(airplane);
-        dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "monetary");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, airplane, "monetary");
 //        dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "monetary", dijkstraSP);
         utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "monetary");
 
         System.out.println("by time: ");
-        dijkstraSP = new DijkstraSP(gIdAirportOrig, airplane, "time");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, airplane, "time");
         utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "time");
 
         System.out.println("\n\nprintAllConnections\n");
-        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, null, "distance");
         dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "distance", dijkstraSP);
 
 
@@ -114,30 +114,29 @@ public class Main {
         airplane = airplaneST.get(2);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         flightDate = new Date(27, 3, 2016, 2, 30, 30);
-        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, null, "distance");
         utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
 
         gIdAirportDest = 27;
         airplane = airplaneST.get(3);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         flightDate = new Date(7, 1, 2014, 11, 30, 30);
-        dijkstraSP = new DijkstraSP(symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
         utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
-
 
 
 //        PrintInfo.allAirplanes(airplaneST);
         System.out.printf("\n\n");
         System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", "Airport Of Origin", "Airport Of Destination", "Date", "Duration",
-                "Distance","Costs", "Nº Passengers", "Airplane Name");
+                "Distance", "Costs", "Nº Passengers", "Airplane Name");
         System.out.println();
-        System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s",    "----------------",  "---------------------",  "----", "--------",
+        System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", "----------------", "---------------------", "----", "--------",
                 "--------", "-----", "-------------", "-------------");
         System.out.printf("\n\n");
         for (Date d : flightST.keys()) {
             Flight flight = flightST.get(d);
             System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
-                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(),flight.getPassengers(), flight.getAirplane().getName());
+                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(), flight.getPassengers(), flight.getAirplane().getName());
             for (String code : flight.getConnections()) {
                 System.out.print("   " + code + " ");
             }
@@ -148,18 +147,18 @@ public class Main {
 
 //        Listar as ligações aéreas que passam num determinado aeroporto
         Airport airportSearch = airportST.get("OPO");
-        System.out.println( "\n\n Ligações que passam no aeroporto: '"+ airportSearch.getCode() + "'  " + utils.airportConnections(airportSearch) + "\n\n");
+        System.out.println("\n\n Ligações que passam no aeroporto: '" + airportSearch.getCode() + "'  " + utils.airportConnections(airportSearch) + "\n\n");
 
         //    Listar informação detalhada do tráfego do aeroporto num determinando período de tempo
         Date start = new Date(7, 3, 2016, 11, 30, 30);
         Date end = new Date(1, 3, 2017, 7, 30, 30);
-        RedBlackBST<Date, Flight> flights = utils.flightsBetweenTimesOfAirport(airportSearch,start,end);
+        RedBlackBST<Date, Flight> flights = utils.flightsBetweenTimesOfAirport(airportSearch, start, end);
 
         System.out.println("Listar informação detalhada do tráfego do aeroporto num determinando período de tempo:\n");
-        for (Date f: flights.keys()) {
+        for (Date f : flights.keys()) {
             Flight flight = flights.get(f);
             System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
-                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(),flight.getPassengers(),
+                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(), flight.getPassengers(),
                     flight.getAirplane().getName());
             System.out.println();
         }
@@ -176,24 +175,44 @@ public class Main {
 
 //        -------------------------------------------
 //        filtros para um novo grafo
-        EdgeWeightedDigraph newGraph = utils.filterGraph("europe");
-
         System.out.println(symbolGraph.G());
 
-//        System.out.println("\n\n");
-//        for (int i = 0; i < newGraph.V(); i++) {
-//            System.out.println(i + " - " + symbolGraph.nameOf(i) + " " + airportST.get(symbolGraph.nameOf(i)).getContinent());
-//        }
+        System.out.println("by ignored: ");
+        ArrayList<String> ignoredAirports = new ArrayList<>();
+        ignoredAirports.add(utils.getAirports().get("OPO").getCode());
+        ignoredAirports.add(utils.getAirports().get("LIS").getCode());
+        ignoredAirports.add(utils.getAirports().get("LGW").getCode());
+        ignoredAirports.add(utils.getAirports().get("CDG").getCode());
+        ignoredAirports.add(utils.getAirports().get("FRA").getCode());
+        ignoredAirports.add(utils.getAirports().get("FCO").getCode());
+//        String ignoredAirports = "OPO";
 
-//        System.out.println("\nby distance: ");
-//        dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
-//        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "distance");
+
+        ArrayList<String> ignoredAirportsContinent = utils.filterAirportsByContinent("europe");
+        System.out.println(ignoredAirportsContinent + " size " + ignoredAirportsContinent.size());
+
+        SymbolEdgeWeightedDigraph newSymbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", ignoredAirports);
+//        SymbolEdgeWeightedDigraph newSymbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", ignoredAirportsContinent );
+
+        System.out.println(newSymbolGraph.G());
+
+        for (int i = 0; i < newSymbolGraph.G().V(); i++) {
+            System.out.println(i + " - " + newSymbolGraph.nameOf(i));
+        }
+
+        System.out.println("by distance: ");
+        dijkstraSP = new DijkstraSP(newSymbolGraph.G(), 0, null, "distance");
+        utils.printShortestPath(dijkstraSP, newSymbolGraph, 4, null, "distance");
 
 //        -------------------------------------------
 
 
+//        remove a ariport of graph
+        System.out.println("Remove OPO Airport of graph");
+        utils.removeAirport("OPO");
+        System.out.println("Airport remove sucessefuly! :)\n\n");
 
-
+        System.out.println(utils.getSymbolGraph().G());
 
 
         // New program or load previous program
@@ -1181,7 +1200,6 @@ public class Main {
         System.out.println("# Passengers transported: " + max + " #");
         return airports;
     }
-
 
 
 }

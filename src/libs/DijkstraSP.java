@@ -72,9 +72,7 @@ public class DijkstraSP {
      * @throws IllegalArgumentException if an edge weight is negative
      * @throws IllegalArgumentException unless {@code 0 <= s < V}
      */
-    public DijkstraSP(int airportOrigin, Airplane airplane, String typeOfSearch) {
-//        utils.initProgram("");
-        EdgeWeightedDigraph G = this.utils.getSymbolGraph().G();
+    public DijkstraSP(EdgeWeightedDigraph G, int airportOrigin, Airplane airplane, String typeOfSearch) {
         for (Connection e : G.edges()) {
             if (e.weight() < 0)
                 throw new IllegalArgumentException("edge " + e + " has negative weight");
@@ -106,7 +104,7 @@ public class DijkstraSP {
     private void relax(Connection e, Airplane airplane, String typeOfSearch) {
         int v = e.from(), w = e.to();
         if (typeOfSearch.compareTo("distance") == 0) {
-            System.out.println(Utils.getInstance().getSymbolGraph().nameOf(e.to()));
+//            System.out.println(Utils.getInstance().getSymbolGraph().nameOf(e.to()));
             if (distTo[w] > distTo[v] + e.weight()) {
                 distTo[w] = distTo[v] + e.weight();
                 edgeTo[w] = e;
