@@ -2,12 +2,14 @@ package airportsProject;
 
 import libs.RedBlackBST;
 
+import java.io.Serializable;
+
 /**
  * The airplane class represents an airplane object with its characteristics and its connections (to an airport, to flights)
  * Aswell as the usual methods that provides (getters and setters), the class calculates the airplane cost for a specific
  * connection of a flight and it provides information on the flights already done, or still to be done
  */
-public class Airplane {
+public class Airplane implements Serializable {
 
     private int id;
     private String model;

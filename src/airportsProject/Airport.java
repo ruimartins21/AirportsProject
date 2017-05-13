@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * on a certain airport aswell as an history of flights that passed through it, being the airport the origin, the destination,
  * or simply a scale of a flight between two other airports
  */
-public class Airport {
+public class Airport implements Serializable {
 
     private String name;
     private String code;

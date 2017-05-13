@@ -108,21 +108,21 @@ public class Main {
         flightDate = new Date(7, 3, 2017, 12, 50, 30);
         passengers = 30;
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
-        utils.newFlight(null, dijkstraSP, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
+        utils.newFlight(null, dijkstraSP, flightDate, passengers, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
 
         gIdAirportDest = 12;
         airplane = airplaneST.get(2);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         flightDate = new Date(27, 3, 2016, 2, 30, 30);
         dijkstraSP = new DijkstraSP(gIdAirportOrig, null, "distance");
-        utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
+        utils.newFlight(bfs, null, flightDate, 310, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
 
         gIdAirportDest = 27;
         airplane = airplaneST.get(3);
         airportOfDestination = airportST.get(symbolGraph.nameOf(gIdAirportDest));
         flightDate = new Date(7, 1, 2014, 11, 30, 30);
         dijkstraSP = new DijkstraSP(symbolGraph.indexOf(airplane.getAirportCode()), null, "distance");
-        utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest);
+        utils.newFlight(null, dijkstraSP, flightDate, 30, airplane, airportST.get(airplane.getAirportCode()), airportOfDestination, gIdAirportDest, null);
 
 
 

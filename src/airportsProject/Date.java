@@ -1,9 +1,10 @@
 package airportsProject;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Date implements Comparable<Date> {
+public class Date implements Comparable<Date>, Serializable {
 
   private int day;
   private int month;
@@ -265,6 +266,20 @@ public class Date implements Comparable<Date> {
   }
   public int getSecond() {
     return second;
+  }
+
+  public static String convertTime(double finalBuildTime) {
+    int hours = (int) finalBuildTime;
+    int minutes = (int) (finalBuildTime * 60) % 60;
+    int seconds = (int) (finalBuildTime * (60 * 60)) % 60;
+    return String.format("%sh %sm %ss ", hours, minutes, seconds);
+  }
+
+  public static Date convertTimeToDate(double finalBuildTime) {
+    int hours = (int) finalBuildTime;
+    int minutes = (int) (finalBuildTime * 60) % 60;
+    int seconds = (int) (finalBuildTime * (60 * 60)) % 60;
+    return new Date(0, 0, 0, hours, minutes, seconds);
   }
 
   public String getHourString(){

@@ -1,5 +1,6 @@
 package airportsProject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * and setting the airports where the airplane will stop aswell the airport from where it will depart
  * (that is the airport where the airplane is parked)
  */
-public class Flight {
+public class Flight implements Serializable {
 
     private double distance;
     private double costs;
@@ -21,21 +22,6 @@ public class Flight {
     private Airport airportOfOrigin;
     private Airport airportOfDestination;
 
-//    remover este construtor pois ricardo esta a usar no flight controller
-    public Flight(double distance, Date duration, Date date,
-                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
-        this.distance = distance;
-        this.duration = duration;
-        this.date = date;
-        this.airplane = airplane;
-        this.setAirports(airportOfOrigin, airportOfDestination);
-        this.setAirplane();
-        this.setPassengers(passengers);
-//        this.setFlightCost();
-
-    }
-
-//    atual rui graphs
     public Flight( Date date,
                   int passengers, Airplane airplane, Airport airportOfOrigin, Airport airportOfDestination) {
         this.distance = distance;
@@ -45,16 +31,13 @@ public class Flight {
         this.setAirports(airportOfOrigin, airportOfDestination);
         this.setAirplane();
         this.setPassengers(passengers);
-//        this.setFlightCost();
-
     }
 
-    /**
-     * hard coded for the 1st phase, this method will set a link between two airports
-     * this connection can be between the origin and the destination or not
-     */
     public void setConnection(String airportCode){
         this.connections.add(airportCode);
+    }
+    public void setConnections(ArrayList<String> cons){
+        this.connections = cons;
     }
 
     /**

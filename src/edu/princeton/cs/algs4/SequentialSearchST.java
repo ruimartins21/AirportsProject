@@ -26,6 +26,8 @@
 
 package edu.princeton.cs.algs4;
 
+import java.io.Serializable;
+
 /**
  *  The {@code SequentialSearchST} class represents an (unordered)
  *  symbol table of generic key-value pairs.
@@ -54,12 +56,12 @@ package edu.princeton.cs.algs4;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public class SequentialSearchST<Key, Value> {
+public class SequentialSearchST<Key, Value> implements Serializable {
     private int n;           // number of key-value pairs
     private Node first;      // the linked list of key-value pairs
 
     // a helper linked list data type
-    private class Node {
+    private class Node implements Serializable {
         private Key key;
         private Value val;
         private Node next;

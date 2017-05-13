@@ -153,6 +153,7 @@ public class FlightsController {
         newPane.getChildren().add(departureHour);
         // departure airport
         Label departureAirport = new Label(flight.getAirportOfOrigin().getName());
+        departureAirport.setMaxWidth(150);
         departureAirport.setLayoutX(43.0);
         departureAirport.setLayoutY(70.0);
         departureAirport.setTextFill(Color.valueOf("838383"));

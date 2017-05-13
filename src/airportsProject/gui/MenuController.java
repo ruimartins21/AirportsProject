@@ -1,5 +1,6 @@
 package airportsProject.gui;
 
+import airportsProject.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -80,7 +83,17 @@ public class MenuController {
         }else if(event.getSource().equals(flights)){
             VistaNavigator.loadVista(VistaNavigator.FLIGHTLIST);
         }else if(event.getSource().equals(saveProgram)){
-            System.out.println("Saving program");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Text", "*.txt"),
+                    new FileChooser.ExtensionFilter("Binary", "*.bin")
+            );
+            // opens a dialog window where the user chooses where to save the current program, this dialog is created inside the scene window what prevents
+            // the user from dragging it and from using the program while this dialog is open
+            File pathToFile = fileChooser.showSaveDialog(menuContainer.getScene().getWindow());
+            if(pathToFile != null){
+                Utils.dump(pathToFile.getPath());
+            }
         }else if(event.getSource().equals(goBack)){
             VistaNavigator.loadVista(VistaNavigator.LANDING);
         }else{

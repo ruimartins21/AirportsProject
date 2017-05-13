@@ -212,48 +212,8 @@
                      </VBox.margin>
                   </Label>
                   <VBox fx:id="containArrivals" alignment="TOP_CENTER">
-                     <!--<children>-->
-                        <!--<Pane>-->
-                           <!--<children>-->
-                              <!--<HBox alignment="CENTER" layoutX="11.0" prefHeight="40.0" prefWidth="425.0" styleClass="item">-->
-                                 <!--<children>-->
-                                    <!--<Label text="22 March 2017" textFill="#4185d1">-->
-                                       <!--<font>-->
-                                          <!--<Font name="Helvetica" size="15.0" />-->
-                                       <!--</font>-->
-                                       <!--<HBox.margin>-->
-                                          <!--<Insets right="10.0" />-->
-                                       <!--</HBox.margin>-->
-                                    <!--</Label>-->
-                                    <!--<Label text="9h30m" textAlignment="CENTER" textFill="#9a9a9a">-->
-                                       <!--<font>-->
-                                          <!--<Font name="Helvetica Light" size="12.0" />-->
-                                       <!--</font>-->
-                                       <!--<HBox.margin>-->
-                                          <!--<Insets right="20.0" />-->
-                                       <!--</HBox.margin>-->
-                                    <!--</Label>-->
-                                    <!--<Label text="from :" textAlignment="CENTER" textFill="#9a9a9a">-->
-                                       <!--<font>-->
-                                          <!--<Font name="Helvetica Light" size="12.0" />-->
-                                       <!--</font>-->
-                                       <!--<HBox.margin>-->
-                                          <!--<Insets right="10.0" />-->
-                                       <!--</HBox.margin>-->
-                                    <!--</Label>-->
-                                    <!--<Label text="Francisco Sá Carneiro" textAlignment="CENTER" textFill="#5e5d5d">-->
-                                       <!--<font>-->
-                                          <!--<Font name="Helvetica" size="15.0" />-->
-                                       <!--</font>-->
-                                    <!--</Label>-->
-                                 <!--</children>-->
-                                 <!--<padding>-->
-                                    <!--<Insets left="5.0" right="5.0" />-->
-                                 <!--</padding>-->
-                              <!--</HBox>-->
-                           <!--</children>-->
-                        <!--</Pane>-->
-                     <!--</children>-->
+                     <children>
+                     </children>
                   </VBox>
                   <Label text="DEPARTURES" textFill="#8d8d8d">
                      <font>
@@ -274,144 +234,10 @@
                         <Font name="Helvetica" size="20.0" />
                      </font>
                   </Label>
-                  <VBox fx:id="containConnections" alignment="TOP_CENTER" />
-                  <!--<SplitPane dividerPositions="0.5" prefHeight="131.0" prefWidth="480.0" styleClass="splitPane">-->
-                     <!--<items>-->
-                        <!--<Pane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">-->
-                           <!--<children>-->
-                              <!--<Label layoutX="84.0" layoutY="14.0" text="ARRIVALS" textFill="#8f8f8f">-->
-                                 <!--<font>-->
-                                    <!--<Font name="Helvetica Light" size="15.0" />-->
-                                 <!--</font>-->
-                              <!--</Label>-->
-                              <!--<Pane layoutX="19.0" layoutY="45.0" prefHeight="87.0" prefWidth="210.0">-->
-                                 <!--<children>-->
-                                    <!--<HBox prefHeight="40.0" prefWidth="210.0" styleClass="item">-->
-                                       <!--<children>-->
-                                          <!--<VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #4185d1;">-->
-                                             <!--<children>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="14.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica Light" size="10.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                             <!--</children>-->
-                                          <!--</VBox>-->
-                                          <!--<Label prefHeight="40.0" prefWidth="100.0" text="Airport of Origin" textFill="#939393">-->
-                                             <!--<font>-->
-                                                <!--<Font name="Helvetica" size="13.0" />-->
-                                             <!--</font>-->
-                                             <!--<padding>-->
-                                                <!--<Insets left="5.0" />-->
-                                             <!--</padding>-->
-                                          <!--</Label>-->
-                                       <!--</children>-->
-                                    <!--</HBox>-->
-                                    <!--<HBox layoutY="39.0" prefHeight="40.0" prefWidth="210.0" styleClass="item">-->
-                                       <!--<children>-->
-                                          <!--<VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #4185d1;">-->
-                                             <!--<children>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="14.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="10.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                             <!--</children>-->
-                                          <!--</VBox>-->
-                                          <!--<Label prefHeight="40.0" prefWidth="100.0" text="Airport of Origin" textFill="#939393">-->
-                                             <!--<font>-->
-                                                <!--<Font name="Helvetica" size="13.0" />-->
-                                             <!--</font>-->
-                                             <!--<padding>-->
-                                                <!--<Insets left="5.0" />-->
-                                             <!--</padding>-->
-                                          <!--</Label>-->
-                                       <!--</children>-->
-                                    <!--</HBox>-->
-                                 <!--</children>-->
-                              <!--</Pane>-->
-                           <!--</children>-->
-                        <!--</Pane>-->
-                        <!--<Pane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">-->
-                           <!--<children>-->
-                              <!--<Label layoutX="71.0" layoutY="14.0" text="DEPARTURES" textFill="#8f8f8f">-->
-                                 <!--<font>-->
-                                    <!--<Font name="Helvetica Light" size="15.0" />-->
-                                 <!--</font>-->
-                              <!--</Label>-->
-                              <!--<Pane layoutX="14.0" layoutY="45.0">-->
-                                 <!--<children>-->
-                                    <!--<HBox prefHeight="40.0" prefWidth="210.0" styleClass="item">-->
-                                       <!--<children>-->
-                                          <!--<VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #888;">-->
-                                             <!--<children>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="14.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="10.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                             <!--</children>-->
-                                          <!--</VBox>-->
-                                          <!--<Label prefHeight="40.0" prefWidth="100.0" text="Airport of Destination" textFill="#939393">-->
-                                             <!--<font>-->
-                                                <!--<Font name="Helvetica" size="13.0" />-->
-                                             <!--</font>-->
-                                             <!--<padding>-->
-                                                <!--<Insets left="5.0" />-->
-                                             <!--</padding>-->
-                                          <!--</Label>-->
-                                       <!--</children>-->
-                                    <!--</HBox>-->
-                                    <!--<HBox layoutY="40.0" prefHeight="40.0" prefWidth="210.0" styleClass="item">-->
-                                       <!--<children>-->
-                                          <!--<VBox prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #888;">-->
-                                             <!--<children>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="24 March 2017" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="14.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                                <!--<Label alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="9h30m" textAlignment="CENTER" textFill="WHITE">-->
-                                                   <!--<font>-->
-                                                      <!--<Font name="Helvetica" size="10.0" />-->
-                                                   <!--</font>-->
-                                                <!--</Label>-->
-                                             <!--</children>-->
-                                          <!--</VBox>-->
-                                          <!--<Label prefHeight="40.0" prefWidth="100.0" text="Airport of Destination" textFill="#939393">-->
-                                             <!--<font>-->
-                                                <!--<Font name="Helvetica" size="13.0" />-->
-                                             <!--</font>-->
-                                             <!--<padding>-->
-                                                <!--<Insets left="5.0" />-->
-                                             <!--</padding>-->
-                                          <!--</Label>-->
-                                       <!--</children>-->
-                                    <!--</HBox>-->
-                                 <!--</children>-->
-                              <!--</Pane>-->
-                           <!--</children>-->
-                        <!--</Pane>-->
-                     <!--</items>-->
-                     <!--<VBox.margin>-->
-                        <!--<Insets bottom="15.0" />-->
-                     <!--</VBox.margin>-->
-                  <!--</SplitPane>-->
+                  <VBox fx:id="containConnections" alignment="TOP_CENTER">
+                     <children>
+                     </children>
+                  </VBox>
                </children>
                <padding>
                   <Insets bottom="20.0" />

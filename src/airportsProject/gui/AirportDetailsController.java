@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import libs.SeparateChainingHashST;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class AirportDetailsController {
@@ -123,6 +124,19 @@ public class AirportDetailsController {
                 } else { // departures
                     containDepartures.getChildren().add(newFlightItem(flight));
                 }
+            }
+        }
+
+        // connections to and from this airport
+        ArrayList<String> connections = utils.airportConnections(airport);
+        if(connections.size() == 0){
+            Label node = new Label("No connections");
+            node.getStyleClass().add("infoLabel");
+            containConnections.getChildren().add(node);
+        }else{
+            for(String code : connections){
+                Airport airport = airports.get(code);
+                containConnections.getChildren().add(newAirportItem(airport));
             }
         }
     }
@@ -225,6 +239,54 @@ public class AirportDetailsController {
                 VistaNavigator.loadVista(VistaNavigator.AIRPORTNETW);
             }
         }
+    }
+
+    private Pane newAirportItem(Airport airport){
+        // container pane of a single flight
+        Pane newPane = new Pane();
+        newPane.setPrefWidth(480.0);
+        newPane.setPrefHeight(40.0);
+        newPane.getStyleClass().add("item");
+        newPane.setCursor(Cursor.HAND);
+        newPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                newPane.setStyle("-fx-background-color: #f2f2f2;");
+            }
+        });
+        newPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                newPane.setStyle("-fx-background-color: #F9F9F9;");
+            }
+        });
+        // checks id to select the airplane clicked to show its details
+        newPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                VistaNavigator.loadVista(VistaNavigator.AIRPORTDETAILS, airport.getCode());
+            }
+        });
+        Label airportCode = new Label(airport.getCode());
+        airportCode.setLayoutX(134);
+        airportCode.setLayoutY(3);
+        airportCode.setTextFill(Color.valueOf("4185d1"));
+        airportCode.setFont(Font.font("Helvetica", 28));
+        newPane.getChildren().add(airportCode);
+        Label airportName = new Label(airport.getName());
+        airportName.setLayoutX(207);
+        airportName.setLayoutY(4);
+        airportName.setTextFill(Color.valueOf("757575"));
+        airportName.setFont(Font.font("Helvetica", 14));
+        newPane.getChildren().add(airportName);
+        Label airportPlace = new Label(airport.getCity() + ", " + airport.getCountry());
+        airportPlace.setLayoutX(207);
+        airportPlace.setLayoutY(21);
+        airportPlace.setTextFill(Color.valueOf("bcbcbc"));
+        airportPlace.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        newPane.getChildren().add(airportPlace);
+//        VBox.setMargin(newPane, new Insets(10,0,0,0));
+        return newPane;
     }
 
     private Pane newFlightItem(Flight flight){

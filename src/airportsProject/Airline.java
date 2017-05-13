@@ -2,12 +2,14 @@ package airportsProject;
 
 import libs.RedBlackBST;
 
+import java.io.Serializable;
+
 /**
  * The airline class represents an actual airline that owns airplanes and does their management:
  * Insert/Removing airplanes
  * It also gives information on its fleet, how many airplanes a company has
  */
-public class Airline {
+public class Airline implements Serializable {
 
     private String name;
     private String nationality;

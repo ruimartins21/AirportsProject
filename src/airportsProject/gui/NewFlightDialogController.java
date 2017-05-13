@@ -91,7 +91,7 @@ public class NewFlightDialogController {
         }else if(!Utils.isNumeric(flightPassengers.getText())){ // check if it is a number
             warning.setText("Please enter a valid number of passengers. (Integer value)");
             warning.setStyle("-fx-opacity: 1");
-        }else if(Integer.valueOf(flightPassengers.getText()) > airplaneUsed.getPassengersCapacity()){ // check if the passengers for this flight fit on the airplane chosen
+        }else if(airplaneUsed != null && Integer.valueOf(flightPassengers.getText()) > airplaneUsed.getPassengersCapacity()){ // check if the passengers for this flight fit on the airplane chosen
             warning.setText("Too many passengers! (Maximum: " + airplaneUsed.getPassengersCapacity() + ")");
             warning.setStyle("-fx-opacity: 1");
         }else{
@@ -103,10 +103,10 @@ public class NewFlightDialogController {
             warning.setStyle("-fx-opacity: 0");
             if(typeOfFlight.compareTo("Less Stops") == 0){ // using BFS
                 utils.newFlight(bfs, null, new Date(), Integer.valueOf(flightPassengers.getText()), airplaneUsed,
-                        airports.get(airplaneUsed.getAirportCode()), airports.get(destination), destinPos);
+                        airports.get(airplaneUsed.getAirportCode()), airports.get(destination), destinPos, null);
             }else{ // using Dijkstra
                 utils.newFlight(null, dijkstraSP, new Date(), Integer.valueOf(flightPassengers.getText()), airplaneUsed,
-                        airports.get(airplaneUsed.getAirportCode()), airports.get(destination), destinPos);
+                        airports.get(airplaneUsed.getAirportCode()), airports.get(destination), destinPos, null);
             }
             // close the dialog window
             flightPassengers.getParent().getParent().getScene().getWindow().hide();
@@ -153,7 +153,7 @@ public class NewFlightDialogController {
                if(show){
                    showRoute(dijkstraSP, destinPos);
                    totalLabel.setText("Total Time: ");
-                   totalValue.setText(utils.convertTime(dijkstraSP.distTo(destinPos)));
+                   totalValue.setText(Date.convertTime(dijkstraSP.distTo(destinPos)));
                }
                break;
            case "Less Stops":
@@ -237,7 +237,7 @@ public class NewFlightDialogController {
                 weightNumber = new Label("" + euroValue * (double) Math.round(airplaneUsed.getAirplaneCost(con) * 100) / 100f);
                 break;
             case "Fastest Flight":
-                weightNumber = new Label(utils.convertTime(airplaneUsed.getFlightDuration(con)));
+                weightNumber = new Label(Date.convertTime(airplaneUsed.getFlightDuration(con)));
                 break;
             default: break;
         }
