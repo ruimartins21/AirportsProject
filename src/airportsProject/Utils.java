@@ -418,7 +418,13 @@ public class Utils {
                 bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
                 bw.newLine();
                 // gravar como esta no ficheiro graph.txt
-
+                for (int i = 0; i < symbolGraph.G().V(); i++) {
+                    bw.write(symbolGraph.nameOf(i));
+                    for (Connection e : symbolGraph.G().adj(i)) {
+                        bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + e.getWindSpeed() + ";" + e.getAltitude());
+                    }
+                    bw.newLine();
+                }
                 bw.close();
             } catch (IOException e) {
                 e.printStackTrace();

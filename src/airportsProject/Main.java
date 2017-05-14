@@ -22,6 +22,8 @@ public class Main {
     public static void main(String[] args) {
         Utils utils = new Utils().getInstance();
         utils.initProgram("");
+        Utils.dump("");
+
         boolean validChoice = false;
         int choice, airplaneId;
         String airportCode, airlineName;
@@ -216,7 +218,10 @@ public class Main {
         System.out.println(utils.getSymbolGraph().G());
 
 //
-        Utils.showGraphs();
+//        Utils.showGraphs();
+
+
+
 
 
         // New program or load previous program

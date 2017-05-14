@@ -78,6 +78,7 @@ public class SymbolEdgeWeightedDigraph {
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
+//            System.out.println(keys[st.get(name)]);
         }
 
         // second pass builds the digraph by connecting first vertex on each
