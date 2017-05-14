@@ -215,6 +215,9 @@ public class Main {
 
         System.out.println(utils.getSymbolGraph().G());
 
+//
+        Utils.showGraphs();
+
 
         // New program or load previous program
         Scanner scanner = new Scanner(System.in);

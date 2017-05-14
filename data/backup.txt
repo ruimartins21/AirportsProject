@@ -77,3 +77,5 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
 distance;cost;duration;date;passengers;plane;originAirport;destinAirport;connections;
+3
+originAirport;airportCode;distance;windSpeed;airTunnel;

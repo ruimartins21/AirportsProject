@@ -412,6 +412,13 @@ public class Utils {
                     );
                     bw.newLine();
                 }
+                // gravar symbol graph
+                bw.write("3");
+                bw.newLine();
+                bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
+                bw.newLine();
+                // gravar como esta no ficheiro graph.txt
+
                 bw.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -468,7 +475,6 @@ public class Utils {
 
     public static void showGraphs() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-        SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
         Graph graph = new SingleGraph("SymbolGraph");
         for (int i = 0; i < symbolGraph.digraph().V(); i++) {
             for (Connection c : symbolGraph.digraph().adj(i)) {
