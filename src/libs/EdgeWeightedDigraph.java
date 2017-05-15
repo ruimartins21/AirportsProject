@@ -15,6 +15,8 @@ package libs;
 import airportsProject.Connection;
 import edu.princeton.cs.algs4.*;
 
+import java.io.Serializable;
+
 /**
  *  The {@code EdgeWeightedDigraph} class represents a edge-weighted
  *  digraph of vertices named 0 through <em>V</em> - 1, where each
@@ -38,7 +40,7 @@ import edu.princeton.cs.algs4.*;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public class EdgeWeightedDigraph {
+public class EdgeWeightedDigraph implements Serializable {
     private static final String NEWLINE = System.getProperty("line.separator");
 
     private final int V;                // number of vertices in this digraph

@@ -11,6 +11,8 @@ package libs;
 
 import edu.princeton.cs.algs4.StdOut;
 
+import java.io.Serializable;
+
 /**
  *  The {@code DirectedEdge} class represents a weighted edge in an 
  *  {@link EdgeWeightedDigraph}. Each edge consists of two integers
@@ -25,7 +27,7 @@ import edu.princeton.cs.algs4.StdOut;
  *  @author Kevin Wayne
  */
 
-public class DirectedEdge { 
+public class DirectedEdge implements Serializable {
     private final int v;
     private final int w;
     private final double weight;

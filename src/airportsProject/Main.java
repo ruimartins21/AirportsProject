@@ -223,7 +223,6 @@ public class Main {
 
 
 
-
         // New program or load previous program
         Scanner scanner = new Scanner(System.in);
         while (!validChoice) {

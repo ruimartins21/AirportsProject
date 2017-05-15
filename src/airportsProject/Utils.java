@@ -9,7 +9,7 @@ import org.graphstream.graph.implementations.SingleGraph;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Utils {
     public static int nValue = 200;
@@ -20,8 +20,10 @@ public class Utils {
     public static int mapHeight = 768; // height of the world map used
 
     private static Utils instance = null;
+    private static ArrayList<String> remove = new ArrayList<>(); // array that will store removed airports to ignore when reading the graph from the file
 
     // paths to default data
+//    public transient Thread asd;
     private static final String pathAirports = ".//data//airports.txt";
     private static final String pathAirplanes = ".//data//airplanes.txt";
     private static final String pathAirlines = ".//data//airlines.txt";
@@ -48,6 +50,10 @@ public class Utils {
         return symbolGraph;
     }
 
+    public static void setSymbolGraph(SymbolEdgeWeightedDigraph sGraph){
+        symbolGraph = sGraph;
+    }
+
     /**
      * Will fill the symbol tables with the data required
      *
@@ -58,7 +64,7 @@ public class Utils {
         log("reset", ""); // clean the log file from the previous program
         if (path.length() > 0) { // load program
             try {
-                ImportFromFile.loadProgram(path, airportST, airlineST, airplaneST, flightST);
+                ImportFromFile.loadProgram(path, airportST, airlineST, airplaneST);
                 File file = new File(path);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 System.out.println("Last opened in: " + sdf.format(file.lastModified()));
@@ -85,6 +91,8 @@ public class Utils {
     }
 
     public void newAirport(Airport airport) {
+        if(remove.contains(airport.getCode())) // if the user is inserting an airport with a code equals to an airport removed before
+            remove.remove(airport.getCode());
         airportST.put(airport.getCode(), airport);
         log("airportST", "New airport [" + airportST.get(airport.getCode()).getCode() + "] \" Name:" + airportST.get(airport.getCode()).getName() + "\" Rating:" +
                 airportST.get(airport.getCode()).getRating());
@@ -129,11 +137,12 @@ public class Utils {
             }
         }
         // removes it from the symbol graph
-        ArrayList<String> remove = new ArrayList<>();
-        remove.add(airport.getCode());
+        if(!remove.contains(airport.getCode())){
+            remove.add(airport.getCode());
+        }
         symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
-        log("AirportST", "Removed airport \"" + airportST.get(airport.getCode()).getName() + "\"");
         airportST.put(airport.getCode(), null);
+        log("AirportST", "Removed airport \"" + airport.getName() + "\"");
         Utils.getInstance().createCoordinatesFile();
     }
 
@@ -179,8 +188,8 @@ public class Utils {
         for (Integer p: airline.getFleet().keys()) {
             removeAirplane(airline.getFleet().get(p));
         }
-        log("AirlineST", "Removed airline \"" + airline.getName() + "\"");
         airlineST.put(airline.getName(), null);
+        log("AirlineST", "Removed airline \"" + airline.getName() + "\"");
     }
 
     /* AIRPLANES */
@@ -323,112 +332,113 @@ public class Utils {
      * or create a new one from the data imported from the files and without flights
      */
     public static void dump(String path) {
-        if(path.length() != 0 && path.contains("bin")){
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-                oos.writeObject(airportST);
-                oos.writeObject(airlineST);
-                oos.writeObject(airplaneST);
-                oos.writeObject(flightST);
-                oos.flush();
-                oos.close();
-            } catch (Exception ex) {
-                System.out.println("Couldn't create the file");
+        String binPath = ".//data//backup.bin";
+        if(path.length() != 0 && path.contains("bin")) {
+            binPath = path;
+        }
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(binPath))) {
+            oos.writeObject(airportST);
+            oos.writeObject(airlineST);
+            oos.writeObject(airplaneST);
+            oos.writeObject(flightST);
+            oos.writeObject(symbolGraph);
+            oos.flush();
+            oos.close();
+        } catch (Exception ex) {
+            System.out.println("Couldn't create the file");
+        }
+        if (path.length() == 0) { // saves to the backup file
+            path = ".//data//backup.txt";
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
+            bw.write("#");
+            bw.newLine();
+            bw.write("airportName;airportCode;city;country;continent;rating;");
+            bw.newLine();
+            for (String a : airportST.keys()) {
+                Airport airport = airportST.get(a);
+                bw.write(
+                        airport.getName() + ";" +
+                                airport.getCode() + ";" +
+                                airport.getCity() + ";" +
+                                airport.getCountry() + ";" +
+                                airport.getContinent() + ";" +
+                                airport.getRating() + ";"
+                );
+                bw.newLine();
             }
-        }else {
-            if (path.length() == 0) { // saves to the backup file
-                path = ".//data//backup.txt";
+            bw.write("#");
+            bw.newLine();
+            bw.write("name;nationality;");
+            bw.newLine();
+            for (String al : airlineST.keys()) {
+                Airline airline = airlineST.get(al);
+                bw.write(
+                        airline.getName() + ";" +
+                                airline.getNationality() + ";"
+                );
+                bw.newLine();
             }
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
-                bw.write("#");
+            bw.write("#");
+            bw.newLine();
+            bw.write("planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;" +
+                    "passengers;fuelCap");
+            bw.newLine();
+            for (Integer ap : airplaneST.keys()) {
+                Airplane airplane = airplaneST.get(ap);
+                bw.write(
+                        airplane.getId() + ";" +
+                                airplane.getModel() + ";" +
+                                airplane.getName() + ";" +
+                                airplane.getAirline().getName() + ";" +
+                                airplane.getCruiseSpeed() + ";" +
+                                airplane.getCruiseAltitude() + ";" +
+                                airplane.getMaxRange() + ";" +
+                                airplane.getAirportCode() + ";" +
+                                airplane.getPassengersCapacity() + ";" +
+                                airplane.getFuelCapacity() + ";"
+                );
                 bw.newLine();
-                bw.write("airportName;airportCode;city;country;continent;rating;");
-                bw.newLine();
-                for (String a : airportST.keys()) {
-                    Airport airport = airportST.get(a);
-                    bw.write(
-                            airport.getName() + ";" +
-                                    airport.getCode() + ";" +
-                                    airport.getCity() + ";" +
-                                    airport.getCountry() + ";" +
-                                    airport.getContinent() + ";" +
-                                    airport.getRating() + ";"
-                    );
-                    bw.newLine();
-                }
-                bw.write("#");
-                bw.newLine();
-                bw.write("name;nationality;");
-                bw.newLine();
-                for (String al : airlineST.keys()) {
-                    Airline airline = airlineST.get(al);
-                    bw.write(
-                            airline.getName() + ";" +
-                                    airline.getNationality() + ";"
-                    );
-                    bw.newLine();
-                }
-                bw.write("#");
-                bw.newLine();
-                bw.write("planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;" +
-                        "passengers;fuelCap");
-                bw.newLine();
-                for (Integer ap : airplaneST.keys()) {
-                    Airplane airplane = airplaneST.get(ap);
-                    bw.write(
-                            airplane.getId() + ";" +
-                                    airplane.getModel() + ";" +
-                                    airplane.getName() + ";" +
-                                    airplane.getAirline().getName() + ";" +
-                                    airplane.getCruiseSpeed() + ";" +
-                                    airplane.getCruiseAltitude() + ";" +
-                                    airplane.getMaxRange() + ";" +
-                                    airplane.getAirportCode() + ";" +
-                                    airplane.getPassengersCapacity() + ";" +
-                                    airplane.getFuelCapacity() + ";"
-                    );
-                    bw.newLine();
-                }
-                bw.write("#");
-                bw.newLine();
-                bw.write("distance;cost;duration;date;passengers;plane;originAirport;destinAirport;connections;");
-                bw.newLine();
-                for (Date d : flightST.keys()) {
-                    Flight flight = flightST.get(d);
-                    StringBuilder sb = new StringBuilder();
-                    for(String code : flight.getConnections()){
-                        sb.append(code);
-                        sb.append("|");
-                    }
-                    bw.write(
-                            flight.getDistance() + ";" +
-                                    flight.getCosts() + ";" +
-                                    flight.getDuration().getSlashes() + ";" +
-                                    flight.getDate().getSlashes() + ";" +
-                                    flight.getPassengers() + ";" +
-                                    flight.getAirplane().getId() + ";" +
-                                    flight.getAirportOfOrigin().getCode() + ";" +
-                                    flight.getAirportOfDestination().getCode() + ";" +
-                                    sb + ";"
-                    );
-                    bw.newLine();
-                }
-                // gravar symbol graph
-                bw.write("3");
-                bw.newLine();
-                bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
-                bw.newLine();
-                // gravar como esta no ficheiro graph.txt
-                for (int i = 0; i < symbolGraph.G().V(); i++) {
-                    bw.write(symbolGraph.nameOf(i));
-                    for (Connection e : symbolGraph.G().adj(i)) {
-                        bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + e.getWindSpeed() + ";" + e.getAltitude());
-                    }
-                    bw.newLine();
-                }
-                bw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            bw.write("#");
+            bw.newLine();
+            bw.write("date;passengers;plane;originAirport;destinAirport;connections;");
+            bw.newLine();
+            for (Date d : flightST.keys()) {
+                Flight flight = flightST.get(d);
+                StringBuilder sb = new StringBuilder();
+                for(String code : flight.getConnections()){
+                    sb.append(code);
+                    sb.append("|");
+                }
+                bw.write(
+                        flight.getDate().getSlashes() + ";" +
+                        flight.getPassengers() + ";" +
+                        flight.getAirplane().getId() + ";" +
+                        flight.getAirportOfOrigin().getCode() + ";" +
+                        flight.getAirportOfDestination().getCode() + ";" +
+                        sb + ";"
+                );
+                bw.newLine();
+            }
+            bw.write("#");
+            bw.newLine();
+            // save symbol graph
+            bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
+            bw.newLine();
+            bw.write("3");
+            bw.newLine();
+            // gravar como esta no ficheiro graph.txt
+            for (int i = 0; i < symbolGraph.G().V(); i++) {
+                bw.write(symbolGraph.nameOf(i));
+                for (Connection e : symbolGraph.G().adj(i)) {
+                    bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + e.getWindSpeed() + ";" + e.getAltitude());
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -456,8 +466,8 @@ public class Utils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            dump(""); // saves a backup of the current program when the user does some change
         }
-        dump(""); // saves a backup of the current program when the user does some change
     }
 
     /**
@@ -635,7 +645,6 @@ public class Utils {
 
         double distance = 0, cost = 0, timeDuration = 0;
         int comp = 0;
-
         Flight newFlight = new Flight(date, passengers, airplane, airportOfOrigin, airportOfDestination);
         if (dijkstraSP != null && dijkstraSP.hasPathTo(gIdAirportDest)) {
             for (Connection e : dijkstraSP.pathTo(gIdAirportDest)) {
@@ -765,25 +774,22 @@ public class Utils {
 
     /**
      * Determines the airport (or more than one if the ammount is the same) with the most traffic (number of flights)
-     *
-     * @param airportST Symbol table that stores all the available airports
      * @return returns the arraylist with all the matches for the most traffic airport, can be more than one with the same ammount
      */
-    private static ArrayList<Airport> mostTrafficAirport(SeparateChainingHashST<String, Airport> airportST) {
-        ArrayList<Airport> airports = new ArrayList<>();
-        int max = 0, current;
+    public static List<Map.Entry<String, Integer>> mostTrafficAirport() {
+        Map<String, Integer> airports = new HashMap<>();
         for (String code : airportST.keys()) {
-            current = airportST.get(code).getFlights().size();
-            if (current > max) { // sets the current airport as the one with the most traffic
-                max = current;
-                airports.clear();
-                airports.add(0, airportST.get(code));
-            } else if (current == max) { // if an airport has the same ammount of traffic than other, will add this new one to the array
-                airports.add(airports.size(), airportST.get(code));
-            }
+            airports.put(code, airportST.get(code).getFlights().size());
         }
-        System.out.println("# With " + max + " flights passed through #");
-        return airports;
+        Set<Map.Entry<String, Integer>> set = airports.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
+        list.sort(new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        return list.subList(0, 5);
     }
 
     /**

@@ -29,6 +29,7 @@
 
 package edu.princeton.cs.algs4;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -51,12 +52,12 @@ import java.util.NoSuchElementException;
  *
  *  @param <Item> the generic type of an item in this bag
  */
-public class Bag<Item> implements Iterable<Item> {
+public class Bag<Item> implements Iterable<Item>, Serializable {
     private Node<Item> first;    // beginning of bag
     private int n;               // number of elements in bag
 
     // helper linked list class
-    private static class Node<Item> {
+    private static class Node<Item> implements Serializable {
         private Item item;
         private Node<Item> next;
     }

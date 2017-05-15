@@ -173,7 +173,6 @@ public class Airplane implements Serializable {
 
 
     public double getFlightDuration(Connection connection){
-//        return connection.weight() / (this.cruiseSpeed + connection.getWindSpeed());
         return connection.weight() / this.cruiseSpeed;
     }
 

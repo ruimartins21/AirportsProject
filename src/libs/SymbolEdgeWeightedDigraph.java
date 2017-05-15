@@ -23,6 +23,7 @@ import airportsProject.Utils;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.ST;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +48,7 @@ import java.util.ArrayList;
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
-public class SymbolEdgeWeightedDigraph {
+public class SymbolEdgeWeightedDigraph implements Serializable {
     private ST<String, Integer> st;  // string -> index
     private String[] keys;           // index  -> string
     private EdgeWeightedDigraph graph;           // the underlying digraph
@@ -78,7 +79,6 @@ public class SymbolEdgeWeightedDigraph {
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
-//            System.out.println(keys[st.get(name)]);
         }
 
         // second pass builds the digraph by connecting first vertex on each
@@ -94,6 +94,43 @@ public class SymbolEdgeWeightedDigraph {
                 float distance = Float.parseFloat(a[i + 1]);
                 float windSpeed = Float.parseFloat(a[i + 3]);
                 float altitude = Float.parseFloat(a[i + 2]);
+                Connection c = new Connection(v, w, distance, altitude, windSpeed);
+                graph.addEdge(c);
+            }
+        }
+    }
+
+    public SymbolEdgeWeightedDigraph(String filename) {
+        st = new ST<String, Integer>();
+
+        // First pass builds the index by reading strings to associate // colocar as chaves da symbol table com os codigos dos aeroportos
+        // distinct strings with an index
+        String[] a = filename.split("\n"); // divides all the lines into single ones for reading
+        String[] del;
+        for (int i = 0; i < a.length; i++) {
+            del = a[i].split(";");
+            if (!st.contains(del[0]))
+                st.put(del[0], st.size());
+        }
+
+        // inverted index to get string keys in an aray
+        keys = new String[st.size()];
+        for (String name : st.keys()) {
+            keys[st.get(name)] = name;
+        }
+
+        // second pass builds the digraph by connecting first vertex on each
+        // line to all others
+        graph = new EdgeWeightedDigraph(st.size());
+        a = filename.split("\n"); // divides all the lines into single ones for reading
+        for (int i = 0; i < a.length; i++) {
+            del = a[i].split(";");
+            int v = st.get(del[0]);
+            for (int j = 1; j < del.length; j += 4) {
+                int w = st.get(del[j]);
+                float distance = Float.parseFloat(del[j + 1]);
+                float windSpeed = Float.parseFloat(del[j + 3]);
+                float altitude = Float.parseFloat(del[j + 2]);
                 Connection c = new Connection(v, w, distance, altitude, windSpeed);
                 graph.addEdge(c);
             }

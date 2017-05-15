@@ -1,9 +1,6 @@
 package airportsProject.gui;
 
-import airportsProject.Airplane;
-import airportsProject.Airport;
-import airportsProject.Date;
-import airportsProject.Flight;
+import airportsProject.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -20,17 +17,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import libs.RedBlackBST;
+import libs.SeparateChainingHashST;
+import libs.SymbolEdgeWeightedDigraph;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import static airportsProject.Utils.euroValue;
 
 public class FlightDetailsController {
     @FXML
@@ -41,6 +42,8 @@ public class FlightDetailsController {
     private Pane mapPane;
     @FXML
     private Slider zoomSlider;
+    @FXML
+    private Label flightDate;
     @FXML
     private Label originCode;
     @FXML
@@ -64,6 +67,8 @@ public class FlightDetailsController {
     @FXML
     private Label airplaneSeats;
     @FXML
+    private Label airplaneUsedSeats;
+    @FXML
     private Pane airplaneInfo;
 
     private Date date;
@@ -72,28 +77,37 @@ public class FlightDetailsController {
     DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
     Group zoomGroup;
 
-    private Airport airport1 = new Airport("Francisco Sá Carneiro", "OPO", "Porto", "Portugal", "Europe", 10.0f);
-    private Airport airport2 = new Airport("International John Kennedy", "JFK", "New York", "USA", "America", 6.0f);
-    private Airplane airplane = new Airplane(1, "model1", "Fernão Mendes Pinto", 400, 5000, 10000, "OPO", 350, 500, null);
-//    private Flight flight = new Flight(10000, new Date(0,0,0,9,20,10), new Date(), 300, airplane, airport1, airport2);
+    private Utils utils = Utils.getInstance();
+    private RedBlackBST<Date, Flight> flights = utils.getFlights();
+    private Flight flight = null;
+    private SymbolEdgeWeightedDigraph symbolGraph = utils.getSymbolGraph();
+    private SeparateChainingHashST<String, Airport> airports = utils.getAirports();
+    private Date lastConnectionArrivalDate = null; // utility variable for a connection to know the last connection arrival time
 
     public void initialize(){
         // set separator symbol for large numbers: 1000 -> 1 000
         symbols.setGroupingSeparator(' ');
         formatter.setDecimalFormatSymbols(symbols);
 
-        // fill labels with info from the flight
-//        originCode.setText(flight.getAirportOfOrigin().getCode());
-//        originName.setText(flight.getAirportOfOrigin().getName());
-//        originLocation.setText(flight.getAirportOfOrigin().getCity() + ", " + flight.getAirportOfOrigin().getCountry());
-//        destinationCode.setText(flight.getAirportOfDestination().getCode());
-//        destinationName.setText(flight.getAirportOfDestination().getName());
-//        destinationLocation.setText(flight.getAirportOfDestination().getCity() + ", " + flight.getAirportOfDestination().getCountry());
-//        flightDuration.setText(flight.getDuration().getDuration());
-//        airplaneModel.setText(flight.getAirplane().getModel());
-//        airplaneName.setText(flight.getAirplane().getName());
-        airplaneAirline.setText("Airline 1"); // mudar depois
-//        airplaneSeats.setText(String.valueOf(flight.getAirplane().getPassengersCapacity()));
+        if(date != null){
+            flight = flights.get(date);
+            if(flight != null){
+                // fill labels with info from the flight
+                flightDate.setText(date.getDateLess().toUpperCase());
+                originCode.setText(flight.getAirportOfOrigin().getCode());
+                originName.setText(flight.getAirportOfOrigin().getName());
+                originLocation.setText(flight.getAirportOfOrigin().getCity() + ", " + flight.getAirportOfOrigin().getCountry());
+                destinationCode.setText(flight.getAirportOfDestination().getCode());
+                destinationName.setText(flight.getAirportOfDestination().getName());
+                destinationLocation.setText(flight.getAirportOfDestination().getCity() + ", " + flight.getAirportOfDestination().getCountry());
+                flightDuration.setText(flight.getDuration().getDuration());
+                airplaneModel.setText(flight.getAirplane().getModel());
+                airplaneName.setText(flight.getAirplane().getName());
+                airplaneAirline.setText(flight.getAirplane().getAirline().getName());
+                airplaneSeats.setText(String.valueOf(flight.getAirplane().getPassengersCapacity()));
+                airplaneUsedSeats.setText("(Used: " + String.valueOf(flight.getPassengers()) + ")");
+            }
+        }
 
         // set zoom values
         zoomSlider.setMin(0.8);
@@ -113,56 +127,53 @@ public class FlightDetailsController {
         map.setVvalue(0.5);
 
         containFlight.getChildren().remove(airplaneInfo);
-        // connections
-        for (int i = 0; i < 3; i++) {
-            if(i == 1){
-                refilling();
-            }else{
-//                newConnection(flight);
+        // list all the connections
+        int comp = 0;
+        for (String code : flight.getConnections()) {
+            for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+                if (comp + 1 >= flight.getConnections().size()) {
+                } else if (symbolGraph.nameOf(e.to()).compareTo(flight.getConnections().get(comp + 1)) == 0) {
+                    if(comp != 0){ // each 2 "connection" cycles we put a separator between connections
+                        refilling();
+                    }
+                    newConnection(e);
+                }
             }
+            comp++;
         }
         containFlight.getChildren().add(airplaneInfo);
 
-        setPinLocation(airport1);
-        setPinLocation(airport2);
-//        Line line = new Line();
-//        line.setStartX(airport1.getLongitude());
-//        line.setStartY(airport1.getLatitude());
-//        line.setEndX(airport2.getLongitude());
-//        line.setEndY(airport2.getLatitude());
-//        mapPane.getChildren().add(line);
+        Airport lastAirport = null;
+        // list the connections on the map
+        for (String code : flight.getConnections()) {
+            Airport airport = airports.get(code);
+            if(lastAirport != null){
+                drawPath(lastAirport.getLongitude(), lastAirport.getLatitude(), airport.getLongitude(), airport.getLatitude());
+            }
+            setPinLocation(airport);
+            lastAirport = airport;
+        }
+    }
 
+    private void drawPath(double startX, double startY, double endX, double endY){
+        if(startX == -1 || startY == -1 || endX == -1 || endY == -1) return;
         Path path = new Path();
         // First move to starting point
         MoveTo moveTo = new MoveTo();
-        moveTo.setX(airport1.getLongitude());
-        moveTo.setY(airport1.getLatitude());
+        moveTo.setX(startX);
+        moveTo.setY(startY);
 
-        // Then start drawing a line
+        // Then start drawing a line to the destination
         LineTo lineTo = new LineTo();
-        lineTo.setX(airport2.getLongitude() + 5);
-        lineTo.setY(airport2.getLatitude());
-
-        // arrow >
-        Line upperLine = new Line();
-        upperLine.setStartX(airport2.getLongitude() + 5);
-        upperLine.setStartY(airport2.getLatitude());
-        upperLine.setEndX(airport2.getLongitude() + 10);
-        upperLine.setEndY(airport2.getLatitude() - 5);
-        upperLine.setStroke(Color.WHITE);
-        Line lowerLine = new Line();
-        lowerLine.setStartX(airport2.getLongitude() + 5);
-        lowerLine.setStartY(airport2.getLatitude());
-        lowerLine.setEndX(airport2.getLongitude() + 10);
-        lowerLine.setEndY(airport2.getLatitude() + 5);
-        lowerLine.setStroke(Color.WHITE);
+        lineTo.setX(endX);
+        lineTo.setY(endY);
 
         path.getElements().add(moveTo);
         path.getElements().add(lineTo);
         path.setStroke(Color.WHITE);
+        path.setStrokeWidth(2);
 
         mapPane.getChildren().add(path);
-        mapPane.getChildren().addAll(upperLine, lowerLine);
     }
 
     public void setDate(Date date){
@@ -185,8 +196,8 @@ public class FlightDetailsController {
                 VistaNavigator.loadVista(VistaNavigator.AIRPORTDETAILS, pin.getId());
             }
         });
-        pin.setLayoutX(airport.getLongitude() - (34 / 2)); // 34 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
-        pin.setLayoutY(airport.getLatitude() - (45)); // 45 is the pin height
+        pin.setLayoutX(airport.getLongitude() - (24 / 2)); // 24 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
+        pin.setLayoutY(airport.getLatitude() - 33); // 33 is the pin height
         pin.setVisible(true);
         mapPane.getChildren().add(pin);
     }
@@ -217,9 +228,7 @@ public class FlightDetailsController {
         map.setVvalue(scrollV);
     }
 
-    // funcao de cancelar voo caso ainda nao tenha saido
-
-    private void newConnection(Flight flight){
+    private void newConnection(Connection con){
         // container pane of a connection of a flight
         Pane newPane = new Pane();
         newPane.setPrefWidth(480.0);
@@ -241,8 +250,14 @@ public class FlightDetailsController {
         connection.setLayoutY(33);
         leftPane.getChildren().add(connection);
         // departing hour
-        String hour = (flight.getDate().getHour() / 10 < 1 ? "0"+flight.getDate().getHour() : String.valueOf(flight.getDate().getHour()));
-        String minute = (flight.getDate().getMinute() / 10 < 1 ? "0"+flight.getDate().getMinute() : String.valueOf(flight.getDate().getMinute()));
+        Date departDate;
+        if(lastConnectionArrivalDate != null){ // there was a connection before
+            departDate = lastConnectionArrivalDate;
+        }else{ // it is the first connection of the flight
+            departDate = flight.getDate();
+        }
+        String hour = (departDate.getHour() / 10 < 1 ? "0"+departDate.getHour() : String.valueOf(departDate.getHour()));
+        String minute = (departDate.getMinute() / 10 < 1 ? "0"+departDate.getMinute() : String.valueOf(departDate.getMinute()));
         Label startHour = new Label(hour + ":" + minute);
         startHour.setTextFill(Color.valueOf("8a8a8a"));
         startHour.setPrefWidth(40);
@@ -251,8 +266,13 @@ public class FlightDetailsController {
         startHour.setAlignment(Pos.CENTER);
         startHour.setFont(Font.font("Helvetica", FontWeight.LIGHT, 15));
         leftPane.getChildren().add(startHour);
-        // arriving hour
-        Label endHour = new Label("14:30"); // starting hour + duration of connection
+        // arriving hour -> time from arrival of the last connection/departing hour + duration of connection
+        Date connectionDuration = Date.convertTimeToDate(flight.getAirplane().getFlightDuration(con));
+        Date arrivDate = departDate.plus(connectionDuration);
+        lastConnectionArrivalDate = arrivDate; // stores the last connection arrival time
+        String dhour = (arrivDate.getHour() / 10 < 1 ? "0"+arrivDate.getHour() : String.valueOf(arrivDate.getHour()));
+        String dminute = (arrivDate.getMinute() / 10 < 1 ? "0"+arrivDate.getMinute() : String.valueOf(arrivDate.getMinute()));
+        Label endHour = new Label(dhour + ":" + dminute);
         endHour.setTextFill(Color.valueOf("8a8a8a"));
         endHour.setPrefWidth(40);
         endHour.setLayoutX(79);
@@ -266,7 +286,7 @@ public class FlightDetailsController {
         rightPane.setPrefHeight(200);
         rightPane.setPrefWidth(322);
         // airport of origin
-        Label originAirport = new Label(flight.getAirportOfOrigin().getName() + " (" + flight.getAirportOfOrigin().getCode() + ")");
+        Label originAirport = new Label(airports.get(symbolGraph.nameOf(con.from())).getName() + " (" + symbolGraph.nameOf(con.from()) + ")");
         originAirport.setTextFill(Color.valueOf("8a8a8a"));
         originAirport.setStyle("-fx-cursor: hand");
         originAirport.setMaxWidth(265);
@@ -309,35 +329,35 @@ public class FlightDetailsController {
         altitudeLabel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
         rightPane.getChildren().add(altitudeLabel);
         // distance number
-//        Label distance = new Label(formatter.format(flight.getDistance()) + " km");
-//        distance.setLayoutX(95);
-//        distance.setLayoutY(54);
-//        distance.setTextFill(Color.valueOf("8a8a8a"));
-//        distance.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-//        rightPane.getChildren().add(distance);
+        Label distance = new Label(formatter.format(con.weight()) + " km");
+        distance.setLayoutX(95);
+        distance.setLayoutY(54);
+        distance.setTextFill(Color.valueOf("8a8a8a"));
+        distance.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        rightPane.getChildren().add(distance);
         // cost number
-//        Label cost = new Label(formatter.format(flight.getFlightCostEuros()) + " €");
-//        cost.setLayoutX(95);
-//        cost.setLayoutY(79);
-//        cost.setTextFill(Color.valueOf("8a8a8a"));
-//        cost.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-//        rightPane.getChildren().add(cost);
+        Label cost = new Label(formatter.format(euroValue * (double) Math.round(flight.getAirplane().getAirplaneCost(con) * 100) / 100f) + " €");
+        cost.setLayoutX(95);
+        cost.setLayoutY(79);
+        cost.setTextFill(Color.valueOf("8a8a8a"));
+        cost.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        rightPane.getChildren().add(cost);
         // wind speed number
-//        Label windSpeed = new Label(formatter.format(flight.getConnection().getWindSpeed()) + " km/h");
-//        windSpeed.setLayoutX(95);
-//        windSpeed.setLayoutY(104);
-//        windSpeed.setTextFill(Color.valueOf("8a8a8a"));
-//        windSpeed.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-//        rightPane.getChildren().add(windSpeed);
+        Label windSpeed = new Label(formatter.format(con.getWindSpeed()) + " km/h");
+        windSpeed.setLayoutX(95);
+        windSpeed.setLayoutY(104);
+        windSpeed.setTextFill(Color.valueOf("8a8a8a"));
+        windSpeed.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        rightPane.getChildren().add(windSpeed);
         // altitude number
-//        Label altitude = new Label(formatter.format(flight.getConnection().getAltitude()) + " km");
-//        altitude.setLayoutX(95);
-//        altitude.setLayoutY(129);
-//        altitude.setTextFill(Color.valueOf("8a8a8a"));
-//        altitude.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-//        rightPane.getChildren().add(altitude);
+        Label altitude = new Label(formatter.format(con.getAltitude()) + " km");
+        altitude.setLayoutX(95);
+        altitude.setLayoutY(129);
+        altitude.setTextFill(Color.valueOf("8a8a8a"));
+        altitude.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
+        rightPane.getChildren().add(altitude);
         // airport of destination for this connection
-        Label destinationAirport = new Label(flight.getAirportOfDestination().getName() + " (" + flight.getAirportOfDestination().getCode() + ")");
+        Label destinationAirport = new Label(airports.get(symbolGraph.nameOf(con.to())).getName() + " (" + symbolGraph.nameOf(con.to()) + ")");
         destinationAirport.setTextFill(Color.valueOf("8a8a8a"));
         destinationAirport.setStyle("-fx-cursor: hand");
         destinationAirport.setMaxWidth(265);

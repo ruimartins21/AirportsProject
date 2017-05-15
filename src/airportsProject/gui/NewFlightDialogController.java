@@ -84,22 +84,20 @@ public class NewFlightDialogController {
     }
 
     @FXML
-    public void submitFlight(){
-        if(typeOfFlight.isEmpty()){ // check if the user chose a type
+    public void submitFlight() {
+        // calculate final route chosen
+        show = false;
+        calculateRoute();
+        if (typeOfFlight.isEmpty()) { // check if the user chose a type
             warning.setText("Please choose a type of flight.");
             warning.setStyle("-fx-opacity: 1");
-        }else if(!Utils.isNumeric(flightPassengers.getText())){ // check if it is a number
+        } else if (!Utils.isNumeric(flightPassengers.getText())) { // check if it is a number
             warning.setText("Please enter a valid number of passengers. (Integer value)");
             warning.setStyle("-fx-opacity: 1");
-        }else if(airplaneUsed != null && Integer.valueOf(flightPassengers.getText()) > airplaneUsed.getPassengersCapacity()){ // check if the passengers for this flight fit on the airplane chosen
+        } else if (airplaneUsed != null && Integer.valueOf(flightPassengers.getText()) > airplaneUsed.getPassengersCapacity()) { // check if the passengers for this flight fit on the airplane chosen
             warning.setText("Too many passengers! (Maximum: " + airplaneUsed.getPassengersCapacity() + ")");
             warning.setStyle("-fx-opacity: 1");
         }else{
-
-            // calculate final route chosen
-            show = false;
-            calculateRoute();
-            show = true; // TO REMOVEA, only until the dialog closes when submitting
             warning.setStyle("-fx-opacity: 0");
             if(typeOfFlight.compareTo("Less Stops") == 0){ // using BFS
                 utils.newFlight(bfs, null, new Date(), Integer.valueOf(flightPassengers.getText()), airplaneUsed,

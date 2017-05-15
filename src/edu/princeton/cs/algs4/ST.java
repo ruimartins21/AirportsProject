@@ -11,6 +11,7 @@
 
 package edu.princeton.cs.algs4;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
@@ -50,7 +51,7 @@ import java.util.TreeMap;
  *  @param <Key> the generic type of keys in this symbol table
  *  @param <Value> the generic type of values in this symbol table
  */
-public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
+public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key>, Serializable {
 
     private TreeMap<Key, Value> st;
 

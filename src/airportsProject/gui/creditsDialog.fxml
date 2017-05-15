@@ -32,12 +32,12 @@
                   <Font name="Helvetica" size="17.0" />
                </font>
             </Label>
-            <ImageView fitHeight="85.0" fitWidth="270.0" layoutX="103.0" layoutY="187.0">
+            <ImageView fitHeight="85.0" fitWidth="250.0" layoutX="113.0" layoutY="187.0">
                <image>
                   <Image url="@images/ufp.png" />
                </image>
             </ImageView>
-            <Label layoutX="156.0" layoutY="160.0" text="Engenharia Informática">
+            <Label layoutX="156.0" layoutY="160.0" text="Engenharia Informática" underline="true">
                <font>
                   <Font name="Helvetica Light" size="15.0" />
                </font>
