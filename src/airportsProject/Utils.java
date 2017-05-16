@@ -76,6 +76,8 @@ public class Utils {
             ImportFromFile.importAirports(airportST, pathAirports);
             ImportFromFile.importAirlines(airlineST, pathAirlines);
             ImportFromFile.importPlanes(airportST, airplaneST, airlineST, pathAirplanes);
+            setFlights(new RedBlackBST<>());
+            setSymbolGraph(new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";"));
         }
         return true;
     }
@@ -773,8 +775,8 @@ public class Utils {
     /* STATICtistics */
 
     /**
-     * Determines the airport (or more than one if the ammount is the same) with the most traffic (number of flights)
-     * @return returns the arraylist with all the matches for the most traffic airport, can be more than one with the same ammount
+     * Determines the airports with the most traffic (number of flights)
+     * @return returns the list with all the matches for the most traffic airport, can be more than one with the same ammount
      */
     public static List<Map.Entry<String, Integer>> mostTrafficAirport() {
         Map<String, Integer> airports = new HashMap<>();
@@ -793,53 +795,50 @@ public class Utils {
     }
 
     /**
-     * Determines the flight (or more than one if the ammount is the same) with the most passengers transported
-     *
-     * @param flightST Symbol table that stores all the flights
-     * @return returns the arraylist with all the matches for the flight that transported most passengers, can be more than one
+     * Determines the flights with the most passengers transported
+     * @return returns the list with all the matches for the flight that transported most passengers, can be more than one
      */
-    private static ArrayList<Flight> mostPassengersFlight(RedBlackBST<Date, Flight> flightST) {
-        ArrayList<Flight> flights = new ArrayList<>();
-        int max = 0, current;
+    public static List<Map.Entry<String, Integer>> mostPassengersFlight() {
+        Map<String, Integer> flights = new HashMap<>();
         for (Date d : flightST.keys()) {
-            current = flightST.get(d).getPassengers();
-            if (current > max) { // sets the current flight as the one with the most passengers transported
-                max = current;
-                flights.clear();
-                flights.add(0, flightST.get(d));
-            } else if (current == max) { // if an flight has the same ammount of transported passengers than other, will add this new one to the array
-                flights.add(flights.size(), flightST.get(d));
-            }
+            flights.put(d.toString(), flightST.get(d).getPassengers());
         }
-        return flights;
+        Set<Map.Entry<String, Integer>> set = flights.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
+        list.sort(new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        int size = list.size() < 5 ? list.size() : 5;
+        return list.subList(0, size);
     }
 
     /**
-     * Determines the airport (or more than one if the ammount is the same) wich had the most passengers passing through it
-     *
-     * @param airportST Symbol table that stores all the available airports
+     * Determines the airports wich had the most passengers passing through it
      * @return returns the arraylist with all the matches for the most passengers passed through, can be more than one if the same ammount
      */
-    private static ArrayList<Airport> mostPassengersAirport(SeparateChainingHashST<String, Airport> airportST) {
-        ArrayList<Airport> airports = new ArrayList<>();
+    public static List<Map.Entry<String, Integer>> mostPassengersAirport() {
+        Map<String, Integer> airports = new HashMap<>();
         RedBlackBST<Date, Flight> airportFlights;
-        int max = 0, nPassengers;
+        int nPassengers;
         for (String code : airportST.keys()) {
-            // ao inserir um voo num aeroporto ter atributo de passageiros e somar n passageiros do novo voo
             nPassengers = 0;
             airportFlights = airportST.get(code).getFlights();
             for (Date d : airportFlights.keys()) {
                 nPassengers += airportFlights.get(d).getPassengers();
             }
-            if (nPassengers > max) { // sets the current airport as the one with the most passengers transported
-                max = nPassengers;
-                airports.clear();
-                airports.add(0, airportST.get(code));
-            } else if (nPassengers == max) { // if an airport has the same ammount of transported passengers than other, will add this new one to the array
-                airports.add(airports.size(), airportST.get(code));
-            }
+            airports.put(code, nPassengers);
         }
-        System.out.println("# Passengers transported: " + max + " #");
-        return airports;
+        Set<Map.Entry<String, Integer>> set = airports.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
+        list.sort(new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        return list.subList(0, 5);
     }
 }

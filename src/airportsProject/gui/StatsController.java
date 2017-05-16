@@ -5,8 +5,9 @@ import airportsProject.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,41 +21,89 @@ public class StatsController {
     private HBox containCharts;
     @FXML
     private Pane goBack;
-    @FXML
-    private LineChart mostTrafficAirport;
-    @FXML
-    private LineChart mostPassengersFlight;
-    @FXML
-    private LineChart mostPassengersAirport;
 
-    private List<Map.Entry<String, Integer>> results;
-    private SeparateChainingHashST<String, Airport> airports = Utils.getInstance().getAirports();
+    @FXML
+    CategoryAxis xAxis = new CategoryAxis();
+    @FXML
+    NumberAxis yAxis;
+
+    private SeparateChainingHashST<String, Airport> airports        = Utils.getInstance().getAirports();
+    private List<Map.Entry<String, Integer>> mostTrafficAirports    = Utils.mostTrafficAirport();
+    private List<Map.Entry<String, Integer>> mostPassengersFlights  = Utils.mostPassengersFlight();
+    private List<Map.Entry<String, Integer>> mostPassengersAirports = Utils.mostPassengersAirport();
 
     public void initialize(){
-//        mostTrafficAirport.getData().add(getMostTrafficAirport());
+        ObservableList<String> categories = FXCollections.observableArrayList();
+        int maxValue = mostTrafficAirports.size() > 0 ? mostTrafficAirports.get(0).getValue() : 0;
+        yAxis = new NumberAxis("Number of Flights", 0, maxValue+5, 1);
+        if(mostTrafficAirports.size() > 0){
+            for (int i = 0; i < mostTrafficAirports.size(); i++) {
+                categories.add(mostTrafficAirports.get(i).getKey());
+            }
+        }
+        xAxis.setCategories(categories);
+        BarChart mostTrafficAirport = new BarChart(xAxis, yAxis, getMostTrafficAirport());
+        mostTrafficAirport.setBarGap(0);
+        containCharts.getChildren().add(mostTrafficAirport);
+
+        categories.clear();
+        maxValue = mostPassengersFlights.size() > 0 ? mostPassengersFlights.get(0).getValue() : 0;
+        yAxis = new NumberAxis("Number of Passengers", 0, maxValue+5, 1);
+        if(mostPassengersFlights.size() > 0){
+            for (int i = 0; i < mostPassengersFlights.size(); i++) {
+                System.out.print(mostPassengersFlights.get(i).getValue() + ", ");
+                categories.add(mostPassengersFlights.get(i).getKey());
+            }
+        }
+        xAxis.setCategories(categories);
+        BarChart mostPassengersFlight = new BarChart(xAxis, yAxis, getMostPassengersFlight());
+        mostPassengersFlight.setBarGap(0);
+        containCharts.getChildren().add(mostPassengersFlight);
+
+        categories.clear();
+        maxValue = mostPassengersAirports.size() > 0 ? mostPassengersAirports.get(0).getValue() : 0;
+        yAxis = new NumberAxis("Number of Passengers", 0, maxValue+5, 1);
+        if(mostPassengersAirports.size() > 0){
+            for (int i = 0; i < mostPassengersAirports.size(); i++) {
+                categories.add(mostPassengersAirports.get(i).getKey());
+            }
+        }
+        xAxis.setCategories(categories);
+        BarChart mostPassengersAirport = new BarChart(xAxis, yAxis, getMostPassengersAirport());
+        mostPassengersAirport.setBarGap(0);
+        containCharts.getChildren().add(mostPassengersAirport);
     }
 
-    private ObservableList<XYChart.Series<String, Integer>> getMostTrafficAirport(){
-        ObservableList<XYChart.Series<String, Integer>> data = FXCollections.observableArrayList();
-        XYChart.Series<String, Integer> airport1 = new XYChart.Series<>();
-        XYChart.Series<String, Integer> airport2 = new XYChart.Series<>();
-        XYChart.Series<String, Integer> airport3 = new XYChart.Series<>();
-        XYChart.Series<String, Integer> airport4 = new XYChart.Series<>();
-        XYChart.Series<String, Integer> airport5 = new XYChart.Series<>();
+    private ObservableList<BarChart.Series<String, Integer>> getMostTrafficAirport(){
+        ObservableList<BarChart.Series<String, Integer>> data = FXCollections.observableArrayList();
+        for (int i = 0; i < mostTrafficAirports.size(); i++){
+            BarChart.Series<String, Integer> airport = new BarChart.Series<>();
+            airport.setName(airports.get(mostTrafficAirports.get(i).getKey()).getName());
+            airport.getData().add(new BarChart.Data(mostTrafficAirports.get(i).getKey(), mostTrafficAirports.get(i).getValue()));
+            data.add(airport);
+        }
+        return data;
+    }
 
-        results = Utils.mostTrafficAirport();
-        airport1.setName(airports.get(results.get(0).getKey()).getName());
-        airport1.getData().add(new XYChart.Data(results.get(0).getKey(), results.get(0).getValue()));
-        airport2.setName(airports.get(results.get(1).getKey()).getName());
-        airport2.getData().add(new XYChart.Data(results.get(1).getKey(), results.get(1).getValue()));
-        airport3.setName(airports.get(results.get(2).getKey()).getName());
-        airport3.getData().add(new XYChart.Data(results.get(2).getKey(), results.get(2).getValue()));
-        airport4.setName(airports.get(results.get(3).getKey()).getName());
-        airport4.getData().add(new XYChart.Data(results.get(3).getKey(), results.get(3).getValue()));
-        airport5.setName(airports.get(results.get(4).getKey()).getName());
-        airport5.getData().add(new XYChart.Data(results.get(4).getKey(), results.get(4).getValue()));
+    private ObservableList<BarChart.Series<String, Integer>> getMostPassengersFlight(){
+        ObservableList<BarChart.Series<String, Integer>> data = FXCollections.observableArrayList();
+        for (int i = 0; i < mostPassengersFlights.size(); i++){
+            BarChart.Series<String, Integer> flight = new BarChart.Series<>();
+            flight.setName(mostPassengersFlights.get(i).getKey());
+            flight.getData().add(new BarChart.Data(mostPassengersFlights.get(i).getKey(), mostPassengersFlights.get(i).getValue()));
+            data.add(flight);
+        }
+        return data;
+    }
 
-        data.addAll(airport1, airport2, airport3, airport4, airport5);
+    private ObservableList<BarChart.Series<String, Integer>> getMostPassengersAirport(){
+        ObservableList<BarChart.Series<String, Integer>> data = FXCollections.observableArrayList();
+        for (int i = 0; i < mostPassengersAirports.size(); i++){
+            BarChart.Series<String, Integer> airport = new BarChart.Series<>();
+            airport.setName(airports.get(mostTrafficAirports.get(i).getKey()).getName());
+            airport.getData().add(new BarChart.Data(mostPassengersAirports.get(i).getKey(), mostPassengersAirports.get(i).getValue()));
+            data.add(airport);
+        }
         return data;
     }
 
