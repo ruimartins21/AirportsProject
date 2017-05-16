@@ -74,9 +74,9 @@ public class Main {
 
         System.out.println("by monetary: ");
         System.out.println(airplane);
-        dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, airplane, "monetary");
+        dijkstraSP = new DijkstraSP(symbolGraph.G(), 0, airplane, "monetary");
 //        dijkstraSP.printAllConnections(symbolGraph.G(), gIdAirportOrig, null, "monetary", dijkstraSP);
-        utils.printShortestPath(dijkstraSP, symbolGraph, gIdAirportDest, airplane, "monetary");
+        utils.printShortestPath(dijkstraSP, symbolGraph, 1, airplane, "monetary");
 
         System.out.println("by time: ");
         dijkstraSP = new DijkstraSP(symbolGraph.G(), gIdAirportOrig, airplane, "time");
@@ -211,13 +211,54 @@ public class Main {
 
 //        remove a ariport of graph
         System.out.println("Remove OPO Airport of graph");
-        Utils.removeAirport(airportSearch);
-        System.out.println("Airport remove sucessefuly! :)\n\n");
+//        Utils.removeAirport(airportSearch);
+//        System.out.println("Airport remove sucessefuly! :)\n\n");
 
         System.out.println(utils.getSymbolGraph().G());
 
 //
 //        Utils.showGraphs();
+
+
+        //        adicionar aresta
+        Connection e = new Connection(31,29,2000.4,21000.5,-5.2);
+        Connection e2 = new Connection(0,1,277.0,21000.0,-5.0);
+        utils.getSymbolGraph().G().addEdge(e);
+
+        System.out.println(utils.getSymbolGraph().G());
+
+        System.out.println("-------\n\n\n\n");
+//        remover aresta
+        utils.getSymbolGraph().G().removeEdge(e);
+        utils.getSymbolGraph().G().removeEdge(e2);
+
+        System.out.println(utils.getSymbolGraph().G());
+
+
+//        add vertex to graph
+//        System.out.println("se contem OPO airport:  "+ utils.addVertexToGraph("RUI") + "\n\n");
+
+//        System.out.println(utils.getSymbolGraph().G());
+
+//        utils.getSymbolGraph().
+
+//        inserir um novo airport, tanto na separte como no graph
+        Airport airportI = new Airport("olamundo","OLA","Madrid","Spain","Europe",3.4f);
+        utils.newAirport(airportI);
+
+//        PrintInfo.allAirports(utils.getAirports());
+
+        System.out.println("------\n\n");
+
+        for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+            System.out.println(i + " - " + utils.getSymbolGraph().nameOf(i));
+        }
+        System.out.println(utils.getSymbolGraph().G());
+
+
+
+
+
 
 
 

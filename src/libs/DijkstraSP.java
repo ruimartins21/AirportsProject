@@ -233,29 +233,6 @@ public class DijkstraSP {
 
     public void printAllConnections(EdgeWeightedDigraph G, int s, Airplane airplane, String typeOfSearch, DijkstraSP sp) {
         // print shortest path
-//        for (int t = 0; t < G.V(); t++) {
-//            if (sp.hasPathTo(t)) {
-//                StdOut.printf("%d to %d  ", s, t, sp.distTo(t));
-//                for (Connection e : sp.pathTo(t)) {
-//                    StdOut.print(e.from() + "-" );
-//                }
-//                StdOut.println();
-//            }
-//            else {
-//                StdOut.printf("%d to %d         no path\n", s, t);
-//            }
-//        }
-
-
-//        In in = new In(args[0]);
-//        EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
-//        int s = Integer.parseInt(args[1]);
-
-        // compute shortest paths
-//        DijkstraSP sp = new DijkstraSP(G, s);
-
-
-        // print shortest path
         for (int t = 0; t < G.V(); t++) {
             if (sp.hasPathTo(t)) {
                 StdOut.printf("%d to %d : ", s, t);

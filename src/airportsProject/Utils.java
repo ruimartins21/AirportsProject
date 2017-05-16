@@ -96,8 +96,23 @@ public class Utils {
         if(remove.contains(airport.getCode())) // if the user is inserting an airport with a code equals to an airport removed before
             remove.remove(airport.getCode());
         airportST.put(airport.getCode(), airport);
-        log("airportST", "New airport [" + airportST.get(airport.getCode()).getCode() + "] \" Name:" + airportST.get(airport.getCode()).getName() + "\" Rating:" +
-                airportST.get(airport.getCode()).getRating());
+//        add airport to a vertice of graph
+        log("airportST", "New airport [" + airport.getCode() + "] \" Name:" + airport.getName() + "\" Rating:" +
+                airport.getRating());
+        if(!getSymbolGraph().contains(airport.getCode())){
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(".//data//backup.txt", true))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
+                bw.write(airport.getCode() + ";");
+                bw.newLine();
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                ImportFromFile.loadGraph();
+            } catch (WrongTypeFileException wt) {
+                System.out.println(wt.getMessage());
+            }
+        }
     }
 
     /**
