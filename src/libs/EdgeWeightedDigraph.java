@@ -13,7 +13,9 @@
 package libs;
 
 import airportsProject.Connection;
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 import java.io.Serializable;
 
@@ -172,6 +174,21 @@ public class EdgeWeightedDigraph implements Serializable {
         E++;
     }
 
+    /**
+     *  Removes the directed edge {@code e} to this edge-weighted digraph.
+     *
+     * @param e the edge
+     */
+    public void removeEdge(Connection e) {
+        int v = e.from();
+        int w = e.to();
+        validateVertex(v);
+        validateVertex(w);
+        adj[v].remove(e);
+        indegree[w]--;
+        E--;
+    }
+
 
     /**
      * Returns the directed edges incident from vertex {@code v}.
@@ -241,6 +258,7 @@ public class EdgeWeightedDigraph implements Serializable {
             s.append(v + ": ");
             for (Connection e : adj[v]) {
                 s.append("["+e + "]");
+//                s.append("["+e.from() + " -> "+  e.to() + " " + e.weight() + " " + e.getWindSpeed() + " "+  e.getAltitude() + " " + "] ");
             }
             s.append(NEWLINE);
         }
@@ -270,6 +288,8 @@ public class EdgeWeightedDigraph implements Serializable {
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
         StdOut.println(G);
     }
+
+
 
 
 

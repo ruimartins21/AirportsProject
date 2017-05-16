@@ -10,20 +10,20 @@ import java.io.Serializable;
  * it has weights like the altitude and wind speed that affects the cost of the flight
  */
 public class Connection extends DirectedEdge implements Serializable {
-    private float altitude;
-    private float windSpeed;
+    private double altitude;
+    private double windSpeed;
 
-    public Connection(int airportOrigin, int airportDestination, double distance, float altitude, float windSpeed) {
+    public Connection(int airportOrigin, int airportDestination, double distance, double altitude, double windSpeed) {
         super(airportOrigin, airportDestination, distance);
         this.altitude = altitude;
         this.windSpeed = windSpeed;
     }
 
-    public float getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
-    public float getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 

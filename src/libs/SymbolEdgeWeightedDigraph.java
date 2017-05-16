@@ -234,6 +234,18 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
         return st.contains(s);
     }
 
+    public ST<String, Integer> getSt() {
+        return st;
+    }
+
+    public String[] getKeys() {
+        return keys;
+    }
+
+    public void setKeys(String[] keys) {
+        this.keys = keys;
+    }
+
     /**
      * Returns the integer associated with the vertex named {@code s}.
      *
