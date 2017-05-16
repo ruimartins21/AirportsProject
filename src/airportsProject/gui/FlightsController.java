@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -245,8 +246,11 @@ public class FlightsController {
         newPane.getChildren().add(cost);
         // cost number
         Label costNumber = new Label(String.valueOf(formatter.format(flight.getCosts())));
-        costNumber.setLayoutX(375.0);
+        costNumber.setLayoutX(340.0);
         costNumber.setLayoutY(109.0);
+        costNumber.setPrefWidth(130);
+        costNumber.setMaxWidth(130);
+        costNumber.setAlignment(Pos.CENTER);
         costNumber.setTextFill(Color.WHITE);
         costNumber.setFont(Font.font("Helvetica", FontWeight.EXTRA_BOLD, 16.0));
         newPane.getChildren().add(costNumber);

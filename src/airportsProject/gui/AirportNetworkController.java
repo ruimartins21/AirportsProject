@@ -114,8 +114,8 @@ public class AirportNetworkController {
                 }
             }
         });
-        pin.setLayoutX(airport.getLongitude() - (34 / 2)); // 34 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
-        pin.setLayoutY(airport.getLatitude() - (45)); // 45 is the pin height
+        pin.setLayoutX(airport.getLongitude() - (24 / 2)); // 24 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
+        pin.setLayoutY(airport.getLatitude() - 33); // 33 is the pin height
         pin.setVisible(true);
         mapPane.getChildren().add(pin);
     }
@@ -159,6 +159,7 @@ public class AirportNetworkController {
 
     private void updateList(){
         if(updated){
+            airports = utils.getAirports();
             containAirports.getChildren().clear(); // removes the previous list
             mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
             for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {

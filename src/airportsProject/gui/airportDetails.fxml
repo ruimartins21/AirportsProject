@@ -168,7 +168,7 @@
                               <Font name="Helvetica Light" size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="airportRating" layoutX="118.0" layoutY="10.0" textFill="#4185d1">
+                        <Label fx:id="airportRating" layoutX="118.0" layoutY="6.0" textFill="#4185d1">
                            <font>
                               <Font name="Helvetica" size="20.0" />
                            </font>
@@ -233,6 +233,9 @@
                      <font>
                         <Font name="Helvetica" size="20.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
                   </Label>
                   <VBox fx:id="containConnections" alignment="TOP_CENTER">
                      <children>

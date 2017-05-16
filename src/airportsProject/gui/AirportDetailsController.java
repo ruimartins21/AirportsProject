@@ -68,6 +68,7 @@ public class AirportDetailsController {
     private Airport airport;
 
     public void initialize(){
+        mapPin.getStyleClass().add("pin");
         airport = airports.get(code);
         // remove scroll bars and prevent scrolls with mouse on the map
         map.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -160,8 +161,8 @@ public class AirportDetailsController {
         timeline.play();
 
         // move the pin
-        mapPin.setLayoutX(airport.getLongitude() - (34 / 2)); // 34 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
-        mapPin.setLayoutY(airport.getLatitude() - (45)); // 45 is the pin height
+        mapPin.setLayoutX(airport.getLongitude() - (24 / 2)); // 24 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
+        mapPin.setLayoutY(airport.getLatitude() - 33); // 33 is the pin height
         mapPin.setVisible(true);
     }
 

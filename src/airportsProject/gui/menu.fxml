@@ -11,16 +11,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="menuContainer" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.MenuController">
+<VBox fx:id="menuContainer" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.MenuController">
     <children>
-        <ImageView fx:id="goBack" fitHeight="54.0" fitWidth="57.0" onMouseClicked="#optionClicked" translateX="-450.0" translateY="-90.0">
-             <image>
-                <Image url="@images/lastPage.png" />
-             </image>
-             <cursor>
-                <Cursor fx:constant="HAND" />
-             </cursor>
-        </ImageView>
+      <Pane prefHeight="74.0" prefWidth="1000.0">
+         <children>
+            <Pane fx:id="goBack" layoutX="7.0" layoutY="18.0" onMouseClicked="#optionClicked" prefHeight="53.0" prefWidth="75.0">
+               <children>
+                    <ImageView fitHeight="54.0" fitWidth="57.0" layoutX="459.0" layoutY="90.0" translateX="-450.0" translateY="-90.0">
+                         <image>
+                            <Image url="@images/lastPage.png" />
+                         </image>
+                    </ImageView>
+               </children>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Pane>
+         </children>
+      </Pane>
+      <Region prefHeight="84.0" prefWidth="1000.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1000.0" text="AIRPORTS MANAGEMENT" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" VBox.vgrow="NEVER">
             <font>
                 <Font name="Helvetica Light" size="40.0" />

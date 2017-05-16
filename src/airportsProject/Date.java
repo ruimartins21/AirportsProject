@@ -170,7 +170,7 @@ public class Date implements Comparable<Date>, Serializable {
           newDate.incrementDate();
       }
       newDate.hour += d.getHour();
-      if(newDate.hour > 24){ // it reached the 24 hours of a day, it is time to increment the day
+      if(newDate.hour >= 24){ // it reached the 24 hours of a day, it is time to increment the day
           newDate.hour -= 24;
           newDate.incrementDate();
       }
@@ -178,7 +178,7 @@ public class Date implements Comparable<Date>, Serializable {
       if(newDate.minute > 60){ // it reached the 24 hours of a day, it is time to increment the day
           newDate.minute -= 60;
           newDate.hour += 1;
-          if(newDate.hour > 24){ // it reached the 24 hours of a day, it is time to increment the day
+          if(newDate.hour >= 24){ // it reached the 24 hours of a day, it is time to increment the day
               newDate.hour -= 24;
               newDate.incrementDate();
           }
@@ -190,7 +190,7 @@ public class Date implements Comparable<Date>, Serializable {
           if(newDate.minute > 60){ // it reached the 24 hours of a day, it is time to increment the day
               newDate.minute -= 60;
               newDate.hour += 1;
-              if(newDate.hour > 24){ // it reached the 24 hours of a day, it is time to increment the day
+              if(newDate.hour >= 24){ // it reached the 24 hours of a day, it is time to increment the day
                   newDate.hour -= 24;
                   newDate.incrementDate();
               }

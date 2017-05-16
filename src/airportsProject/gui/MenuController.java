@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -36,7 +35,7 @@ public class MenuController {
     @FXML
     private VBox menuContainer;
     @FXML
-    private ImageView goBack;
+    private Pane goBack;
 
     @FXML
     void hoverIn(MouseEvent event) {

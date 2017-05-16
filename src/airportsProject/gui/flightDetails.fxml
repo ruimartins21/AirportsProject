@@ -54,7 +54,7 @@
                               <Font name="Helvetica" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="254.0" layoutY="-2.0" text="25 MARCH 2017" textFill="WHITE">
+                        <Label fx:id="flightDate" layoutX="254.0" layoutY="-2.0" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Bold" size="15.0" />
                            </font>
@@ -231,7 +231,7 @@
                                           <Font name="Helvetica" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="airplaneSeats" layoutX="121.0" layoutY="152.0" textFill="#8a8a8a">
+                                    <Label fx:id="airplaneSeats" layoutX="122.0" layoutY="152.0" prefHeight="15.0" prefWidth="29.0" textFill="#8a8a8a">
                                        <font>
                                           <Font name="Helvetica Light" size="12.0" />
                                        </font>
@@ -241,6 +241,11 @@
                                           <Image url="@images/seats.png" />
                                        </image>
                                     </ImageView>
+                                    <Label fx:id="airplaneUsedSeats" alignment="CENTER" layoutX="145.0" layoutY="152.0" prefHeight="15.0" prefWidth="79.0" textFill="#8a8a8a">
+                                       <font>
+                                          <Font name="Helvetica Light" size="12.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </Pane>
                               <Pane maxWidth="240.0" prefHeight="200.0" prefWidth="240.0">

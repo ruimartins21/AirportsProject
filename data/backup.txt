@@ -1,47 +1,51 @@
 #
 airportName;airportCode;city;country;continent;rating;
-Narita;NRT;Tokyo;Japan;Asia;9.8;
-Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
-Houari Boumediene;ALG;Algiers;Algeria;Africa;7.6;
-Moscou Domodedovo;DME;Moscow;Russia;Asia;7.8;
-Gatwick;LGW;Londres;UK;Europe;8.1;
-Internacional do Recife/Guararapes Gilberto Freyre;REC;Recife;Brazil;South America;8.4;
-Tito Minniti de Reggio di Calabria;REG;Reggio Calabria;Italy;Europe;8.4;
-Internacional Comodoro Arturo Merino Benitez;SCL;Santiago de Chile;Chile;South America;8.6;
-Pierre Elliott Trudeau;YUL;Montreal;Canada;North America;8.7;
 Internacional Jorge Chávez;LIM;Lima;Peru;South America;8.9;
-Rio Galeão;GIG;Rio de Janeiro;Brazil;South America;5.3;
-Warsaw Chopin Airport;WAW;Warsaw;Poland;Europe;7.8;
-Boryspil;KBP;Kiev;Ukraine;Europe;8.0;
-Milão-Malpensa;MXP;Milão;Italy;Europe;8.4;
+Pierre Elliott Trudeau;YUL;Montreal;Canada;North America;8.7;
+Internacional Comodoro Arturo Merino Benitez;SCL;Santiago de Chile;Chile;South America;8.6;
+Tito Minniti de Reggio di Calabria;REG;Reggio Calabria;Italy;Europe;8.4;
+Internacional do Recife/Guararapes Gilberto Freyre;REC;Recife;Brazil;South America;8.4;
+Gatwick;LGW;Londres;UK;Europe;8.1;
+Moscou Domodedovo;DME;Moscow;Russia;Asia;7.8;
+Houari Boumediene;ALG;Algiers;Algeria;Africa;7.6;
+Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
+Narita;NRT;Tokyo;Japan;Asia;9.8;
 Frankfurt;FRA;Frankfurt;Germany;Europe;9.6;
-Charles de Gaulle;CDG;Paris;France;Europe;8.1;
-Kingsford Smith de Sydney;SYD;Sydney;Australia;Oceania;9.3;
-Beijing International;PEK;Beijing;China;Asia;9.8;
-Joanesburgo;JNB;Joanesburgo;South Africa;Africa;8.0;
-Internacional Fiumicino-Leonardo da Vinci;FCO;Roma;Italy;Europe;8.3;
-Humberto Delgado;LIS;Lisboa;Portugal;Europe;8.5;
-Internacional El Dorado;BOG;Bogotá;Colombia;South America;9.0;
-Internacional de Dubai;DXB;Dubai;Dubai;Asia;9.4;
-Francisco Sá Carneiro;OPO;Porto;Portugal;Europe;9.8;
+Milão-Malpensa;MXP;Milão;Italy;Europe;8.4;
+Boryspil;KBP;Kiev;Ukraine;Europe;8.0;
+Warsaw Chopin Airport;WAW;Warsaw;Poland;Europe;7.8;
+Rio Galeão;GIG;Rio de Janeiro;Brazil;South America;5.3;
 Ben Gurion;TLV;Tel Aviv;Israel;Asia;10.0;
-Henri Coanda de Bucareste;OTP;Bucharest;Romenia;Europe;7.8;
-Internacional Quatro de Fevereiro;LAD;Luanda;Angola;Africa;4.3;
-International Soekarno-Hatta;CGK;Jakarta;Indonesia;Asia;7.8;
-Internacional Rafael Nuñez;MVD;Montevideu;Uruguai;South America;8.0;
-Amsterdam Schiphol;AMS;Amsterdão;Netherland;Europe;8.1;
-Internacional de Los Angeles;LAX;Los Angeles;US;North America;8.6;
-Kastrup;CPH;Copenhaga;Denmark;Europe;8.7;
+Francisco Sá Carneiro;OPO;Porto;Portugal;Europe;9.8;
+Internacional de Dubai;DXB;Dubai;Dubai;Asia;9.4;
+Internacional El Dorado;BOG;Bogotá;Colombia;South America;9.0;
+Humberto Delgado;LIS;Lisboa;Portugal;Europe;8.5;
+Internacional Fiumicino-Leonardo da Vinci;FCO;Roma;Italy;Europe;8.3;
+Joanesburgo;JNB;Joanesburgo;South Africa;Africa;8.0;
+Beijing International;PEK;Beijing;China;Asia;9.8;
+Kingsford Smith de Sydney;SYD;Sydney;Australia;Oceania;9.3;
+Charles de Gaulle;CDG;Paris;France;Europe;8.1;
 Internacional John Kennedy;JFK;Nova York;US;North America;9.3;
+Kastrup;CPH;Copenhaga;Denmark;Europe;8.7;
+Internacional de Los Angeles;LAX;Los Angeles;US;North America;8.6;
+Amsterdam Schiphol;AMS;Amsterdão;Netherland;Europe;8.1;
+Internacional Rafael Nuñez;MVD;Montevideu;Uruguai;South America;8.0;
+International Soekarno-Hatta;CGK;Jakarta;Indonesia;Asia;7.8;
+Internacional Quatro de Fevereiro;LAD;Luanda;Angola;Africa;4.3;
+Henri Coanda de Bucareste;OTP;Bucharest;Romenia;Europe;7.8;
 #
 name;nationality;
-Qantas;Australia;
 Lufthansa;Germany;
+Qantas;Australia;
 TAP Air Portugal;Portugal;
 Thai Airways;Thailand;
 Qatar Airways;Qatar;
 #
 planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passengers;fuelCap
+1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;LGW;380;274876;
+2;Airbus A340;D. João de Castro;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
+3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
+4;Airbus A340;D. Francisco de Almeida;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 5;Airbus A331;Pero Vaz de Caminha;TAP Air Portugal;829.0;12000.0;5900.0;SCL;236;29580;
 6;Airbus A331;Luís vaz de camões;TAP Air Portugal;829.0;12000.0;5900.0;AMS;236;29580;
 7;Airbus A331;Amalia Rodrigues;TAP Air Portugal;829.0;12000.0;5900.0;LGW;236;29580;
@@ -64,7 +68,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 24;Boeing 787;Chaturaphak Phiman;Thai Airways;958.0;12000.0;15190.0;BOM;420;126206;
 25;Boeing 787;Wapi Pathum;Thai Airways;958.0;12000.0;15190.0;MXP;420;126206;
 26;Boeing 787;pran Buri;Thai Airways;958.0;12000.0;15190.0;MXP;420;126206;
-27;Boeing 787;Kosum Phisai;Thai Airways;958.0;12000.0;15190.0;JFK;420;126206;
+27;Boeing 787;Kosum Phisai;Thai Airways;958.0;12000.0;15190.0;ALG;420;126206;
 28;Boeing 787;Kong Krailat;Thai Airways;958.0;12000.0;15190.0;AMS;420;126206;
 29;ATR 72;Apasara;Thai Airways;511.0;5000.0;1528.0;KBP;74;5700;
 30;ATR 72;Chang;Thai Airways;511.0;5000.0;1528.0;CPH;74;5700;
@@ -76,38 +80,43 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 36;Airbus A319;Eca de Queiros;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
-distance;cost;duration;date;passengers;plane;originAirport;destinAirport;connections;
-3
+date;passengers;plane;originAirport;destinAirport;connections;
+15/5/2017/14/25/22;123;27;JFK;LIS;JFK|OPO|LIS|;
+15/5/2017/14/25/29;32;1;OPO;LGW;OPO|LGW|;
+15/5/2017/14/25/36;42;27;LIS;ALG;LIS|ALG|;
+#
 originAirport;airportCode;distance;windSpeed;airTunnel;
-LIS;ALG;1110.0;-4.6;26000.0
-LGW;CPH;984.0;6.6;28000.0;CDG;308.0;-2.8;21000.0;AMS;365.0;2.3;26500.0
-CDG;ALG;1372.0;-4.6;30100.0;WAW;1344.0;3.5;28000.0;LGW;308.0;-2.8;21000.0
-FRA;DME;2049.0;7.8;31500.0;AMS;367.0;2.3;21000.0
-AMS;CPH;772.0;5.4;26000.0;FRA;367.0;2.3;21000.0
-WAW;CDG;1344.0;-3.5;28000.0
-FCO;ALG;963.0;-3.1;25200.0;OTP;1165.0;4.3;27000.0;REG;506.0;-2.6;21500.0;MXP;512.0;2.9;21500.0
-MXP;FCO;512.0;-2.9;21500.0
-REG;FCO;506.0;2.6;21500.0
-CPH;AMS;772.0;-5.4;26000.0
-OTP;TLV;1594.0;-4.9;27300.0;KBP;737.0;4.7;26000.0;FCO;1165.0;-4.3;27000.0
-KBP;DME;734.0;-7.9;26500.0;OTP;737.0;-4.7;26000.0
-DME;DXB;3646.0;-5.8;31800.0;FRA;2049.0;-7.8;31500.0
-DXB;CGK;6553.0;-6.7;37500.0;TLV;2133.0;5.1;31600.0;DME;3646.0;5.8;31800.0
-TLV;JNB;6509.0;-3.6;37500.0;BOM;4050.0;-6.2;32100.0;DXB;2133.0;-5.1;31600.0;ALG;2994.0;4.3;31500.0
-BOM;CGK;4647.0;-3.1;33100.0;PEK;4770.0;-5.4;33200.0;TLV;4050.0;6.2;32100.0
-PEK;NRT;2136.0;-4.5;31600.0;BOM;4770.0;5.4;33200.0
-NRT;LAX;8760.0;6.9;39500.0;PEK;2136.0;4.5;31600.0
-CGK;SYD;5523.0;-6.3;33600.0;PEK;5243.0;2.1;33500.0;DXB;6553.0;6.7;37500.0
-ALG;TLV;2994.0;-4.3;31500.0;LAD;5176.0;-5.3;33400.0;CDG;1372.0;4.6;30100.0;LIS;1110.0;4.6;26000.0
-LAD;REC;5299.0;8.3;33500.0;JNB;2493.0;-5.9;31800.0;ALG;5176.0;5.3;33400.0
-JNB;TLV;6509.0;3.6;37500.0;LAD;2493.0;5.9;31800.0
-SYD;CGK;5523.0;6.3;33600.0
-JFK;BOG;4001.0;-5.1;32100.0;GIG;7739.0;-7.6;39000.0;YUL;538.0;7.4;21600.0
-LAX;YUL;3977.0;4.1;32100.0;NRT;8760.0;-6.9;39500.0
-YUL;JFK;538.0;-7.4;21600.0;LAX;3977.0;-4.1;32100.0
-GIG;MVD;1826.0;-4.5;32100.0;REC;1862.0;3.5;31200.0;JFK;7739.0;7.6;39000.0
-REC;LAD;5299.0;-8.3;33500.0;GIG;1862.0;-3.5;31200.0
-MVD;SCL;1370.0;2.4;26300.0;GIG;1826.0;4.5;32100.0
-SCL;MVD;1370.0;-2.4;26300.0
-BOG;JFK;4001.0;5.1;32100.0;LIM;1890.0;-4.8;31200.0;GIG;4546.0;-6.1;33100.0
-LIM;BOG;1890.0;4.8;31200.0
+3
+OPO;GIG;7974.0;39000.0;6.6;JFK;5339.0;37000.0;6.8;FCO;1741.0;27800.0;2.0;FRA;1655.0;27500.0;6.0;LGW;1206.0;27000.0;7.0;LIS;277.0;21000.0;-5.0
+LIS;ALG;1110.0;26000.0;-4.6;OPO;277.0;21000.0;5.0
+LGW;CPH;984.0;28000.0;6.6;CDG;308.0;21000.0;-2.8;AMS;365.0;26500.0;2.3;OPO;1206.0;27000.0;-7.0
+CDG;ALG;1372.0;30100.0;-4.6;WAW;1344.0;28000.0;3.5;LGW;308.0;21000.0;-2.8
+FRA;DME;2049.0;31500.0;7.8;AMS;367.0;21000.0;2.3;OPO;1655.0;27500.0;-6.0
+AMS;CPH;772.0;26000.0;5.4;FRA;367.0;21000.0;2.3
+WAW;CDG;1344.0;28000.0;-3.5
+FCO;ALG;963.0;25200.0;-3.1;OTP;1165.0;27000.0;4.3;REG;506.0;21500.0;-2.6;MXP;512.0;21500.0;2.9;OPO;1741.0;27800.0;-2.0
+MXP;FCO;512.0;21500.0;-2.9
+REG;FCO;506.0;21500.0;2.6
+CPH;AMS;772.0;26000.0;-5.4
+OTP;TLV;1594.0;27300.0;-4.9;KBP;737.0;26000.0;4.7;FCO;1165.0;27000.0;-4.3
+KBP;DME;734.0;26500.0;-7.9;OTP;737.0;26000.0;-4.7
+DME;DXB;3646.0;31800.0;-5.8;FRA;2049.0;31500.0;-7.8
+DXB;CGK;6553.0;37500.0;-6.7;TLV;2133.0;31600.0;5.1;DME;3646.0;31800.0;5.8
+TLV;JNB;6509.0;37500.0;-3.6;BOM;4050.0;32100.0;-6.2;DXB;2133.0;31600.0;-5.1;ALG;2994.0;31500.0;4.3
+BOM;CGK;4647.0;33100.0;-3.1;PEK;4770.0;33200.0;-5.4;TLV;4050.0;32100.0;6.2
+PEK;NRT;2136.0;31600.0;-4.5;BOM;4770.0;33200.0;5.4
+NRT;LAX;8760.0;39500.0;6.9;PEK;2136.0;31600.0;4.5
+CGK;SYD;5523.0;33600.0;-6.3;PEK;5243.0;33500.0;2.1;DXB;6553.0;37500.0;6.7
+ALG;TLV;2994.0;31500.0;-4.3;LAD;5176.0;33400.0;-5.3;CDG;1372.0;30100.0;4.6;LIS;1110.0;26000.0;4.6
+LAD;REC;5299.0;33500.0;8.3;JNB;2493.0;31800.0;-5.9;ALG;5176.0;33400.0;5.3
+JNB;TLV;6509.0;37500.0;3.6;LAD;2493.0;31800.0;5.9
+SYD;CGK;5523.0;33600.0;6.3
+JFK;BOG;4001.0;32100.0;-5.1;GIG;7739.0;39000.0;-7.6;YUL;538.0;21600.0;7.4;OPO;5339.0;37000.0;-6.8
+LAX;YUL;3977.0;32100.0;4.1;NRT;8760.0;39500.0;-6.9
+YUL;JFK;538.0;21600.0;-7.4;LAX;3977.0;32100.0;-4.1
+GIG;MVD;1826.0;32100.0;-4.5;REC;1862.0;31200.0;3.5;OPO;7974.0;39000.0;6.6;JFK;7739.0;39000.0;7.6
+REC;LAD;5299.0;33500.0;-8.3;GIG;1862.0;31200.0;-3.5
+MVD;SCL;1370.0;26300.0;2.4;GIG;1826.0;32100.0;4.5
+SCL;MVD;1370.0;26300.0;-2.4
+BOG;JFK;4001.0;32100.0;5.1;LIM;1890.0;31200.0;-4.8;GIG;4546.0;33100.0;-6.1
+LIM;BOG;1890.0;31200.0;4.8

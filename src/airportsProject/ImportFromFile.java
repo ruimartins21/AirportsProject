@@ -4,6 +4,7 @@ import airportsProject.Exceptions.WrongTypeFileException;
 import libs.In;
 import libs.RedBlackBST;
 import libs.SeparateChainingHashST;
+import libs.SymbolEdgeWeightedDigraph;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -106,21 +107,21 @@ public class ImportFromFile {
      * @param airportST will populate this ST with the airports
      * @param airlineST will populate this ST with the airlines
      * @param airplaneST will populate this ST with the airplanes
-     * @param flightST will populate this ST with the flights
-     * @return returns false if the file is empty and true if the read was successful and there's data to begin the program
      */
     public static void loadProgram(String path, SeparateChainingHashST<String, Airport> airportST, SeparateChainingHashST<String, Airline> airlineST,
-                                      RedBlackBST<Integer, Airplane> airplaneST, RedBlackBST<Date, Flight> flightST) throws WrongTypeFileException {
+                                      RedBlackBST<Integer, Airplane> airplaneST) throws WrongTypeFileException {
+        String sb = "";
         if (path.length() != 0 && path.contains("bin")) {
-            try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream(path))) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
                 // need to read in the same order that it was saved
-                setAirports((SeparateChainingHashST<String, Airport>) oos.readObject());
-                setAirlines((SeparateChainingHashST<String, Airline>) oos.readObject());
-                setAirplanes((RedBlackBST<Integer, Airplane>) oos.readObject());
-                setFlights((RedBlackBST<Date, Flight>) oos.readObject());
-                oos.close();
+                setAirports((SeparateChainingHashST<String, Airport>) ois.readObject());
+                setAirlines((SeparateChainingHashST<String, Airline>) ois.readObject());
+                setAirplanes((RedBlackBST<Integer, Airplane>) ois.readObject());
+                setFlights((RedBlackBST<Date, Flight>) ois.readObject());
+                setSymbolGraph((SymbolEdgeWeightedDigraph) ois.readObject());
+                ois.close();
             } catch (Exception ex) {
-                // wrong file format
+                System.out.println("Wrong file format");
             }
         } else {
             In in;
@@ -177,19 +178,7 @@ public class ImportFromFile {
                             thisPlaneAirline.addPlane(newPlane); // adds this new plane to the respective airline
                             airplaneST.put(id - 1, newPlane); // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
                         } else if (j == 3) { // flights
-                            float distance = Float.parseFloat(fileContent[0]);
-                            float costs = Float.parseFloat(fileContent[1]);
-
-                            String[] durationText = fileContent[2].split("/");
-                            int durationDay = Integer.parseInt(durationText[0]);
-                            int durationMonth = Integer.parseInt(durationText[1]);
-                            int durationYear = Integer.parseInt(durationText[2]);
-                            int durationHour = Integer.parseInt(durationText[3]);
-                            int durationMinute = Integer.parseInt(durationText[4]);
-                            int durationSecond = Integer.parseInt(durationText[5]);
-                            Date duration = new Date(durationDay, durationMonth, durationYear, durationHour, durationMinute, durationSecond);
-
-                            String[] dateText = fileContent[3].split("/");
+                            String[] dateText = fileContent[0].split("/");
                             int day = Integer.parseInt(dateText[0]);
                             int month = Integer.parseInt(dateText[1]);
                             int year = Integer.parseInt(dateText[2]);
@@ -198,15 +187,23 @@ public class ImportFromFile {
                             int second = Integer.parseInt(dateText[5]);
                             Date flightDate = new Date(day, month, year, hour, minute, second);
 
-                            int passengers = Integer.parseInt(fileContent[4]);
-                            int airplaneId = Integer.parseInt(fileContent[5]);
-                            Airplane airplane = airplaneST.get(airplaneId);
-                            Airport airportOfOrigin = airportST.get(fileContent[6]);
-                            Airport airportOfDestination = airportST.get(fileContent[7]);
-                            String[] connections = fileContent[8].split("\\|");
+                            int passengers = Integer.parseInt(fileContent[1]);
+                            int airplaneId = Integer.parseInt(fileContent[2]);
+                            Airplane airplane = airplaneST.get(airplaneId-1);
+                            Airport airportOfOrigin = airportST.get(fileContent[3]);
+                            Airport airportOfDestination = airportST.get(fileContent[4]);
+                            String[] connections = fileContent[5].split("\\|");
                             ArrayList<String> conects = new ArrayList<>();
                             conects.addAll(Arrays.asList(connections));
                             Utils.getInstance().newFlight(null, null, flightDate, passengers, airplane, airportOfOrigin, airportOfDestination, 0, conects);
+                        } else if (j == 4) { // graph
+                            if(i == 1){
+                                // ignores this line, it is the number of weights
+                            }else{
+                                for (int k = 0; k < fileContent.length; k++)
+                                    sb = sb + fileContent[k] + ";";
+                                sb = sb + "\n";
+                            }
                         }
                     }
                     i++;
@@ -214,6 +211,9 @@ public class ImportFromFile {
             }
             if (j < 3) { // it didn't load the correct information
                 throw new WrongTypeFileException("Wrong type of file selected");
+            }else{ // for the graph, it stores all the info on a string first to send to the function now
+                SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(sb);
+                setSymbolGraph(symbolGraph);
             }
         }
     }

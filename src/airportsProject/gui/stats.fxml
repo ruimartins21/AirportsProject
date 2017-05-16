@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airportsProject.gui.StatsController">
    <children>
-       <ImageView fx:id="goBack" fitHeight="54.0" fitWidth="57.0" onMouseClicked="#optionClicked" translateX="-450.0" translateY="10.0">
-           <image>
-               <Image url="@images/lastPage.png" />
-           </image>
-           <cursor>
-               <Cursor fx:constant="HAND" />
-           </cursor>
-       </ImageView>
+      <Pane prefHeight="72.0" prefWidth="1000.0">
+         <children>
+            <Pane fx:id="goBack" layoutX="7.0" layoutY="17.0" onMouseClicked="#optionClicked" prefHeight="53.0" prefWidth="75.0">
+               <children>
+                  <ImageView fitHeight="54.0" fitWidth="57.0" layoutX="459.0" layoutY="90.0" translateX="-450.0" translateY="-90.0">
+                     <image>
+                        <Image url="@images/lastPage.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Pane>
+         </children>
+      </Pane>
       <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="1000.0" text="STATISTICS" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" VBox.vgrow="NEVER">
          <font>
             <Font name="Helvetica Light" size="40.0" />
@@ -26,7 +38,67 @@
       </Label>
       <Region prefHeight="20.0" prefWidth="1000.0" />
       <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="underLine" />
-      <Region prefHeight="30.0" prefWidth="1000.0" />
-      <HBox fx:id="containCharts" alignment="CENTER" prefWidth="0.0" />
+      <Region prefHeight="55.0" prefWidth="1000.0" />
+      <Pane prefHeight="29.0" prefWidth="1000.0">
+         <children>
+            <Label layoutX="125.0" layoutY="4.0" text="Most Traffic Airports" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="445.0" layoutY="4.0" text="Most Passengers Flight" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="779.0" layoutY="4.0" text="Most Passengers Airport" textFill="WHITE">
+               <font>
+                  <Font name="Helvetica Light" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="75.0" layoutY="4.0" text="TOP 5" textFill="#4185d1">
+               <font>
+                  <Font name="Helvetica Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="396.0" layoutY="4.0" text="TOP 5" textFill="#4185d1">
+               <font>
+                  <Font name="Helvetica Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="729.0" layoutY="4.0" text="TOP 5" textFill="#4185d1">
+               <font>
+                  <Font name="Helvetica Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <HBox fx:id="containCharts" alignment="CENTER" prefWidth="0.0">
+         <children>
+            <LineChart fx:id="mostTrafficAirport" prefHeight="300.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="mostPassengersFlight" prefHeight="300.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="mostPassengersAirport" prefHeight="300.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children></HBox>
    </children>
 </VBox>

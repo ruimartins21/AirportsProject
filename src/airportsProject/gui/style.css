@@ -93,6 +93,8 @@
     -fx-shape: "M13.558,0C6.07,0,0,6.07,0,13.558s13.558,22.346,13.558,22.346s13.558-14.858,13.558-22.346S21.045,0,13.558,0z M13.558,20.762c-4.084,0-7.395-3.311-7.395-7.395s3.311-7.395,7.395-7.395c4.084,0,7.396,3.311,7.396,7.395 S17.642,20.762,13.558,20.762z";
     -fx-background-color:white;
     -fx-background-insets: 0, 2;
+    -fx-border-width: 1px;
+    -fx-border-color: #4185d1;
     -fx-pref-width: 24;
     -fx-pref-height: 33;
 }
@@ -225,7 +227,6 @@
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-show-week-numbers: false;
-    /*-fx-font-size:12px;*/
     -fx-font-family: "Helvetica light";
 }
 .date-picker .text-field{
@@ -247,7 +248,6 @@
     -fx-pref-height: 23px;
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
-    /*-fx-background-position: center;*/
 }
 .underlineInput{
     -fx-text-fill: white;
@@ -258,4 +258,33 @@
 }
 .routeItem{
     -fx-background-color: rgba(255, 255, 255, 0.2) ;
+}
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+.chart .chart-series-line {
+    -fx-stroke-width: 4px;
+    -fx-stroke:#4185d1;
+}
+.chart .chart-legend{
+    -fx-background-color: transparent;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: transparent;
+}
+.axis {
+    -fx-font-size: 1.4em;
+    -fx-tick-label-fill: white;
+    -fx-font-family: Helvetica;
+    /*-fx-tick-length: 20;*/
+    /*-fx-minor-tick-length: 10;*/
+}
+.chart-legend-item-symbol{
+    -fx-background-radius: 30px;
+}
+.chart-legend-item{
+    -fx-text-fill: white;
 }
