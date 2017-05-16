@@ -253,7 +253,7 @@ public class Main {
         for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
             System.out.println(i + " - " + utils.getSymbolGraph().nameOf(i));
         }
-//        System.out.println(utils.getSymbolGraph().G());
+        System.out.println(utils.getSymbolGraph().G());
 
 
 
