@@ -20,7 +20,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import static airportsProject.Utils.euroValue;
 
 public class NewFlightDialogController {
     @FXML
@@ -137,7 +136,7 @@ public class NewFlightDialogController {
                if(show){
                    showRoute(dijkstraSP, destinPos);
                    totalLabel.setText("Total Cost: ");
-                   totalValue.setText(euroValue * (double) Math.round(dijkstraSP.distTo(destinPos) * 100) / 100f + " €");
+                   totalValue.setText(dijkstraSP.distTo(destinPos) + " €");
                }
                break;
            case "Fastest Flight":
@@ -232,7 +231,7 @@ public class NewFlightDialogController {
                 weightNumber = new Label(formatter.format(con.weight()));
                 break;
             case "Cheapest Flight":
-                weightNumber = new Label("" + euroValue * (double) Math.round(airplaneUsed.getAirplaneCost(con) * 100) / 100f);
+                weightNumber = new Label("" + airplaneUsed.getAirplaneCost(con));
                 break;
             case "Fastest Flight":
                 weightNumber = new Label(Date.convertTime(airplaneUsed.getFlightDuration(con)));

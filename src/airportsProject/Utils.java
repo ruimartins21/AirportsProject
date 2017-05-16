@@ -584,7 +584,8 @@ public class Utils {
             if (typeOfSearch.compareTo("distance") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + e.weight() + " Km");
             } else if (typeOfSearch.compareTo("monetary") == 0) {
-                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
+                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " +airplane.getAirplaneCost(e) + " €");
+//                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
             } else if (typeOfSearch.compareTo("time") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : ");
                 System.out.println(Date.convertTime(airplane.getFlightDuration(e)));
@@ -597,7 +598,8 @@ public class Utils {
         } else if (typeOfSearch.compareTo("distance") == 0) {
             System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " km");
         } else if (typeOfSearch.compareTo("monetary") == 0) {
-            System.out.println("Total Cost: " + euroValue * (double) Math.round(dijkstraSP.distTo(airportOfDestination) * 100) / 100f + " €");
+            System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " €");
+//            System.out.println("Total Cost: " + euroValue * (double) Math.round(dijkstraSP.distTo(airportOfDestination) * 100) / 100f + " €");
         }
         System.out.println();
     }

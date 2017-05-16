@@ -92,8 +92,8 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
             for (int i = 1; i < a.length; i += 4) {
                 int w = st.get(a[i]);
                 float distance = Float.parseFloat(a[i + 1]);
-                float windSpeed = Float.parseFloat(a[i + 3]);
-                float altitude = Float.parseFloat(a[i + 2]);
+                float windSpeed = Float.parseFloat(a[i + 2]);
+                float altitude = Float.parseFloat(a[i + 3]);
                 Connection c = new Connection(v, w, distance, altitude, windSpeed);
                 graph.addEdge(c);
             }
@@ -194,8 +194,8 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
                     }
                     int w = st.get(a[i]);
                     float distance = Float.parseFloat(a[i + 1]);
-                    float windSpeed = Float.parseFloat(a[i + 3]);
-                    float altitude = Float.parseFloat(a[i + 2]);
+                    float windSpeed = Float.parseFloat(a[i + 2]);
+                    float altitude = Float.parseFloat(a[i + 3]);
                     Connection c = new Connection(v, w, distance, altitude, windSpeed);
                     graph.addEdge(c);
                 }
@@ -216,8 +216,8 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
                     index++;
                 }
                 float distance = Float.parseFloat(a[i + 1]);
-                float windSpeed = Float.parseFloat(a[i + 3]);
-                float altitude = Float.parseFloat(a[i + 2]);
+                float windSpeed = Float.parseFloat(a[i + 2]);
+                float altitude = Float.parseFloat(a[i + 3]);
                 Connection c = new Connection(v, w, distance, altitude, windSpeed);
                 graph.addEdge(c);
             }

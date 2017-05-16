@@ -113,8 +113,8 @@ public class Airplane implements Serializable {
      */
     private float planeConsumption() {
 //        System.out.println("getFuelCapacity: " + this.getFuelCapacity() + "Max range: " + this.getMaxRange());
-//        System.out.println("total: " + (1000*(this.getFuelCapacity()/this.getMaxRange())));
-        return 1000*(this.getFuelCapacity()/this.getMaxRange());
+        System.out.println("total: " + this.getFuelCapacity() + " " + this.getMaxRange());
+        return 1000*this.getFuelCapacity()/this.getMaxRange();
     }
 
     /**
@@ -146,28 +146,59 @@ public class Airplane implements Serializable {
      */
     public double getAirplaneCost(double distance, double windSpeed, double altitude) {
 
+//        double altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
+//        altitudeDiference /= 1000; // adds cost at each 1000 km difference in height
+//        double consum_extra = 0.0f;
+//        if(altitudeDiference < 0){
+//            consum_extra =   Main.nValue * Math.abs(altitudeDiference);
+//        }else if(altitudeDiference > 0){
+//            consum_extra =  Main.mValue *  Math.abs(altitudeDiference);
+//        }
+////        altitudeDiference /= 1000; // adds cost at each 1000 km difference in height
+////        if(altitudeDiference < 0){
+////            consum_extra =   Main.nValue * Math.abs(altitudeDiference);
+////        }else if(altitudeDiference > 0){
+////            consum_extra =  Main.mValue *  Math.abs(altitudeDiference);
+////        }
+//
+////        return getFlightDuration(distance,windSpeed) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - altitude)/1000) * altitudeDiference));
+//        return getFlightDuration(distance,windSpeed) * (planeConsumption() * consum_extra);
+
+
+        double consum_extra = 0.0, l_at_1000 = 0.0, liters = 0.0;
+
         double altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
-        altitudeDiference /= 1000; // adds cost at each 1000 km difference in height
-        if(altitudeDiference < 0){
-            altitudeDiference =   Main.nValue * altitudeDiference;
-        }else if(altitudeDiference > 0){
-            altitudeDiference =  Main.mValue * - altitudeDiference;
-        }
-//        return getFlightDuration(distance,windSpeed) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - altitude)/1000) * altitudeDiference));
-        return getFlightDuration(distance,windSpeed) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - altitude)/1000)) * altitudeDiference + windSpeed * 20);
+
+        if(altitudeDiference != 0)
+            consum_extra =  Main.extraValue *  Math.abs(altitudeDiference) / 1000;
+
+        consum_extra = consum_extra - (Main.windCost+windSpeed);
+
+        l_at_1000 += consum_extra;
+
+        liters = distance* l_at_1000/1000;
+
+        return  Math.round(liters*Main.euroValue*100)/100;
+//        return liters;
 
     }
 
     public double getAirplaneCost(Connection connection) {
+        double consum_extra = 0.0, l_at_1000 = 0.0, liters = 0.0;
+
         double altitudeDiference = this.cruiseAltitude - connection.getAltitude(); // difference between airplane cruise altitude and the connection altitude
-        altitudeDiference /= 1000; // adds cost at each 1000 km difference in height
-        if(altitudeDiference < 0){
-            altitudeDiference =   Main.nValue * altitudeDiference;
-        }else if(altitudeDiference > 0){
-            altitudeDiference =  Main.mValue * - altitudeDiference;
-        }
-//        return getFlightDuration(connection) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - connection.getAltitude())/1000) * altitudeDiference));
-        return getFlightDuration(connection) * (planeConsumption() + ((Math.abs(this.cruiseAltitude - connection.getAltitude())/1000)) * altitudeDiference + connection.getWindSpeed() * 20);
+
+        if(altitudeDiference != 0)
+            consum_extra =  Main.extraValue *  Math.abs(altitudeDiference) / 1000;
+
+        consum_extra = consum_extra - (Main.windCost+connection.getWindSpeed());
+
+        l_at_1000 += consum_extra;
+
+        liters = connection.weight()* l_at_1000/1000;
+
+//        return  liters;
+        return  Math.round(liters*Main.euroValue*100)/100;
 
     }
 

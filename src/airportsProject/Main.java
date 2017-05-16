@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static int nValue = 200;
-    static int mValue = 200;
+    static int extraValue = 200;
     static double euroValue = 2;  // 30 €/L
     static int windCost = 20;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
     static int mapWidth = 1536; // width of the world map used
@@ -63,8 +62,8 @@ public class Main {
         }
 
 
-        System.out.println("Custo do aviao 1: " + (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100) * 100) / 100f + " L");
-        System.out.println("Custo do aviao 1: " + euroValue * (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100) * 100) / 100f + " €" + "\n\n");
+        System.out.println("Custo do aviao 1: " + airplane.getAirplaneCost(2077, -5, 2100) + " €");
+//        System.out.println("Custo do aviao 1: " + euroValue * (double) Math.round(airplane.getAirplaneCost(2077, -5, 2100) * 100) / 100f + " €" + "\n\n");
 
         System.out.println("airportOfOrigin: 1 - " + airplaneST.get(1).getAirportCode());
         System.out.println("airportOfDestination: 30 - " + airplaneST.get(gIdAirportDest).getAirportCode() + "\n");
