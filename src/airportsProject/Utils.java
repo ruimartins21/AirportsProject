@@ -675,7 +675,7 @@ public class Utils {
                 if (comp + 1 >= newFlight.getConnections().size()) {
                 } else if (symbolGraph.nameOf(e.to()).compareTo(newFlight.getConnections().get(comp + 1)) == 0) {
                     distance += e.weight();
-                    cost += euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f;
+                    cost += airplane.getAirplaneCost(e);
                     timeDuration += airplane.getFlightDuration(e);
                 }
             }

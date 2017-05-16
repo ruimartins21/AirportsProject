@@ -72,6 +72,26 @@ public class AirportNetworkController {
             newAirportItem(airport);
             if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                 setPinLocation(airport);
+            }else{
+                System.out.println(airport.getCode() + " -> " + airport.getLongitude() + ", " + airport.getLatitude());
+                Thread t1 = new Thread(new Runnable() {
+                    public void run() {
+                        airport.setCoordinates();
+                    }
+                });
+                t1.start();
+                try{
+                    t1.join(); // waits for the function to end
+                    // saves the new coordinates on the file
+                    Utils.getInstance().createCoordinatesFile();
+                    System.out.println(airport.getCode() + " -> " + airport.getLongitude() + ", " + airport.getLatitude());
+                    if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
+                        setPinLocation(airport);
+                    }
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+
             }
         }
 

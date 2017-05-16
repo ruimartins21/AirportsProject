@@ -36,39 +36,39 @@ public class StatsController {
         ObservableList<String> categories = FXCollections.observableArrayList();
         int maxValue = mostTrafficAirports.size() > 0 ? mostTrafficAirports.get(0).getValue() : 0;
         yAxis = new NumberAxis("Number of Flights", 0, maxValue+5, 1);
-        if(mostTrafficAirports.size() > 0){
-            for (int i = 0; i < mostTrafficAirports.size(); i++) {
-                categories.add(mostTrafficAirports.get(i).getKey());
-            }
-        }
-        xAxis.setCategories(categories);
+//        if(mostTrafficAirports.size() > 0){
+//            for (int i = 0; i < mostTrafficAirports.size(); i++) {
+//                categories.add(mostTrafficAirports.get(i).getKey());
+//            }
+//        }
+//        xAxis.setCategories(categories);
         BarChart mostTrafficAirport = new BarChart(xAxis, yAxis, getMostTrafficAirport());
         mostTrafficAirport.setBarGap(0);
         containCharts.getChildren().add(mostTrafficAirport);
 
-        categories.clear();
+//        categories.clear();
         maxValue = mostPassengersFlights.size() > 0 ? mostPassengersFlights.get(0).getValue() : 0;
         yAxis = new NumberAxis("Number of Passengers", 0, maxValue+5, 1);
-        if(mostPassengersFlights.size() > 0){
-            for (int i = 0; i < mostPassengersFlights.size(); i++) {
-                System.out.print(mostPassengersFlights.get(i).getValue() + ", ");
-                categories.add(mostPassengersFlights.get(i).getKey());
-            }
-        }
-        xAxis.setCategories(categories);
+//        if(mostPassengersFlights.size() > 0){
+//            for (int i = 0; i < mostPassengersFlights.size(); i++) {
+//                categories.add(mostPassengersFlights.get(i).getKey());
+//            }
+//        }
+//        xAxis.setCategories(categories);
         BarChart mostPassengersFlight = new BarChart(xAxis, yAxis, getMostPassengersFlight());
+        mostPassengersFlight.setPrefHeight(300);
         mostPassengersFlight.setBarGap(0);
         containCharts.getChildren().add(mostPassengersFlight);
 
-        categories.clear();
+//        categories.clear();
         maxValue = mostPassengersAirports.size() > 0 ? mostPassengersAirports.get(0).getValue() : 0;
         yAxis = new NumberAxis("Number of Passengers", 0, maxValue+5, 1);
-        if(mostPassengersAirports.size() > 0){
-            for (int i = 0; i < mostPassengersAirports.size(); i++) {
-                categories.add(mostPassengersAirports.get(i).getKey());
-            }
-        }
-        xAxis.setCategories(categories);
+//        if(mostPassengersAirports.size() > 0){
+//            for (int i = 0; i < mostPassengersAirports.size(); i++) {
+//                categories.add(mostPassengersAirports.get(i).getKey());
+//            }
+//        }
+//        xAxis.setCategories(categories);
         BarChart mostPassengersAirport = new BarChart(xAxis, yAxis, getMostPassengersAirport());
         mostPassengersAirport.setBarGap(0);
         containCharts.getChildren().add(mostPassengersAirport);

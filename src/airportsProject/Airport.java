@@ -81,7 +81,7 @@ public class Airport implements Serializable {
         this.longitude = longitude;
     }
 
-    private void setCoordinates(){
+    public void setCoordinates(){
         final Geocoder geocoder = new Geocoder();
         String location = this.city + ", " + this.country;
         GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(location).setLanguage("en").getGeocoderRequest();
