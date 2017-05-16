@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -38,7 +35,7 @@
       </Label>
       <Region prefHeight="20.0" prefWidth="1000.0" />
       <Region prefHeight="2.0" prefWidth="200.0" scaleX="0.3" styleClass="underLine" />
-      <Region prefHeight="55.0" prefWidth="1000.0" />
+      <Region prefHeight="31.0" prefWidth="1000.0" />
       <Pane prefHeight="29.0" prefWidth="1000.0">
          <children>
             <Label layoutX="125.0" layoutY="4.0" text="Most Traffic Airports" textFill="WHITE">
@@ -73,32 +70,6 @@
             </Label>
          </children>
       </Pane>
-      <HBox fx:id="containCharts" alignment="CENTER" prefWidth="0.0">
-         <children>
-            <LineChart fx:id="mostTrafficAirport" prefHeight="300.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-            <LineChart fx:id="mostPassengersFlight" prefHeight="300.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-            <LineChart fx:id="mostPassengersAirport" prefHeight="300.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-         </children></HBox>
+      <HBox fx:id="containCharts" alignment="CENTER" prefWidth="0.0" />
    </children>
 </VBox>

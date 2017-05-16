@@ -263,7 +263,7 @@
     -fx-background-color: transparent;
 }
 .chart .chart-series-line {
-    -fx-stroke-width: 4px;
+    -fx-stroke-width: 10px;
     -fx-stroke:#4185d1;
 }
 .chart .chart-legend{
@@ -279,8 +279,6 @@
     -fx-font-size: 1.4em;
     -fx-tick-label-fill: white;
     -fx-font-family: Helvetica;
-    /*-fx-tick-length: 20;*/
-    /*-fx-minor-tick-length: 10;*/
 }
 .chart-legend-item-symbol{
     -fx-background-radius: 30px;
