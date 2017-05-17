@@ -6,6 +6,8 @@ import libs.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.spriteManager.Sprite;
+import org.graphstream.ui.spriteManager.SpriteManager;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -449,7 +451,7 @@ public class Utils {
             for (int i = 0; i < symbolGraph.G().V(); i++) {
                 bw.write(symbolGraph.nameOf(i));
                 for (Connection e : symbolGraph.G().adj(i)) {
-                    bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + e.getWindSpeed() + ";" + e.getAltitude());
+                    bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed()* 100) / 100f + ";" + e.getAltitude());
                 }
                 bw.newLine();
             }
@@ -506,23 +508,31 @@ public class Utils {
         return true;
     }
 
-    public static void showGraphs() {
+    public void showGraphs() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         Graph graph = new SingleGraph("SymbolGraph");
+//        import org.graphstream.ui.spriteManager.*;
+//        SpriteManager sman = new SpriteManager(graph);
+//        Sprite s = sman.addSprite("S1");
+//        s.setPosition(2, 1, 0);
+
         for (int i = 0; i < symbolGraph.digraph().V(); i++) {
             for (Connection c : symbolGraph.digraph().adj(i)) {
                 try {
-                    graph.addNode("" + c.from());
+                    graph.addNode( symbolGraph.nameOf(c.from()));
+//                    s.attachToNode(symbolGraph.nameOf(c.from()));
                 } catch (Exception e) {
                     // ignore
                 }
                 try {
-                    graph.addNode("" + c.to());
+                    graph.addNode( symbolGraph.nameOf(c.to()));
+//                    s.attachToNode(symbolGraph.nameOf(c.to()));
                 } catch (Exception e) {
                     // ignore
                 }
                 try {
-                    graph.addEdge("" + c.from() + "-" + "" + c.to(), "" + c.from(), "" + c.to(), false);
+                    graph.addEdge( symbolGraph.nameOf(c.from()) + "-" + symbolGraph.nameOf(c.to()), symbolGraph.nameOf(c.from()),  symbolGraph.nameOf(c.to()), false);
+//                    s.attachToEdge( symbolGraph.nameOf(c.from()));
                 } catch (Exception e) {
                     // ignore
                 }
@@ -582,8 +592,8 @@ public class Utils {
                         "   text-color: white; " +
                         "   text-style: bold;" +
                         "   text-font: Helvetica;" +
-                        "   text-size: 17px;" +
-                        "   size: 20px; " +
+                        "   text-size: 13px;" +
+                        "   size: 40px; " +
                         "}" +
                         "edge {" +
                         "   fill-color:#4185d1;" +
@@ -866,5 +876,16 @@ public class Utils {
             }
         });
         return list.subList(0, 5);
+    }
+
+//    saber qual conecao entre dois aeroportos
+    public  void removeConnectionOfAirport(String originCode, String destinationCode){
+        for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(originCode))) {
+            if(e.to() == symbolGraph.indexOf(destinationCode)){
+                symbolGraph.G().removeEdge(e);
+                log("SymbolGraph", "Removed connection between " + originCode + " and " + destinationCode);
+            }
+
+        }
     }
 }

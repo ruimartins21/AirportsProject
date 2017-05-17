@@ -20,11 +20,11 @@ public class Connection extends DirectedEdge implements Serializable {
     }
 
     public double getAltitude() {
-        return altitude;
+        return Math.round(altitude * 100) / 100f;
     }
 
     public double getWindSpeed() {
-        return windSpeed;
+        return Math.round(windSpeed * 100) / 100f;
     }
 
     public void setAltitude(float altitude) {
