@@ -157,25 +157,25 @@ public class Main {
         //    Listar informação detalhada do tráfego do aeroporto num determinando período de tempo
         Date start = new Date(7, 3, 2016, 11, 30, 30);
         Date end = new Date(1, 3, 2017, 7, 30, 30);
-        RedBlackBST<Date, Flight> flights = utils.flightsBetweenTimesOfAirport(airportSearch, start, end);
+//        RedBlackBST<Date, Flight> flights = utils.flightsBetweenTimesOfAirport(airportSearch, start, end);
 
         System.out.println("Listar informação detalhada do tráfego do aeroporto num determinando período de tempo:\n");
-        for (Date f : flights.keys()) {
-            Flight flight = flights.get(f);
-            System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
-                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(), flight.getPassengers(),
-                    flight.getAirplane().getName());
-            System.out.println();
-        }
-        System.out.println("\n\n");
+//        for (Date f : flights.keys()) {
+//            Flight flight = flights.get(f);
+//            System.out.format("%20s%25s%26s%26s%11s%15s%15s%35s", flight.getAirportOfOrigin().getCode(), flight.getAirportOfDestination().getCode(),
+//                    flight.getDate(), flight.getDuration(), flight.getDistance(), flight.getCosts(), flight.getPassengers(),
+//                    flight.getAirplane().getName());
+//            System.out.println();
+//        }
+//        System.out.println("\n\n");
 
 
 //        pesquisar aeroportos apenas com x numero de connections
-        SeparateChainingHashST<String, Airport> results = utils.quantityOfConnections(4);
+//        SeparateChainingHashST<String, Airport> results = utils.quantityOfConnections(4);
         System.out.println("\n\nPesquisar aeroportos apenas com 4 connections\n");
-        for (String a : results.keys()) {
-            System.out.println(a);
-        }
+//        for (String a : results.keys()) {
+//            System.out.println(a);
+//        }
         System.out.println("\n\n");
 
 

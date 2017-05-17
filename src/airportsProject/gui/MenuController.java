@@ -50,7 +50,7 @@ public class MenuController {
         }else if(event.getSource().equals(saveProgram)){
             saveProgram.setStyle("-fx-background-color: #2D6AB0");
         }else{
-            statistics.setStyle("-fx-background-color: #EEEEEE;");
+            statistics.setStyle("-fx-background-color: #2D6AB0;");
         }
     }
 
@@ -67,7 +67,7 @@ public class MenuController {
         }else if(event.getSource().equals(saveProgram)){
             saveProgram.setStyle("-fx-background-color: #4185d1");
         }else{
-            statistics.setStyle("-fx-background-color: white");
+            statistics.setStyle("-fx-background-color: #4185d1");
         }
     }
 

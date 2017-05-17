@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -88,6 +89,18 @@
                         <Font name="Helvetica" size="23.0" />
                      </font>
                   </Label>
+                  <Circle fill="LIME" layoutX="14.0" layoutY="13.0" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Circle fill="YELLOW" layoutX="74.0" layoutY="13.0" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Label layoutX="25.0" layoutY="6.0" text="Origin" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="85.0" layoutY="6.0" text="Destination" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
@@ -136,12 +149,12 @@
                                     <Font name="Helvetica Light" size="30.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="destinationName" layoutX="79.0" layoutY="26.0" maxWidth="140.0" textFill="#5e5e5e">
+                              <Label fx:id="destinationName" layoutX="83.0" layoutY="26.0" maxWidth="140.0" textFill="#5e5e5e">
                                  <font>
                                     <Font name="Helvetica" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="destinationLocation" layoutX="79.0" layoutY="42.0" maxWidth="140.0" textFill="#949494">
+                              <Label fx:id="destinationLocation" layoutX="83.0" layoutY="42.0" maxWidth="140.0" textFill="#949494">
                                  <font>
                                     <Font name="Helvetica" size="10.0" />
                                  </font>

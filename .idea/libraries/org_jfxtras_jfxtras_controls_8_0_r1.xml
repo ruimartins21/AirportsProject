@@ -5,6 +5,9 @@
       <root url="jar://$PROJECT_DIR$/lib/jfxtras-controls-8.0-r1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jfxtras-common-8.0-r1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jfxtras-fxml-8.0-r1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfxtras-controls-8.0-r1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfxtras-common-8.0-r1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfxtras-fxml-8.0-r1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

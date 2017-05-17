@@ -593,6 +593,23 @@ public class Utils {
         graph.display();
     }
 
+    /**
+     * All the flights between a period of time
+     * @param start starting date
+     * @param end ending date
+     */
+    public static RedBlackBST<Date, Flight> flightsBetweenTimes(Date start, Date end){
+        RedBlackBST<Date, Flight> results = new RedBlackBST<>();
+        for (Date date : flightST.keys()) {
+            Flight flight = flightST.get(date);
+            if ((flight.getDate().compareTo(start) == 1 || flight.getDate().compareTo(start) == 0) &&
+                    (flight.getDate().compareTo(end) == -1 || flight.getDate().compareTo(end) == 0)) {
+                results.put(date, flight);
+            }
+        }
+        return results;
+    }
+
     // prints shortest path, cheaper one, and fastest one
     public void printShortestPath(DijkstraSP dijkstraSP, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination, Airplane airplane, String typeOfSearch) {
         for (Connection e : dijkstraSP.pathTo(airportOfDestination)) {
@@ -645,7 +662,6 @@ public class Utils {
         } else {
             System.out.println("Graph is not connected! \n");
         }
-
     }
 
     /**
@@ -710,7 +726,7 @@ public class Utils {
     }
 
     //  Recebe um numero e retorna uma SeparateChainingHashST com os aeroportos que tem esse numero de ligacoes
-    public SeparateChainingHashST<String, Airport> quantityOfConnections(int number){
+    public SeparateChainingHashST<String, Airport> airportWithConnections(int number){
         SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
         for (String key : airportST.keys()) {
             Airport airport = airportST.get(key);
@@ -731,16 +747,16 @@ public class Utils {
     }
 
     //    Retorna informação detalhada do tráfego do aeroporto num determinando período de tempo, retorna uma redblack de blick com o filtro do tempo de um determinado aeroporto
-    public RedBlackBST<Date, Flight> flightsBetweenTimesOfAirport(Airport airport, Date start, Date end) {
-        RedBlackBST<Date, Flight> results = new RedBlackBST<>();
-        for (Date f : airport.getFlights().keys()) {
-            Flight flight = airport.getFlights().get(f);
-            if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1) {
-                results.put(flight.getDate(), flight);
-            }
-        }
-        return results;
-    }
+//    public static RedBlackBST<Date, Flight> flightsBetweenTimesOfAirport(Airport airport, Date start, Date end) {
+//        RedBlackBST<Date, Flight> results = new RedBlackBST<>();
+//        for (Date f : airport.getFlights().keys()) {
+//            Flight flight = airport.getFlights().get(f);
+//            if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1) {
+//                results.put(flight.getDate(), flight);
+//            }
+//        }
+//        return results;
+//    }
 
     //    criar um novo grafo perante
     public EdgeWeightedDigraph filterGraph(String searchContinent) {
@@ -748,7 +764,6 @@ public class Utils {
 //        criar tabela de simbolos para mapear os codigos originais da symbolDiagraph nos novos
         ST<Integer, Integer> map = new ST<>();
         int i = 0;
-        System.out.println(symbolGraph.G());
 //        impirmir lista de adjacencias com filtro
         for (String code : airportST.keys()) {
             if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
@@ -758,16 +773,10 @@ public class Utils {
                 i++;
             }
         }
-
-        System.out.println("\n\nnovo grafo criado: \n");
-
-
-        System.out.println("key " + "value");
         for (Integer inte : map.keys()) {
-
-            System.out.println("[" + inte + "]   " + map.get(inte));
+//            System.out.println("[" + inte + "]   " + map.get(inte));
         }
-        System.out.println();
+//        System.out.println();
         return newGraph;
     }
 
@@ -818,7 +827,7 @@ public class Utils {
     public static List<Map.Entry<String, Integer>> mostPassengersFlight() {
         Map<String, Integer> flights = new HashMap<>();
         for (Date d : flightST.keys()) {
-            flights.put(d.toString(), flightST.get(d).getPassengers());
+            flights.put(d.minifyDate(), flightST.get(d).getPassengers());
         }
         Set<Map.Entry<String, Integer>> set = flights.entrySet();
         List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);

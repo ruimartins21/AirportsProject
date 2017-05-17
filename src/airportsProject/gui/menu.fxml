@@ -45,7 +45,7 @@
                         <Insets right="20.0" />
                     </HBox.margin>
                     <children>
-                        <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="AIRPORT NETWORK" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="AIRPORT NETWORK" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                             <font>
                                 <Font name="Helvetica Light" size="20.0" />
                             </font>
@@ -54,7 +54,7 @@
                 </Pane>
             <Pane fx:id="airplanes" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
                <children>
-                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="AIRPLANES" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="AIRPLANES" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="20.0" />
                      </font>
@@ -66,7 +66,7 @@
             </Pane>
             <Pane fx:id="airlines" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
                <children>
-                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-7.0" prefHeight="104.0" prefWidth="177.0" text="AIRLINES" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-7.0" prefHeight="104.0" prefWidth="177.0" text="AIRLINES" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="20.0" />
                      </font>
@@ -78,7 +78,7 @@
             </Pane>
             <Pane fx:id="flights" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="200.0" prefWidth="170.0" styleClass="menuOption">
                <children>
-                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-6.0" prefHeight="104.0" prefWidth="177.0" text="FLIGHTS" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="-6.0" prefHeight="104.0" prefWidth="177.0" text="FLIGHTS" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="20.0" />
                      </font>
@@ -93,12 +93,12 @@
       <Region prefHeight="20.0" prefWidth="1000.0" />
       <HBox alignment="CENTER" prefHeight="88.0" prefWidth="1000.0">
          <children>
-            <Pane id="statistics" fx:id="statistics" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="88.0" prefWidth="360.0" styleClass="menuOption">
+            <Pane fx:id="statistics" onMouseClicked="#optionClicked" onMouseEntered="#hoverIn" onMouseExited="#hoverOut" prefHeight="88.0" prefWidth="360.0" styleClass="menuOption">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
                <children>
-                  <Label id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="STATISTICS" textAlignment="CENTER" textFill="#4185d1" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="-8.0" prefHeight="104.0" prefWidth="177.0" text="STATISTICS" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="20.0" />
                      </font>
@@ -112,7 +112,7 @@
                         <Image url="@images/saveProgram.png" />
                      </image>
                   </ImageView>
-                  <Label id="whiteLabel" layoutX="89.0" layoutY="-7.0" prefHeight="104.0" prefWidth="264.0" text="SAVE CURRENT PROGRAM" textFill="WHITE" wrapText="true">
+                  <Label layoutX="89.0" layoutY="-7.0" prefHeight="104.0" prefWidth="264.0" text="SAVE CURRENT PROGRAM" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Helvetica Light" size="20.0" />
                      </font>

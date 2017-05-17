@@ -8,11 +8,6 @@
     -fx-background-color: #4185d1;
     -fx-cursor: hand;
 }
-#statistics{
-    -fx-background-color: white;
-    -fx-border-width: 2px;
-    -fx-border-color: #4185d1;
-}
 .underLine{
     -fx-background-color: #4185d1;
 }
@@ -76,6 +71,9 @@
 .optionPane, .holdIcon{
     -fx-cursor: hand;
 }
+.optionPane:hover{
+    -fx-opacity: 0.9;
+}
 .searchInput{
     -fx-background-color: transparent;
     -fx-box-border: transparent;
@@ -88,7 +86,6 @@
 .searchInput:focused {
     -fx-focus-color: transparent;
 }
-
 .pin {
     -fx-shape: "M13.558,0C6.07,0,0,6.07,0,13.558s13.558,22.346,13.558,22.346s13.558-14.858,13.558-22.346S21.045,0,13.558,0z M13.558,20.762c-4.084,0-7.395-3.311-7.395-7.395s3.311-7.395,7.395-7.395c4.084,0,7.396,3.311,7.396,7.395 S17.642,20.762,13.558,20.762z";
     -fx-background-color:white;
@@ -97,6 +94,12 @@
     -fx-border-color: #4185d1;
     -fx-pref-width: 24;
     -fx-pref-height: 33;
+}
+.origin{
+    -fx-background-color: lime !important;
+}
+.destin{
+    -fx-background-color: yellow !important;
 }
 .pin:hover{
     -fx-background-color:#4185d1;
@@ -229,6 +232,25 @@
     -fx-show-week-numbers: false;
     -fx-font-family: "Helvetica light";
 }
+.datePickerBlack{
+    -fx-text-fill: grey !important;
+}
+.datePickerBlack .text-field{
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: grey !important;
+    -fx-text-fill: grey !important;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: grey !important;
+}
+.datePickerBlack > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-shape : null ;
+    -fx-background-image : url("images/calendarGrey.png") !important;
+    -fx-pref-width: 19px;
+    -fx-pref-height: 23px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+}
 .date-picker .text-field{
     -fx-background-color: transparent;
     -fx-prompt-text-fill: white;
@@ -266,9 +288,10 @@
     -fx-stroke-width: 10px;
     -fx-stroke:#4185d1;
 }
-.chart .chart-legend{
-    -fx-background-color: transparent;
-}
+/*.chart .chart-legend{*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-opacity: 0;*/
+/*}*/
 .chart-vertical-grid-lines {
     -fx-stroke: transparent;
 }
@@ -279,6 +302,11 @@
     -fx-font-size: 1.4em;
     -fx-tick-label-fill: white;
     -fx-font-family: Helvetica;
+}
+.axis-label{
+    -fx-text-fill:white;
+    -fx-font-family: "Helvetica light";
+    -fx-font-size: 15px;
 }
 .chart-legend-item-symbol{
     -fx-background-radius: 30px;

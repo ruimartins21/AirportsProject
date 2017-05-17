@@ -187,6 +187,11 @@ public class FlightDetailsController {
     private void setPinLocation(Airport airport){
         Label pin = new Label("");
         pin.getStyleClass().add("pin");
+        if(airport.equals(flight.getAirportOfOrigin())){
+            pin.getStyleClass().add("origin");
+        }else if(airport.equals(flight.getAirportOfDestination())){
+            pin.getStyleClass().add("destin");
+        }
         pin.setCursor(Cursor.HAND);
         pin.setId(airport.getCode());
         pin.setTooltip(new Tooltip(airport.getName()));

@@ -43,12 +43,12 @@
                   <Font name="Helvetica Light" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="445.0" layoutY="4.0" text="Most Passengers Flight" textFill="WHITE">
+            <Label layoutX="445.0" layoutY="4.0" text="Most Passengers Flights" textFill="WHITE">
                <font>
                   <Font name="Helvetica Light" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="779.0" layoutY="4.0" text="Most Passengers Airport" textFill="WHITE">
+            <Label layoutX="779.0" layoutY="4.0" text="Most Passengers Airports" textFill="WHITE">
                <font>
                   <Font name="Helvetica Light" size="17.0" />
                </font>
@@ -70,6 +70,11 @@
             </Label>
          </children>
       </Pane>
-      <HBox fx:id="containCharts" alignment="CENTER" prefWidth="0.0" />
+      <HBox alignment="CENTER" prefHeight="381.0" prefWidth="1000.0">
+         <children>
+            <VBox fx:id="chart1" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="chart2" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="chart3" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+         </children></HBox>
    </children>
 </VBox>

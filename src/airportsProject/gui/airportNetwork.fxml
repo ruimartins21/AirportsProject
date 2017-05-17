@@ -73,6 +73,11 @@
                      </font>
                   </Label>
                   <Label fx:id="warning" alignment="CENTER" layoutY="-7.0" prefHeight="17.0" prefWidth="481.0" text="Airport doesn't have airplanes to start a flight" textFill="RED" />
+                  <Label layoutX="14.0" layoutY="12.0" onMouseClicked="#openGraph" styleClass="optionPane" text="GRAPH" textFill="WHITE">
+                     <font>
+                        <Font name="Helvetica Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
@@ -92,17 +97,17 @@
                   </Pane>
                   <Pane prefHeight="30.0" prefWidth="490.0">
                      <children>
-                        <TextField fx:id="searchAirport" alignment="CENTER" layoutX="101.0" layoutY="-1.0" onAction="#getInput" prefHeight="30.0" prefWidth="190.0" promptText="SEARCH AIRPORT" styleClass="searchInput">
+                        <TextField fx:id="searchAirport" alignment="CENTER" layoutX="72.0" layoutY="-1.0" onAction="#getInput" prefHeight="30.0" prefWidth="244.0" promptText="SEARCH AIRPORT" styleClass="searchInput">
                            <font>
                               <Font name="Helvetica" size="13.0" />
                            </font>
                         </TextField>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="116.0" layoutY="6.0">
+                        <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="85.0" layoutY="6.0">
                            <image>
                               <Image url="@images/search.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="305.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clearSearch" styleClass="resetButton" text="Clear" textFill="WHITE">
+                        <Button layoutX="334.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clearSearch" styleClass="resetButton" text="Clear" textFill="WHITE">
                            <font>
                               <Font name="Helvetica Light" size="13.0" />
                            </font>
@@ -112,7 +117,9 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Pane>
-                  <VBox fx:id="containAirports" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefWidth="480.0" />
+                  <VBox fx:id="containAirports" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" prefWidth="480.0">
+
+                  </VBox>
                </children>
             </VBox>
          </content>

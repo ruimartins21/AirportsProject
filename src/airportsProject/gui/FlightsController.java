@@ -9,9 +9,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -19,10 +21,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.StringConverter;
 import libs.RedBlackBST;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
 import static javafx.geometry.Orientation.VERTICAL;
@@ -32,9 +37,14 @@ public class FlightsController {
     private VBox listFlightsContainer;
     @FXML
     private TextField searchFlight;
+    @FXML
+    private DatePicker fromDate;
+    @FXML
+    private DatePicker toDate;
 
     private Utils utils = Utils.getInstance();
     private RedBlackBST<Date, Flight> flights = utils.getFlights();
+    private Date from = null, to = null;
 
     NumberFormat formatter = new DecimalFormat("#0.##");
 
@@ -50,7 +60,93 @@ public class FlightsController {
                 newFlightItem(flight);
                 currentDate = flight.getDate();
             }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("No flights done yet !");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(90);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            listFlightsContainer.getChildren().add(newPane);
         }
+
+        String pattern = "dd/MM/yyyy";
+        fromDate.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+        toDate.setConverter(new StringConverter<LocalDate>() {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+        fromDate.setOnAction(event -> {
+            LocalDate date = fromDate.getValue();
+            if(date != null){
+                from = new Date(date.getDayOfMonth(), date.getMonthValue(), date.getYear(), 23,59,59);
+            }else{
+                from = null;
+                updateList();
+            }
+            if(to != null){ // ready to search
+                searchPeriod(from, to);
+            }
+        });
+        toDate.setOnAction(event -> {
+            LocalDate date = toDate.getValue();
+            if(date != null){
+                to = new Date(date.getDayOfMonth(), date.getMonthValue(), date.getYear(), 23,59,59);
+            }else{
+                to = null;
+                updateList();
+            }
+            if(from != null){ // ready to search
+                searchPeriod(from, to);
+            }
+        });
     }
 
     @FXML
@@ -60,11 +156,40 @@ public class FlightsController {
 
     private void updateList(){
         listFlightsContainer.getChildren().clear(); // removes the previous list
-        for(Date date : flights.keys()){ // lists all the existent flights
-            Flight flight = flights.get(date);
-            newFlightItem(flight);
+        if(!flights.isEmpty()){
+            Date currentDate = flights.select(0);
+            newFlightDate(currentDate);
+            for (Date date : flights.keys()) {
+                Flight flight = flights.get(date);
+                if(flight.getDate().compareDate(currentDate) != 0){
+                    newFlightDate(date);
+                }
+                newFlightItem(flight);
+                currentDate = flight.getDate();
+            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("No flights done yet !");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(90);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            listFlightsContainer.getChildren().add(newPane);
         }
-        searchFlight.setText("");
     }
 
     @FXML
@@ -72,14 +197,63 @@ public class FlightsController {
         updateList();
     }
 
+    private void searchPeriod(Date start, Date end){
+        RedBlackBST<Date, Flight> resultFlights = new RedBlackBST<>();
+        resultFlights = Utils.flightsBetweenTimes(start, end);
+        listFlightsContainer.getChildren().clear(); // removes the previous list
+        if(!resultFlights.isEmpty()){
+            Date currentDate = resultFlights.select(0);
+            newFlightDate(currentDate);
+            for (Date date : resultFlights.keys()) {
+                Flight flight = resultFlights.get(date);
+                if(flight.getDate().compareDate(currentDate) != 0){
+                    newFlightDate(date);
+                }
+                newFlightItem(flight);
+                currentDate = flight.getDate();
+            }
+//            for(Date date : resultFlights.keys()){ // lists all the existent airports
+//                Flight flight = resultFlights.get(date);
+//                newFlightItem(flight);
+//            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("Sorry we couldn't find any matches for that search");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(70);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            listFlightsContainer.getChildren().add(newPane);
+        }
+    }
+
     private void getResults(String search){
         search = search.toUpperCase();
         RedBlackBST<Date, Flight> resultFlights = new RedBlackBST<>();
         for(Date date : flights.keys()){
+            Flight flight = flights.get(date);
             // searches the keyword occurrence on the flights
-//            if(){
-//                resultFlights.put(date, flights.get(date));
-//            }
+            if(flight.getConnections().contains(search) ||
+                    Utils.isNumeric(search) && Double.valueOf(search).compareTo(flight.getCosts()) == 0 ||
+                    Utils.isNumeric(search) && Double.valueOf(search).compareTo(flight.getDistance()) == 0 ||
+                    Utils.isNumeric(search) && Integer.valueOf(search).compareTo(flight.getPassengers()) == 0 ||
+                    Utils.isNumeric(search) && Integer.valueOf(search).compareTo(flight.getConnections().size()) == 0){
+                resultFlights.put(date, flight);
+            }
         }
         listFlightsContainer.getChildren().clear(); // removes the previous list
         if(!resultFlights.isEmpty()){
@@ -87,6 +261,28 @@ public class FlightsController {
                 Flight flight = resultFlights.get(date);
                 newFlightItem(flight);
             }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("Sorry we couldn't find any matches for that search");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(70);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            listFlightsContainer.getChildren().add(newPane);
         }
     }
 

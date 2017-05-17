@@ -6,9 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,6 +25,8 @@ import libs.SeparateChainingHashST;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class AirportNetworkController {
@@ -73,7 +79,6 @@ public class AirportNetworkController {
             if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                 setPinLocation(airport);
             }else{
-                System.out.println(airport.getCode() + " -> " + airport.getLongitude() + ", " + airport.getLatitude());
                 Thread t1 = new Thread(new Runnable() {
                     public void run() {
                         airport.setCoordinates();
@@ -84,7 +89,6 @@ public class AirportNetworkController {
                     t1.join(); // waits for the function to end
                     // saves the new coordinates on the file
                     Utils.getInstance().createCoordinatesFile();
-                    System.out.println(airport.getCode() + " -> " + airport.getLongitude() + ", " + airport.getLatitude());
                     if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
                         setPinLocation(airport);
                     }
@@ -194,6 +198,42 @@ public class AirportNetworkController {
         updated = false;
     }
 
+    private void updateList(SeparateChainingHashST<String, Airport> results){
+        containAirports.getChildren().clear(); // removes the previous list
+        mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
+        if(!results.isEmpty()){
+            for(String code : results.keys()){ // lists all the existent airports
+                Airport airport = results.get(code);
+                newAirportItem(airport);
+                if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
+                    setPinLocation(airport);
+                }
+            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("Sorry we couldn't find any matches for that search");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(65);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            containAirports.getChildren().add(newPane);
+        }
+    }
+
     public static void setUpdate(){
         updated = true;
     }
@@ -207,6 +247,12 @@ public class AirportNetworkController {
     @FXML
     void gotoMenu(MouseEvent event) {
         VistaNavigator.loadVista(VistaNavigator.MENU);
+    }
+
+    @FXML
+    void openGraph(){
+        utils.checkGraphIsConnected(utils.getSymbolGraph().G()); // check if the graph is connected
+        Utils.showGraphs();
     }
 
     @FXML
@@ -235,31 +281,107 @@ public class AirportNetworkController {
         }
     }
 
+    /**
+     * parses the inputted search, checks for any boolean operators and searches for the results having all the variables in consideration
+     * @param search -> search wanted
+     */
     private void getResults(String search){
         search = search.toUpperCase();
-        SeparateChainingHashST<String, Airport> resultAirports = new SeparateChainingHashST<>();
-        for(String code : airports.keys()){
-            // searches the keyword occurrence on the airports
-            if(search.compareTo(code) == 0 ||
-            search.compareTo(airports.get(code).getName().toUpperCase()) == 0 ||
-            Utils.isNumeric(search) && Float.valueOf(search).compareTo(airports.get(code).getRating()) == 0 ||
-            search.compareTo(airports.get(code).getCity().toUpperCase()) == 0 ||
-            search.compareTo(airports.get(code).getCountry().toUpperCase()) == 0 ||
-            search.compareTo(airports.get(code).getContinent().toUpperCase()) == 0){
-                resultAirports.put(code, airports.get(code));
+        SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
+        String[] multipleAND = search.split("&&"); // searches for the boolean operator AND
+        List<String> gatherResults = new ArrayList<>();
+        List<String> auxList = new ArrayList<>(), toRemove = new ArrayList<>();
+        if(multipleAND.length > 1){ // multiple searches with the AND operator
+            for (int i = 0; i < multipleAND.length; i++) { // the results must meet ALL the requirements
+                multipleAND[i] = multipleAND[i].trim();
+                String[] multipleOR = multipleAND[i].split("\\|\\|"); // searches for the boolean operator OR inside each statement separated by an AND operator
+                if(multipleOR.length > 1){
+                    for (int j = 0; j < multipleOR.length; j++) {
+                        multipleOR[j] = multipleOR[j].trim();
+                        auxList.addAll(searchIt(multipleOR[j]));
+                        // checks for any AND statement that, together with this OR statements, must get a result that is common to both
+                        if(gatherResults.size() > 0){
+                            for(String code : auxList){
+                                if(!gatherResults.contains(code)){ // a result is not present in both statements, it is not a result wanted
+                                    toRemove.add(code);
+                                }
+                            }
+                            if(toRemove.size() > 0){ // stores a list of airports that don't meet all the requirements to remove now
+                                auxList.removeAll(toRemove);
+                                toRemove.clear();
+                            }
+                        }
+                    }
+                    if(auxList.size() == 0){ // at the end of the OR operators if no airport met the requirements, it means there's no results wanted even if there was on an AND statement
+                        gatherResults.clear();
+                    }
+                }else{ // no operators within an AND statement, proceeds with the search
+                    if(gatherResults.size() > 0 ){ // one of the two AND statement has already been done
+                        auxList.addAll(searchIt(multipleAND[i]));
+                        for (String code : auxList){
+                            if(!gatherResults.contains(code)){
+                                toRemove.add(code);
+                            }
+                        }
+                        if(toRemove.size() > 0){ // stores a list of airports that don't meet all the requirements to remove now
+                            auxList.removeAll(toRemove);
+                            toRemove.clear();
+                        }
+                        if(auxList.size() == 0){ // at the end of the OR operators if no airport met the requirements, it means there's no results wanted even if there was on an AND statement
+                            gatherResults.clear();
+                        }
+                    }else {
+                        gatherResults.addAll(searchIt(multipleAND[i]));
+                    }
+                }
             }
+            for (String code : gatherResults){
+                results.put(code, airports.get(code));
+            }
+            updateList(results);
+        }else{
+            String[] multipleOR = search.split("\\|\\|"); // searches for the boolean operator OR
+            if(multipleOR.length > 1){
+                for (int i = 0; i < multipleOR.length; i++) { // results must only meet one requirement AT LEAST, they are not dependent on each other, the results will be added up for each requirement met
+                    multipleOR[i] = multipleOR[i].trim();
+                    // there can't be any AND operators inside because the first split already checks for their existence
+                    gatherResults.addAll(searchIt(multipleOR[i]));
+                }
+            }else{ // no boolean operators found, proceeds with the search
+                gatherResults.addAll(searchIt(search));
+            }
+            for (String code : gatherResults){
+                results.put(code, airports.get(code));
+            }
+            updateList(results);
         }
-        containAirports.getChildren().clear(); // removes the previous list
-        mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
-        if(!resultAirports.isEmpty()){
-            for(String name : resultAirports.keys()){ // lists all the existent airports
-                Airport airport = resultAirports.get(name);
-                newAirportItem(airport);
-                if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
-                    setPinLocation(airport);
+    }
+
+    private List<String> searchIt(String search){
+        List<String> result = new ArrayList<>();
+        if(search.contains("CONNECTIONS:")){
+            String[] cons = search.split("CONNECTIONS:");
+            cons[1] = cons[1].trim();
+            if(Utils.isNumeric(cons[1])){
+                for(String code : utils.airportWithConnections(Integer.valueOf(cons[1])).keys()){
+                    result.add(code);
+                }
+            }
+        }else{
+            for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+                Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
+                // searches the keyword occurrence on the airport
+                if (search.compareTo(airport.getCode()) == 0 ||
+                        search.compareTo(airport.getName().toUpperCase()) == 0 ||
+                        Utils.isNumeric(search) && Float.valueOf(search).compareTo(airport.getRating()) == 0 ||
+                        search.compareTo(airport.getCity().toUpperCase()) == 0 ||
+                        search.compareTo(airport.getCountry().toUpperCase()) == 0 ||
+                        search.compareTo(airport.getContinent().toUpperCase()) == 0) {
+                    result.add(airport.getCode());
                 }
             }
         }
+        return result;
     }
 
     @FXML

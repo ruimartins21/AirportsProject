@@ -210,6 +210,10 @@ public class Date implements Comparable<Date>, Serializable {
               (this.minute > 0 ? this.minute + "m " : "");
   }
 
+  public String minifyDate(){
+      return this.day + "/" + this.month + "/" + this.year + "\n" + getHourString() + ":" + getMinuteString() + ":" + getSecondString();
+  }
+
   public String getSlashes(){
       return  this.day + "/" +
               this.month + "/" +

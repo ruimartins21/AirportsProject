@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.Blend?>
@@ -198,11 +200,17 @@
                         <Insets bottom="15.0" top="15.0" />
                      </VBox.margin>
                   </Line>
-                  <Label text="FLIGHT HISTORY" textFill="#4185d1">
-                     <font>
-                        <Font name="Helvetica" size="20.0" />
-                     </font>
-                  </Label>
+                  <Pane>
+                     <children>
+                        <Label layoutX="157.0" text="FLIGHT HISTORY" textFill="#4185d1">
+                           <font>
+                              <Font name="Helvetica" size="20.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="startDate" layoutX="22.0" layoutY="-1.0" prefHeight="27.0" prefWidth="127.0" promptText="Start:" styleClass="datePickerBlack" />
+                        <DatePicker fx:id="endDate" layoutX="333.0" layoutY="-1.0" prefHeight="27.0" prefWidth="127.0" promptText="End:" styleClass="datePickerBlack" />
+                     </children>
+                  </Pane>
                   <Label text="ARRIVALS" textFill="#8d8d8d">
                      <font>
                         <Font name="Helvetica" size="15.0" />
@@ -229,14 +237,19 @@
                         <Insets bottom="15.0" top="15.0" />
                      </VBox.margin>
                   </Line>
-                  <Label text="CONNECTION TO" textFill="#4185d1">
-                     <font>
-                        <Font name="Helvetica" size="20.0" />
-                     </font>
+                  <Pane>
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
-                  </Label>
+                     <children>
+                        <Label layoutX="30.0" text="CONNECTION TO" textFill="#4185d1">
+                           <font>
+                              <Font name="Helvetica" size="20.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="380.0" layoutY="-1.0" mnemonicParsing="false" onAction="#newConnection" styleClass="resetButton" text="NEW" />
+                     </children>
+                  </Pane>
                   <VBox fx:id="containConnections" alignment="TOP_CENTER">
                      <children>
                      </children>
