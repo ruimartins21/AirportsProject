@@ -292,7 +292,22 @@ public class AirportDetailsController {
         Optional<ButtonType> result = dialog.showAndWait();
         // if the user closes the dialog, the list of airports will update
         if(!result.isPresent()){
-//            update list of connections
+            updateConnections();
+        }
+    }
+
+    private void updateConnections(){
+        containConnections.getChildren().clear();
+        ArrayList<String> connections = utils.airportConnections(airport);
+        if(connections.size() == 0){
+            Label node = new Label("No connections");
+            node.getStyleClass().add("infoLabel");
+            containConnections.getChildren().add(node);
+        }else{
+            for(String code : connections){
+                Airport airport = airports.get(code);
+                containConnections.getChildren().add(newAirportItem(airport));
+            }
         }
     }
 
@@ -420,7 +435,9 @@ public class AirportDetailsController {
                     alert.setContentText("Are you sure you want to delete the connection from \"" + airport.getName() + "\" to \"" + airport2.getName() + "\" ?");
                     alert.showAndWait();
                     if (alert.getResult() == ButtonType.YES) {
-//                        utils.getSymbolGraph().G().removeEdge();
+                        Utils.removeConnectionOfAirport(airport.getCode(), airport2.getCode());
+                        updateConnections();
+
                     }
                     removeThis = false; // reset variable
                 }else{
