@@ -29,6 +29,7 @@
 
 package libs;
 
+import airportsProject.Connection;
 import edu.princeton.cs.algs4.LinkedBag;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -112,23 +113,32 @@ public class Bag<Item> implements Iterable<Item>, Serializable {
      * @param item the item to remove to this bag
      */
     public void remove(Item item){
-        Node<Item> currentNode = first;
-        Node<Item> previousNode = null;
-        while(currentNode != null){
-            if(item.equals(currentNode.item)){
-                if(previousNode  == null) {
-                    first = currentNode.next;
+        if(item instanceof Connection){
+            Node<Item> currentNode = first;
+            Node<Item> previousNode = null;
+
+            while(currentNode != null){
+                if(     ((Connection)item).from() == ((Connection)currentNode.item).from() &&
+                        ((Connection)item).to() == ((Connection)currentNode.item).to() &&
+                        ((Connection)item).weight() == ((Connection)currentNode.item).weight() &&
+                        ((Connection)item).getWindSpeed() == ((Connection)currentNode.item).getWindSpeed() &&
+                        ((Connection)item).getAltitude() == ((Connection)currentNode.item).getAltitude()
+                        ){
+                    if(previousNode  == null) {
+                        first = currentNode.next;
+                    }
+                    else {
+                        previousNode.next = currentNode.next;
+                    }
+                    n--;
                 }
                 else {
-                    previousNode.next = currentNode.next;
+                    previousNode = currentNode;
                 }
-                n--;
+                currentNode = currentNode.next;
             }
-            else {
-                previousNode = currentNode;
-            }
-            currentNode = currentNode.next;
         }
+
     }
 
 

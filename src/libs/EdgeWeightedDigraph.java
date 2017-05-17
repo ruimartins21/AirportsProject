@@ -185,10 +185,12 @@ public class EdgeWeightedDigraph implements Serializable {
         validateVertex(v);
         validateVertex(w);
         adj[v].remove(e);
+
         indegree[w]--;
         E--;
-    }
 
+
+    }
 
     /**
      * Returns the directed edges incident from vertex {@code v}.
@@ -264,19 +266,6 @@ public class EdgeWeightedDigraph implements Serializable {
         }
         return s.toString();
     }
-
-//    public String toString() {
-//        StringBuilder s = new StringBuilder();
-//        s.append(V + " " + E + NEWLINE);
-//        for (int v = 0; v < V; v++) {
-//            s.append(v + ": ");
-//            for (Connection e : adj[v]) {
-//                s.append(e + "  " + e.getAltitude() + "  " + e.getWindSpeed() + "  ");
-//            }
-//            s.append(NEWLINE);
-//        }
-//        return s.toString();
-//    }
 
     /**
      * Unit tests the {@code EdgeWeightedDigraph} data type.
