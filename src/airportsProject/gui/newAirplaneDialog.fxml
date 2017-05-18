@@ -2,7 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
@@ -41,8 +41,8 @@
             <String fx:value="airplaneInput" />
          </styleClass>
       </TextField>
-      <ChoiceBox fx:id="airplaneAirline" layoutX="55.0" layoutY="247.0" prefHeight="40.0" prefWidth="211.0" styleClass="choiceButton" />
-      <ChoiceBox fx:id="airplaneAirport" layoutX="342.0" layoutY="247.0" prefHeight="40.0" prefWidth="211.0" styleClass="choiceButton" />
+      <ComboBox fx:id="airplaneAirport" layoutX="344.0" layoutY="247.0" prefHeight="40.0" prefWidth="211.0" promptText="Select Airport" />
+      <ComboBox fx:id="airplaneAirline" layoutX="54.0" layoutY="247.0" prefHeight="40.0" prefWidth="211.0" promptText="Select Airline" />
       <TextField fx:id="airplaneFuel" layoutX="195.0" layoutY="319.0" prefHeight="40.0" prefWidth="211.0" promptText="Fuel Capacity" stylesheets="@style.css">
          <styleClass>
             <String fx:value="newItemInput" />

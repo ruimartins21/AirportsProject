@@ -123,6 +123,8 @@ public class AirportNetworkController {
         pin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                pin.setStyle("-fx-background-color: white");
+                warning.setStyle("-fx-opacity: 0");
                 if (origin.isEmpty()) {
                     if(!airport.getAirplanes().isEmpty()){ // if the chosen origin has airplanes parked to perform the flight
                         origin = airport.getCode();

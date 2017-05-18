@@ -209,11 +209,38 @@
 }
 .choiceButton{
     -fx-background-color: rgba(255, 255, 255, 0.2);
-    /*-fx-mark-color: white ;*/
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
     -fx-font-size: 18px;
 }
 .choiceButton > .label{
     -fx-text-fill: white;
+}
+.combo-box{
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-font-size: 18px;
+}
+.combo-box .list-cell {
+    -fx-text-fill: white;
+}
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background-color: #4185d1;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: #4185d1;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.combo-box-popup .list-view .list-cell
+{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+.combo-box-popup .list-view{
+    -fx-background-color: rgba(255, 255, 255, 0.8) ;
+    -fx-font-size: 15px;
 }
 .choiceButton .context-menu {
     -fx-background-color: rgba(255, 255, 255, 0.8) ;

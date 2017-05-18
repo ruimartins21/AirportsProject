@@ -618,9 +618,9 @@ public class Utils {
     public void checkGraphIsConnected(EdgeWeightedDigraph graph) {
         KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
         if (kosarajuSharirSCC.count() == 1) {
-            System.out.println("Graph is connected! \n");
+            System.out.println("Graph is connected!");
         } else {
-            System.out.println("Graph is not connected! \n");
+            System.out.println("Graph is not connected!");
         }
     }
 

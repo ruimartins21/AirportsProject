@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -69,7 +70,7 @@
             </Pane>
          </children>
       </Pane>
-      <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" pannable="true" pickOnBounds="false" prefHeight="200.0" prefWidth="500.0" styleClass="listsBackground" HBox.hgrow="NEVER">
          <content>
             <VBox alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWidth="480.0">
                <children>
@@ -93,6 +94,7 @@
                               </Label>
                            </children>
                         </Pane>
+                        <TextField editable="false" layoutX="145.0" opacity="0.0" />
                      </children>
                   </Pane>
                   <Pane prefHeight="51.0" prefWidth="480.0" VBox.vgrow="NEVER">
