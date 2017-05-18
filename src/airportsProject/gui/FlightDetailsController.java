@@ -130,7 +130,7 @@ public class FlightDetailsController {
         // list all the connections
         int comp = 0;
         for (String code : flight.getConnections()) {
-            for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+            for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(code))) {
                 if (comp + 1 >= flight.getConnections().size()) {
                 } else if (symbolGraph.nameOf(e.to()).compareTo(flight.getConnections().get(comp + 1)) == 0) {
                     if(comp != 0){ // each 2 "connection" cycles we put a separator between connections

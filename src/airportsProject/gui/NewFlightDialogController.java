@@ -117,7 +117,7 @@ public class NewFlightDialogController {
         RedBlackBST<Integer, Airplane> airplanes = airports.get(origin).getAirplanes();
         switch (typeOfFlight){
            case "Shortest Distance":
-               dijkstraSP = new DijkstraSP(symbolGraph.G(),originPos, null, "distance");
+               dijkstraSP = new DijkstraSP(symbolGraph.digraph(),originPos, null, "distance");
                airplaneUsed = airplanes.get(airplanes.min()); // select a random airplane that is parked on the origin airport
                if(show){
                    showRoute(dijkstraSP, destinPos);
@@ -127,7 +127,7 @@ public class NewFlightDialogController {
                break;
            case "Cheapest Flight":
                for(int id : airplanes.keys()){
-                   DijkstraSP dijkstra = new DijkstraSP(symbolGraph.G(),originPos, airplanes.get(id), "monetary");
+                   DijkstraSP dijkstra = new DijkstraSP(symbolGraph.digraph(),originPos, airplanes.get(id), "monetary");
                    if(dijkstraSP == null || dijkstra.distTo(destinPos) < dijkstraSP.distTo(destinPos)){
                        dijkstraSP = dijkstra;
                        airplaneUsed = airplanes.get(id);
@@ -141,7 +141,7 @@ public class NewFlightDialogController {
                break;
            case "Fastest Flight":
                for(int id : airplanes.keys()){
-                   DijkstraSP dijkstra = new DijkstraSP(symbolGraph.G(),originPos, airplanes.get(id), "time");
+                   DijkstraSP dijkstra = new DijkstraSP(symbolGraph.digraph(),originPos, airplanes.get(id), "time");
                    if(dijkstraSP == null || dijkstra.distTo(destinPos) < dijkstraSP.distTo(destinPos)){
                        dijkstraSP = dijkstra;
                        airplaneUsed = airplanes.get(id);
@@ -154,7 +154,7 @@ public class NewFlightDialogController {
                }
                break;
            case "Less Stops":
-               bfs = new BreadthFirstPaths(symbolGraph.G(), originPos);
+               bfs = new BreadthFirstPaths(symbolGraph.digraph(), originPos);
                airplaneUsed = airplanes.get(airplanes.min()); // select a random airplane that is parked on the origin airport
                if(show) showBFSRoute(bfs, destinPos);
                break;

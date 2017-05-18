@@ -73,7 +73,7 @@ public class AirportNetworkController {
         map.setHvalue(0.4);
         map.setVvalue(0.5);
 
-        for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
             Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
             newAirportItem(airport);
             if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
@@ -186,7 +186,7 @@ public class AirportNetworkController {
             airports = utils.getAirports();
             containAirports.getChildren().clear(); // removes the previous list
             mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update
-            for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+            for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
                 Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
                 newAirportItem(airport);
                 if(airport.getLatitude() != -1 && airport.getLongitude() != -1) {
@@ -251,7 +251,7 @@ public class AirportNetworkController {
 
     @FXML
     void openGraph(){
-        utils.checkGraphIsConnected(utils.getSymbolGraph().G()); // check if the graph is connected
+        utils.checkGraphIsConnected(utils.getSymbolGraph().digraph()); // check if the graph is connected
         Utils.showGraphs();
     }
 
@@ -368,7 +368,7 @@ public class AirportNetworkController {
                 }
             }
         }else{
-            for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+            for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
                 Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
                 // searches the keyword occurrence on the airport
                 if (search.compareTo(airport.getCode()) == 0 ||

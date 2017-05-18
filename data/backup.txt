@@ -15,6 +15,7 @@ Warsaw Chopin Airport;WAW;Warsaw;Poland;Europe;7.8;
 Boryspil;KBP;Kiev;Ukraine;Europe;8.0;
 Milão-Malpensa;MXP;Milão;Italy;Europe;8.4;
 Frankfurt;FRA;Frankfurt;Germany;Europe;9.6;
+Mauritania;RUI;Mauritania;Mauritania;Mauritania;10.0;
 Charles de Gaulle;CDG;Paris;France;Europe;8.1;
 Kingsford Smith de Sydney;SYD;Sydney;Australia;Oceania;9.3;
 Beijing International;PEK;Beijing;China;Asia;9.8;
@@ -42,9 +43,9 @@ Thai Airways;Thailand;
 Qatar Airways;Qatar;
 #
 planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passengers;fuelCap
-1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;LIS;380;274876;
-2;Airbus A340;D. João de Castro;TAP Air Portugal;871.0;8000.0;16700.0;JFK;380;274876;
-3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871.0;8000.0;16700.0;LIS;380;274876;
+1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
+2;Airbus A340;D. João de Castro;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
+3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 4;Airbus A340;D. Francisco de Almeida;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 5;Airbus A331;Pero Vaz de Caminha;TAP Air Portugal;829.0;12000.0;5900.0;SCL;236;29580;
 6;Airbus A331;Luís vaz de camões;TAP Air Portugal;829.0;12000.0;5900.0;AMS;236;29580;
@@ -60,7 +61,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 16;Boeing 777;Al Khattya;Qatar Airways;905.0;12000.0;17000.0;WAW;550;117348;
 17;Boeing 777;Jaow Alsalam;Qatar Airways;905.0;12000.0;17000.0;FRA;550;117348;
 18;Boeing 777;Lbeshairiya;Qatar Airways;905.0;12000.0;17000.0;CDG;550;117348;
-19;Boeing 777;Um-Alamad;Qatar Airways;905.0;12000.0;17000.0;YUL;550;117348;
+19;Boeing 777;Um-Alamad;Qatar Airways;905.0;12000.0;17000.0;JFK;550;117348;
 20;Boeing 747;Gosford;Qantas;893.0;12000.0;9800.0;SYD;480;183380;
 21;Boeing 747;Hamilton Island;Qantas;893.0;12000.0;9800.0;TLV;480;183380;
 22;Boeing 747;Phillip Island;Qantas;893.0;12000.0;9800.0;PEK;480;183380;
@@ -68,7 +69,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 24;Boeing 787;Chaturaphak Phiman;Thai Airways;958.0;12000.0;15190.0;BOM;420;126206;
 25;Boeing 787;Wapi Pathum;Thai Airways;958.0;12000.0;15190.0;MXP;420;126206;
 26;Boeing 787;pran Buri;Thai Airways;958.0;12000.0;15190.0;MXP;420;126206;
-27;Boeing 787;Kosum Phisai;Thai Airways;958.0;12000.0;15190.0;LGW;420;126206;
+27;Boeing 787;Kosum Phisai;Thai Airways;958.0;12000.0;15190.0;JFK;420;126206;
 28;Boeing 787;Kong Krailat;Thai Airways;958.0;12000.0;15190.0;AMS;420;126206;
 29;ATR 72;Apasara;Thai Airways;511.0;5000.0;1528.0;KBP;74;5700;
 30;ATR 72;Chang;Thai Airways;511.0;5000.0;1528.0;CPH;74;5700;
@@ -81,11 +82,6 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
 date;passengers;plane;originAirport;destinAirport;connections;
-17/5/2017/18/19/28;123;19;JFK;YUL;JFK|YUL|;
-17/5/2017/18/19/34;55;27;JFK;LGW;JFK|OPO|LGW|;
-17/5/2017/18/19/41;15;1;OPO;LIS;OPO|LIS|;
-17/5/2017/18/28/51;77;2;OPO;JFK;OPO|JFK|;
-17/5/2017/21/7/8;123;3;OPO;LIS;OPO|FCO|ALG|LIS|;
 #
 originAirport;airportCode;distance;windSpeed;airTunnel;
 3
@@ -122,3 +118,4 @@ MVD;SCL;1370.0;2.4;26300.0;GIG;1826.0;4.5;32100.0
 SCL;MVD;1370.0;-2.4;26300.0
 BOG;JFK;4001.0;5.1;32100.0;LIM;1890.0;-4.8;31200.0;GIG;4546.0;-6.1;33100.0
 LIM;BOG;1890.0;4.8;31200.0
+RUI;
