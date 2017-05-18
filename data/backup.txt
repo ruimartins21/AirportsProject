@@ -15,6 +15,7 @@ Warsaw Chopin Airport;WAW;Warsaw;Poland;Europe;7.8;
 Boryspil;KBP;Kiev;Ukraine;Europe;8.0;
 Milão-Malpensa;MXP;Milão;Italy;Europe;8.4;
 Frankfurt;FRA;Frankfurt;Germany;Europe;9.6;
+Mauritania;RUI;Mauritania;Mauritania;Mauritania;10.0;
 Charles de Gaulle;CDG;Paris;France;Europe;8.1;
 Kingsford Smith de Sydney;SYD;Sydney;Australia;Oceania;9.3;
 Beijing International;PEK;Beijing;China;Asia;9.8;
@@ -117,3 +118,4 @@ MVD;SCL;1370.0;2.4;26300.0;GIG;1826.0;4.5;32100.0
 SCL;MVD;1370.0;-2.4;26300.0
 BOG;JFK;4001.0;5.1;32100.0;LIM;1890.0;-4.8;31200.0;GIG;4546.0;-6.1;33100.0
 LIM;BOG;1890.0;4.8;31200.0
+RUI;

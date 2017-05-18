@@ -6,6 +6,7 @@ import libs.*;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -50,7 +51,7 @@ public class Utils {
         return symbolGraph;
     }
 
-    public static void setSymbolGraph(SymbolEdgeWeightedDigraph sGraph){
+    public static void setSymbolGraph(SymbolEdgeWeightedDigraph sGraph) {
         symbolGraph = sGraph;
     }
 
@@ -88,18 +89,18 @@ public class Utils {
         return airportST;
     }
 
-    public static void setAirports(SeparateChainingHashST<String, Airport> airports){
+    public static void setAirports(SeparateChainingHashST<String, Airport> airports) {
         airportST = airports;
     }
 
     public void newAirport(Airport airport) {
-        if(remove.contains(airport.getCode())) // if the user is inserting an airport with a code equals to an airport removed before
+        if (remove.contains(airport.getCode())) // if the user is inserting an airport with a code equals to an airport removed before
             remove.remove(airport.getCode());
         airportST.put(airport.getCode(), airport);
 //        add airport to a vertice of graph
         log("airportST", "New airport [" + airport.getCode() + "] \" Name:" + airport.getName() + "\" Rating:" +
                 airport.getRating());
-        if(!getSymbolGraph().contains(airport.getCode())){
+        if (!getSymbolGraph().contains(airport.getCode())) {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(".//data//backup.txt", true))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
                 bw.write(airport.getCode() + ";");
                 bw.newLine();
@@ -140,10 +141,10 @@ public class Utils {
                 removeAirplane(airportST.get(airport.getCode()).getAirplanes().get(p));
             }
         }
-        if(!airport.getFlights().isEmpty()){ // all the flights that passed on the airport are removed too, it can't exist a history of a flight that passed through an airport that doesn't exist
-            for(Date date : airport.getFlights().keys()){
+        if (!airport.getFlights().isEmpty()) { // all the flights that passed on the airport are removed too, it can't exist a history of a flight that passed through an airport that doesn't exist
+            for (Date date : airport.getFlights().keys()) {
                 Flight flight = flightST.get(date);
-                for(String code : flight.getConnections()){ // removes the flight from the history of all the airports from where it passed
+                for (String code : flight.getConnections()) { // removes the flight from the history of all the airports from where it passed
                     airportST.get(code).getFlights().put(date, null);
                 }
                 flight.getAirplane().getAirplaneFlights().put(date, null); // removes it from the airplane history aswell
@@ -154,7 +155,7 @@ public class Utils {
             }
         }
         // removes it from the symbol graph
-        if(!remove.contains(airport.getCode())){
+        if (!remove.contains(airport.getCode())) {
             remove.add(airport.getCode());
         }
         symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
@@ -169,7 +170,7 @@ public class Utils {
         return airlineST;
     }
 
-    public static void setAirlines(SeparateChainingHashST<String, Airline> airlines){
+    public static void setAirlines(SeparateChainingHashST<String, Airline> airlines) {
         airlineST = airlines;
     }
 
@@ -181,8 +182,9 @@ public class Utils {
 
     /**
      * Receives the data possible to be edited on an airline and changes it using the class setters
-     * @param oldName previous name of the airline to match it in the ST
-     * @param newName new name of the airline
+     *
+     * @param oldName     previous name of the airline to match it in the ST
+     * @param newName     new name of the airline
      * @param nationality airline nationality
      */
     public void editAirline(String oldName, String newName, String nationality) {
@@ -199,10 +201,11 @@ public class Utils {
 
     /**
      * Removes an airline including all its airplanes
+     *
      * @param airline is the airline to remove
      */
-    public static void removeAirline(Airline airline){
-        for (Integer p: airline.getFleet().keys()) {
+    public static void removeAirline(Airline airline) {
+        for (Integer p : airline.getFleet().keys()) {
             removeAirplane(airline.getFleet().get(p));
         }
         airlineST.put(airline.getName(), null);
@@ -218,7 +221,7 @@ public class Utils {
         return airplaneST;
     }
 
-    public static void setAirplanes(RedBlackBST<Integer, Airplane> airplanes){
+    public static void setAirplanes(RedBlackBST<Integer, Airplane> airplanes) {
         airplaneST = airplanes;
     }
 
@@ -234,7 +237,7 @@ public class Utils {
      * @param maxRange           max range of the airplane
      * @param airportCode        airport where the airplane will be parked at first
      * @param passengersCapacity passengers capacity of the airplane
-     * @param fuelCapacity fuel capacity of the airplane
+     * @param fuelCapacity       fuel capacity of the airplane
      * @return returns false if the airline or the airport in question does not exist
      */
     public boolean addAirplane(String model, String name, String airlineName, float cruiseSpeed, float cruiseAltitude,
@@ -308,7 +311,7 @@ public class Utils {
         return flightST;
     }
 
-    public static void setFlights(RedBlackBST<Date, Flight> flights){
+    public static void setFlights(RedBlackBST<Date, Flight> flights) {
         flightST = flights;
     }
 
@@ -350,7 +353,7 @@ public class Utils {
      */
     public static void dump(String path) {
         String binPath = ".//data//backup.bin";
-        if(path.length() != 0 && path.contains("bin")) {
+        if (path.length() != 0 && path.contains("bin")) {
             binPath = path;
         }
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(binPath))) {
@@ -424,17 +427,17 @@ public class Utils {
             for (Date d : flightST.keys()) {
                 Flight flight = flightST.get(d);
                 StringBuilder sb = new StringBuilder();
-                for(String code : flight.getConnections()){
+                for (String code : flight.getConnections()) {
                     sb.append(code);
                     sb.append("|");
                 }
                 bw.write(
                         flight.getDate().getSlashes() + ";" +
-                        flight.getPassengers() + ";" +
-                        flight.getAirplane().getId() + ";" +
-                        flight.getAirportOfOrigin().getCode() + ";" +
-                        flight.getAirportOfDestination().getCode() + ";" +
-                        sb + ";"
+                                flight.getPassengers() + ";" +
+                                flight.getAirplane().getId() + ";" +
+                                flight.getAirportOfOrigin().getCode() + ";" +
+                                flight.getAirportOfDestination().getCode() + ";" +
+                                sb + ";"
                 );
                 bw.newLine();
             }
@@ -446,10 +449,10 @@ public class Utils {
             bw.write("3");
             bw.newLine();
             // gravar como esta no ficheiro graph.txt
-            for (int i = 0; i < symbolGraph.G().V(); i++) {
+            for (int i = 0; i < symbolGraph.digraph().V(); i++) {
                 bw.write(symbolGraph.nameOf(i));
-                for (Connection e : symbolGraph.G().adj(i)) {
-                    bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed()* 100) / 100f + ";" + e.getAltitude());
+                for (Connection e : symbolGraph.digraph().adj(i)) {
+                    bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed() * 100) / 100f + ";" + e.getAltitude());
                 }
                 bw.newLine();
             }
@@ -510,22 +513,27 @@ public class Utils {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         Graph graph = new SingleGraph("SymbolGraph");
         for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-            for (Connection c : symbolGraph.digraph().adj(i)) {
-                try {
-                    graph.addNode( symbolGraph.nameOf(c.from()));
-                } catch (Exception e) {
-                    // ignore
+//            if (symbolGraph.digraph().indegree(i) >= 0) {
+            if(symbolGraph.digraph().adj(i).iterator().hasNext()){
+                for (Connection c : symbolGraph.digraph().adj(i)) {
+                    try {
+                        graph.addNode(symbolGraph.nameOf(c.from()));
+                    } catch (Exception e) {
+                        // ignore
+                    }
+                    try {
+                        graph.addNode(symbolGraph.nameOf(c.to()));
+                    } catch (Exception e) {
+                        // ignore
+                    }
+                    try {
+                        graph.addEdge(symbolGraph.nameOf(c.from()) + "-" + symbolGraph.nameOf(c.to()), symbolGraph.nameOf(c.from()), symbolGraph.nameOf(c.to()), true);
+                    } catch (Exception e) {
+                        // ignore
+                    }
                 }
-                try {
-                    graph.addNode( symbolGraph.nameOf(c.to()));
-                } catch (Exception e) {
-                    // ignore
-                }
-                try {
-                    graph.addEdge( symbolGraph.nameOf(c.from()) + "-" + symbolGraph.nameOf(c.to()), symbolGraph.nameOf(c.from()),  symbolGraph.nameOf(c.to()), true);
-                } catch (Exception e) {
-                    // ignore
-                }
+            }else{
+                graph.addNode(symbolGraph.nameOf(i));
             }
         }
         for (Node node : graph) {
@@ -550,15 +558,17 @@ public class Utils {
                         "   padding: 4px;" +
                         "}";
         graph.addAttribute("ui.stylesheet", styleSheet);
-        graph.display();
+        Viewer viewer = graph.display();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
     }
 
     /**
      * All the flights between a period of time
+     *
      * @param start starting date
-     * @param end ending date
+     * @param end   ending date
      */
-    public static RedBlackBST<Date, Flight> flightsBetweenTimes(Date start, Date end){
+    public static RedBlackBST<Date, Flight> flightsBetweenTimes(Date start, Date end) {
         RedBlackBST<Date, Flight> results = new RedBlackBST<>();
         for (Date date : flightST.keys()) {
             Flight flight = flightST.get(date);
@@ -576,7 +586,7 @@ public class Utils {
             if (typeOfSearch.compareTo("distance") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + e.weight() + " Km");
             } else if (typeOfSearch.compareTo("monetary") == 0) {
-                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " +airplane.getAirplaneCost(e) + " €");
+                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + airplane.getAirplaneCost(e) + " €");
 //                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
             } else if (typeOfSearch.compareTo("time") == 0) {
                 System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : ");
@@ -626,6 +636,7 @@ public class Utils {
 
     /**
      * Creates a new flight between two airports
+     *
      * @param bfs
      * @param dijkstraSP
      * @param date
@@ -656,13 +667,13 @@ public class Utils {
                     getAirports().get(symbolGraph.nameOf(x)).newFlight(newFlight);
                 }
             }
-        }else if(!cons.isEmpty()){
+        } else if (!cons.isEmpty()) {
             newFlight.setConnections(cons);
         }
 
         // get from all the flight connections, all the info of the weights needed
         for (String code : newFlight.getConnections()) {
-            for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+            for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(code))) {
                 if (comp + 1 >= newFlight.getConnections().size()) {
                 } else if (symbolGraph.nameOf(e.to()).compareTo(newFlight.getConnections().get(comp + 1)) == 0) {
                     distance += e.weight();
@@ -686,7 +697,7 @@ public class Utils {
     }
 
     //  Recebe um numero e retorna uma SeparateChainingHashST com os aeroportos que tem esse numero de ligacoes
-    public SeparateChainingHashST<String, Airport> airportWithConnections(int number){
+    public SeparateChainingHashST<String, Airport> airportWithConnections(int number) {
         SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
         for (String key : airportST.keys()) {
             Airport airport = airportST.get(key);
@@ -700,7 +711,7 @@ public class Utils {
     //    Retorna as ligações aéreas que passam num determinado aeroporto
     public ArrayList<String> airportConnections(Airport airport) {
         ArrayList<String> results = new ArrayList<>();
-        for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(airport.getCode()))) {
+        for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(airport.getCode()))) {
             results.add(symbolGraph.nameOf(e.to()));
         }
         return results;
@@ -727,7 +738,7 @@ public class Utils {
 //        impirmir lista de adjacencias com filtro
         for (String code : airportST.keys()) {
             if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
-                for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(code))) {
+                for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(code))) {
                     map.put(i, symbolGraph.indexOf(code));
                 }
                 i++;
@@ -762,6 +773,7 @@ public class Utils {
 
     /**
      * Determines the airports with the most traffic (number of flights)
+     *
      * @return returns the list with all the matches for the most traffic airport, can be more than one with the same ammount
      */
     public static List<Map.Entry<String, Integer>> mostTrafficAirport() {
@@ -782,6 +794,7 @@ public class Utils {
 
     /**
      * Determines the flights with the most passengers transported
+     *
      * @return returns the list with all the matches for the flight that transported most passengers, can be more than one
      */
     public static List<Map.Entry<String, Integer>> mostPassengersFlight() {
@@ -803,6 +816,7 @@ public class Utils {
 
     /**
      * Determines the airports wich had the most passengers passing through it
+     *
      * @return returns the arraylist with all the matches for the most passengers passed through, can be more than one if the same ammount
      */
     public static List<Map.Entry<String, Integer>> mostPassengersAirport() {
@@ -828,11 +842,11 @@ public class Utils {
         return list.subList(0, 5);
     }
 
-//    saber qual conecao entre dois aeroportos
-    public static void removeConnectionOfAirport(String originCode, String destinationCode){
-        for (Connection e : symbolGraph.G().adj(symbolGraph.indexOf(originCode))) {
-            if(e.to() == symbolGraph.indexOf(destinationCode)){
-                symbolGraph.G().removeEdge(e);
+    //    saber qual conecao entre dois aeroportos
+    public static void removeConnectionOfAirport(String originCode, String destinationCode) {
+        for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(originCode))) {
+            if (e.to() == symbolGraph.indexOf(destinationCode)) {
+                symbolGraph.digraph().removeEdge(e);
                 log("SymbolGraph", "Removed connection between " + originCode + " and " + destinationCode);
             }
 
