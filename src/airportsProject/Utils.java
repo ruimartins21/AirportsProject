@@ -13,8 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Utils {
-    public static int nValue = 200;
-    public static int mValue = 250;
+    public static int extraValue = 200;
     public static int euroValue = 30;  // 30 €/L
     public static int windCost = 10;   // aditional cost by km/h of wind (adds 10L per km/h to the airplane fuel cost if it is against the airplane, or substracts if in favor)
     public static int mapWidth = 1536; // width of the world map used
@@ -717,39 +716,6 @@ public class Utils {
         return results;
     }
 
-    //    Retorna informação detalhada do tráfego do aeroporto num determinando período de tempo, retorna uma redblack de blick com o filtro do tempo de um determinado aeroporto
-//    public static RedBlackBST<Date, Flight> flightsBetweenTimesOfAirport(Airport airport, Date start, Date end) {
-//        RedBlackBST<Date, Flight> results = new RedBlackBST<>();
-//        for (Date f : airport.getFlights().keys()) {
-//            Flight flight = airport.getFlights().get(f);
-//            if (flight.getDate().compareTo(start) == 1 && flight.getDate().compareTo(end) == -1) {
-//                results.put(flight.getDate(), flight);
-//            }
-//        }
-//        return results;
-//    }
-
-    //    criar um novo grafo perante
-    public EdgeWeightedDigraph filterGraph(String searchContinent) {
-        EdgeWeightedDigraph newGraph = new EdgeWeightedDigraph(searchAirportsOfContinent(airportST, searchContinent).size());
-//        criar tabela de simbolos para mapear os codigos originais da symbolDiagraph nos novos
-        ST<Integer, Integer> map = new ST<>();
-        int i = 0;
-//        impirmir lista de adjacencias com filtro
-        for (String code : airportST.keys()) {
-            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
-                for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(code))) {
-                    map.put(i, symbolGraph.indexOf(code));
-                }
-                i++;
-            }
-        }
-        for (Integer inte : map.keys()) {
-//            System.out.println("[" + inte + "]   " + map.get(inte));
-        }
-//        System.out.println();
-        return newGraph;
-    }
 
     public static ArrayList<String> cloneList(ArrayList<String> list) {
         ArrayList<String> clone = new ArrayList<String>(list.size());
@@ -842,7 +808,13 @@ public class Utils {
         return list.subList(0, 5);
     }
 
-    //    saber qual conecao entre dois aeroportos
+
+    /***
+     *  function responsible for removing an edge of graph
+     *
+     * @param originCode -  code of origin Airport
+     * @param destinationCode - code of destination Airport
+     */
     public static void removeConnectionOfAirport(String originCode, String destinationCode) {
         for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(originCode))) {
             if (e.to() == symbolGraph.indexOf(destinationCode)) {

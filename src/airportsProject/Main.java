@@ -257,7 +257,9 @@ public class Main {
 
 //        System.out.println("------\n\n");
 
-        utils.showGraphs();
+//        utils.showGraphs();
+
+        utils.checkGraphIsConnected(symbolGraph.digraph());
 
 
 //        utils.removeConnectionOfAirport("OPO","LIS");

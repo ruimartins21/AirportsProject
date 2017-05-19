@@ -4,6 +4,10 @@ import libs.RedBlackBST;
 
 import java.io.Serializable;
 
+import static airportsProject.Utils.euroValue;
+import static airportsProject.Utils.extraValue;
+import static airportsProject.Utils.windCost;
+
 /**
  * The airplane class represents an airplane object with its characteristics and its connections (to an airport, to flights)
  * Aswell as the usual methods that provides (getters and setters), the class calculates the airplane cost for a specific
@@ -150,15 +154,15 @@ public class Airplane implements Serializable {
         altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
 
         if(altitudeDiference != 0)
-            consum_extra =  Main.extraValue *  Math.abs(altitudeDiference) / 1000;
+            consum_extra =  extraValue *  Math.abs(altitudeDiference) / 1000;
 
-        consum_extra = consum_extra - (Main.windCost+windSpeed);
+        consum_extra = consum_extra - (windCost+windSpeed);
 
         l_at_1000 += consum_extra;
 
         liters = distance* l_at_1000/1000;
 
-        return  Math.round(liters*Main.euroValue*100)/100;
+        return  Math.round(liters*euroValue*100)/100;
     }
 
     public double getAirplaneCost(Connection connection) {
@@ -167,15 +171,15 @@ public class Airplane implements Serializable {
         altitudeDiference = this.cruiseAltitude - connection.getAltitude(); // difference between airplane cruise altitude and the connection altitude
 
         if(altitudeDiference != 0)
-            consum_extra =  Main.extraValue *  Math.abs(altitudeDiference) / 1000;
+            consum_extra =  extraValue *  Math.abs(altitudeDiference) / 1000;
 
-        consum_extra = consum_extra - (Main.windCost+connection.getWindSpeed());
+        consum_extra = consum_extra - (windCost+connection.getWindSpeed());
 
         l_at_1000 += consum_extra;
 
         liters = connection.weight()* l_at_1000/1000;
 
-        return  Math.round(liters*Main.euroValue*100)/100;
+        return  Math.round(liters*euroValue*100)/100;
 
     }
 

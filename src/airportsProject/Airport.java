@@ -9,6 +9,9 @@ import libs.RedBlackBST;
 import java.io.*;
 import java.util.ArrayList;
 
+import static airportsProject.Utils.mapHeight;
+import static airportsProject.Utils.mapWidth;
+
 /**
  * The airport class has information (and provides it by getters aswell) on itself and on the airplanes that are parked
  * on a certain airport aswell as an history of flights that passed through it, being the airport the origin, the destination,
@@ -93,8 +96,8 @@ public class Airport implements Serializable {
             }
             this.latitude  = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue();
             this.longitude = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue();
-            this.latitude  = (Main.mapHeight) * (90 - latitude) / 180;
-            this.longitude = (Main.mapWidth) * (180 + longitude) / 360;
+            this.latitude  = (mapHeight) * (90 - latitude) / 180;
+            this.longitude = (mapWidth) * (180 + longitude) / 360;
         }catch (IOException e){
             System.out.println("Maps Coordinates: Internet connection required.");
         }

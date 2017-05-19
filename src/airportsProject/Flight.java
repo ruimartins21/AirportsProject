@@ -3,6 +3,8 @@ package airportsProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import static airportsProject.Utils.euroValue;
+
 /**
  * Class responsible for the flight information together with its connections
  * It is capable of giving informations on the airplane that will do the respective flight
@@ -68,7 +70,7 @@ public class Flight implements Serializable {
      * @return returns the cost in euros
      */
     public double getFlightCostEuros(){
-        return Main.euroValue * this.costs;
+        return euroValue * this.costs;
     }
 
     /**
