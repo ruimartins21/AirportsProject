@@ -35,7 +35,7 @@ public class ImportFromFile {
                 float rating = Float.parseFloat(fileContent[5]);
                 Airport newAirport = new Airport(name, code, city, country, continent, rating);
                 airportST.put(code, newAirport);
-                Main.log("airportST", "Inserted airport \"" + newAirport.getName() + "\"");
+                log("airportST", "Inserted airport \"" + newAirport.getName() + "\"");
             }
             i++;
         }
@@ -77,7 +77,7 @@ public class ImportFromFile {
                 airportST.get(airportCode).receivePlane(newPlane);  // adds this new plane to the respective airport
                 thisPlaneAirline.addPlane(newPlane); // adds this new plane to the respective airline
                 airplaneST.put(id - 1, newPlane); // keys on the ST starts with 0 and ids of the planes starts with 1 so "id-1" for the keys
-                Main.log("airplaneST", "Inserted airplane \"" + newPlane.getName() + "\"");
+                log("airplaneST", "Inserted airplane \"" + newPlane.getName() + "\"");
             }
             i++;
         }
@@ -97,7 +97,7 @@ public class ImportFromFile {
             if (i != 0) {  // first line of the file is to ignore
                 Airline newAirline = new Airline(fileContent[0], fileContent[1]);
                 airlineST.put(newAirline.getName(), newAirline);
-                Main.log("airlineST", "Inserted airline \"" + newAirline.getName() + "\"");
+                log("airlineST", "Inserted airline \"" + newAirline.getName() + "\"");
             }
             i++;
         }
