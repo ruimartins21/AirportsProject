@@ -58,9 +58,9 @@ public class Main {
         DijkstraSP dijkstraSP = null;
 
 
-//        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-//            System.out.println(i + " - " + symbolGraph.nameOf(i));
-//        }
+        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
+            System.out.println(i + " - " + symbolGraph.nameOf(i));
+        }
 
 
 //        System.out.println("Custo do aviao 1: " + airplane.getAirplaneCost(2077, -5, 2100) + " €");
@@ -222,14 +222,25 @@ public class Main {
 
 //        System.out.println(utils.getSymbolGraph().digraph());
         //        adicionar aresta
-//        Connection e = new Connection(31,29,2000.40,21000.5,-5.2);
+        Connection e = new Connection(31,29,2000.40,21000.5,-5.2);
+        Connection e2 = new Connection(23,33,2757.0,11000.0,-15.0);
+
 //        Connection e2 = new Connection(0,1,277.0,21000.0,-5.0);
 //        Connection e2 = new Connection(1,20,1110.00,26000.0,-4.6);
-//        utils.getSymbolGraph().digraph().addEdge(e);
+        utils.getSymbolGraph().digraph().addEdge(e);
+        utils.getSymbolGraph().digraph().addEdge(e2);
 
 //        System.out.println("depois de add");
 
 //        System.out.println(utils.getSymbolGraph().digraph());
+
+        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
+            System.out.println(symbolGraph.nameOf(i));
+            for (Connection c : symbolGraph.digraph().adj(i)) {
+                System.out.println(";" + symbolGraph.nameOf(c.to()) + ";" + c.weight() + ";" + Math.round(c.getWindSpeed() * 100) / 100f + ";" + c.getAltitude());
+            }
+            System.out.println();
+        }
 
 //        System.out.println("-------\n\n\n\n");
 //        remover aresta
@@ -250,8 +261,28 @@ public class Main {
 //        utils.getSymbolGraph().
 
 //        inserir um novo airport, tanto na separte como no graph
-//        Airport airportI = new Airport("olamundo","OLA","Madrid","Spain","Europe",3.4f);
-//        utils.newAirport(airportI);
+        Airport airportI = new Airport("olamundo","OLA","Madrid","Spain","Europe",3.4f);
+        utils.newAirport(airportI);
+
+        System.out.println("\n\n\n --------------------------------------------------------------------");
+
+        Connection e3 = new Connection(31,34,3757.0,4000.0,-35.0);
+        Connection e4 = new Connection(34,0,13757.0,4050.0,-25.0);
+        utils.getSymbolGraph().digraph().addEdge(e3);
+        utils.getSymbolGraph().digraph().addEdge(e4);
+
+        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
+            System.out.println(i + " - " + utils.getSymbolGraph().nameOf(i));
+        }
+
+
+        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
+            System.out.println(utils.getSymbolGraph().nameOf(i));
+            for (Connection c : utils.getSymbolGraph().digraph().adj(i)) {
+                System.out.println(";" + utils.getSymbolGraph().nameOf(c.to()) + ";" + c.weight() + ";" + Math.round(c.getWindSpeed() * 100) / 100f + ";" + c.getAltitude());
+            }
+            System.out.println();
+        }
 
 //        PrintInfo.allAirports(utils.getAirports());
 

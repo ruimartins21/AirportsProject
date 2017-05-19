@@ -1,5 +1,6 @@
 #
 airportName;airportCode;city;country;continent;rating;
+olamundo;OLA;Madrid;Spain;Europe;3.4;
 Narita;NRT;Tokyo;Japan;Asia;9.8;
 Chhatrapati Shivaji;BOM;Mumbai;India;Asia;8.4;
 Houari Boumediene;ALG;Algiers;Algeria;Africa;7.6;
@@ -42,6 +43,7 @@ Thai Airways;Thailand;
 Qatar Airways;Qatar;
 #
 planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passengers;fuelCap
+1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 2;Airbus A340;D. João de Castro;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 4;Airbus A340;D. Francisco de Almeida;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
@@ -50,7 +52,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 7;Airbus A331;Amalia Rodrigues;TAP Air Portugal;829.0;12000.0;5900.0;LGW;236;29580;
 8;Airbus A319;Soares dos Reis;TAP Air Portugal;828.0;10000.0;6950.0;REC;156;26750;
 9;Airbus A319;Guilhermina Suggia;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
-10;Airbus A380;Frankfurt Am Main;Lufthansa;910.0;13000.0;15700.0;NRT;525;320000;
+10;Airbus A380;Frankfurt Am Main;Lufthansa;910.0;13000.0;15700.0;LAX;525;320000;
 11;Airbus A380;München;Lufthansa;910.0;13000.0;15700.0;LGW;525;320000;
 12;Airbus A380;Peking;Lufthansa;910.0;13000.0;15700.0;FCO;525;320000;
 13;Airbus A380;Tokio;Lufthansa;910.0;13000.0;15700.0;LGW;525;320000;
@@ -60,7 +62,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 17;Boeing 777;Jaow Alsalam;Qatar Airways;905.0;12000.0;17000.0;FRA;550;117348;
 18;Boeing 777;Lbeshairiya;Qatar Airways;905.0;12000.0;17000.0;CDG;550;117348;
 19;Boeing 777;Um-Alamad;Qatar Airways;905.0;12000.0;17000.0;JFK;550;117348;
-20;Boeing 747;Gosford;Qantas;893.0;12000.0;9800.0;LAX;480;183380;
+20;Boeing 747;Gosford;Qantas;893.0;12000.0;9800.0;SYD;480;183380;
 21;Boeing 747;Hamilton Island;Qantas;893.0;12000.0;9800.0;TLV;480;183380;
 22;Boeing 747;Phillip Island;Qantas;893.0;12000.0;9800.0;PEK;480;183380;
 23;Boeing 787;Ongkharak;Thai Airways;958.0;12000.0;15190.0;BOM;420;126206;
@@ -80,8 +82,6 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
 date;passengers;plane;originAirport;destinAirport;connections;
-19/5/2017/1/0/59;22;20;SYD;LAX;SYD|CGK|PEK|NRT|LAX|;
-19/5/2017/1/1/12;22;10;LAX;NRT;LAX|NRT|;
 #
 originAirport;airportCode;distance;windSpeed;airTunnel;
 3
@@ -108,7 +108,7 @@ CGK;SYD;5523.0;-6.3;33600.0;PEK;5243.0;2.1;33500.0;DXB;6553.0;6.7;37500.0
 ALG;TLV;2994.0;-4.3;31500.0;LAD;5176.0;-5.3;33400.0;CDG;1372.0;4.6;30100.0;LIS;1110.0;4.6;26000.0
 LAD;REC;5299.0;8.3;33500.0;JNB;2493.0;-5.9;31800.0;ALG;5176.0;5.3;33400.0
 JNB;TLV;6509.0;3.6;37500.0;LAD;2493.0;5.9;31800.0
-SYD;CGK;5523.0;6.3;33600.0
+SYD;TIM;2757.0;-15.0;11000.0;CGK;5523.0;6.3;33600.0
 JFK;BOG;4001.0;-5.1;32100.0;GIG;7739.0;-7.6;39000.0;YUL;538.0;7.4;21600.0;OPO;5339.0;-6.8;37000.0
 LAX;YUL;3977.0;4.1;32100.0;NRT;8760.0;-6.9;39500.0
 YUL;JFK;538.0;-7.4;21600.0;LAX;3977.0;-4.1;32100.0
@@ -116,5 +116,7 @@ GIG;MVD;1826.0;-4.5;32100.0;REC;1862.0;3.5;31200.0;OPO;7974.0;6.6;39000.0;JFK;77
 REC;LAD;5299.0;-8.3;33500.0;GIG;1862.0;-3.5;31200.0
 MVD;SCL;1370.0;2.4;26300.0;GIG;1826.0;4.5;32100.0
 SCL;MVD;1370.0;-2.4;26300.0
-BOG;JFK;4001.0;5.1;32100.0;LIM;1890.0;-4.8;31200.0;GIG;4546.0;-6.1;33100.0
+BOG;MVD;2000.4;-5.2;21000.5;JFK;4001.0;5.1;32100.0;LIM;1890.0;-4.8;31200.0;GIG;4546.0;-6.1;33100.0
 LIM;BOG;1890.0;4.8;31200.0
+TIM
+OLA;
