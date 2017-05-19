@@ -24,7 +24,7 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 0px;
-    -fx-padding: 0.0em; /* 4 8 4 8 */
+    -fx-padding: 0.0em;
 }
 .radio-button > .radio > .dot{
     -fx-background-insets: 0;
@@ -207,24 +207,31 @@
 .resetButton:hover{
     -fx-background-color: #3A76B9;
 }
-.choiceButton{
+.combo-box{
     -fx-background-color: rgba(255, 255, 255, 0.2);
-    /*-fx-mark-color: white ;*/
     -fx-font-size: 18px;
 }
-.choiceButton > .label{
+.combo-box .list-cell {
     -fx-text-fill: white;
 }
-.choiceButton .context-menu {
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background-color: #4185d1;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: #4185d1;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.combo-box-popup .list-view .list-cell
+{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+.combo-box-popup .list-view{
     -fx-background-color: rgba(255, 255, 255, 0.8) ;
     -fx-font-size: 15px;
-    -fx-max-height: 500px;
-}
-.choiceButton .menu-item{
-    -fx-cursor: hand;
-}
-.choiceButton .menu-item:focused{
-    -fx-background-color: #4185d1;
 }
 .date-picker{
     -fx-background-color: transparent;
@@ -288,10 +295,6 @@
     -fx-stroke-width: 10px;
     -fx-stroke:#4185d1;
 }
-/*.chart .chart-legend{*/
-    /*-fx-background-color: transparent;*/
-    /*-fx-opacity: 0;*/
-/*}*/
 .chart-vertical-grid-lines {
     -fx-stroke: transparent;
 }

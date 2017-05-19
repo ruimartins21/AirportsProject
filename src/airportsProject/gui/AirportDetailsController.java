@@ -62,6 +62,8 @@ public class AirportDetailsController {
     @FXML
     private ScrollPane map;
     @FXML
+    private ScrollPane scroll;
+    @FXML
     private Label mapPin;
     @FXML
     private DatePicker startDate;
@@ -77,6 +79,9 @@ public class AirportDetailsController {
     private Date from = null, to = null;
 
     public void initialize(){
+        startDate.getParent().requestFocus();
+        startDate.setFocusTraversable(false);
+        endDate.setFocusTraversable(false);
         mapPin.getStyleClass().add("pin");
         airport = airports.get(code);
         // remove scroll bars and prevent scrolls with mouse on the map
@@ -276,10 +281,23 @@ public class AirportDetailsController {
         Dialog<ButtonType> dialog = new Dialog<>();
         Window window = dialog.getDialogPane().getScene().getWindow();
         window.setOnCloseRequest(e -> window.hide());
-        dialog.initOwner(containConnections.getScene().getWindow());
-        dialog.setTitle("New Airport");
+        dialog.initOwner(containAirportDetails.getScene().getWindow());
+        dialog.setTitle("New Connection");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("newAirportDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("newConnectionDialog.fxml"));
+        fxmlLoader.setControllerFactory((Class<?> controllerType) -> {
+            if (controllerType == NewConnectionDialogController.class) { // send the code of the airport to show its details
+                NewConnectionDialogController controller = new NewConnectionDialogController();
+                controller.setOrigin(airport);
+                return controller;
+            }else{
+                try {
+                    return controllerType.newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         try{
             dialog.getDialogPane().setContent(fxmlLoader.load());
         }catch(IOException e) {
@@ -290,7 +308,7 @@ public class AirportDetailsController {
         dialog.getDialogPane().getStyleClass().add("customDialog");
         dialog.setContentText(null);
         Optional<ButtonType> result = dialog.showAndWait();
-        // if the user closes the dialog, the list of airports will update
+        // if the user closes the dialog, the information edited will update
         if(!result.isPresent()){
             updateConnections();
         }

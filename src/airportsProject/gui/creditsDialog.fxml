@@ -16,18 +16,18 @@
    <header>
       <Pane prefHeight="243.0" prefWidth="470.0">
          <children>
-            <Label layoutX="183.0" layoutY="-2.0" text="CREDITS">
+            <Label layoutX="183.0" layoutY="-2.0" text="CREDITS" textFill="#4185d1">
                <font>
-                  <Font name="Helvetica Light" size="25.0" />
+                  <Font name="Helvetica Bold" size="25.0" />
                </font>
             </Label>
-             <Region layoutX="138.0" layoutY="39.0" prefHeight="2.0" prefWidth="200.0" scaleX="0.3" style="-fx-background-color: #888;" />
-             <Label layoutX="48.0" layoutY="60.0" text="Ricardo Barbosa nº 31210">
+             <Region layoutX="138.0" layoutY="39.0" prefHeight="1.0" prefWidth="200.0" scaleX="0.3" style="-fx-background-color: #4185d1;" />
+             <Label layoutX="28.0" layoutY="72.0" text="Ricardo Barbosa nº 31210" textFill="#5e5e5e">
                <font>
                   <Font name="Helvetica" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="266.0" layoutY="60.0" text="Rui Martins nº 31217">
+            <Label layoutX="28.0" layoutY="107.0" text="Rui Martins nº 31217" textFill="#5e5e5e">
                <font>
                   <Font name="Helvetica" size="17.0" />
                </font>
@@ -42,17 +42,17 @@
                   <Font name="Helvetica Light" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="48.0" layoutY="93.0" text="Within the subjects:">
+            <Label layoutX="264.0" layoutY="61.0" text="Within the subjects:">
                <font>
                   <Font name="Helvetica Light" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="264.0" layoutY="80.0" prefHeight="45.0" prefWidth="200.0" text="Linguagens de Programação II" textFill="#4185d1" wrapText="true">
+            <Label layoutX="264.0" layoutY="70.0" prefHeight="45.0" prefWidth="200.0" text="Linguagens de Programação II" textFill="#4185d1" wrapText="true">
                <font>
                   <Font name="Helvetica Light" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="264.0" layoutY="110.0" prefHeight="45.0" prefWidth="200.0" text="Algoritmos e Estruturas de Dados II" textFill="#4185d1" wrapText="true">
+            <Label layoutX="264.0" layoutY="100.0" prefHeight="45.0" prefWidth="200.0" text="Algoritmos e Estruturas de Dados II" textFill="#4185d1" wrapText="true">
                <font>
                   <Font name="Helvetica Light" size="14.0" />
                </font>

@@ -97,7 +97,7 @@
                   </Pane>
                   <Pane prefHeight="30.0" prefWidth="490.0">
                      <children>
-                        <TextField fx:id="searchAirport" alignment="CENTER" layoutX="72.0" layoutY="-1.0" onAction="#getInput" prefHeight="30.0" prefWidth="244.0" promptText="SEARCH AIRPORT" styleClass="searchInput">
+                        <TextField fx:id="searchAirport" alignment="CENTER" layoutX="72.0" layoutY="-1.0" onAction="#getInput" prefHeight="30.0" prefWidth="244.0" promptText="SEARCH" styleClass="searchInput">
                            <font>
                               <Font name="Helvetica" size="13.0" />
                            </font>

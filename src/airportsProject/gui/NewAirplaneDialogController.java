@@ -8,7 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import libs.SeparateChainingHashST;
@@ -31,9 +31,9 @@ public class NewAirplaneDialogController{
     @FXML
     private TextField airplaneFuel;
     @FXML
-    private ChoiceBox<String> airplaneAirline;
+    private ComboBox<String> airplaneAirline;
     @FXML
-    private ChoiceBox<String> airplaneAirport;
+    private ComboBox<String> airplaneAirport;
     @FXML
     private Label warning;
 
@@ -44,21 +44,23 @@ public class NewAirplaneDialogController{
     private SeparateChainingHashST<String, Airport> airports = utils.getAirports();
 
     public void initialize(){
-
         ObservableList<String> airlinesList = FXCollections.observableArrayList();
         for(String name : airlines.keys()){
             airlinesList.add(name + " (" + airlines.get(name).getNationality() + ")");
         }
         ObservableList<String> airportsList = FXCollections.observableArrayList();
-        for(String code : airports.keys()){
-            airportsList.add(code + " - " + airports.get(code).getName() + " (" + airports.get(code).getCountry() + ")");
+        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
+            Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
+            airportsList.add(airport.getCode() + " - " + airport.getName() + " (" + airport.getCountry() + ")");
         }
         airplaneAirline.setItems(airlinesList);
         airplaneAirline.getItems().add(0, "Select Airline");
         airplaneAirline.getSelectionModel().selectFirst();
+        airplaneAirline.setFocusTraversable(false);
         airplaneAirport.setItems(airportsList);
         airplaneAirport.getItems().add(0, "Select Airport");
         airplaneAirport.getSelectionModel().selectFirst();
+        airplaneAirport.setFocusTraversable(false);
 
         if(isEdit){
             airplaneName.setText(airplane.getName());
@@ -113,9 +115,9 @@ public class NewAirplaneDialogController{
                 }
                 String airportCode = "";
                 count = 1;
-                for (String code : airports.keys()){
+                for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
                     if(count == airplaneAirport.getSelectionModel().getSelectedIndex()){
-                        airportCode = code;
+                        airportCode = utils.getSymbolGraph().nameOf(i);
                     }
                     count++;
                 }

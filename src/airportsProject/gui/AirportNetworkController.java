@@ -123,6 +123,8 @@ public class AirportNetworkController {
         pin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                pin.setStyle("-fx-background-color: white");
+                warning.setStyle("-fx-opacity: 0");
                 if (origin.isEmpty()) {
                     if(!airport.getAirplanes().isEmpty()){ // if the chosen origin has airplanes parked to perform the flight
                         origin = airport.getCode();
@@ -296,42 +298,35 @@ public class AirportNetworkController {
                 multipleAND[i] = multipleAND[i].trim();
                 String[] multipleOR = multipleAND[i].split("\\|\\|"); // searches for the boolean operator OR inside each statement separated by an AND operator
                 if(multipleOR.length > 1){
-                    for (int j = 0; j < multipleOR.length; j++) {
+                    auxList.clear(); // clears the results for the next search
+                    for (int j = 0; j < multipleOR.length; j++) { // runs the OR statements and gathers them all in a list
                         multipleOR[j] = multipleOR[j].trim();
                         auxList.addAll(searchIt(multipleOR[j]));
-                        // checks for any AND statement that, together with this OR statements, must get a result that is common to both
-                        if(gatherResults.size() > 0){
-                            for(String code : auxList){
-                                if(!gatherResults.contains(code)){ // a result is not present in both statements, it is not a result wanted
-                                    toRemove.add(code);
-                                }
-                            }
-                            if(toRemove.size() > 0){ // stores a list of airports that don't meet all the requirements to remove now
-                                auxList.removeAll(toRemove);
-                                toRemove.clear();
-                            }
-                        }
                     }
-                    if(auxList.size() == 0){ // at the end of the OR operators if no airport met the requirements, it means there's no results wanted even if there was on an AND statement
-                        gatherResults.clear();
+                    if(gatherResults.size() > 0){ // if there's already some result, the results got from the OR statements must be present in the previous results
+                        for (String code : gatherResults)
+                            if(!auxList.contains(code))
+                                toRemove.add(code); // stores a list of results that don't meet all the requirements
+                    }else{
+                        gatherResults.addAll(auxList); // no results yet, it's stored directly without verifications
+                    }
+                    if(toRemove.size() > 0){
+                        gatherResults.removeAll(toRemove);
+                        toRemove.clear();
                     }
                 }else{ // no operators within an AND statement, proceeds with the search
-                    if(gatherResults.size() > 0 ){ // one of the two AND statement has already been done
-                        auxList.addAll(searchIt(multipleAND[i]));
-                        for (String code : auxList){
-                            if(!gatherResults.contains(code)){
-                                toRemove.add(code);
-                            }
-                        }
-                        if(toRemove.size() > 0){ // stores a list of airports that don't meet all the requirements to remove now
-                            auxList.removeAll(toRemove);
-                            toRemove.clear();
-                        }
-                        if(auxList.size() == 0){ // at the end of the OR operators if no airport met the requirements, it means there's no results wanted even if there was on an AND statement
-                            gatherResults.clear();
-                        }
-                    }else {
-                        gatherResults.addAll(searchIt(multipleAND[i]));
+                    auxList.clear(); // clears the results for the next search
+                    auxList.addAll(searchIt(multipleAND[i]));
+                    if(gatherResults.size() > 0){ // if there are alreay some results, the stored ones must have some result equals to the new ones or else they will be removed
+                        for (String code : gatherResults)
+                            if(!auxList.contains(code))
+                                toRemove.add(code); // stores a list of results that don't meet all the requirements
+                    }else{
+                        gatherResults.addAll(auxList); // no results yet, it's stored directly without verifications
+                    }
+                    if(toRemove.size() > 0){
+                        gatherResults.removeAll(toRemove);
+                        toRemove.clear();
                     }
                 }
             }

@@ -83,7 +83,7 @@
                </children>
             </Pane>
             <Region prefHeight="25.0" prefWidth="650.0" />
-            <Button mnemonicParsing="false" onAction="#calculateRoute" text="CALCULATE ROUTE">
+            <Button mnemonicParsing="false" onAction="#route" text="CALCULATE ROUTE">
                <styleClass>
                   <String fx:value="dialogButton" />
                   <String fx:value="calcRoute" />
