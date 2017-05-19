@@ -78,6 +78,7 @@ public class AirplanesController {
                 Airplane airplane = airplanes.get(id);
                 newAirplaneItem(airplane);
             }
+
         }else{
             Pane newPane = new Pane();
             newPane.setPrefHeight(200);

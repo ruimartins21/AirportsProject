@@ -767,6 +767,13 @@ public class Utils {
 //        return newGraph;
 //    }
 
+
+    /***
+     *  function responsible for cloning the arrayList
+     *
+     * @param list -> array for the cloning
+     * @return An arraylist cloned
+     */
     public static ArrayList<String> cloneList(ArrayList<String> list) {
         ArrayList<String> clone = new ArrayList<String>(list.size());
         clone.addAll(list);
@@ -780,7 +787,7 @@ public class Utils {
      * @param continent -> continent for search
      * @return - An Arraylist of airports of the continent different of continent param
      */
-    public ArrayList<String> filterAirportsByContinent(String continent) {
+   public ArrayList<String> filterAirportsByContinent(String continent) {
         ArrayList<String> filter = new ArrayList<>();
         for (int i = 0; i < symbolGraph.digraph().V(); i++) {
             if (airportST.get(symbolGraph.nameOf(i)).getContinent().toUpperCase().compareTo(continent.toUpperCase()) != 0) {
