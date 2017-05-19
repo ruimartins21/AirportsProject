@@ -508,6 +508,10 @@ public class Utils {
         return true;
     }
 
+    /**
+     * Draw in the new GUI interface the Graph used in project
+     *
+     */
     public static void showGraphs() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         Graph graph = new SingleGraph("SymbolGraph");
@@ -623,7 +627,12 @@ public class Utils {
         System.out.println("\n");
     }
 
-    // check if the graph is connected
+
+    /**
+     * check if the graph is connected
+     *
+     * @param graph - graph will be checked
+     */
     public void checkGraphIsConnected(EdgeWeightedDigraph graph) {
         KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
         if (kosarajuSharirSCC.count() == 1) {
@@ -636,14 +645,14 @@ public class Utils {
     /**
      * Creates a new flight between two airports
      *
-     * @param bfs
-     * @param dijkstraSP
-     * @param date
-     * @param passengers
-     * @param airplane
-     * @param airportOfOrigin
-     * @param airportOfDestination
-     * @param gIdAirportDest
+     * @param bfs - Breadth First Search object
+     * @param dijkstraSP - dijkstraSP object
+     * @param date - date of flight
+     * @param passengers - passengers of flight
+     * @param airplane - airplane used in the flight
+     * @param airportOfOrigin - airport of origin the flight
+     * @param airportOfDestination - airport of Destination the flight
+     * @param gIdAirportDest - id will be used for search the hasPathTo in bfs and dijkstraSP algorithm
      */
     public void newFlight(BreadthFirstPaths bfs, DijkstraSP dijkstraSP, Date date, int passengers, Airplane airplane,
                           Airport airportOfOrigin, Airport airportOfDestination, int gIdAirportDest, ArrayList<String> cons) {
@@ -695,7 +704,13 @@ public class Utils {
                 newFlight.getAirportOfDestination().getCity() + ", " + newFlight.getAirportOfDestination().getCountry() + ")");
     }
 
-    //  Recebe um numero e retorna uma SeparateChainingHashST com os aeroportos que tem esse numero de ligacoes
+
+    /**
+     * Search the airports that have the number of conections
+     *
+     * @param number - number of connections of airport
+     * @return - Return SeparateChainingHashST of airports that have number connections
+     */
     public SeparateChainingHashST<String, Airport> airportWithConnections(int number) {
         SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
         for (String key : airportST.keys()) {
@@ -707,7 +722,12 @@ public class Utils {
         return results;
     }
 
-    //    Retorna as ligações aéreas que passam num determinado aeroporto
+    /**
+     * Search the edges/connections of determinate airport
+     *
+     * @param airport - Airport for search
+     * @return Arraylist of Strings with name of airports connections
+     */
     public ArrayList<String> airportConnections(Airport airport) {
         ArrayList<String> results = new ArrayList<>();
         for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(airport.getCode()))) {
@@ -716,7 +736,12 @@ public class Utils {
         return results;
     }
 
-
+    /***
+     *  function responsible for cloning the arrayList
+     *
+     * @param list -> array for the cloning
+     * @return An arraylist cloned
+     */
     public static ArrayList<String> cloneList(ArrayList<String> list) {
         ArrayList<String> clone = new ArrayList<String>(list.size());
         for (String item : list) clone.add(item);
@@ -724,7 +749,12 @@ public class Utils {
     }
 
 
-    //    funcao que retorna um arraylist dos aeroportos a ser ignorados (por continente)
+    /***
+     *  Search in the airportST for by Continent
+     *
+     * @param continent -> continent for search
+     * @return - An Arraylist of airports of the continent different of continent param
+     */
     public ArrayList<String> filterAirportsByContinent(String continent) {
         ArrayList<String> filter = new ArrayList<>();
         for (String code : airportST.keys()) {
