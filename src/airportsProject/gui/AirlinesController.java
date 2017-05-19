@@ -2,11 +2,10 @@ package airportsProject.gui;
 
 import airportsProject.Airline;
 import airportsProject.Utils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
@@ -14,6 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -42,20 +42,66 @@ public class AirlinesController {
     SeparateChainingHashST<String, Airline> airlines = utils.getAirlines();
 
     public void initialize(){
-        ObservableList<Airline> airlinesList = FXCollections.observableArrayList();
-        for(String name : airlines.keys()){
-            Airline airline = airlines.get(name);
-            airlinesList.add(airline);
-            newAirlineItem(airline);
+        if(!airlines.isEmpty()){
+            for(String name : airlines.keys()){
+                Airline airline = airlines.get(name);
+                newAirlineItem(airline);
+            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("No airlines found !");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(90);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            airlinesContainer.getChildren().add(newPane);
         }
     }
 
     private void updateList(){
         airlinesContainer.getChildren().remove(0, airlineId); // removes the previous list with the removed airline still showing
         airlineId = 0; // resets the id counter
-        for(String name : airlines.keys()){ // lists all the existent airlines
-            Airline airline = airlines.get(name);
-            newAirlineItem(airline);
+        if(!airlines.isEmpty()){
+            for(String name : airlines.keys()){
+                Airline airline = airlines.get(name);
+                newAirlineItem(airline);
+            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("No airlines found !");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(90);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            airlinesContainer.getChildren().add(newPane);
         }
     }
 

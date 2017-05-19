@@ -3,8 +3,6 @@ package airportsProject.gui;
 import airportsProject.Airline;
 import airportsProject.Airplane;
 import airportsProject.Utils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,12 +48,18 @@ public class AirlineDetailsController {
         airlineName.setText(String.valueOf(airline.getName()));
         fleetSizeNumber.setText(airline.getFleet().size() + " airplanes");
 
-        ObservableList<Airplane> airplanesList = FXCollections.observableArrayList();
         RedBlackBST<Integer, Airplane> fleet = airline.getFleet();
         for(int id : fleet.keys()){
             Airplane airplane = fleet.get(id);
-            airplanesList.add(airplane);
             newAirplaneItem(airplane);
+        }
+    }
+
+    private void updateList(){
+        airlinesContainer.getChildren().clear();
+        RedBlackBST<Integer, Airplane> fleet = airline.getFleet();
+        for(int id : fleet.keys()){
+            newAirplaneItem(fleet.get(id));
         }
     }
 
@@ -171,8 +175,17 @@ public class AirlineDetailsController {
             @Override
             public void handle(MouseEvent event) {
                 if(removeThis){
-                    System.out.println("Remove airplane id: " + airplane.getId());
-                    // alert para verificar se quer mesmo remover
+                    // alert to check if the user really wants to delete the airline
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+                    // style the alert
+                    alert.setTitle("Confirm Deletion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you sure you want to delete \"" + airplane.getName() + "\" airplane ?");
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.YES) {
+                        Utils.removeAirplane(airplane);
+                        updateList();
+                    }
                     removeThis = false; // reset variable
                 }else{
                     VistaNavigator.loadVista(VistaNavigator.AIRPLANEDETAILS, airplane.getId());

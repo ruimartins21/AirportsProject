@@ -69,7 +69,7 @@ public class NewConnectionDialogController{
                 count++;
             }
             Connection c = new Connection(utils.getSymbolGraph().indexOf(airport.getCode()), utils.getSymbolGraph().indexOf(destinCode),
-                                    Double.valueOf(distance.getText()), Double.valueOf(altitude.getText()), Double.valueOf(windSpeed.getText()));
+                    Double.valueOf(distance.getText()), Double.valueOf(altitude.getText()), Double.valueOf(windSpeed.getText()));
             utils.getSymbolGraph().digraph().addEdge(c);
             log("SymbolGraph", "New connection between " + airport.getCode() + " and " + destinCode);
             // close the dialog window

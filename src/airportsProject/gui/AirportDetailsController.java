@@ -278,10 +278,6 @@ public class AirportDetailsController {
 
     @FXML
     void newConnection(ActionEvent event) {
-        // para guardar edge
-//        utils.getSymbolGraph().G().addEdge();
-        // verificar se ja nao existe a conexao
-        // fazer log depois
         Dialog<ButtonType> dialog = new Dialog<>();
         Window window = dialog.getDialogPane().getScene().getWindow();
         window.setOnCloseRequest(e -> window.hide());

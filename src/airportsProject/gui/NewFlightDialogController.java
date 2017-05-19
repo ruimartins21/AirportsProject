@@ -86,8 +86,10 @@ public class NewFlightDialogController {
     public void submitFlight() {
         // calculate final route chosen
         show = false;
-        calculateRoute();
-        if (typeOfFlight.isEmpty()) { // check if the user chose a type
+        if(!calculateRoute()){
+            warning.setText(origin + " doesn't have a connection to the destination chosen.");
+            warning.setStyle("-fx-opacity: 1");
+        }else if (typeOfFlight.isEmpty()) { // check if the user chose a type
             warning.setText("Please choose a type of flight.");
             warning.setStyle("-fx-opacity: 1");
         } else if (!Utils.isNumeric(flightPassengers.getText())) { // check if it is a number
@@ -111,7 +113,15 @@ public class NewFlightDialogController {
     }
 
     @FXML
-    public void calculateRoute(){
+    public void route(){
+        if(!calculateRoute()){
+            warning.setText(origin + " doesn't have a connection to the destination chosen.");
+            warning.setStyle("-fx-opacity: 1");
+        }
+    }
+
+    @FXML
+    public boolean calculateRoute(){
         routeContainer.getChildren().clear();
         dijkstraSP = null;
         RedBlackBST<Integer, Airplane> airplanes = airports.get(origin).getAirplanes();
@@ -119,26 +129,32 @@ public class NewFlightDialogController {
            case "Shortest Distance":
                dijkstraSP = new DijkstraSP(symbolGraph.digraph(),originPos, null, "distance");
                airplaneUsed = airplanes.get(airplanes.min()); // select a random airplane that is parked on the origin airport
-               if(show){
-                   showRoute(dijkstraSP, destinPos);
-                   totalLabel.setText("Total Distance: ");
-                   totalValue.setText(dijkstraSP.distTo(destinPos) + " km");
+               if(dijkstraSP.hasPathTo(destinPos)){
+                   if(show){
+                       showRoute(dijkstraSP, destinPos);
+                       totalLabel.setText("Total Distance: ");
+                       totalValue.setText(dijkstraSP.distTo(destinPos) + " km");
+                   }
+                   return true;
                }
-               break;
+               return false;
            case "Cheapest Flight":
                for(int id : airplanes.keys()){
                    DijkstraSP dijkstra = new DijkstraSP(symbolGraph.digraph(),originPos, airplanes.get(id), "monetary");
-                   if(dijkstraSP == null || dijkstra.distTo(destinPos) < dijkstraSP.distTo(destinPos)){
+                   if (dijkstraSP == null || dijkstra.distTo(destinPos) < dijkstraSP.distTo(destinPos)) {
                        dijkstraSP = dijkstra;
                        airplaneUsed = airplanes.get(id);
                    }
                }
-               if(show){
-                   showRoute(dijkstraSP, destinPos);
-                   totalLabel.setText("Total Cost: ");
-                   totalValue.setText(dijkstraSP.distTo(destinPos) + " €");
+               if(dijkstraSP.hasPathTo(destinPos)){
+                   if(show){
+                       showRoute(dijkstraSP, destinPos);
+                       totalLabel.setText("Total Cost: ");
+                       totalValue.setText(dijkstraSP.distTo(destinPos) + " €");
+                   }
+                    return true;
                }
-               break;
+               return false;
            case "Fastest Flight":
                for(int id : airplanes.keys()){
                    DijkstraSP dijkstra = new DijkstraSP(symbolGraph.digraph(),originPos, airplanes.get(id), "time");
@@ -147,18 +163,24 @@ public class NewFlightDialogController {
                        airplaneUsed = airplanes.get(id);
                    }
                }
-               if(show){
-                   showRoute(dijkstraSP, destinPos);
-                   totalLabel.setText("Total Time: ");
-                   totalValue.setText(Date.convertTime(dijkstraSP.distTo(destinPos)));
+               if(dijkstraSP.hasPathTo(destinPos)){
+                   if(show){
+                       showRoute(dijkstraSP, destinPos);
+                       totalLabel.setText("Total Time: ");
+                       totalValue.setText(Date.convertTime(dijkstraSP.distTo(destinPos)));
+                   }
+                   return true;
                }
-               break;
+               return false;
            case "Less Stops":
                bfs = new BreadthFirstPaths(symbolGraph.digraph(), originPos);
                airplaneUsed = airplanes.get(airplanes.min()); // select a random airplane that is parked on the origin airport
-               if(show) showBFSRoute(bfs, destinPos);
-               break;
-           default: break;
+               if(bfs.hasPathTo(destinPos)){
+                   if(show) showBFSRoute(bfs, destinPos);
+                   return true;
+               }
+               return false;
+           default: return false;
         }
     }
 

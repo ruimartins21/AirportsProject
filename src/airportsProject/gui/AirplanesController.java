@@ -6,10 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -38,20 +40,67 @@ public class AirplanesController {
     public void initialize(){
         searchAirplane.getParent().requestFocus();
         searchAirplane.setFocusTraversable(false);
-
-        for (int id : airplanes.keys()) {
-            Airplane airplane = airplanes.get(id);
-            newAirplaneItem(airplane);
+        if(!airplanes.isEmpty()){
+            for (int id : airplanes.keys()) {
+                Airplane airplane = airplanes.get(id);
+                newAirplaneItem(airplane);
+            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("No airplanes found !");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(90);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            airplanesContainer.getChildren().add(newPane);
         }
     }
 
     private void updateList(){
         airplanesContainer.getChildren().clear(); // removes the previous list with the removed airline still showing
-        for(int id : airplanes.keys()){ // lists all the existent airlines
-            Airplane airplane = airplanes.get(id);
-            newAirplaneItem(airplane);
-        }
         searchAirplane.setText("");
+        if(!airplanes.isEmpty()){
+            for(int id : airplanes.keys()){ // lists all the existent airlines
+                Airplane airplane = airplanes.get(id);
+                newAirplaneItem(airplane);
+            }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("No airplanes found !");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(90);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            airplanesContainer.getChildren().add(newPane);
+        }
     }
 
     @FXML
@@ -88,6 +137,28 @@ public class AirplanesController {
                 Airplane airplane = resultAirplanes.get(id);
                 newAirplaneItem(airplane);
             }
+        }else{
+            Pane newPane = new Pane();
+            newPane.setPrefHeight(200);
+            newPane.setPrefWidth(480);
+            ImageView icon = new ImageView();
+            icon.setImage(new Image("airportsProject/gui/images/noResults.png"));
+            icon.setFitHeight(92);
+            icon.setFitWidth(92);
+            icon.setLayoutX(80);
+            icon.setLayoutY(53);
+            newPane.getChildren().add(icon);
+            Label noResult = new Label("Sorry we couldn't find any matches for that search");
+            noResult.setAlignment(Pos.CENTER);
+            noResult.setLayoutX(200);
+            noResult.setLayoutY(70);
+            noResult.setPrefWidth(213);
+            noResult.setFont(Font.font("Helvetica", 20));
+            noResult.setTextFill(Color.valueOf("4185d1"));
+            noResult.setWrapText(true);
+            newPane.getChildren().add(noResult);
+            VBox.setMargin(newPane, new Insets(10,0,0,0));
+            airplanesContainer.getChildren().add(newPane);
         }
     }
 

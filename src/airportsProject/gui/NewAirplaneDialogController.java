@@ -49,7 +49,7 @@ public class NewAirplaneDialogController{
             airlinesList.add(name + " (" + airlines.get(name).getNationality() + ")");
         }
         ObservableList<String> airportsList = FXCollections.observableArrayList();
-        for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
             Airport airport = airports.get(utils.getSymbolGraph().nameOf(i));
             airportsList.add(airport.getCode() + " - " + airport.getName() + " (" + airport.getCountry() + ")");
         }
@@ -115,7 +115,7 @@ public class NewAirplaneDialogController{
                 }
                 String airportCode = "";
                 count = 1;
-                for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+                for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
                     if(count == airplaneAirport.getSelectionModel().getSelectedIndex()){
                         airportCode = utils.getSymbolGraph().nameOf(i);
                     }
