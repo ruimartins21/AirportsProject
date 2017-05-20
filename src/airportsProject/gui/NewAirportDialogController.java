@@ -44,6 +44,7 @@ public class NewAirportDialogController {
     private double latitude = -1;
     private double longitude = -1;
     private Airport airport;
+    private Utils utils = Utils.getInstance();
 
     NumberFormat formatter = new DecimalFormat("#0.#");
 

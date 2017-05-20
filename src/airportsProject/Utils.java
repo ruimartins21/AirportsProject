@@ -98,7 +98,7 @@ public class Utils {
 //        add airport to a vertice of graph
         log("airportST", "New airport [" + airport.getCode() + "] \" Name:" + airport.getName() + "\" Rating:" +
                 airport.getRating());
-        if (!getSymbolGraph().contains(airport.getCode())) {
+        if (!symbolGraph.contains(airport.getCode())) {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(".//data//backup.txt", true))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
                 bw.write(airport.getCode() + ";");
                 bw.newLine();

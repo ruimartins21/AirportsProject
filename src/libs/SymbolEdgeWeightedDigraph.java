@@ -129,8 +129,8 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
             for (int j = 1; j < del.length; j += 4) {
                 int w = st.get(del[j]);
                 float distance = Float.parseFloat(del[j + 1]);
-                float windSpeed = Float.parseFloat(del[j + 3]);
-                float altitude = Float.parseFloat(del[j + 2]);
+                float windSpeed = Float.parseFloat(del[j + 2]);
+                float altitude = Float.parseFloat(del[j + 3]);
                 Connection c = new Connection(v, w, distance, altitude, windSpeed);
                 graph.addEdge(c);
             }
