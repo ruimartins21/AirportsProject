@@ -125,7 +125,7 @@ public class ImportFromFile {
                 setSymbolGraph((SymbolEdgeWeightedDigraph) ois.readObject());
                 ois.close();
             } catch (Exception ex) {
-                System.out.println("Wrong file format");
+                throw new WrongTypeFileException("Wrong type of file selected");
             }
         } else {
             In in;

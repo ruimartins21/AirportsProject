@@ -350,112 +350,211 @@ public class Utils {
      * or create a new one from the data imported from the files and without flights
      */
     public static void dump(String path) {
-        String binPath = ".//data//backup.bin";
-        if (path.length() != 0 && path.contains("bin")) {
-            binPath = path;
-        }
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(binPath))) {
-            oos.writeObject(airportST);
-            oos.writeObject(airlineST);
-            oos.writeObject(airplaneST);
-            oos.writeObject(flightST);
-            oos.writeObject(symbolGraph);
-            oos.flush();
-            oos.close();
-        } catch (Exception ex) {
-            System.out.println("Couldn't create the file");
-        }
-        if (path.length() == 0) { // saves to the backup file
+        if (path.length() != 0 && path.contains("bin")) { // store on binary file
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
+                oos.writeObject(airportST);
+                oos.writeObject(airlineST);
+                oos.writeObject(airplaneST);
+                oos.writeObject(flightST);
+                oos.writeObject(symbolGraph);
+                oos.flush();
+                oos.close();
+            } catch (Exception ex) {
+                System.out.println("Couldn't create the file");
+            }
+        }else if(path.length() != 0) { // store on text file
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
+                bw.write("#");
+                bw.newLine();
+                bw.write("airportName;airportCode;city;country;continent;rating;");
+                bw.newLine();
+                for (String a : airportST.keys()) {
+                    Airport airport = airportST.get(a);
+                    bw.write(
+                            airport.getName() + ";" +
+                                    airport.getCode() + ";" +
+                                    airport.getCity() + ";" +
+                                    airport.getCountry() + ";" +
+                                    airport.getContinent() + ";" +
+                                    airport.getRating() + ";"
+                    );
+                    bw.newLine();
+                }
+                bw.write("#");
+                bw.newLine();
+                bw.write("name;nationality;");
+                bw.newLine();
+                for (String al : airlineST.keys()) {
+                    Airline airline = airlineST.get(al);
+                    bw.write(
+                            airline.getName() + ";" +
+                                    airline.getNationality() + ";"
+                    );
+                    bw.newLine();
+                }
+                bw.write("#");
+                bw.newLine();
+                bw.write("planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;" +
+                        "passengers;fuelCap");
+                bw.newLine();
+                for (Integer ap : airplaneST.keys()) {
+                    Airplane airplane = airplaneST.get(ap);
+                    bw.write(
+                            airplane.getId() + ";" +
+                                    airplane.getModel() + ";" +
+                                    airplane.getName() + ";" +
+                                    airplane.getAirline().getName() + ";" +
+                                    airplane.getCruiseSpeed() + ";" +
+                                    airplane.getCruiseAltitude() + ";" +
+                                    airplane.getMaxRange() + ";" +
+                                    airplane.getAirportCode() + ";" +
+                                    airplane.getPassengersCapacity() + ";" +
+                                    airplane.getFuelCapacity() + ";"
+                    );
+                    bw.newLine();
+                }
+                bw.write("#");
+                bw.newLine();
+                bw.write("date;passengers;plane;originAirport;destinAirport;connections;");
+                bw.newLine();
+                for (Date d : flightST.keys()) {
+                    Flight flight = flightST.get(d);
+                    StringBuilder sb = new StringBuilder();
+                    for (String code : flight.getConnections()) {
+                        sb.append(code);
+                        sb.append("|");
+                    }
+                    bw.write(
+                            flight.getDate().getSlashes() + ";" +
+                                    flight.getPassengers() + ";" +
+                                    flight.getAirplane().getId() + ";" +
+                                    flight.getAirportOfOrigin().getCode() + ";" +
+                                    flight.getAirportOfDestination().getCode() + ";" +
+                                    sb + ";"
+                    );
+                    bw.newLine();
+                }
+                bw.write("#");
+                bw.newLine();
+                // save symbol graph
+                bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
+                bw.newLine();
+                bw.write("3");
+                bw.newLine();
+                for (int i = 0; i < symbolGraph.digraph().V(); i++) {
+                    bw.write(symbolGraph.nameOf(i));
+                    for (Connection e : symbolGraph.digraph().adj(i)) {
+                        bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed() * 100) / 100f + ";" + e.getAltitude());
+                    }
+                    bw.newLine();
+                }
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{ // backup save, both binary and txt
+            String binPath = ".//data//backup.bin";
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(binPath))) {
+                oos.writeObject(airportST);
+                oos.writeObject(airlineST);
+                oos.writeObject(airplaneST);
+                oos.writeObject(flightST);
+                oos.writeObject(symbolGraph);
+                oos.flush();
+                oos.close();
+            } catch (Exception ex) {
+                System.out.println("Couldn't create the file");
+            }
             path = ".//data//backup.txt";
-        }
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
-            bw.write("#");
-            bw.newLine();
-            bw.write("airportName;airportCode;city;country;continent;rating;");
-            bw.newLine();
-            for (String a : airportST.keys()) {
-                Airport airport = airportST.get(a);
-                bw.write(
-                        airport.getName() + ";" +
-                                airport.getCode() + ";" +
-                                airport.getCity() + ";" +
-                                airport.getCountry() + ";" +
-                                airport.getContinent() + ";" +
-                                airport.getRating() + ";"
-                );
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) { // FileWriter with only one parameter will overwrite the file content each time that is what we want
+                bw.write("#");
                 bw.newLine();
-            }
-            bw.write("#");
-            bw.newLine();
-            bw.write("name;nationality;");
-            bw.newLine();
-            for (String al : airlineST.keys()) {
-                Airline airline = airlineST.get(al);
-                bw.write(
-                        airline.getName() + ";" +
-                                airline.getNationality() + ";"
-                );
+                bw.write("airportName;airportCode;city;country;continent;rating;");
                 bw.newLine();
-            }
-            bw.write("#");
-            bw.newLine();
-            bw.write("planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;" +
-                    "passengers;fuelCap");
-            bw.newLine();
-            for (Integer ap : airplaneST.keys()) {
-                Airplane airplane = airplaneST.get(ap);
-                bw.write(
-                        airplane.getId() + ";" +
-                                airplane.getModel() + ";" +
-                                airplane.getName() + ";" +
-                                airplane.getAirline().getName() + ";" +
-                                airplane.getCruiseSpeed() + ";" +
-                                airplane.getCruiseAltitude() + ";" +
-                                airplane.getMaxRange() + ";" +
-                                airplane.getAirportCode() + ";" +
-                                airplane.getPassengersCapacity() + ";" +
-                                airplane.getFuelCapacity() + ";"
-                );
-                bw.newLine();
-            }
-            bw.write("#");
-            bw.newLine();
-            bw.write("date;passengers;plane;originAirport;destinAirport;connections;");
-            bw.newLine();
-            for (Date d : flightST.keys()) {
-                Flight flight = flightST.get(d);
-                StringBuilder sb = new StringBuilder();
-                for (String code : flight.getConnections()) {
-                    sb.append(code);
-                    sb.append("|");
+                for (String a : airportST.keys()) {
+                    Airport airport = airportST.get(a);
+                    bw.write(
+                            airport.getName() + ";" +
+                                    airport.getCode() + ";" +
+                                    airport.getCity() + ";" +
+                                    airport.getCountry() + ";" +
+                                    airport.getContinent() + ";" +
+                                    airport.getRating() + ";"
+                    );
+                    bw.newLine();
                 }
-                bw.write(
-                        flight.getDate().getSlashes() + ";" +
-                                flight.getPassengers() + ";" +
-                                flight.getAirplane().getId() + ";" +
-                                flight.getAirportOfOrigin().getCode() + ";" +
-                                flight.getAirportOfDestination().getCode() + ";" +
-                                sb + ";"
-                );
+                bw.write("#");
                 bw.newLine();
-            }
-            bw.write("#");
-            bw.newLine();
-            // save symbol graph
-            bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
-            bw.newLine();
-            bw.write("3");
-            bw.newLine();
-            for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-                bw.write(symbolGraph.nameOf(i));
-                for (Connection e : symbolGraph.digraph().adj(i)) {
-                    bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed() * 100) / 100f + ";" + e.getAltitude());
+                bw.write("name;nationality;");
+                bw.newLine();
+                for (String al : airlineST.keys()) {
+                    Airline airline = airlineST.get(al);
+                    bw.write(
+                            airline.getName() + ";" +
+                                    airline.getNationality() + ";"
+                    );
+                    bw.newLine();
                 }
+                bw.write("#");
                 bw.newLine();
+                bw.write("planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;" +
+                        "passengers;fuelCap");
+                bw.newLine();
+                for (Integer ap : airplaneST.keys()) {
+                    Airplane airplane = airplaneST.get(ap);
+                    bw.write(
+                            airplane.getId() + ";" +
+                                    airplane.getModel() + ";" +
+                                    airplane.getName() + ";" +
+                                    airplane.getAirline().getName() + ";" +
+                                    airplane.getCruiseSpeed() + ";" +
+                                    airplane.getCruiseAltitude() + ";" +
+                                    airplane.getMaxRange() + ";" +
+                                    airplane.getAirportCode() + ";" +
+                                    airplane.getPassengersCapacity() + ";" +
+                                    airplane.getFuelCapacity() + ";"
+                    );
+                    bw.newLine();
+                }
+                bw.write("#");
+                bw.newLine();
+                bw.write("date;passengers;plane;originAirport;destinAirport;connections;");
+                bw.newLine();
+                for (Date d : flightST.keys()) {
+                    Flight flight = flightST.get(d);
+                    StringBuilder sb = new StringBuilder();
+                    for (String code : flight.getConnections()) {
+                        sb.append(code);
+                        sb.append("|");
+                    }
+                    bw.write(
+                            flight.getDate().getSlashes() + ";" +
+                                    flight.getPassengers() + ";" +
+                                    flight.getAirplane().getId() + ";" +
+                                    flight.getAirportOfOrigin().getCode() + ";" +
+                                    flight.getAirportOfDestination().getCode() + ";" +
+                                    sb + ";"
+                    );
+                    bw.newLine();
+                }
+                bw.write("#");
+                bw.newLine();
+                // save symbol graph
+                bw.write("originAirport;airportCode;distance;windSpeed;airTunnel;");
+                bw.newLine();
+                bw.write("3");
+                bw.newLine();
+                for (int i = 0; i < symbolGraph.digraph().V(); i++) {
+                    bw.write(symbolGraph.nameOf(i));
+                    for (Connection e : symbolGraph.digraph().adj(i)) {
+                        bw.write(";" + symbolGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed() * 100) / 100f + ";" + e.getAltitude());
+                    }
+                    bw.newLine();
+                }
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
