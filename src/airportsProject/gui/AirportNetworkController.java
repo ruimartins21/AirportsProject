@@ -2,6 +2,8 @@ package airportsProject.gui;
 
 import airportsProject.Airport;
 import airportsProject.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -44,6 +46,8 @@ public class AirportNetworkController {
     private Slider zoomSlider;
     @FXML
     private Label warning;
+    @FXML
+    private ComboBox<String> filterMap;
 
     private static boolean updated = false; // will tell the update method if a user added/removed an airport or not, to know if it is needed to update the list
     private Group zoomGroup;
@@ -52,6 +56,33 @@ public class AirportNetworkController {
     private String origin = "", destination = "";
 
     public void initialize(){
+        ObservableList<String> filters = FXCollections.observableArrayList();
+        filters.add("World");
+        filters.add("North America");
+        filters.add("South America");
+        filters.add("Europe");
+        filters.add("Africa");
+        filters.add("Asia");
+        filters.add("Oceania");
+        filterMap.setItems(filters);
+        filterMap.getSelectionModel().selectFirst(); // starts with all the airports in the world
+        filterMap.setFocusTraversable(false);
+
+        // filtra o grafo atual, tem de ter em conta os aeroportos removidos, nao convem ler do graph.txt...
+        // resultava ler do backup se so houvesse o grafo la, com mais coisas nao da
+        // depois de apresentar os aeroportos filtrados de um determinado continente, deve remover o aeroporto tanto desse grafo
+        // como do ficheiro backup como ja funciona com o grafo original
+        // o objetivo de criar novo grafo so de um continente e de limitar as conexoes a este, se de um aeroporto da europa
+        // tiver de passar por um de outro continente para ir para outro aeroporto da europa, nao permite
+
+        filterMap.setOnAction((event) -> { // listens for changes on the combo box to respond to the user request
+            System.out.println("Filter: " + filterMap.getSelectionModel().getSelectedItem());
+//            Utils.dump(""); // required to dump the original graph the first time the user filters, it might be a new program
+//            Utils.filterGraph(filterMap.getSelectionModel().getSelectedItem());
+//            updated = true;
+//            updateList();
+        });
+
         warning.setStyle("-fx-opacity: 0");
         searchAirport.getParent().requestFocus();
         searchAirport.setFocusTraversable(false);
@@ -183,6 +214,9 @@ public class AirportNetworkController {
         dialog.showAndWait();
     }
 
+    /**
+     * updates the list after an action from the user that might have changed something in the symbol graph
+     */
     private void updateList(){
         if(updated){
             airports = utils.getAirports();
@@ -200,6 +234,10 @@ public class AirportNetworkController {
         updated = false;
     }
 
+    /**
+     * updates the list with the results from a search query
+     * @param results -> results from a search query
+     */
     private void updateList(SeparateChainingHashST<String, Airport> results){
         containAirports.getChildren().clear(); // removes the previous list
         mapPane.getChildren().remove(1, mapPane.getChildren().size()); // resets pins locations to update

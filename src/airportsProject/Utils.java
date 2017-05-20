@@ -32,6 +32,7 @@ public class Utils {
     private static SeparateChainingHashST<String, Airline> airlineST = new SeparateChainingHashST<>();
     private static RedBlackBST<Integer, Airplane> airplaneST = new RedBlackBST<>();
     private static RedBlackBST<Date, Flight> flightST = new RedBlackBST<>();
+    private static SymbolEdgeWeightedDigraph mainGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
     private static SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";");
 
     protected Utils() {
@@ -51,6 +52,10 @@ public class Utils {
 
     public static void setSymbolGraph(SymbolEdgeWeightedDigraph sGraph) {
         symbolGraph = sGraph;
+    }
+
+    public static void filterGraph(String continent){
+        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", filterAirportsByContinent(continent));
     }
 
     /**
@@ -881,16 +886,17 @@ public class Utils {
 
 
     /***
-     *  Search in the airportST for by Continent
-     *
+     *  Search in the airportST for the airports that are NOT from the continent passed
+     *  Returns a list of airports to ignore when creating a graph with only the airports from a continent
+     *  Uses a "mainGraph" that is the one that holds all the airports without filters
      * @param continent -> continent for search
      * @return - An Arraylist of airports of the continent different of continent param
      */
-   public ArrayList<String> filterAirportsByContinent(String continent) {
+   public static ArrayList<String> filterAirportsByContinent(String continent) {
         ArrayList<String> filter = new ArrayList<>();
-        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-            if (airportST.get(symbolGraph.nameOf(i)).getContinent().toUpperCase().compareTo(continent.toUpperCase()) != 0) {
-                filter.add(symbolGraph.nameOf(i));
+        for (int i = 0; i < mainGraph.digraph().V(); i++) {
+            if (airportST.get(mainGraph.nameOf(i)).getContinent().toUpperCase().compareTo(continent.toUpperCase()) != 0) {
+                filter.add(mainGraph.nameOf(i));
             }
         }
         return filter;

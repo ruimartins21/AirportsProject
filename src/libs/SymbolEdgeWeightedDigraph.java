@@ -103,7 +103,7 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
     public SymbolEdgeWeightedDigraph(String filename) {
         st = new ST<String, Integer>();
 
-        // First pass builds the index by reading strings to associate // colocar as chaves da symbol table com os codigos dos aeroportos
+        // First pass builds the index by reading strings to associate
         // distinct strings with an index
         String[] a = filename.split("\n"); // divides all the lines into single ones for reading
         String[] del;
