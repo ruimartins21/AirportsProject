@@ -34,5 +34,4 @@ public class Connection extends DirectedEdge implements Serializable {
     public void setWindSpeed(float windSpeed) {
         this.windSpeed = windSpeed;
     }
-
 }

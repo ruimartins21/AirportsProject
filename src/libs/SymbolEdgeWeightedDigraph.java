@@ -208,13 +208,15 @@ public class SymbolEdgeWeightedDigraph implements Serializable {
                 }
                 int w = st.get(a[i]);
                 index = 0;
+                ArrayList<String> toRemove = Utils.cloneList(ignoredAirports);
                 for(String ignore : clone2){
                     if(ignore.toUpperCase().compareTo(a[i].toUpperCase()) == 0){
-                        clone2.remove(index);
+                        toRemove.add(clone2.get(index));
                         continue;
                     }
                     index++;
                 }
+                clone2.removeAll(toRemove);
                 float distance = Float.parseFloat(a[i + 1]);
                 float windSpeed = Float.parseFloat(a[i + 2]);
                 float altitude = Float.parseFloat(a[i + 3]);
