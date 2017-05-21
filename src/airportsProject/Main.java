@@ -1,6 +1,7 @@
 package airportsProject;
 
 import airportsProject.Exceptions.AirportNotExistException;
+import edu.princeton.cs.algs4.StdOut;
 import libs.*;
 
 import java.io.BufferedWriter;
@@ -58,9 +59,7 @@ public class Main {
         DijkstraSP dijkstraSP = null;
 
 
-        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-            System.out.println(i + " - " + symbolGraph.nameOf(i));
-        }
+//
 
 
 //        System.out.println("Custo do aviao 1: " + airplane.getAirplaneCost(2077, -5, 2100) + " €");
@@ -85,13 +84,6 @@ public class Main {
 //        System.out.println("\n\nprintAllConnections\n");
 //        dijkstraSP = new DijkstraSP(symbolGraph.digraph(), gIdAirportOrig, null, "distance");
 //        dijkstraSP.printAllConnections(symbolGraph.digraph(), gIdAirportOrig, null, "distance", dijkstraSP);
-
-
-//        mais rapido por menos conecoes
-//        DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.digraph(), gIdAirportOrig);
-//        System.out.println("\n\nDFS\n");
-//        dfs.printGraph(symbolGraph.digraph(), gIdAirportOrig);
-//        System.out.println("Nº componentes: " + dfs.count());
 
 //
 //        BreadthFirstPaths bfs = new BreadthFirstPaths(symbolGraph.digraph(), gIdAirportOrig);
@@ -222,25 +214,25 @@ public class Main {
 
 //        System.out.println(utils.getSymbolGraph().digraph());
         //        adicionar aresta
-        Connection e = new Connection(31,29,2000.40,21000.5,-5.2);
-        Connection e2 = new Connection(23,33,2757.0,11000.0,-15.0);
+//        Connection e = new Connection(31,29,2000.40,21000.5,-5.2);
+//        Connection e2 = new Connection(23,33,2757.0,11000.0,-15.0);
 
 //        Connection e2 = new Connection(0,1,277.0,21000.0,-5.0);
 //        Connection e2 = new Connection(1,20,1110.00,26000.0,-4.6);
-        utils.getSymbolGraph().digraph().addEdge(e);
-        utils.getSymbolGraph().digraph().addEdge(e2);
+//        utils.getSymbolGraph().digraph().addEdge(e);
+//        utils.getSymbolGraph().digraph().addEdge(e2);
 
 //        System.out.println("depois de add");
 
 //        System.out.println(utils.getSymbolGraph().digraph());
 
-        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
-            System.out.println(symbolGraph.nameOf(i));
-            for (Connection c : symbolGraph.digraph().adj(i)) {
-                System.out.println(";" + symbolGraph.nameOf(c.to()) + ";" + c.weight() + ";" + Math.round(c.getWindSpeed() * 100) / 100f + ";" + c.getAltitude());
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
+//            System.out.println(symbolGraph.nameOf(i));
+//            for (Connection c : symbolGraph.digraph().adj(i)) {
+//                System.out.println(";" + symbolGraph.nameOf(c.to()) + ";" + c.weight() + ";" + Math.round(c.getWindSpeed() * 100) / 100f + ";" + c.getAltitude());
+//            }
+//            System.out.println();
+//        }
 
 //        System.out.println("-------\n\n\n\n");
 //        remover aresta
@@ -261,28 +253,28 @@ public class Main {
 //        utils.getSymbolGraph().
 
 //        inserir um novo airport, tanto na separte como no graph
-        Airport airportI = new Airport("olamundo","OLA","Madrid","Spain","Europe",3.4f);
-        utils.newAirport(airportI);
+//        Airport airportI = new Airport("olamundo", "OLA", "Madrid", "Spain", "Europe", 3.4f);
+//        utils.newAirport(airportI);
 
-        System.out.println("\n\n\n --------------------------------------------------------------------");
+//        System.out.println("\n\n\n --------------------------------------------------------------------");
+//
+//        Connection e3 = new Connection(31,34,3757.0,4000.0,-35.0);
+//        Connection e4 = new Connection(34,0,13757.0,4050.0,-25.0);
+//        utils.getSymbolGraph().digraph().addEdge(e3);
+//        utils.getSymbolGraph().digraph().addEdge(e4);
 
-        Connection e3 = new Connection(31,34,3757.0,4000.0,-35.0);
-        Connection e4 = new Connection(34,0,13757.0,4050.0,-25.0);
-        utils.getSymbolGraph().digraph().addEdge(e3);
-        utils.getSymbolGraph().digraph().addEdge(e4);
-
-        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
-            System.out.println(i + " - " + utils.getSymbolGraph().nameOf(i));
-        }
+//        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
+//            System.out.println(i + " - " + utils.getSymbolGraph().nameOf(i));
+//        }
 
 
-        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
-            System.out.println(utils.getSymbolGraph().nameOf(i));
-            for (Connection c : utils.getSymbolGraph().digraph().adj(i)) {
-                System.out.println(";" + utils.getSymbolGraph().nameOf(c.to()) + ";" + c.weight() + ";" + Math.round(c.getWindSpeed() * 100) / 100f + ";" + c.getAltitude());
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < utils.getSymbolGraph().digraph().V(); i++) {
+//            System.out.println(utils.getSymbolGraph().nameOf(i));
+//            for (Connection c : utils.getSymbolGraph().digraph().adj(i)) {
+//                System.out.println(";" + utils.getSymbolGraph().nameOf(c.to()) + ";" + c.weight() + ";" + Math.round(c.getWindSpeed() * 100) / 100f + ";" + c.getAltitude());
+//            }
+//            System.out.println();
+//        }
 
 //        PrintInfo.allAirports(utils.getAirports());
 
@@ -290,16 +282,39 @@ public class Main {
 
 //        utils.showGraphs();
 
-        utils.checkGraphIsConnected(symbolGraph.digraph());
+
+//        for (int i = 0; i < symbolGraph.digraph().V(); i++) {
+//            System.out.println(i + " - " + symbolGraph.nameOf(i));
+//        }
+//        System.out.println("\n\nDFS\n");
+//
+//        for (int i = 0; i < utils.getSymbolGraph().G().V(); i++) {
+//            DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.digraph(), i);
+//            for (int v = 0; v < utils.getSymbolGraph().G().V(); v++) {
+//                if (dfs.hasPathTo(v)) {
+//                    StdOut.printf("%d to %d:  ", i, v);
+//                    for (int x : dfs.pathTo(v)) {
+//                        if (x == i) StdOut.print(x);
+//                        else        StdOut.print("-" + x);
+//                    }
+//                    StdOut.println();
+//                }
+//
+//                else {
+//                    StdOut.printf("%d to %d:  not connected\n", i, v);
+//                }
+//
+//            }
+//        }
+
+//        if(utils.checkGraphIsConnected(utils.getSymbolGraph().digraph())){
+//            System.out.println("Graph is connected!");
+//        }else {
+//            System.out.println("Graph is not connected!");
+//        }
 
 
 //        utils.removeConnectionOfAirport("OPO","LIS");
-
-
-
-
-
-
 
 
         // New program or load previous program

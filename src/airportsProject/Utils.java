@@ -693,13 +693,17 @@ public class Utils {
      *
      * @param graph - graph will be checked
      */
-    public void checkGraphIsConnected(EdgeWeightedDigraph graph) {
-        KosarajuSharirSCC kosarajuSharirSCC = new KosarajuSharirSCC(graph);
-        if (kosarajuSharirSCC.count() == 1) {
-            System.out.println("Graph is connected!");
-        } else {
-            System.out.println("Graph is not connected!");
+    public boolean checkGraphIsConnected(EdgeWeightedDigraph graph) {
+        for (int i = 0; i < getSymbolGraph().G().V(); i++) {
+            DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.digraph(), i);
+            for (int v = 0; v < getSymbolGraph().G().V(); v++) {
+                // is graph is not connected!
+                if (!dfs.hasPathTo(v)) {
+                    return false;
+                }
+            }
         }
+        return true; // is graph is connected
     }
 
     /**
@@ -795,29 +799,6 @@ public class Utils {
         }
         return results;
     }
-
-//    //    criar um novo grafo perante um continente escolhido
-//    public EdgeWeightedDigraph filterGraph(String searchContinent) {
-//        EdgeWeightedDigraph newGraph = new EdgeWeightedDigraph(searchAirportsOfContinent(airportST, searchContinent).size());
-////        criar tabela de simbolos para mapear os codigos originais da symbolDiagraph nos novos
-//        ST<Integer, Integer> map = new ST<>();
-//        int i = 0;
-////        impirmir lista de adjacencias com filtro
-//        for (String code : airportST.keys()) {
-//            if (airportST.get(code).getContinent().toLowerCase().compareTo(searchContinent) == 0) {
-//                for (Connection e : symbolGraph.digraph().adj(symbolGraph.indexOf(code))) {
-//                    map.put(i, symbolGraph.indexOf(code));
-//                }
-//                i++;
-//            }
-//        }
-//        for (Integer inte : map.keys()) {
-////            System.out.println("[" + inte + "]   " + map.get(inte));
-//        }
-////        System.out.println();
-//        return newGraph;
-//    }
-
 
     /***
      * function responsible for cloning the arrayList

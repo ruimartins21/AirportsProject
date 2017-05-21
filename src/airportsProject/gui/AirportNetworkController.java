@@ -301,7 +301,12 @@ public class AirportNetworkController {
 
     @FXML
     void openGraph(){
-        utils.checkGraphIsConnected(utils.getSymbolGraph().digraph()); // check if the graph is connected
+        // check if the graph is connected
+        if(utils.checkGraphIsConnected(utils.getSymbolGraph().digraph())){
+            System.out.println("Graph is connected!");
+        }else {
+            System.out.println("Graph is not connected!");
+        }
         Utils.showGraphs();
     }
 
