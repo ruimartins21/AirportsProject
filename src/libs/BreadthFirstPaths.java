@@ -41,12 +41,11 @@
 package libs;
 
 
+import airportsProject.Airplane;
 import airportsProject.Connection;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
-
-import java.util.ArrayList;
 
 /**
  * The {@code BreadthFirstPaths} class represents a data type for finding
@@ -79,12 +78,12 @@ public class BreadthFirstPaths {
      * @param s the source vertex
      * @throws IllegalArgumentException unless {@code 0 <= s < V}
      */
-    public BreadthFirstPaths(EdgeWeightedDigraph G, int s) {
+    public BreadthFirstPaths(EdgeWeightedDigraph G, int s, Airplane airplane) {
         marked = new boolean[G.V()];
         distTo = new int[G.V()];
         edgeTo = new int[G.V()];
         validateVertex(s);
-        bfs(G, s);
+        bfs(G, s, airplane);
 
         assert check(G, s);
     }
@@ -110,7 +109,7 @@ public class BreadthFirstPaths {
 
 
     // breadth-first search from a single source
-    private void bfs(EdgeWeightedDigraph G, int s) {
+    private void bfs(EdgeWeightedDigraph G, int s, Airplane airplane) {
         Queue<Integer> q = new Queue<Integer>();
         for (int v = 0; v < G.V(); v++)
             distTo[v] = INFINITY;
@@ -121,6 +120,9 @@ public class BreadthFirstPaths {
         while (!q.isEmpty()) {
             int v = q.dequeue();
             for (Connection e : G.adj(v)) {
+                if(airplane.getAirplaneCost(e) >= Double.POSITIVE_INFINITY){
+                    return;
+                }
                 if (!marked[e.to()]) {
                     edgeTo[e.to()] = v;
                     distTo[e.to()] = distTo[v] + 1;
@@ -272,7 +274,7 @@ public class BreadthFirstPaths {
         // StdOut.println(G);
 
         int s = Integer.parseInt(args[1]);
-        BreadthFirstPaths bfs = new BreadthFirstPaths(G, s);
+        BreadthFirstPaths bfs = new BreadthFirstPaths(G, s, null);
 
         for (int v = 0; v < G.V(); v++) {
             if (bfs.hasPathTo(v)) {

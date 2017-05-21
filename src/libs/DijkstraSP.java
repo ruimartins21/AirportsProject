@@ -92,8 +92,12 @@ public class DijkstraSP {
         pq.insert(airportOrigin, distTo[airportOrigin]);
         while (!pq.isEmpty()) {
             int v = pq.delMin();
-            for (Connection e : G.adj(v))
+            for (Connection e : G.adj(v)){
+                if(airplane.getAirplaneCost(e) >= Double.POSITIVE_INFINITY){
+                    return;
+                }
                 relax(e, airplane, typeOfSearch);
+            }
         }
 
         // check optimality conditions
@@ -104,7 +108,6 @@ public class DijkstraSP {
     private void relax(Connection e, Airplane airplane, String typeOfSearch) {
         int v = e.from(), w = e.to();
         if (typeOfSearch.compareTo("distance") == 0) {
-//            System.out.println(Utils.getInstance().getSymbolGraph().nameOf(e.to()));
             if (distTo[w] > distTo[v] + e.weight()) {
                 distTo[w] = distTo[v] + e.weight();
                 edgeTo[w] = e;

@@ -25,7 +25,6 @@ Internacional El Dorado;BOG;Bogotá;Colombia;South America;9.0;
 Internacional de Dubai;DXB;Dubai;Dubai;Asia;9.4;
 Francisco Sá Carneiro;OPO;Porto;Portugal;Europe;9.8;
 Ben Gurion;TLV;Tel Aviv;Israel;Asia;10.0;
-Mauritania;SSS;Mauritania;Mauritania;Mauritania;3.5;
 Henri Coanda de Bucareste;OTP;Bucharest;Romenia;Europe;7.8;
 Internacional Quatro de Fevereiro;LAD;Luanda;Angola;Africa;4.3;
 International Soekarno-Hatta;CGK;Jakarta;Indonesia;Asia;7.8;
@@ -43,7 +42,7 @@ Thai Airways;Thailand;
 Qatar Airways;Qatar;
 #
 planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passengers;fuelCap
-1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
+1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;LAD;380;274876;
 2;Airbus A340;D. João de Castro;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 4;Airbus A340;D. Francisco de Almeida;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
@@ -82,11 +81,12 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
 date;passengers;plane;originAirport;destinAirport;connections;
+21/5/2017/16/2/19;66;1;OPO;LAD;OPO|LIS|ALG|LAD|;
 #
 originAirport;airportCode;distance;windSpeed;airTunnel;
 3
 OPO;LIS;277.0;-5.0;21000.0;LGW;1206.0;7.0;27000.0;FRA;1655.0;6.0;27500.0;FCO;1741.0;2.0;27800.0;JFK;5339.0;6.8;37000.0;GIG;7974.0;6.6;39000.0
-LIS;SSS;2222.0;21.1;22223.0;OPO;277.0;5.0;21000.0;ALG;1110.0;-4.6;26000.0
+LIS;OPO;277.0;5.0;21000.0;ALG;1110.0;-4.6;26000.0
 LGW;OPO;1206.0;-7.0;27000.0;AMS;365.0;2.3;26500.0;CDG;308.0;-2.8;21000.0;CPH;984.0;6.6;28000.0
 CDG;LGW;308.0;-2.8;21000.0;WAW;1344.0;3.5;28000.0;ALG;1372.0;-4.6;30100.0
 FRA;OPO;1655.0;-6.0;27500.0;AMS;367.0;2.3;21000.0;DME;2049.0;7.8;31500.0
@@ -118,4 +118,3 @@ MVD;GIG;1826.0;4.5;32100.0;SCL;1370.0;2.4;26300.0
 SCL;MVD;1370.0;-2.4;26300.0
 BOG;GIG;4546.0;-6.1;33100.0;LIM;1890.0;-4.8;31200.0;JFK;4001.0;5.1;32100.0
 LIM;BOG;1890.0;4.8;31200.0
-SSS;FRA;123123.0;12.2;123.0

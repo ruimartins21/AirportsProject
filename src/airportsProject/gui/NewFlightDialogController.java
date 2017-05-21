@@ -89,7 +89,7 @@ public class NewFlightDialogController {
         // calculate final route chosen
         show = false;
         if(!calculateRoute()){
-            warning.setText(origin + " doesn't have a connection to the destination chosen.");
+            warning.setText(origin + " doesn't have a connection to the destination chosen or no airplane can do that flight.");
             warning.setStyle("-fx-opacity: 1");
         }else if (typeOfFlight.isEmpty()) { // check if the user chose a type
             warning.setText("Please choose a type of flight.");
@@ -129,15 +129,17 @@ public class NewFlightDialogController {
         RedBlackBST<Integer, Airplane> airplanes = airports.get(origin).getAirplanes();
         switch (typeOfFlight){
            case "Shortest Distance":
-               dijkstraSP = new DijkstraSP(symbolGraph.digraph(),originPos, null, "distance");
-               airplaneUsed = airplanes.get(airplanes.min()); // select a random airplane that is parked on the origin airport
-               if(dijkstraSP.hasPathTo(destinPos)){
-                   if(show){
-                       showRoute(dijkstraSP, destinPos);
-                       totalLabel.setText("Total Distance: ");
-                       totalValue.setText(dijkstraSP.distTo(destinPos) + " km");
+               for(int id : airplanes.keys()) {
+                   dijkstraSP = new DijkstraSP(symbolGraph.digraph(), originPos, airplanes.get(id), "distance");
+                   if (dijkstraSP.hasPathTo(destinPos)) {
+                       airplaneUsed = airplanes.get(id);
+                       if (show) {
+                           showRoute(dijkstraSP, destinPos);
+                           totalLabel.setText("Total Distance: ");
+                           totalValue.setText(dijkstraSP.distTo(destinPos) + " km");
+                       }
+                       return true;
                    }
-                   return true;
                }
                return false;
            case "Cheapest Flight":
@@ -175,11 +177,13 @@ public class NewFlightDialogController {
                }
                return false;
            case "Less Stops":
-               bfs = new BreadthFirstPaths(symbolGraph.digraph(), originPos);
-               airplaneUsed = airplanes.get(airplanes.min()); // select a random airplane that is parked on the origin airport
-               if(bfs.hasPathTo(destinPos)){
-                   if(show) showBFSRoute(bfs, destinPos);
-                   return true;
+               for(int id : airplanes.keys()) {
+                   bfs = new BreadthFirstPaths(symbolGraph.digraph(), originPos, airplanes.get(id));
+                   if (bfs.hasPathTo(destinPos)) {
+                       if (show) showBFSRoute(bfs, destinPos);
+                       airplaneUsed = airplanes.get(id);
+                       return true;
+                   }
                }
                return false;
            default: return false;

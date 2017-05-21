@@ -63,7 +63,7 @@ public class AirportNetworkController {
     private Group zoomGroup;
     private Utils utils = Utils.getInstance();
     private SeparateChainingHashST<String, Airport> airports = utils.getAirports();
-    private String origin = "", destination = "";
+    private String origin = "", destination = "", currentFilter = "World";
 
     public void initialize(){
         ObservableList<String> filters = FXCollections.observableArrayList();
@@ -76,21 +76,14 @@ public class AirportNetworkController {
         filters.add("Oceania");
         filterMap.setItems(filters);
         filterMap.getSelectionModel().selectFirst(); // starts with all the airports in the world
+        Utils.filterGraph(currentFilter);
         filterMap.setFocusTraversable(false);
 
-        // filtra o grafo atual, tem de ter em conta os aeroportos removidos, nao convem ler do graph.txt...
-        // resultava ler do backup se so houvesse o grafo la, com mais coisas nao da
-        // depois de apresentar os aeroportos filtrados de um determinado continente, deve remover o aeroporto tanto desse grafo
-        // como do ficheiro backup como ja funciona com o grafo original
-        // o objetivo de criar novo grafo so de um continente e de limitar as conexoes a este, se de um aeroporto da europa
-        // tiver de passar por um de outro continente para ir para outro aeroporto da europa, nao permite
-
         filterMap.setOnAction((event) -> { // listens for changes on the combo box to respond to the user request
-            System.out.println("Filter: " + filterMap.getSelectionModel().getSelectedItem());
-//            Utils.dump(""); // required to dump the original graph the first time the user filters, it might be a new program
-//            Utils.filterGraph(filterMap.getSelectionModel().getSelectedItem());
-//            updated = true;
-//            updateList();
+            currentFilter = filterMap.getSelectionModel().getSelectedItem();
+            Utils.filterGraph(currentFilter);
+            updated = true;
+            updateList();
         });
 
         warning.setStyle("-fx-opacity: 0");
@@ -222,6 +215,7 @@ public class AirportNetworkController {
         dialog.getDialogPane().getStyleClass().add("customDialog");
         dialog.setContentText(null);
         dialog.showAndWait();
+        Utils.filterGraph(currentFilter);
     }
 
     /**
@@ -377,11 +371,11 @@ public class AirportNetworkController {
                     }else{
                         gatherResults.addAll(auxList); // no results yet, it's stored directly without verifications
                     }
-                    if(toRemove.size() > 0){
-                        gatherResults.removeAll(toRemove);
-                        toRemove.clear();
-                    }
                 }
+            }
+            if(toRemove.size() > 0){ // removes all the results that didn't match all the requirements
+                gatherResults.removeAll(toRemove);
+                toRemove.clear();
             }
             for (String code : gatherResults){
                 results.put(code, airports.get(code));
@@ -407,11 +401,27 @@ public class AirportNetworkController {
 
     private List<String> searchIt(String search){
         List<String> result = new ArrayList<>();
-        if(search.contains("CONNECTIONS:")){
+        if(search.contains("CONNECTIONS:")){ // airports with X connections
             String[] cons = search.split("CONNECTIONS:");
             cons[1] = cons[1].trim();
             if(Utils.isNumeric(cons[1])){
-                for(String code : utils.airportWithConnections(Integer.valueOf(cons[1])).keys()){
+                for(String code : utils.airportWithConnections(Integer.valueOf(cons[1]), "").keys()){
+                    result.add(code);
+                }
+            }
+        }else if(search.contains("CONNECTIONS>")){ // more than X connections
+            String[] cons = search.split("CONNECTIONS>");
+            cons[1] = cons[1].trim();
+            if(Utils.isNumeric(cons[1])){
+                for(String code : utils.airportWithConnections(Integer.valueOf(cons[1]), "more").keys()){
+                    result.add(code);
+                }
+            }
+        }else if(search.contains("CONNECTIONS<")){ // less than X connections
+            String[] cons = search.split("CONNECTIONS<");
+            cons[1] = cons[1].trim();
+            if(Utils.isNumeric(cons[1])){
+                for(String code : utils.airportWithConnections(Integer.valueOf(cons[1]), "less").keys()){
                     result.add(code);
                 }
             }
@@ -520,6 +530,7 @@ public class AirportNetworkController {
                     alert.showAndWait();
                     if (alert.getResult() == ButtonType.YES) {
                         Utils.removeAirport(airport);
+                        Utils.filterGraph(currentFilter);
                         updated = true;
                         updateList();
                     }

@@ -161,6 +161,7 @@ public class FlightsController {
 
     private void updateList(){
         listFlightsContainer.getChildren().clear(); // removes the previous list
+        searchFlight.setText("");
         if(!flights.isEmpty()){
             Date currentDate = flights.select(0);
             newFlightDate(currentDate);

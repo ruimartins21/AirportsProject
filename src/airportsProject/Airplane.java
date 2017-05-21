@@ -123,6 +123,10 @@ public class Airplane implements Serializable {
         return airline;
     }
 
+    public void setAirline(Airline airline){
+        this.airline = airline;
+    }
+
     /**
      * Cost in fuel litres for the airplane considering various factors like
      * -> distance of the flight

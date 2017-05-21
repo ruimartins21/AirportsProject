@@ -53,9 +53,12 @@ public class Utils {
         symbolGraph = sGraph;
     }
 
-//    public static void filterGraph(String continent){
-//        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", filterAirportsByContinent(continent));
-//    }
+    public static void filterGraph(String continent){
+        if(new File(".//data//currentGraph.txt").canRead()){
+            mainGraph = new SymbolEdgeWeightedDigraph(".//data//currentGraph.txt", ";"); // all the airports existing to filter
+            symbolGraph = new SymbolEdgeWeightedDigraph(".//data//currentGraph.txt", ";", filterAirportsByContinent(continent));
+        }
+    }
 
     /**
      * Will fill the symbol tables with the data required
@@ -64,7 +67,6 @@ public class Utils {
      *             he chooses to load a program
      */
     public static boolean initProgram(String path) {
-        log("reset", ""); // clean the log file from the previous program
         if (path.length() > 0) { // load program
             try {
                 ImportFromFile.loadProgram(path, airportST, airlineST, airplaneST);
@@ -82,6 +84,7 @@ public class Utils {
             setFlights(new RedBlackBST<>());
             setSymbolGraph(new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";"));
         }
+        log("reset", ""); // clean the log file from the previous program
         return true;
     }
 
@@ -159,7 +162,9 @@ public class Utils {
         if (!remove.contains(airport.getCode())) {
             remove.add(airport.getCode());
         }
-        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
+        mainGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", remove);
+        symbolGraph = mainGraph;
+        dumpGraph();
         airportST.put(airport.getCode(), null);
         log("AirportST", "Removed airport \"" + airport.getName() + "\"");
         Utils.getInstance().createCoordinatesFile();
@@ -194,6 +199,9 @@ public class Utils {
         } else { // otherwise the entry must be replaced
             Airline newAirline = new Airline(newName, nationality);
             newAirline.setFleet(airlineST.get(oldName).getFleet()); // copies the airline fleet before replacing it
+            for (Integer id : newAirline.getFleet().keys()){ // updates each airplane from the fleet, that has a different name for the airline now
+                airplaneST.get(id-1).setAirline(newAirline);
+            }
             airlineST.put(oldName, null); // removes the previous key
             airlineST.put(newName, newAirline);
         }
@@ -316,6 +324,9 @@ public class Utils {
         flightST = flights;
     }
 
+    /**
+     * Creates a file to store the coordinates of the existing airports so the program doesn't always recur to the API
+     */
     public void createCoordinatesFile() {
         ArrayList<Coordinates> coordinates = new ArrayList<>();
         for (String code : airportST.keys()) {
@@ -330,23 +341,26 @@ public class Utils {
         }
     }
 
-//    /**
-//     * searches airports of a certain continent
-//     *
-//     * @param airportST Symbol table that stores all the available airports
-//     * @param search    the continent to search for
-//     * @return returns all the airports that matched the search
-//     */
-//    public static ArrayList<Airport> searchAirportsOfContinent(SeparateChainingHashST<String, Airport> airportST, String search) {
-//        ArrayList<Airport> airportSearch = new ArrayList<>();
-//        search = search.toLowerCase();
-//        for (String code : airportST.keys()) {
-//            if (airportST.get(code).getContinent().toLowerCase().compareTo(search) == 0) {
-//                airportSearch.add(airportSearch.size(), airportST.get(code));
-//            }
-//        }
-//        return airportSearch;
-//    }
+    /**
+     * Dumps the current graph to a file to be able to manipulate the filters in the map
+     */
+    public static void dumpGraph(){
+        String path = ".//data//currentGraph.txt";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            bw.write("3");
+            bw.newLine();
+            for (int i = 0; i < mainGraph.digraph().V(); i++) {
+                bw.write(mainGraph.nameOf(i));
+                for (Connection e : mainGraph.digraph().adj(i)) {
+                    bw.write(";" + mainGraph.nameOf(e.to()) + ";" + e.weight() + ";" + Math.round(e.getWindSpeed() * 100) / 100f + ";" + e.getAltitude());
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates a copy of the current program so the next time the program runs there will be an option of loading the previous program
@@ -359,7 +373,7 @@ public class Utils {
                 oos.writeObject(airlineST);
                 oos.writeObject(airplaneST);
                 oos.writeObject(flightST);
-                oos.writeObject(symbolGraph);
+                oos.writeObject(mainGraph);
                 oos.flush();
                 oos.close();
             } catch (Exception ex) {
@@ -555,6 +569,7 @@ public class Utils {
                     bw.newLine();
                 }
                 bw.close();
+                dumpGraph();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -612,7 +627,6 @@ public class Utils {
 
     /**
      * Draw in the new GUI interface the Graph used in project
-     *
      */
     public static void showGraphs() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -694,9 +708,9 @@ public class Utils {
      * @param graph - graph will be checked
      */
     public boolean checkGraphIsConnected(EdgeWeightedDigraph graph) {
-        for (int i = 0; i < getSymbolGraph().G().V(); i++) {
+        for (int i = 0; i < getSymbolGraph().digraph().V(); i++) {
             DepthFirstPaths dfs = new DepthFirstPaths(symbolGraph.digraph(), i);
-            for (int v = 0; v < getSymbolGraph().G().V(); v++) {
+            for (int v = 0; v < getSymbolGraph().digraph().V(); v++) {
                 // is graph is not connected!
                 if (!dfs.hasPathTo(v)) {
                     return false;
@@ -775,13 +789,33 @@ public class Utils {
      * @param number - number of connections of airport
      * @return - Return SeparateChainingHashST of airports that have number connections
      */
-    public SeparateChainingHashST<String, Airport> airportWithConnections(int number) {
+    public SeparateChainingHashST<String, Airport> airportWithConnections(int number, String type) {
         SeparateChainingHashST<String, Airport> results = new SeparateChainingHashST<>();
-        for (String key : airportST.keys()) {
-            Airport airport = airportST.get(key);
-            if (airportConnections(airport).size() == number) {
-                results.put(key, airport);
-            }
+        switch(type){
+            case "less":
+                for (String key : airportST.keys()) {
+                    Airport airport = airportST.get(key);
+                    if (airportConnections(airport).size() < number) {
+                        results.put(key, airport);
+                    }
+                }
+                break;
+            case "more":
+                for (String key : airportST.keys()) {
+                    Airport airport = airportST.get(key);
+                    if (airportConnections(airport).size() > number) {
+                        results.put(key, airport);
+                    }
+                }
+                break;
+            default:
+                for (String key : airportST.keys()) {
+                    Airport airport = airportST.get(key);
+                    if (airportConnections(airport).size() == number) {
+                        results.put(key, airport);
+                    }
+                }
+                break;
         }
         return results;
     }
@@ -816,15 +850,16 @@ public class Utils {
     /***
      *  Search in the airportST for the airports that are NOT from the continent passed
      *  Returns a list of airports to ignore when creating a graph with only the airports from a continent
-     *  Uses a "mainGraph" that is the one that holds all the airports without filters
      * @param continent -> continent for search
      * @return - An Arraylist of airports of the continent different of continent param
      */
    public static ArrayList<String> filterAirportsByContinent(String continent) {
         ArrayList<String> filter = new ArrayList<>();
-        for (int i = 0; i < mainGraph.digraph().V(); i++) {
-            if (airportST.get(mainGraph.nameOf(i)).getContinent().toUpperCase().compareTo(continent.toUpperCase()) != 0) {
-                filter.add(mainGraph.nameOf(i));
+        if(continent.toUpperCase().compareTo("WORLD") != 0){
+            for (int i = 0; i < mainGraph.digraph().V(); i++) {
+                if (airportST.get(mainGraph.nameOf(i)).getContinent().toUpperCase().compareTo(continent.toUpperCase()) != 0) {
+                    filter.add(mainGraph.nameOf(i));
+                }
             }
         }
         return filter;
