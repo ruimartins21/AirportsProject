@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import static airportsProject.Utils.isNumeric;
 import static airportsProject.Utils.log;
 
+/**
+ * Dialog window to insert a new connection between two airports
+ */
 public class NewConnectionDialogController{
     @FXML
     private TextField distance;

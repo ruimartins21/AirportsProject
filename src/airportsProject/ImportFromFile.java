@@ -222,7 +222,10 @@ public class ImportFromFile {
         }
     }
 
-
+    /**
+     * Loads the graph from the backup file that is the one being manipulated in the current program
+     * @throws WrongTypeFileException when the file does not correspond to the wanted
+     */
     public static void loadGraph() throws WrongTypeFileException {
         String sb = "";
         String path = ".//data//backup.txt";

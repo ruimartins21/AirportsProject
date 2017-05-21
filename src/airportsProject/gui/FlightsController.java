@@ -32,6 +32,11 @@ import java.time.format.DateTimeFormatter;
 import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
 import static javafx.geometry.Orientation.VERTICAL;
 
+/**
+ * Lists all the flights realized by date
+ * It is possible to search for flights in a period of time, aswell as for the origin or destination airport code,
+ * the number of passengers transported, the total distance of the flight, its cost and for the number of connections of a flight
+ */
 public class FlightsController {
     @FXML
     private VBox listFlightsContainer;
@@ -212,10 +217,6 @@ public class FlightsController {
                 newFlightItem(flight);
                 currentDate = flight.getDate();
             }
-//            for(Date date : resultFlights.keys()){ // lists all the existent airports
-//                Flight flight = resultFlights.get(date);
-//                newFlightItem(flight);
-//            }
         }else{
             Pane newPane = new Pane();
             newPane.setPrefHeight(200);

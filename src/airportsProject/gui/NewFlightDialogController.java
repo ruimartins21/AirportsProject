@@ -20,7 +20,9 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-
+/**
+ * Dialog window to insert a new flight
+ */
 public class NewFlightDialogController {
     @FXML
     private Label originCode;

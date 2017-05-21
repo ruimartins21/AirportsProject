@@ -32,6 +32,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Shows the details of an airport
+ * Among its personal info, it shows its location on the map, the user can edit and remove the airport
+ * is lists the parked planes there, the flight history and the connections available from there.
+ * It is still possible to search for a flight history in a period of time chosen by the user
+ */
 public class AirportDetailsController {
     @FXML
     private HBox containAirportDetails;
@@ -93,7 +99,6 @@ public class AirportDetailsController {
                 event.consume();
             }});
 
-        // ir buscar airport a ST pelo code dado
         airportName.setText(airport.getName());
         airportCode.setText(airport.getCode());
         airportCity.setText(airport.getCity());
@@ -222,7 +227,6 @@ public class AirportDetailsController {
         final KeyFrame kf = new KeyFrame(Duration.millis(500), kv1, kv2);
         timeline.getKeyFrames().add(kf);
         timeline.play();
-
         // move the pin
         mapPin.setLayoutX(airport.getLongitude() - (24 / 2)); // 24 is the pin width, divided by 2 to set the pin bottom to the coordinate (middle of the pin)
         mapPin.setLayoutY(airport.getLatitude() - 33); // 33 is the pin height
@@ -393,7 +397,6 @@ public class AirportDetailsController {
         }else{
             // alert to check if the user really wants to delete the airline
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
-            // style the alert
             alert.setTitle("Confirm Deletion");
             alert.setHeaderText(null);
             alert.setContentText("Are you sure you want to delete \"" + airport.getName() + "\" airport ?");

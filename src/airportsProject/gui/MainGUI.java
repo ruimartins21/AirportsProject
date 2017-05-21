@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * MainGUI application class.
+ * MainGUI application class
+ * It sets the scene and handles the showing of the first page
  */
 public class MainGUI extends Application {
 
@@ -54,9 +55,6 @@ public class MainGUI extends Application {
      */
     private Scene createScene(Pane mainPane) {
         Scene scene = new Scene(mainPane);
-//        scene.getStylesheets().setAll(
-//            getClass().getResource("style.css").toExternalForm()
-//        );
         return scene;
     }
 

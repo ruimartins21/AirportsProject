@@ -3,8 +3,6 @@ package airportsProject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import static airportsProject.Utils.euroValue;
-
 /**
  * Class responsible for the flight information together with its connections
  * It is capable of giving informations on the airplane that will do the respective flight
@@ -41,36 +39,14 @@ public class Flight implements Serializable {
     public void setConnections(ArrayList<String> cons){
         this.connections = cons;
     }
-
-    /**
-     * Cost is defined by the shortest path algorithm that will take in consideration various weights like distance, altitude and wind speed
-     * being used as it should in the 2nd phase
-     */
-//    public void setFlightCost() {
-        // airplane returns how many liters will spend on the flight
-//        this.costs = this.airplane.getAirplaneCost(this.distance, this.connection.getWindSpeed(),this.connection.getAltitude());
-
-//    }
-
-
     public void setDistance(double distance) {
         this.distance = distance;
     }
-
     public void setCosts(double costs) {
         this.costs = costs;
     }
-
     public void setDuration(Date duration) {
         this.duration = duration;
-    }
-
-    /**
-     * converts the cost given in litres to an actual cost for the airline or the airport to pay
-     * @return returns the cost in euros
-     */
-    public double getFlightCostEuros(){
-        return euroValue * this.costs;
     }
 
     /**
@@ -160,7 +136,6 @@ public class Flight implements Serializable {
                 "\n-> date=" + date +
                 "\n-> passengers=" + passengers +
                 "\n-> airplane=" + airplane +
-//                "\n-> connections=" + connections +
                 "\n-> airportOfOrigin=" + airportOfOrigin +
                 "\n-> airportOfDestination=" + airportOfDestination +
                 "\n}";

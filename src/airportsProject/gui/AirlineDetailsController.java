@@ -28,6 +28,10 @@ import libs.SeparateChainingHashST;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Airline Details page
+ * Shows the details for an airline like its fleet, its size and the list of airplanes that it got
+ */
 public class AirlineDetailsController {
     @FXML
     private VBox airlinesContainer;
@@ -122,7 +126,6 @@ public class AirlineDetailsController {
         }else{ // delete airline
             // alert to check if the user really wants to delete the airline
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
-            // style the alert
             alert.setTitle("Confirm Deletion");
             alert.setHeaderText(null);
             alert.setContentText("Are you sure you want to delete \"" + airline.getName() + "\" airline ?");
@@ -220,23 +223,10 @@ public class AirlineDetailsController {
         airplaneName.setTextFill(Color.valueOf("4185d1"));
         airplaneName.setFont(Font.font("Helvetica", FontWeight.BOLD, 15));
         newHBox.getChildren().add(airplaneName);
-        // airline label
-        Label airlineLabel = new Label("AIRLINE :");
-        airlineLabel.setAlignment(Pos.CENTER);
-        airlineLabel.setPrefWidth(45.0);
-        airlineLabel.setPrefHeight(40.0);
-        airlineLabel.setTextFill(Color.valueOf("8f8f8f"));
-        airlineLabel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 9));
-        newHBox.getChildren().add(airlineLabel);
-        // airline
-//        Label airline = new Label(airplane.getAirline().getName());
-        Label airline = new Label("TAP Air Portugal");
-        airline.setAlignment(Pos.CENTER);
-        airline.setPrefWidth(111.0);
-        airline.setPrefHeight(40.0);
-        airline.setTextFill(Color.valueOf("4185d1"));
-        airline.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
-        newHBox.getChildren().add(airline);
+        // spacing label
+        Label spacing = new Label("");
+        spacing.setPrefWidth(150);
+        newHBox.getChildren().add(spacing);
         newHBox.getChildren().add(removeAirplane);
         newPane.getChildren().add(newHBox);
         airlinesContainer.getChildren().add(newPane);

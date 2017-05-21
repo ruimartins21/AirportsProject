@@ -29,6 +29,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ *  Shows a certain airplane details aswell as options to edit or remove it, and it's flight history
+ */
 public class AirplaneDetailsController {
     @FXML
     private VBox containAirplaneDetails;
@@ -172,7 +175,6 @@ public class AirplaneDetailsController {
         }else{
             // alert to check if the user really wants to delete the airline
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
-            // style the alert
             alert.setTitle("Confirm Deletion");
             alert.setHeaderText(null);
             alert.setContentText("Are you sure you want to delete \"" + airplane.getName() + "\" airplane ?");

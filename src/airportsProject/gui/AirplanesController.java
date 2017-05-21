@@ -26,6 +26,12 @@ import libs.RedBlackBST;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * List of existent airplanes
+ * In this page the user can search for an airplane by its ID, name, airline, the code of the airport where the plane
+ * is parked and their model
+ * the user can add and remove an airplane and see details of it
+ */
 public class AirplanesController {
     @FXML
     private VBox airplanesContainer;
@@ -247,7 +253,6 @@ public class AirplanesController {
                 if(removeThis){
                     // alert to check if the user really wants to delete the airline
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
-                    // style the alert
                     alert.setTitle("Confirm Deletion");
                     alert.setHeaderText(null);
                     alert.setContentText("Are you sure you want to delete \"" + airplane.getName() + "\" airplane ?");
@@ -299,7 +304,6 @@ public class AirplanesController {
         airlineLabel.setFont(Font.font("Helvetica", FontWeight.LIGHT, 9));
         newHBox.getChildren().add(airlineLabel);
         // airline
-//        Label airline = new Label(airplane.getAirline().getName());
         Label airline = new Label(airplane.getAirline().getName());
         airline.setAlignment(Pos.CENTER);
         airline.setPrefWidth(111.0);

@@ -33,6 +33,10 @@ import java.util.Locale;
 
 import static airportsProject.Utils.euroValue;
 
+/**
+ * Shows the route the flight will take among other infos like detailed informations for each connection, the duration (total and for connection)
+ * and the airplane used for the flight
+ */
 public class FlightDetailsController {
     @FXML
     private VBox containFlight;
@@ -72,7 +76,6 @@ public class FlightDetailsController {
     private Pane airplaneInfo;
 
     private Date date;
-//    NumberFormat formatter = new DecimalFormat("#0.##");
     DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.ENGLISH);
     DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
     Group zoomGroup;

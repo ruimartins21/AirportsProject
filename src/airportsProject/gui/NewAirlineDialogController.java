@@ -5,6 +5,9 @@ import airportsProject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+/**
+ * Dialog window to insert OR edit an airline
+ */
 public class NewAirlineDialogController {
     @FXML
     private TextField airlineName;

@@ -16,6 +16,11 @@ import javafx.stage.StageStyle;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Landing page of the GUI of the project
+ * here are the option to load a program or start a new one
+ * loading a program can be from a text or a binary file
+ */
 public class LandingPageController {
     @FXML
     private Pane newProgram;

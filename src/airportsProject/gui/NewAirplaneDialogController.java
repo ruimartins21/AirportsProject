@@ -15,6 +15,9 @@ import libs.SeparateChainingHashST;
 
 import static airportsProject.Utils.isNumeric;
 
+/**
+ * Dialog window to insert OR edit an airplane
+ */
 public class NewAirplaneDialogController{
     @FXML
     private TextField airplaneName;

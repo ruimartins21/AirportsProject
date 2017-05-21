@@ -112,16 +112,6 @@ public class Airplane implements Serializable {
     }
 
     /**
-     * Consumption of fuel by the airplane considering its capacity and its max range
-     * @return returns the ammount of fuel it will spend each 1000 km
-     */
-    private float planeConsumption() {
-//        System.out.println("getFuelCapacity: " + this.getFuelCapacity() + "Max range: " + this.getMaxRange());
-        System.out.println("total: " + this.getFuelCapacity() + " " + this.getMaxRange());
-        return 1000*this.getFuelCapacity()/this.getMaxRange();
-    }
-
-    /**
      * Adds a flight that the airplane will do
      * @param currentFlight the flight to add
      */
@@ -143,30 +133,16 @@ public class Airplane implements Serializable {
      * than the cost if it travelled in its cruise altitude and the same happens if the altitude is lower, it will cost more.
      * the wind speed will affect aswell the cost in the way that if the wind is against the plane will require more power for it to push
      * therefore will add to the fuel cost, contrary to that, if the wind is in favor it will help the plane and it can spend less fuel
-     * @param distance distance of the connection
-     * @param windSpeed speed of the wind (and its direction given by the signal)
-     * @param altitude altitude of the connection that the airplane must fly
+     * @param connection is the current connection to calculate the cost
      * @return returns the cost in litres for the connection
      */
-    public double getAirplaneCost(double distance, double windSpeed, double altitude) {
-        double consum_extra = 0.0, l_at_1000 = 0.0, liters = 0.0, altitudeDiference;
-
-        altitudeDiference = this.cruiseAltitude - altitude; // difference between airplane cruise altitude and the connection altitude
-
-        if(altitudeDiference != 0)
-            consum_extra =  extraValue *  Math.abs(altitudeDiference) / 1000;
-
-        consum_extra = consum_extra - (windCost+windSpeed);
-
-        l_at_1000 += consum_extra;
-
-        liters = distance* l_at_1000/1000;
-
-        return  Math.round(liters*euroValue*100)/100;
-    }
 
     public double getAirplaneCost(Connection connection) {
-        double consum_extra = 0.0, l_at_1000 = 0.0, liters = 0.0, altitudeDiference;
+        if(connection.weight() > this.maxRange){
+            return Double.POSITIVE_INFINITY;
+        }
+
+        double consum_extra = 0.0, l_at_1000 = 0.0, liters, altitudeDiference;
 
         altitudeDiference = this.cruiseAltitude - connection.getAltitude(); // difference between airplane cruise altitude and the connection altitude
 
@@ -179,17 +155,12 @@ public class Airplane implements Serializable {
 
         liters = connection.weight()* l_at_1000/1000;
 
-        return  Math.round(liters*euroValue*100)/100;
-
+        return Math.round(liters*euroValue*100)/100;
     }
 
 
     public double getFlightDuration(Connection connection){
         return connection.weight() / this.cruiseSpeed;
-    }
-
-    public double getFlightDuration(double distance, double windSpeed){
-        return distance / (this.cruiseSpeed + windSpeed);
     }
 
     @Override

@@ -15,8 +15,11 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
+/**
+ * Menu page responsible for the flow of the application
+ * Options are: Airport network, airplanes, airlines, flights, statistics and save the current program
+ */
 public class MenuController {
     @FXML
     private Pane airportNetW;
@@ -125,11 +128,6 @@ public class MenuController {
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         dialog.initStyle(StageStyle.UNDECORATED);
-        Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.CLOSE){
-//            System.out.println("Close Credits");
-        }else{
-            System.out.println("Action not recognized");
-        }
+        dialog.showAndWait();
     }
 }

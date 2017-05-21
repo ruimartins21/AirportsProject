@@ -21,6 +21,9 @@ import javafx.scene.text.Text;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Page for showing some statistics for airports and flights
+ */
 public class StatsController {
     @FXML
     private VBox chart1;

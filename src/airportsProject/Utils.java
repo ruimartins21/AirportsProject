@@ -22,7 +22,6 @@ public class Utils {
     private static ArrayList<String> remove = new ArrayList<>(); // array that will store removed airports to ignore when reading the graph from the file
 
     // paths to default data
-//    public transient Thread asd;
     private static final String pathAirports = ".//data//airports.txt";
     private static final String pathAirplanes = ".//data//airplanes.txt";
     private static final String pathAirlines = ".//data//airlines.txt";
@@ -54,9 +53,9 @@ public class Utils {
         symbolGraph = sGraph;
     }
 
-    public static void filterGraph(String continent){
-        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", filterAirportsByContinent(continent));
-    }
+//    public static void filterGraph(String continent){
+//        symbolGraph = new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";", filterAirportsByContinent(continent));
+//    }
 
     /**
      * Will fill the symbol tables with the data required
@@ -100,7 +99,6 @@ public class Utils {
         if (remove.contains(airport.getCode())) // if the user is inserting an airport with a code equals to an airport removed before
             remove.remove(airport.getCode());
         airportST.put(airport.getCode(), airport);
-//        add airport to a vertice of graph
         log("airportST", "New airport [" + airport.getCode() + "] \" Name:" + airport.getName() + "\" Rating:" +
                 airport.getRating());
         if (!symbolGraph.contains(airport.getCode())) {
@@ -690,51 +688,6 @@ public class Utils {
         return results;
     }
 
-    // prints shortest path, cheaper one, and fastest one
-//    public void printShortestPath(DijkstraSP dijkstraSP, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination, Airplane airplane, String typeOfSearch) {
-//        for (Connection e : dijkstraSP.pathTo(airportOfDestination)) {
-//            if (typeOfSearch.compareTo("distance") == 0) {
-//                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + e.weight() + " Km");
-//            } else if (typeOfSearch.compareTo("monetary") == 0) {
-//                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + airplane.getAirplaneCost(e) + " €");
-////                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : " + euroValue * (double) Math.round(airplane.getAirplaneCost(e) * 100) / 100f + " €");
-//            } else if (typeOfSearch.compareTo("time") == 0) {
-//                System.out.print("[" + e.from() + "] " + symbolGraph.nameOf(e.from()) + "-> " + "[" + e.to() + "] " + symbolGraph.nameOf(e.to()) + " : ");
-//                System.out.println(Date.convertTime(airplane.getFlightDuration(e)));
-//            }
-//            System.out.println();
-//        }
-//        if (typeOfSearch.compareTo("time") == 0) {
-//            System.out.print("Total Cost: ");
-//            System.out.println(Date.convertTime(dijkstraSP.distTo(airportOfDestination)));
-//        } else if (typeOfSearch.compareTo("distance") == 0) {
-//            System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " km");
-//        } else if (typeOfSearch.compareTo("monetary") == 0) {
-//            System.out.println("Total Cost: " + dijkstraSP.distTo(airportOfDestination) + " €");
-////            System.out.println("Total Cost: " + euroValue * (double) Math.round(dijkstraSP.distTo(airportOfDestination) * 100) / 100f + " €");
-//        }
-//        System.out.println();
-//    }
-
-    // prints fastest path (less connections)
-//    public void printAShortestPath(BreadthFirstPaths bfs, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination) {
-//        if (bfs.hasPathTo(airportOfDestination)) {
-//            // with airport positions on the symbol graph
-//            for (int x : bfs.pathTo(airportOfDestination)) {
-//                if (x == airportOfDestination) System.out.print(x);
-//                else System.out.print(x + " - ");
-//            }
-//            System.out.println();
-//            // with airport codes
-//            for (int x : bfs.pathTo(airportOfDestination)) {
-//                if (x == airportOfDestination) System.out.print(symbolGraph.nameOf(x));
-//                else System.out.print(symbolGraph.nameOf(x) + " - ");
-//            }
-//        }
-//        System.out.println("\n");
-//    }
-
-
     /**
      * check if the graph is connected
      *
@@ -843,12 +796,6 @@ public class Utils {
         return results;
     }
 
-    /***
-     *  function responsible for cloning the arrayList
-     *
-     * @param list -> array for the cloning
-     * @return An arraylist cloned
-     */
 //    //    criar um novo grafo perante um continente escolhido
 //    public EdgeWeightedDigraph filterGraph(String searchContinent) {
 //        EdgeWeightedDigraph newGraph = new EdgeWeightedDigraph(searchAirportsOfContinent(airportST, searchContinent).size());
@@ -873,7 +820,7 @@ public class Utils {
 
 
     /***
-     *  function responsible for cloning the arrayList
+     * function responsible for cloning the arrayList
      *
      * @param list -> array for the cloning
      * @return An arraylist cloned

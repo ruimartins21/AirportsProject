@@ -20,6 +20,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+/**
+ * Dialog window to insert OR edit an airport
+ */
 public class NewAirportDialogController {
     @FXML
     private TextField airportName;
@@ -44,7 +47,6 @@ public class NewAirportDialogController {
     private double latitude = -1;
     private double longitude = -1;
     private Airport airport;
-    private Utils utils = Utils.getInstance();
 
     NumberFormat formatter = new DecimalFormat("#0.#");
 

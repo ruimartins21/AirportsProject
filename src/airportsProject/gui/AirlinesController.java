@@ -30,6 +30,9 @@ import java.util.Optional;
 
 import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
 
+/**
+ * Shows all the airlines existent and lets the user create a new one and remove an airline or see its details
+ */
 public class AirlinesController {
     @FXML
     private VBox airlinesContainer;
@@ -190,7 +193,6 @@ public class AirlinesController {
                 if(removeThis){
                     // alert to check if the user really wants to delete the airline
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
-                    // style the alert
                     alert.setTitle("Confirm Deletion");
                     alert.setHeaderText(null);
                     alert.setContentText("Are you sure you want to delete \"" + airline.getName() + "\" airline ?");

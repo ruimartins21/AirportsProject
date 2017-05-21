@@ -60,7 +60,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 16;Boeing 777;Al Khattya;Qatar Airways;905.0;12000.0;17000.0;WAW;550;117348;
 17;Boeing 777;Jaow Alsalam;Qatar Airways;905.0;12000.0;17000.0;FRA;550;117348;
 18;Boeing 777;Lbeshairiya;Qatar Airways;905.0;12000.0;17000.0;CDG;550;117348;
-19;Boeing 777;Um-Alamad;Qatar Airways;905.0;12000.0;17000.0;JFK;550;117348;
+19;Boeing 777;Um-Alamad;Qatar Airways;905.0;12000.0;17000.0;PEK;550;117348;
 20;Boeing 747;Gosford;Qantas;893.0;12000.0;9800.0;SYD;480;183380;
 21;Boeing 747;Hamilton Island;Qantas;893.0;12000.0;9800.0;TLV;480;183380;
 22;Boeing 747;Phillip Island;Qantas;893.0;12000.0;9800.0;PEK;480;183380;
@@ -81,6 +81,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
 date;passengers;plane;originAirport;destinAirport;connections;
+21/5/2017/1/38/34;12;19;JFK;PEK;JFK|YUL|LAX|NRT|PEK|;
 #
 originAirport;airportCode;distance;windSpeed;airTunnel;
 3

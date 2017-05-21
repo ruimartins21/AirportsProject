@@ -31,6 +31,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Network of airports, shows a map of the location of all available airports, the user can set a new flight by choosing two points on the map
+ * the user can see the graph with all the connections available among all the airport on the lower left corner and choose a filter by continent
+ * on the lower right corner of the map.
+ * At the right side there's the list of existing airports, the user can create a new airport given the proper data like a correct location
+ * so the API can find its coordinates.
+ * It is possible to do searches with multiple variables, using && (AND) and || (OR) operators, or simple ones, it can search for airports
+ * with a certain number of connections by searching "connections:X" being X the number of connections wanted.
+ * Clicking on an airport it is possible to see details of the airport and remove it aswel
+ */
 public class AirportNetworkController {
     @FXML
     private VBox containAirports;
