@@ -75,6 +75,7 @@ public class NewAirportDialogController {
 
     @FXML
     void getNewAirportInput(ActionEvent event) {
+        invalidLocation = false;
         if(isEdit){ // editing an airport
             if(airportName.getText().length() == 0){
                 warning.setStyle("-fx-opacity: 1");
@@ -97,9 +98,9 @@ public class NewAirportDialogController {
                 try {
                     GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
                     if(geocoderResponse.getResults().isEmpty()){
-                        System.out.println(airportCode.getText() + ": Invalid Location / Not strong enough connection, try again");
+                        warning.setText("Invalid Location / Not strong enough connection, try again");
+                        warning.setStyle("-fx-opacity: 1");
                         invalidLocation = true;
-                        return;
                     }
                     latitude  = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue();
                     longitude = geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue();

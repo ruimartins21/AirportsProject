@@ -51,6 +51,11 @@ public class Utils {
 
     public static void setSymbolGraph(SymbolEdgeWeightedDigraph sGraph) {
         symbolGraph = sGraph;
+//        mainGraph = symbolGraph;
+    }
+    public static void setMainGraph(SymbolEdgeWeightedDigraph mGraph){
+        mainGraph = mGraph;
+        dumpGraph();
     }
 
     public static void filterGraph(String continent){
@@ -78,11 +83,17 @@ public class Utils {
                 return false;
             }
         } else { // new program
+//            try{
+//                ImportFromFile.loadProgram(".//backup.bin", null, null, null);
+//            }catch (WrongTypeFileException e){
+//                // ignore
+//            }
             ImportFromFile.importAirports(airportST, pathAirports);
             ImportFromFile.importAirlines(airlineST, pathAirlines);
             ImportFromFile.importPlanes(airportST, airplaneST, airlineST, pathAirplanes);
             setFlights(new RedBlackBST<>());
             setSymbolGraph(new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";"));
+            setMainGraph(new SymbolEdgeWeightedDigraph(".//data//graph.txt", ";"));
         }
         log("reset", ""); // clean the log file from the previous program
         return true;
@@ -569,6 +580,7 @@ public class Utils {
                     bw.newLine();
                 }
                 bw.close();
+                setMainGraph(symbolGraph);
                 dumpGraph();
             } catch (IOException e) {
                 e.printStackTrace();

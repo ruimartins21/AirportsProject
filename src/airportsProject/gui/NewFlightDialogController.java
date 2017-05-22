@@ -117,7 +117,7 @@ public class NewFlightDialogController {
     @FXML
     public void route(){
         if(!calculateRoute()){
-            warning.setText(origin + " doesn't have a connection to the destination chosen.");
+            warning.setText(origin + " doesn't have a connection to the destination chosen or no airplane can do that flight.");
             warning.setStyle("-fx-opacity: 1");
         }
     }

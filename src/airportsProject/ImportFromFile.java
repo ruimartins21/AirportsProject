@@ -261,6 +261,7 @@ public class ImportFromFile {
         if(sb.length() > 0){
             SymbolEdgeWeightedDigraph symbolGraph = new SymbolEdgeWeightedDigraph(sb);
             setSymbolGraph(symbolGraph);
+            setMainGraph(symbolGraph);
         }
     }
 }
