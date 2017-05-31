@@ -97,6 +97,7 @@ public class BreadthFirstPaths {
      * @throws IllegalArgumentException unless {@code 0 <= s < V} for each vertex
      *                                  {@code s} in {@code sources}
      */
+//    public BreadthFirstPaths(EdgeWeightedDigraph G, Iterable<Integer> sources) {
     public BreadthFirstPaths(EdgeWeightedDigraph G, Iterable<Integer> sources) {
         marked = new boolean[G.V()];
         distTo = new int[G.V()];

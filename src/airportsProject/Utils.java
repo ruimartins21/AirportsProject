@@ -954,4 +954,22 @@ public class Utils {
 
         }
     }
+
+    // prints fastest path (less connections)
+    public void printAShortestPath(BreadthFirstPaths bfs, SymbolEdgeWeightedDigraph symbolGraph, int airportOfDestination) {
+        if (bfs.hasPathTo(airportOfDestination)) {
+            // with airport positions on the symbol graph
+            for (int x : bfs.pathTo(airportOfDestination)) {
+                if (x == airportOfDestination) System.out.print(x);
+                else System.out.print(x + " - ");
+            }
+            System.out.println();
+            // with airport codes
+            for (int x : bfs.pathTo(airportOfDestination)) {
+                if (x == airportOfDestination) System.out.print(symbolGraph.nameOf(x));
+                else System.out.print(symbolGraph.nameOf(x) + " - ");
+            }
+        }
+        System.out.println("\n");
+    }
 }
