@@ -343,7 +343,7 @@ public class FlightDetailsController {
         distance.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
         rightPane.getChildren().add(distance);
         // cost number
-        Label cost = new Label(formatter.format(flight.getAirplane().getAirplaneCost(con)));
+        Label cost = new Label(formatter.format(flight.getAirplane().getAirplaneCost(con)) + " €");
         cost.setLayoutX(95);
         cost.setLayoutY(79);
         cost.setTextFill(Color.valueOf("8a8a8a"));

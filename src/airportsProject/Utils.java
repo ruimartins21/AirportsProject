@@ -321,7 +321,20 @@ public class Utils {
         Airline airline = plane.getAirline();
         airline.removePlane(plane);
         airportST.get(plane.getAirportCode()).sendPlane(plane); // goes to the airport where the plane is parked to remove it
-        airplaneST.put(plane.getId() - 1, null); // ids on the ST starts from 0 and airplanes ids from 1
+        // removes all the flights done by this airplane
+        if (!plane.getAirplaneFlights().isEmpty()) {
+            for (Date date : plane.getAirplaneFlights().keys()) {
+                Flight flight = flightST.get(date);
+                for (String code : flight.getConnections()) { // removes the flight from the history of all the airports from where it passed
+                    airportST.get(code).getFlights().put(date, null);
+                }
+                log("flightST", "Removed Flight from \"" + flight.getAirportOfOrigin().getName() + "\" (" + flight.getAirportOfOrigin().getCity() + ", " +
+                        flight.getAirportOfOrigin().getCountry() + ") to \"" + flight.getAirportOfDestination().getName() + "\" (" +
+                        flight.getAirportOfDestination().getCity() + ", " + flight.getAirportOfDestination().getCountry() + ")");
+                flightST.put(date, null);
+            }
+        }
+        airplaneST.put(plane.getId()-1, null); // ids on the ST starts from 0 and airplanes ids from 1
         log("Airline \"" + airline.getName() + "\"", "Removed airplane \"" + plane.getName() + "\"");
         log("AirplaneST", "Removed airplane \"" + plane.getName() + "\"");
         log("Airport \"" + airportST.get(plane.getAirportCode()) + "\"", "Removed airplane \"" + plane.getName() + "\"");

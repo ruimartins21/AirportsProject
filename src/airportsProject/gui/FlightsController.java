@@ -25,9 +25,11 @@ import javafx.util.StringConverter;
 import libs.RedBlackBST;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import static javafx.geometry.NodeOrientation.LEFT_TO_RIGHT;
 import static javafx.geometry.Orientation.VERTICAL;
@@ -53,7 +55,13 @@ public class FlightsController {
 
     NumberFormat formatter = new DecimalFormat("#0.##");
 
+    DecimalFormat decFormatter = (DecimalFormat) NumberFormat.getInstance(Locale.ENGLISH);
+    DecimalFormatSymbols symbols = decFormatter.getDecimalFormatSymbols();
+
     public void initialize(){
+        // set separator symbol for large numbers: 1000 -> 1 000, used for the cost of the flight
+        symbols.setGroupingSeparator(' ');
+        decFormatter.setDecimalFormatSymbols(symbols);
         if(!flights.isEmpty()){
             Date currentDate = flights.select(0);
             newFlightDate(currentDate);
@@ -443,7 +451,7 @@ public class FlightsController {
         cost.setFont(Font.font("Helvetica Light", 15.0));
         newPane.getChildren().add(cost);
         // cost number
-        Label costNumber = new Label(String.valueOf(formatter.format(flight.getCosts())));
+        Label costNumber = new Label(String.valueOf(decFormatter.format(flight.getCosts())));
         costNumber.setLayoutX(340.0);
         costNumber.setLayoutY(109.0);
         costNumber.setPrefWidth(130);

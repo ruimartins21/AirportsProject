@@ -191,16 +191,14 @@ public class NewFlightDialogController {
     }
 
     private void showBFSRoute(BreadthFirstPaths bfs, int destination){
-        int count = 1, lastAirport = -1, stops = 0;
+        int lastAirport = -1, stops = 0;
         if (bfs.hasPathTo(destination)) {
             for (int x : bfs.pathTo(destination)) {
-                if(count%2 == 0){ // it prints a connection (two per time airports)
+                if(lastAirport != -1){ // if not the first cycle, it prints a connection, so it needs two airports
                     stops += 1;
                     newRouteItem(new Connection(lastAirport, x, -1, -1, -1));
-                }else{
-                    lastAirport = x;
                 }
-                count++;
+                lastAirport = x;
             }
             totalLabel.setText("Total Stops: ");
             totalValue.setText("" + stops);
