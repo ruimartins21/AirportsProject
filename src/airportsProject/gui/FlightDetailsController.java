@@ -31,7 +31,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import static airportsProject.Utils.euroValue;
 
 /**
  * Shows the route the flight will take among other infos like detailed informations for each connection, the duration (total and for connection)
@@ -344,7 +343,7 @@ public class FlightDetailsController {
         distance.setFont(Font.font("Helvetica", FontWeight.LIGHT, 12));
         rightPane.getChildren().add(distance);
         // cost number
-        Label cost = new Label(formatter.format(euroValue * (double) Math.round(flight.getAirplane().getAirplaneCost(con) * 100) / 100f) + " €");
+        Label cost = new Label(formatter.format(flight.getAirplane().getAirplaneCost(con)));
         cost.setLayoutX(95);
         cost.setLayoutY(79);
         cost.setTextFill(Color.valueOf("8a8a8a"));
