@@ -9,9 +9,9 @@ Fernando Pessoa university
 Faculty of Science and Technology
 
 
-![Screenshot](screenshot-1.png)
-![Screenshot](screenshot-2.png)
-![Screenshot](screenshot-3.png)
+![Screenshot](screenshot_1.png)
+![Screenshot](screenshot_2.png)
+![Screenshot](screenshot_3.png)
 
 Demonstration
 
@@ -22,8 +22,8 @@ Screenshots
 
 
 
-![Screenshot](screenshot-4.png)
-![Screenshot](screenshot-5.png)
+![Screenshot](screenshot_4.png)
+![Screenshot](screenshot_5.png)
 
 
 
