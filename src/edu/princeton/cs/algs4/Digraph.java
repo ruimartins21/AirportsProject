@@ -210,7 +210,6 @@ public class Digraph {
         return indegree[v];
     }
 
-
     /**
      * Returns the reverse of the digraph.
      *
