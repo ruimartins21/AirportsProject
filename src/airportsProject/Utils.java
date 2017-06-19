@@ -963,7 +963,6 @@ public class Utils {
         return list.subList(0, 5);
     }
 
-
     /***
      *  function responsible for removing an edge of graph
      *

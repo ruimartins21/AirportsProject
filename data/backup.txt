@@ -42,7 +42,7 @@ Thai Airways;Thailand;
 Qatar Airways;Qatar;
 #
 planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passengers;fuelCap
-1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
+1;Airbus A340;Fernão Mendes Pinto;TAP Air Portugal;871.0;8000.0;16700.0;SCL;380;274876;
 2;Airbus A340;D. João de Castro;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 3;Airbus A340;Wenceslau de Moraes;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
 4;Airbus A340;D. Francisco de Almeida;TAP Air Portugal;871.0;8000.0;16700.0;OPO;380;274876;
@@ -81,6 +81,7 @@ planeId;model;name;airline;cruiseSpeed;cruiseAltitude;maxRange;airportCode;passe
 37;Airbus A319;Eusebio;TAP Air Portugal;828.0;9000.0;6950.0;MVD;156;26750;
 #
 date;passengers;plane;originAirport;destinAirport;connections;
+19/6/2017/14/53/19;121;1;OPO;SCL;OPO|GIG|MVD|SCL|;
 #
 originAirport;airportCode;distance;windSpeed;airTunnel;
 3
