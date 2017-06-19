@@ -24,8 +24,6 @@ Screenshots
 
 ![Screenshot](screenshot-4.png)
 ![Screenshot](screenshot-5.png)
-![Screenshot](screenshot-6.png)
-![Screenshot](screenshot-7.png)
 
 
 
